@@ -22,12 +22,12 @@ Development platform: Android - Kotlin
 
 Name | Student ID | GitHub Username
 --- | --- | ---
-Maël Semler (Team Lead) | 40061228 | ---
+Maël Semler (Team Lead) | 40061228 | --- MaelSemler
 Johnston Stott | 40059176 | johnstonstott
-Andy Vu | 27008481 | ---
-Hai Ha Nguyen | 40052116 | ---
-Yomna Abdelkawy | 40041892 | ---
-Leslie Poso | 40057877 | ---
-David Semunjanga | 40032841 | ---
-Khaled Shah | 29216839 | ---
-Daphné Augier | 40036123 | ---
+Andy Vu | 27008481 | --- Andynism
+Hai Ha Nguyen | 40052116 | --- Nguyhh
+Yomna Abdelkawy | 40041892 | --- yabdelkawy
+Leslie Poso | 40057877 | --- lposo 
+David Semunjanga | 40032841 | --- DavSemu
+Khaled Shah | 29216839 | --- Khal-Shah
+Daphné Augier | 40036123 | --- daphneaugier
