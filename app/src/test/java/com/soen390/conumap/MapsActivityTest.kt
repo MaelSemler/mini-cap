@@ -37,6 +37,7 @@ class MapsActivityTest {
     @Test
     fun canYouDrink_isCorrect() {
         assertEquals(true, activity.canYouDrink(20))
+        assertEquals(true, activity.canYouDrink(18))
         assertEquals(false, activity.canYouDrink(10))
     }
 }
