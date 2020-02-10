@@ -1,4 +1,4 @@
-# mini-cap
+# ConUMaps
 
 This is the Mini-Cap project for SOEN 390.
 
