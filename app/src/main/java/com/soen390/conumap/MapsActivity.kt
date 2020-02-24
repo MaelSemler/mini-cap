@@ -79,4 +79,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             }
         }
     }
+
+    // For sample unit tests, remove for sprint 2.
+    fun sum(a: Int, b: Int) = a + b
+
+    fun square(num: Double) = num * num
+
+    fun reverse(word: String) = word.reversed()
+
+    fun canYouDrink(age: Int): Boolean {
+        return age >= 18
+    }
 }
