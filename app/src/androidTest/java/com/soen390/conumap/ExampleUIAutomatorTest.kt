@@ -76,5 +76,11 @@ class ExampleUIAutomatorTest {
         )
 
         if(debug) sleep(1000)
+
+        // Clicks on marker on map. Need to figure out how to click on certain elements and not
+        // hardcoded coordinates.
+        device.click(715, 1400)
+
+        if(debug) sleep(1000)
     }
 }
