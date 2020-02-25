@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:orientation="vertical">
 <fragment
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/map"
     android:name="com.google.android.gms.maps.SupportMapFragment"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentStart="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MapsActivity" />
@@ -21,6 +22,8 @@
     android:text="@string/campus_Loyola"
         android:visibility="visible"
         android:layout_gravity="bottom"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
     /> //Implements Loyola button
     <Button
         android:id="@+id/button_SGW"
@@ -29,6 +32,8 @@
         android:text="@string/campus_Downtown"
         android:visibility="visible"
         android:layout_gravity="bottom"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
         /> //Implements SGW button
 
-</LinearLayout>
+</RelativeLayout>
