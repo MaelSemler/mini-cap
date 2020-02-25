@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:orientation="vertical"
+    android:gravity="center">
+<fragment
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/map"
@@ -7,3 +14,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MapsActivity" />
+    <Button
+    android:id="@+id/button_LOY"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/campus_Loyola"
+        android:visibility="visible"
+        android:layout_gravity="bottom"
+    /> //Implements Loyola button
+    <Button
+        android:id="@+id/button_SGW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/campus_Downtown"
+        android:visibility="visible"
+        android:layout_gravity="bottom"
+        /> //Implements SGW button
+
+</LinearLayout>

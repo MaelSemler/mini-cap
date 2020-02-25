@@ -8,6 +8,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import android.widget.Button
 import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -22,7 +23,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -32,15 +32,23 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
-    override fun onMapReady(googleMap: GoogleMap) {
+
+    override fun onMapReady(googleMap: GoogleMap) {  //Supposed to create two buttons.
+        //When either button is clicked, map moves to respective location.
         mMap = googleMap
-
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        val button = findViewById<Button>(R.id.button_SGW)
+        val button2= findViewById<Button>(R.id.button_LOY)
+        val loyola=LatLng(45.458,-73.639)
+        val downTown=LatLng(45.5,-73.57)
+        button?.setOnClickListener()
+        {
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(downTown))
+        }
+        button2?.setOnClickListener()
+        {
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(loyola))
+        }
     }
-
     // For sample unit tests, remove for sprint 2.
     fun sum(a: Int, b: Int) = a + b
 
