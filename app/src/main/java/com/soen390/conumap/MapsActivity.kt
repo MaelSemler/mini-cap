@@ -54,7 +54,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         map.setOnMarkerClickListener(this)
 
         setUpMap()
-        displayButtons(map)
+        changeBetweenCampuses(map)
     }
 
     private fun setUpMap() {
@@ -80,7 +80,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
     }
 
-    fun displayButtons (googleMap:GoogleMap){
+    private fun changeBetweenCampuses (googleMap:GoogleMap){
         //When either button is clicked, map moves to respective location.
         map = googleMap
         val button = findViewById<Button>(R.id.button_SGW)
@@ -89,11 +89,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         val downTown=LatLng(45.5,-73.57)
         button?.setOnClickListener()
         {
+            map.clear()
+            map.addMarker(MarkerOptions().
+                    position(downTown).
+                title("SGW"))
             map.moveCamera(CameraUpdateFactory.newLatLng(downTown))
+
         }
         button2?.setOnClickListener()
         {
+            map.clear()
+            map.addMarker(MarkerOptions().position(loyola).title("LOY"))
             map.moveCamera(CameraUpdateFactory.newLatLng(loyola))
+
         }
     }
     // For sample unit tests, remove for sprint 2.
