@@ -31,6 +31,8 @@ class ExampleUIAutomatorTest {
     @Test
     // Again, temporary. May not work on devices with different resolutions.
     fun moveMapAround() {
+        sleep(5000) // Give app enough time to locate user and focus.
+
         if(debug) sleep(1000)
 
         // Drag left.
@@ -74,12 +76,6 @@ class ExampleUIAutomatorTest {
             2000,
             100
         )
-
-        if(debug) sleep(1000)
-
-        // Clicks on marker on map. Need to figure out how to click on certain elements and not
-        // hardcoded coordinates.
-        device.click(715, 1400)
 
         if(debug) sleep(1000)
     }
