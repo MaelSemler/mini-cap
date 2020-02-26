@@ -34,6 +34,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
 
     override fun onMapReady(googleMap: GoogleMap) {  //Supposed to create two buttons.
+
+    }
+
+    fun displayButtons (googleMap:GoogleMap){
         //When either button is clicked, map moves to respective location.
         mMap = googleMap
         val button = findViewById<Button>(R.id.button_SGW)
