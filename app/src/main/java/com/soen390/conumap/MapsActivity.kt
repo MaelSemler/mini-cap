@@ -2,12 +2,11 @@ package com.soen390.conumap
 
 import android.content.pm.PackageManager
 import android.location.Location
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -48,11 +47,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+    val myHouse = LatLng(45.453212, -73.804311)
+
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
 
         map.uiSettings.isZoomControlsEnabled = true
         map.setOnMarkerClickListener(this)
+
+        // Note to future self: probably best to make all this a function and call it before
+        // SetUpMap()
+        // Sample. Will need something like this for all Concordia Buildings.
+        map.addMarker(MarkerOptions()
+            .position(myHouse)
+            .alpha(0.0F)
+            .title("My House")
+            .snippet("XXX StreetName Ave.\nI live here\nWith my dogs")
+        )
+
+        map.setInfoWindowAdapter(CustomInfoWindowAdapter(this))
 
         setUpMap()
     }
