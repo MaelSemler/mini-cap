@@ -93,7 +93,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     private fun route(originLatLng: LatLng, destinationLatLng:LatLng){
         val path : MutableList<List<LatLng>> = ArrayList()
-        val urlDirections= getString(R.string.DirectionAPI) +"origin=" + originLatLng.latitude + "," + originLatLng.longitude +"&destination=" + destinationLatLng.latitude + "," + destinationLatLng.longitude + getString(R.string.apiKey)
+        val urlDirections= getString(R.string.DirectionAPI) +"origin=" + originLatLng.latitude + "," + originLatLng.longitude +"&destination=" + destinationLatLng.latitude + "," + destinationLatLng.longitude + "&key=" + getString(R.string.apiKey)
 
         val directionsRequest = object : StringRequest(Request.Method.GET, urlDirections, com.android.volley.Response.Listener<String> {
                 response ->
