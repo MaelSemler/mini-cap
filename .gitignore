@@ -166,4 +166,4 @@ fabric.properties
 
 # End of https://www.gitignore.io/api/java,kotlin,androidstudio
 
-config.xml
+apiKey.xml
