@@ -84,11 +84,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     fun changeBetweenCampuses (googleMap:GoogleMap){
         //When either button is clicked, map moves to respective location.
         map = googleMap
-        val button = findViewById<Button>(R.id.button_SGW)
-        val button2= findViewById<Button>(R.id.button_LOY)
+        val buttonSGW = findViewById<Button>(R.id.button_SGW)
+        val buttonLOY= findViewById<Button>(R.id.button_LOY)
         val loyola=LatLng(45.458275,-73.640469)
         val downTown=LatLng(45.4975,-73.579004)
-        button?.setOnClickListener()
+        buttonSGW?.setOnClickListener()
         {
             map.clear()
             map.addMarker(MarkerOptions().
@@ -97,7 +97,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             map.moveCamera(CameraUpdateFactory.newLatLng(downTown))
 
         }
-        button2?.setOnClickListener()
+        buttonLOY?.setOnClickListener()
         {
             map.clear()
             map.addMarker(MarkerOptions().position(loyola).title("LOY").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
