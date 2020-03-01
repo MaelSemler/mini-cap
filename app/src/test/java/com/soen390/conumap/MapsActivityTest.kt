@@ -1,4 +1,5 @@
 package com.soen390.conumap
+<<<<<<< HEAD
 //import org.junit.Test
 //
 //import org.junit.Assert.*
@@ -40,3 +41,15 @@ package com.soen390.conumap
 //    }
 //
 //}
+=======
+import org.junit.Test
+
+import org.junit.Assert.*
+import com.soen390.conumap.MapsActivity as MapsActivity
+
+class MapsActivityTest {
+
+    private val activity = MapsActivity()
+
+}
+>>>>>>> 9d106167c25b057ae2e148545c61a5a2a3c56202
