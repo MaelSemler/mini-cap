@@ -9,5 +9,4 @@ class MapsActivityTest {
 
     private val activity = MapsActivity()
 
-
 }
