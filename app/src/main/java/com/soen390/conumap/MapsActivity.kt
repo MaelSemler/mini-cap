@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -118,6 +119,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             val routes = jsonResponse.getJSONArray("routes")
             val legs = routes.getJSONObject(0).getJSONArray("legs")
             val steps = legs.getJSONObject(0).getJSONArray("steps")
+            val directionText : TextView = findViewById(R.id.Directions)
+            //TODO: Create function to clean up the directions
+            var textConverted=""
+            for (i in 0 until steps.length()-1){
+                textConverted+=steps.getJSONObject(i).getString("html_instructions")
+                directionText.text= textConverted
+            }
+
             for (i in 0 until steps.length()) {
                 val points = steps.getJSONObject(i).getJSONObject("polyline").getString("points")
                 path.add(PolyUtil.decode(points))
