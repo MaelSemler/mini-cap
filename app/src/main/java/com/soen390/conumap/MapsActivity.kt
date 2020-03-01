@@ -121,7 +121,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.457226, -73.639919),
                 LatLng(45.457213, -73.639990),
                 LatLng(45.457218, -73.640016)
-            ).fillColor(concordiaRed)
+            ).fillColor(concordiaRed).strokeWidth(0.1f)
         val buildingGE = PolygonOptions()
             .add(
                 LatLng(45.457040, -73.640163),
@@ -135,7 +135,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.457132, -73.640451),
                 LatLng(45.457139, -73.640436),
                 LatLng(45.457040, -73.640163)
-            ).fillColor(concordiaRed)
+            ).fillColor(concordiaRed).strokeWidth(0.1f)
         val buildingCC = PolygonOptions()
             .add(
                 LatLng(45.458078, -73.640019),
@@ -151,7 +151,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.458324, -73.640148),
                 LatLng(45.458228, -73.639905),
                 LatLng(45.458078, -73.640019)
-            ).fillColor(concordiaRed)
+            ).fillColor(concordiaRed).strokeWidth(0.1f)
         val buildingSP = PolygonOptions()
             .add(
                 LatLng(45.456985, -73.640828),
@@ -183,7 +183,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.457526, -73.641470),
                 LatLng(45.457204, -73.640659),
                 LatLng(45.456985, -73.640828)
-            ).fillColor(concordiaRed)
+            ).fillColor(concordiaRed).strokeWidth(0.1f)
         val buildingRF = PolygonOptions()
             .add(
                 LatLng(45.458439, -73.640752),
@@ -209,7 +209,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.458519, -73.640774),
                 LatLng(45.458492, -73.640710),
                 LatLng(45.458439, -73.640752)
-            ).fillColor(concordiaRed)
+            ).fillColor(concordiaRed).strokeWidth(0.1f)
         val buildingAD = PolygonOptions()
             .add(
                 LatLng(45.458003, -73.639682),
@@ -233,7 +233,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.458088, -73.639694),
                 LatLng(45.458070, -73.639641),
                 LatLng(45.458003, -73.639682)
-            ).fillColor(concordiaRed)
+            ).fillColor(concordiaRed).strokeWidth(0.1f)
         val buildingFC = PolygonOptions()
             .add(
                 LatLng(45.458424, -73.639163),
@@ -272,7 +272,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.458581, -73.639061),
                 LatLng(45.458577, -73.639050),
                 LatLng(45.458424, -73.639163)
-            ).fillColor(concordiaRed)
+            ).fillColor(concordiaRed).strokeWidth(0.1f)
         val buildingVL = PolygonOptions()
             .add(
                 LatLng(45.458634, -73.638466),
@@ -314,7 +314,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.458707, -73.638360),
                 LatLng(45.458719, -73.638399),
                 LatLng(45.458634, -73.638466)
-            ).fillColor(concordiaRed)
+            ).fillColor(concordiaRed).strokeWidth(0.1f)
         val buildingPY= PolygonOptions()
             .add(
                 LatLng(45.458731, -73.640448),
@@ -332,7 +332,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.458758, -73.640398),
                 LatLng(45.458765, -73.640418),
                 LatLng(45.458731, -73.640448)
-            ).fillColor(concordiaRed)
+            ).fillColor(concordiaRed).strokeWidth(0.1f)
 
         map.addPolygon(buildingCJ)
         map.addPolygon(buildingGE)
@@ -358,7 +358,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.495474, -73.577626),
                 LatLng(45.495456, -73.577598),
                 LatLng(45.495208, -73.577884)
-            ).fillColor(concordiaRed)
+            ).fillColor(concordiaRed).strokeWidth(0.1f)
         val buildingGM = PolygonOptions()
             .add(
                 LatLng(45.495651, -73.578809),
@@ -367,7 +367,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.495783, -73.579151),
                 LatLng(45.496133, -73.578808),
                 LatLng(45.495977, -73.578482)
-            ).fillColor(concordiaRed)
+            ).fillColor(concordiaRed).strokeWidth(0.1f)
         val buildingH  = PolygonOptions()
             .add(
                 LatLng(45.496832, -73.578850),
@@ -375,7 +375,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.497729, -73.579034),
                 LatLng(45.497380, -73.5783300),
                 LatLng(45.496832, -73.578850)
-            ).fillColor(concordiaRed)
+            ).fillColor(concordiaRed).strokeWidth(0.1f)
         val buildingFG = PolygonOptions()
             .add(
                 LatLng(45.494703, -73.578041),
@@ -400,7 +400,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.494310, -73.578532),
                 LatLng(45.494378, -73.578443),
                 LatLng(45.494703, -73.578041)
-            ).fillColor(concordiaRed)
+            ).fillColor(concordiaRed).strokeWidth(0.1f)
         val buildingMB = PolygonOptions()
             .add(
                 LatLng(45.495188, -73.578524),
@@ -413,7 +413,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.495527, -73.579199),
                 LatLng(45.495450, -73.578964),
                 LatLng(45.495188, -73.578524)
-            ).fillColor(concordiaRed)
+            ).fillColor(concordiaRed).strokeWidth(0.1f)
         val buildingLB = PolygonOptions()
             .add(
                 LatLng(45.496254, -73.577697),
@@ -443,7 +443,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.496596, -73.577637),
                 LatLng(45.496508, -73.577458),
                 LatLng(45.496254, -73.577697)
-            ).fillColor(concordiaRed)
+            ).fillColor(concordiaRed).strokeWidth(0.1f)
         val buildingGN = PolygonOptions()
             .add(
                 LatLng(45.492593, -73.576533),
@@ -506,7 +506,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.492898, -73.576745),
                 LatLng(45.492732, -73.576396),
                 LatLng(45.492593, -73.576533)
-            ).fillColor(concordiaRed)
+            ).fillColor(concordiaRed).strokeWidth(0.1f)
 
         val buildingFB = PolygonOptions()
             .add(
@@ -525,7 +525,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.494700, -73.577298),
                 LatLng(45.494656, -73.577218),
                 LatLng(45.494397, -73.577521)
-            ).fillColor(concordiaRed)
+            ).fillColor(concordiaRed).strokeWidth(0.1f)
         map.addPolygon(buildingEV)
         map.addPolygon(buildingGM)
         map.addPolygon(buildingH)
