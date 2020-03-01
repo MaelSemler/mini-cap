@@ -1,9 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="1dp"
+    android:paddingRight="1dp"
+    android:orientation="vertical">
+<fragment
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/map"
     android:name="com.google.android.gms.maps.SupportMapFragment"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentStart="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MapsActivity" />
+
+    <Button
+        android:id="@+id/button_SGW"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="@string/campus_Downtown"
+        android:textColor="#932339"
+        android:background="@drawable/circle"
+        android:visibility="visible"
+        android:layout_margin="10dp"
+        android:layout_gravity="bottom"
+        android:layout_centerInParent="true"
+        android:layout_alignParentRight="true" />
+        //Implements SGW button
+    <Button
+        android:id="@+id/button_LOY"
+        android:layout_margin="10dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="@string/campus_Loyola"
+        android:visibility="visible"
+        android:textColor="#932339"
+        android:background="@drawable/circle"
+        android:layout_below="@id/button_SGW"
+        android:layout_gravity="bottom"
+        android:layout_alignParentRight="true"
+        /> //Implements Loyola button
+
+</RelativeLayout>

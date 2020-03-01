@@ -1,5 +1,4 @@
 package com.soen390.conumap
-
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -8,7 +7,6 @@ import com.soen390.conumap.MapsActivity as MapsActivity
 class MapsActivityTest {
 
     private val activity = MapsActivity()
-
     @Test
     fun sum_isCorrect() {
         assertEquals(0, activity.sum(0, 0))
@@ -40,4 +38,5 @@ class MapsActivityTest {
         assertEquals(true, activity.canYouDrink(18))
         assertEquals(false, activity.canYouDrink(10))
     }
+
 }
