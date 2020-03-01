@@ -9,13 +9,10 @@ import androidx.test.uiautomator.UiSelector
 import org.junit.Before
 import org.junit.Test
 import org.junit.After
-import org.junit.FixMethodOrder
 import org.junit.runner.RunWith
-import org.junit.runners.MethodSorters
 
 import java.lang.Thread.sleep
 
-@FixMethodOrder(MethodSorters.DEFAULT)
 @RunWith(AndroidJUnit4::class)
 class LocateUserTest {
     var device = UiDevice.getInstance(getInstrumentation())
