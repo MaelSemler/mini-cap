@@ -45,7 +45,7 @@ class LocateUserTest {
         )
 
         // Press locate user button.
-        var locateUserButton: UiObject = device.findObject(UiSelector().description("My Location"))
+        val locateUserButton: UiObject = device.findObject(UiSelector().description("My Location"))
         locateUserButton.click()
     }
 }
