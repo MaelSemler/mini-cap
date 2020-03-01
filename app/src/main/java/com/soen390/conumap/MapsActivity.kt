@@ -4,6 +4,8 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
+import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.android.volley.Request
@@ -59,6 +61,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
+        val routeButton: Button = findViewById(R.id.route_button)
+        routeButton.setOnClickListener{ routeTest()}
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
@@ -78,15 +83,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap.setOnMarkerClickListener(this)
 
         setUpMap()
-        //TODO: Get Origin and Get Destination coordinates
-//        val originLatLng = getOrigin()
-//        val destinationLatLng = getDestination
+//        //TODO: Get Origin and Get Destination coordinates
+////        val originLatLng = getOrigin()
+////        val destinationLatLng = getDestination
+//        val originLatLng = LatLng(45.502516, -73.563929)//HardCoded for now
+//        val destinationLatLng = LatLng(45.497044, -73.578407)//HardCoded for now
+//        //TODO: Origin and Destination should have a title
+//            this.mMap!!.addMarker(MarkerOptions().position(originLatLng).title("This is the origin"))
+//            this.mMap!!.addMarker(MarkerOptions().position(destinationLatLng).title("This is the destination"))
+//            this.mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(originLatLng, 14.5f))
+//
+//        route(originLatLng, destinationLatLng)
+    }
+
+    fun routeTest(){
         val originLatLng = LatLng(45.502516, -73.563929)//HardCoded for now
         val destinationLatLng = LatLng(45.497044, -73.578407)//HardCoded for now
         //TODO: Origin and Destination should have a title
-            this.mMap!!.addMarker(MarkerOptions().position(originLatLng).title("This is the origin"))
-            this.mMap!!.addMarker(MarkerOptions().position(destinationLatLng).title("This is the destination"))
-            this.mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(originLatLng, 14.5f))
+        this.mMap!!.addMarker(MarkerOptions().position(originLatLng).title("This is the origin"))
+        this.mMap!!.addMarker(MarkerOptions().position(destinationLatLng).title("This is the destination"))
+        this.mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(originLatLng, 14.5f))
 
         route(originLatLng, destinationLatLng)
     }
