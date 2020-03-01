@@ -121,24 +121,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
         directionText.text= textConverted
     }
-//    private fun setUpMap(){
-//        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED)
-//        {
-//            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
-//            return
-//        }
-//
-//        map.isMyLocationEnabled = true
-//        fusedLocationClient.lastLocation.addOnSuccessListener(this) {
-//                location->
-//            if(location != null){
-//                lastLocation = location
-//                val currentLatLng = LatLng(location.latitude, location.longitude)
-//                map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng,12f))
-//            }
-//        }
-//    }
-
 
     private fun setUpMap() {
         if (ActivityCompat.checkSelfPermission(this,

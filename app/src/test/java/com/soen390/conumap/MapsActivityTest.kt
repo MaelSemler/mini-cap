@@ -39,4 +39,9 @@ class MapsActivityTest {
         assertEquals(false, activity.canYouDrink(10))
     }
 
+    @Test
+    fun originDestination_isCorrect(){
+        assert
+    }
+
 }
