@@ -1,17 +1,21 @@
 package com.soen390.conumap
+
 import org.junit.Test
 import org.hamcrest.CoreMatchers.instanceOf
 import org.junit.Assert.*
 import com.google.android.gms.maps.model.LatLng
 import org.json.JSONObject
+import org.mockito.Mock
 import java.io.File
 import kotlin.reflect.typeOf
 import com.soen390.conumap.MapsActivity as MapsActivity
+import org.junit.Before as Before
 
 
 class MapsActivityTest {
 
     private val activity = MapsActivity()
+
 
 
     @Test
@@ -33,16 +37,26 @@ class MapsActivityTest {
     }
 
     @Test
-    fun search_isCorrect(input:String){
-        assertNotNull(input)
+    fun checkInput(){
+        fun search_isNull(input:String):Boolean{
+            return (input==null)
+        }
+        val nullString=null
+        val emptyString=""
+        val aString="a"
+
+        assertTrue(search_isNull(nullString.toString()))
+        assertFalse(search_isNull(aString))
+        assertTrue(search_isNull(emptyString))
+
     }
 
-//    @Test
-//    fun
+    //Mock does not want to work
+    @Mock
+    val jsonResponse :String = File("/responseTest.json").toString()
 
     @Test
     fun extractDirections_isCorrect(){
-        val jsonResponse = File("/responseTest.json").toString()
 
         val jsonObj = JSONObject(jsonResponse)
         val routes = jsonObj.getJSONArray("routes")
