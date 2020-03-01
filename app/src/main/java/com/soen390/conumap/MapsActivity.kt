@@ -334,15 +334,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.458731, -73.640448)
             ).fillColor(concordiaRed)
 
-        mMap.addPolygon(buildingCJ)
-        mMap.addPolygon(buildingGE)
-        mMap.addPolygon(buildingCC)
-        mMap.addPolygon(buildingSP)
-        mMap.addPolygon(buildingRF)
-        mMap.addPolygon(buildingAD)
-        mMap.addPolygon(buildingFC)
-        mMap.addPolygon(buildingVL)
-        mMap.addPolygon(buildingPY)
+        map.addPolygon(buildingCJ)
+        map.addPolygon(buildingGE)
+        map.addPolygon(buildingCC)
+        map.addPolygon(buildingSP)
+        map.addPolygon(buildingRF)
+        map.addPolygon(buildingAD)
+        map.addPolygon(buildingFC)
+        map.addPolygon(buildingVL)
+        map.addPolygon(buildingPY)
 
         // Creates the buildings for SGW campus
         val buildingEV = PolygonOptions()
@@ -526,14 +526,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.494656, -73.577218),
                 LatLng(45.494397, -73.577521)
             ).fillColor(concordiaRed)
-        mMap.addPolygon(buildingEV)
-        mMap.addPolygon(buildingGM)
-        mMap.addPolygon(buildingH)
-        mMap.addPolygon(buildingFG)
-        mMap.addPolygon(buildingMB)
-        mMap.addPolygon(buildingLB)
-        mMap.addPolygon(buildingGN)
-        mMap.addPolygon(buildingFB)
+        map.addPolygon(buildingEV)
+        map.addPolygon(buildingGM)
+        map.addPolygon(buildingH)
+        map.addPolygon(buildingFG)
+        map.addPolygon(buildingMB)
+        map.addPolygon(buildingLB)
+        map.addPolygon(buildingGN)
+        map.addPolygon(buildingFB)
 
     }
 
