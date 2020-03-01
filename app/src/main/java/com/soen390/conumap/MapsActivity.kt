@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.PolyUtil
+import org.json.JSONArray
 import org.json.JSONObject
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -87,14 +88,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 //        //TODO: Get Origin and Get Destination coordinates
 ////        val originLatLng = getOrigin()
 ////        val destinationLatLng = getDestination
-//        val originLatLng = LatLng(45.502516, -73.563929)//HardCoded for now
-//        val destinationLatLng = LatLng(45.497044, -73.578407)//HardCoded for now
-//        //TODO: Origin and Destination should have a title
-//            this.mMap!!.addMarker(MarkerOptions().position(originLatLng).title("This is the origin"))
-//            this.mMap!!.addMarker(MarkerOptions().position(destinationLatLng).title("This is the destination"))
-//            this.mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(originLatLng, 14.5f))
-//
-//        route(originLatLng, destinationLatLng)
+
     }
 
     fun routeTest(){
@@ -119,13 +113,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             val routes = jsonResponse.getJSONArray("routes")
             val legs = routes.getJSONObject(0).getJSONArray("legs")
             val steps = legs.getJSONObject(0).getJSONArray("steps")
-            val directionText : TextView = findViewById(R.id.Directions)
+
             //TODO: Create function to clean up the directions
-            var textConverted=""
-            for (i in 0 until steps.length()-1){
-                textConverted+=steps.getJSONObject(i).getString("html_instructions")
-                directionText.text= textConverted
-            }
+            extractDirections(steps)
 
             for (i in 0 until steps.length()) {
                 val points = steps.getJSONObject(i).getJSONObject("polyline").getString("points")
@@ -141,6 +131,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         requestQueue.add(directionsRequest)
     }
 
+    private fun extractDirections(steps: JSONArray) {
+        val directionText : TextView = findViewById(R.id.Directions)
+        var textConverted="Direction:" + '\n'
+        for (i in 0 until steps.length()-1){
+            textConverted+= (i+1).toString() +". " +  steps.getJSONObject(i).getString("html_instructions") + '\n'
+        }
+        directionText.text= textConverted
+    }
 
 
     // For sample unit tests, remove for sprint 2.
