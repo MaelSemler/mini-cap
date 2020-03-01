@@ -329,15 +329,4 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     override fun onInfoWindowClick(mkr: Marker) {
         mkr.hideInfoWindow()
     }
-
-    // For sample unit tests, remove for sprint 2.
-    fun sum(a: Int, b: Int) = a + b
-
-    fun square(num: Double) = num * num
-
-    fun reverse(word: String) = word.reversed()
-
-    fun canYouDrink(age: Int): Boolean {
-        return age >= 18
-    }
 }
