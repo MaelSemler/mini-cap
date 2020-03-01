@@ -69,6 +69,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         map.uiSettings.isZoomControlsEnabled = true
         map.setOnMarkerClickListener(this)
 
+        addShapesToMap()
         setUpMap()
         changeBetweenCampuses(map)
     }
@@ -93,6 +94,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
             }
         }
+    }
+
+    private fun addShapesToMap(){
         val concordiaRed = Color.rgb(147,35,57)
         // Creates the shapes for Loyola Buildings
         val buildingCJ = PolygonOptions()
@@ -539,7 +543,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         map.addPolygon(buildingLB)
         map.addPolygon(buildingGN)
         map.addPolygon(buildingFB)
-
     }
 
     fun changeBetweenCampuses (googleMap:GoogleMap){
@@ -556,13 +559,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                     position(downTown).
                 title("SGW").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
             map.moveCamera(CameraUpdateFactory.newLatLng(downTown))
-
+            addShapesToMap()
         }
         buttonLOY?.setOnClickListener()
         {
             map.clear()
             map.addMarker(MarkerOptions().position(loyola).title("LOY").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
             map.moveCamera(CameraUpdateFactory.newLatLng(loyola))
+            addShapesToMap()
         }
     }
     // For sample unit tests, remove for sprint 2.
