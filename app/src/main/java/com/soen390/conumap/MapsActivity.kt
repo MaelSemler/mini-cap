@@ -1,6 +1,9 @@
 package com.soen390.conumap
 
 import android.content.pm.PackageManager
+import com.google.android.gms.maps.model.*
+
+<<<<<<< HEAD
 import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
@@ -13,16 +16,21 @@ import com.android.volley.Request
 import com.android.volley.*
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+=======
+import android.content.res.Resources
+import android.location.Location
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Log
+import androidx.core.app.ActivityCompat
+>>>>>>> 7b086fc2c54b5965a49183de97afe231c8975d03
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolylineOptions
+<<<<<<< HEAD
 import com.google.maps.android.PolyUtil
 import org.json.JSONArray
 import org.json.JSONObject
@@ -54,6 +62,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             }
         }
     }
+=======
+import android.widget.Button
+import com.google.android.gms.maps.model.*
+
+
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+    override fun onMarkerClick(p0: Marker?) = false
+    private lateinit var map: GoogleMap
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var lastLocation: Location
+>>>>>>> 7b086fc2c54b5965a49183de97afe231c8975d03
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,12 +82,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
+<<<<<<< HEAD
         val routeButton: Button = findViewById(R.id.route_button)
         routeButton.setOnClickListener{ routeTest()}
 
+=======
+>>>>>>> 7b086fc2c54b5965a49183de97afe231c8975d03
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+    }
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -79,8 +104,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
      * installed Google Play services and returned to the app.
      */
     override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
+        map = googleMap
+        
+        // Customise the styling of the map using a JSON object defined in the raw resource file
+        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle ))
+        map.uiSettings.isZoomControlsEnabled = true
+        map.setOnMarkerClickListener(this)
 
+<<<<<<< HEAD
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.setOnMarkerClickListener(this)
 
@@ -141,6 +172,58 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     }
 
 
+=======
+        setUpMap()
+        changeBetweenCampuses(map)
+    }
+
+    private fun setUpMap() {
+        if (ActivityCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+            return
+        }
+
+        // 1
+        map.isMyLocationEnabled = true
+
+        // 2
+        fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
+            // Got last known location. In some rare situations this can be null.
+            // 3
+            if (location != null) {
+                lastLocation = location
+                val currentLatLng = LatLng(location.latitude, location.longitude)
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
+            }
+        }
+    }
+
+    fun changeBetweenCampuses (googleMap:GoogleMap){
+        //When either button is clicked, map moves to respective location.
+        map = googleMap
+        val buttonSGW = findViewById<Button>(R.id.button_SGW)
+        val buttonLOY= findViewById<Button>(R.id.button_LOY)
+        val loyola=LatLng(45.458275,-73.640469)
+        val downTown=LatLng(45.4975,-73.579004)
+        buttonSGW?.setOnClickListener()
+        {
+            map.clear()
+            map.addMarker(MarkerOptions().
+                    position(downTown).
+                title("SGW").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
+            map.moveCamera(CameraUpdateFactory.newLatLng(downTown))
+
+        }
+        buttonLOY?.setOnClickListener()
+        {
+            map.clear()
+            map.addMarker(MarkerOptions().position(loyola).title("LOY").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
+            map.moveCamera(CameraUpdateFactory.newLatLng(loyola))
+        }
+    }
+>>>>>>> 7b086fc2c54b5965a49183de97afe231c8975d03
     // For sample unit tests, remove for sprint 2.
     fun sum(a: Int, b: Int) = a + b
 

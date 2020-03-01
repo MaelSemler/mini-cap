@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">ConUMap</string>
     <string name="title_activity_maps">Map</string>
+<<<<<<< HEAD
     <string name="directions">DIRECTIONS:</string>
+=======
+    <string name="campus_Downtown">SGW</string>
+    <string name="campus_Loyola">LOY</string>
+>>>>>>> 7b086fc2c54b5965a49183de97afe231c8975d03
 </resources>
