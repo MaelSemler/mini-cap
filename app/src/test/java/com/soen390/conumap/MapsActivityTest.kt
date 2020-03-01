@@ -1,5 +1,4 @@
 package com.soen390.conumap
-
 import org.junit.Test
 
 import org.junit.Assert.*

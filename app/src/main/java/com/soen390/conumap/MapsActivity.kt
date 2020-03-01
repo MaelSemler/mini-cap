@@ -1,9 +1,11 @@
 package com.soen390.conumap
 
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.location.Location
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -11,13 +13,11 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import android.widget.Button
+import com.google.android.gms.maps.model.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
     GoogleMap.OnInfoWindowClickListener {
-
     // For locating user.
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -116,12 +116,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-
+        
+        // Customise the styling of the map using a JSON object defined in the raw resource file
+        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle ))
         map.uiSettings.isZoomControlsEnabled = true
         map.setOnInfoWindowClickListener(this)
 
         addMarkersToMap()
         setUpMap()
+        changeBetweenCampuses(map)
     }
 
     private fun addMarkersToMap() {
@@ -319,6 +322,32 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 val currentLatLng = LatLng(location.latitude, location.longitude)
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
             }
+        }
+    }
+
+    private fun changeBetweenCampuses (googleMap:GoogleMap) {
+        //When either button is clicked, map moves to respective location.
+        map = googleMap
+        val buttonSGW = findViewById<Button>(R.id.button_SGW)
+        val buttonLOY= findViewById<Button>(R.id.button_LOY)
+        val loyola=LatLng(45.458275,-73.640469)
+        val downTown=LatLng(45.4975,-73.579004)
+        buttonSGW?.setOnClickListener()
+        {
+            map.clear()
+            map.addMarker(MarkerOptions().
+                    position(downTown).
+                title("SGW").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
+            addMarkersToMap()
+            map.moveCamera(CameraUpdateFactory.newLatLng(downTown))
+
+        }
+        buttonLOY?.setOnClickListener()
+        {
+            map.clear()
+            map.addMarker(MarkerOptions().position(loyola).title("LOY").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
+            addMarkersToMap()
+            map.moveCamera(CameraUpdateFactory.newLatLng(loyola))
         }
     }
 
