@@ -1,19 +1,22 @@
 package com.soen390.conumap
 
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.graphics.Color
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolygonOptions
@@ -26,11 +29,12 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.StringReader
 
+import android.widget.Button
+import com.google.android.gms.maps.model.*
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     override fun onMarkerClick(p0: Marker?) = false
-
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
@@ -49,7 +53,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
     }
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -61,11 +64,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
      */
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-
+        
+        // Customise the styling of the map using a JSON object defined in the raw resource file
+        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle ))
         map.uiSettings.isZoomControlsEnabled = true
         map.setOnMarkerClickListener(this)
 
         setUpMap()
+        changeBetweenCampuses(map)
     }
 
     private fun setUpMap() {
@@ -537,7 +543,29 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     }
 
+    fun changeBetweenCampuses (googleMap:GoogleMap){
+        //When either button is clicked, map moves to respective location.
+        map = googleMap
+        val buttonSGW = findViewById<Button>(R.id.button_SGW)
+        val buttonLOY= findViewById<Button>(R.id.button_LOY)
+        val loyola=LatLng(45.458275,-73.640469)
+        val downTown=LatLng(45.4975,-73.579004)
+        buttonSGW?.setOnClickListener()
+        {
+            map.clear()
+            map.addMarker(MarkerOptions().
+                    position(downTown).
+                title("SGW").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
+            map.moveCamera(CameraUpdateFactory.newLatLng(downTown))
 
+        }
+        buttonLOY?.setOnClickListener()
+        {
+            map.clear()
+            map.addMarker(MarkerOptions().position(loyola).title("LOY").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
+            map.moveCamera(CameraUpdateFactory.newLatLng(loyola))
+        }
+    }
     // For sample unit tests, remove for sprint 2.
     fun sum(a: Int, b: Int) = a + b
 
