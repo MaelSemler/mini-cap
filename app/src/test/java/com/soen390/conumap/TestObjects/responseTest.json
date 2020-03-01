@@ -1,0 +1,181 @@
+{
+   "geocoded_waypoints" : [
+      {
+         "geocoder_status" : "OK",
+         "place_id" : "ChIJndMIH1sayUwROv2hl0YW1eg",
+         "types" : [ "street_address" ]
+      },
+      {
+         "geocoder_status" : "OK",
+         "place_id" : "ChIJ1WMdWM4byUwRHBdshiHAsRw",
+         "types" : [ "establishment", "point_of_interest", "school" ]
+      }
+   ],
+   "routes" : [
+      {
+         "bounds" : {
+            "northeast" : {
+               "lat" : 45.5030704,
+               "lng" : -73.56395619999999
+            },
+            "southwest" : {
+               "lat" : 45.4952882,
+               "lng" : -73.5784328
+            }
+         },
+         "copyrights" : "Map data ©2020 Google",
+         "legs" : [
+            {
+               "distance" : {
+                  "text" : "1.7 km",
+                  "value" : 1742
+               },
+               "duration" : {
+                  "text" : "8 mins",
+                  "value" : 468
+               },
+               "end_address" : "1400 Boulevard de Maisonneuve O, Montréal, QC H3G 2V8, Canada",
+               "end_location" : {
+                  "lat" : 45.4970552,
+                  "lng" : -73.5784328
+               },
+               "start_address" : "490 Rue de la Gauchetière O, Montréal, QC H2Z 0B3, Canada",
+               "start_location" : {
+                  "lat" : 45.5025258,
+                  "lng" : -73.56395619999999
+               },
+               "steps" : [
+                  {
+                     "distance" : {
+                        "text" : "38 m",
+                        "value" : 38
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 12
+                     },
+                     "end_location" : {
+                        "lat" : 45.5022247,
+                        "lng" : -73.5641778
+                     },
+                     "html_instructions" : "Head \u003cb\u003esouthwest\u003c/b\u003e on \u003cb\u003eRue de la Gauchetière O\u003c/b\u003e toward \u003cb\u003eCôte du Beaver Hall\u003c/b\u003e",
+                     "polyline" : {
+                        "points" : "yevtGv}~_M|@j@"
+                     },
+                     "start_location" : {
+                        "lat" : 45.5025258,
+                        "lng" : -73.56395619999999
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.2 km",
+                        "value" : 191
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 65
+                     },
+                     "end_location" : {
+                        "lat" : 45.5030277,
+                        "lng" : -73.5663158
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e at the 1st cross street onto \u003cb\u003eCôte du Beaver Hall\u003c/b\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "{cvtGb__`MCd@EV?@EPENUt@m@fB{@dCEPER"
+                     },
+                     "start_location" : {
+                        "lat" : 45.5022247,
+                        "lng" : -73.5641778
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "1.0 km",
+                        "value" : 1048
+                     },
+                     "duration" : {
+                        "text" : "4 mins",
+                        "value" : 225
+                     },
+                     "end_location" : {
+                        "lat" : 45.4952882,
+                        "lng" : -73.5737153
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eleft\u003c/b\u003e onto \u003cb\u003eBoulevard René-Lévesque O S\u003c/b\u003e",
+                     "maneuver" : "turn-left",
+                     "polyline" : {
+                        "points" : "}hvtGnl_`MGd@`B~@RPt@p@f@d@TRb@^|BrBfA`Ad@b@pAlA~AxAj@f@v@t@bA`ANL~BxBjCfCvCjClCjCXVbB`B"
+                     },
+                     "start_location" : {
+                        "lat" : 45.5030277,
+                        "lng" : -73.5663158
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.4 km",
+                        "value" : 417
+                     },
+                     "duration" : {
+                        "text" : "2 mins",
+                        "value" : 140
+                     },
+                     "end_location" : {
+                        "lat" : 45.4974225,
+                        "lng" : -73.57810839999999
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e onto \u003cb\u003eRue Bishop\u003c/b\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "qxttGvz``Ms@`BO`@oAhDs@nBw@nBaA~BgB~E"
+                     },
+                     "start_location" : {
+                        "lat" : 45.4952882,
+                        "lng" : -73.5737153
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "48 m",
+                        "value" : 48
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 26
+                     },
+                     "end_location" : {
+                        "lat" : 45.4970552,
+                        "lng" : -73.5784328
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eleft\u003c/b\u003e onto \u003cb\u003eBoulevard de Maisonneuve O\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003eDestination will be on the left\u003c/div\u003e",
+                     "maneuver" : "turn-left",
+                     "polyline" : {
+                        "points" : "{eutGdva`MfA~@"
+                     },
+                     "start_location" : {
+                        "lat" : 45.4974225,
+                        "lng" : -73.57810839999999
+                     },
+                     "travel_mode" : "DRIVING"
+                  }
+               ],
+               "traffic_speed_entry" : [],
+               "via_waypoint" : []
+            }
+         ],
+         "overview_polyline" : {
+            "points" : "yevtGv}~_M|@j@Cd@EXK`@cA|CaAvCMx@tBpA|AvA~FhFbGrFjG~FbHrGfDbDbB`Bs@`B_BjEkB~EiD~IfA~@"
+         },
+         "summary" : "Boulevard René-Lévesque O S",
+         "warnings" : [],
+         "waypoint_order" : []
+      }
+   ],
+   "status" : "OK"
+}

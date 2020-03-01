@@ -1,47 +1,47 @@
 package com.soen390.conumap
 import org.junit.Test
-
+import org.hamcrest.CoreMatchers.instanceOf
 import org.junit.Assert.*
+import com.google.android.gms.maps.model.LatLng
+import org.json.JSONObject
+import java.io.File
+import kotlin.reflect.typeOf
 import com.soen390.conumap.MapsActivity as MapsActivity
+
 
 class MapsActivityTest {
 
     private val activity = MapsActivity()
-    @Test
-    fun sum_isCorrect() {
-        assertEquals(0, activity.sum(0, 0))
-        assertEquals(0, activity.sum(-5, 5))
-        assertEquals(100, activity.sum(25, 75))
-        assertEquals(-50, activity.sum(10, -60))
-    }
 
-    @Test
-    fun square_isCorrect() {
-        assertEquals(9.0, activity.square(3.0), 0.0)
-        assertEquals(9.0, activity.square(-3.0), 0.0)
-        assertEquals(0.0, activity.square(0.0), 0.0)
-        assertEquals(17.64, activity.square(4.2), 0.0)
-    }
-
-    @Test
-    fun reverse_isCorrect() {
-        assertEquals("Android", activity.reverse("diordnA"))
-        assertEquals("zyxwvutsrqponmlkjihgfedcba",
-            activity.reverse("abcdefghijklmnopqrstuvwxyz"))
-        assertEquals("4321", activity.reverse("1234"))
-        assertEquals("", activity.reverse(""))
-    }
-
-    @Test
-    fun canYouDrink_isCorrect() {
-        assertEquals(true, activity.canYouDrink(20))
-        assertEquals(true, activity.canYouDrink(18))
-        assertEquals(false, activity.canYouDrink(10))
-    }
 
     @Test
     fun originDestination_isCorrect(){
-        assert
+        val currentLoc = LatLng(45.502516, -73.563929)
+        val incorrectLoc = LatLng(45.6, -73.59)
+
+        fun location_isCorrect(locLatLng: LatLng): Boolean {
+            val realLocLatLng = LatLng(45.502516, -73.563929)
+
+            return (locLatLng.latitude == realLocLatLng.latitude && locLatLng.longitude ==realLocLatLng.longitude)
+        }
+
+        assertTrue(location_isCorrect(currentLoc))
+        assertFalse(location_isCorrect(incorrectLoc))
+
     }
 
+
+    @Test
+    fun extractDirections_isCorrect(){
+        val jsonResponse = File("/responseTest.json").toString()
+        val jsonObj = JSONObject(jsonResponse)
+        val routes = jsonObj.getJSONArray("routes")
+        val legs = routes.getJSONObject(0).getJSONArray("legs")
+        val steps = legs.getJSONObject(0).getJSONArray("steps")
+
+        assertEquals("Direction: '\n' 1. " +
+                "2. Turn <b>left</b> onto <b>Boulevard René-Lévesque O S</b>'\n'" +
+                "3. Turn <b>right</b> onto <b>Rue Bishop</b>'\n'" +
+                "4. Turn <b>left</b> onto <b>Boulevard de Maisonneuve O</b><div style=\\\"font-size:0.9em\\\">Destination will be on the left</div>", activity.extractDirections(steps))
+    }
 }

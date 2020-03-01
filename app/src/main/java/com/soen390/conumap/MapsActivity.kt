@@ -113,10 +113,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         requestQueue.add(directionsRequest)
     }
 
-    private fun extractDirections(steps: JSONArray) {
+    fun extractDirections(steps: JSONArray) {
         val directionText : TextView = findViewById(R.id.Directions)
         var textConverted="Direction:" + '\n'
-        for (i in 0 until steps.length()-1){
+        for (i in 0 until steps.length()){
             textConverted+= (i+1).toString() +". " +  steps.getJSONObject(i).getString("html_instructions") + '\n'
         }
         directionText.text= textConverted
