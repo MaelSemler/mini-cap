@@ -22,6 +22,8 @@ class MapsActivityTest {
         fun location_isCorrect(locLatLng: LatLng): Boolean {
             val realLocLatLng = LatLng(45.502516, -73.563929)
 
+            assertNotNull(locLatLng)
+
             return (locLatLng.latitude == realLocLatLng.latitude && locLatLng.longitude ==realLocLatLng.longitude)
         }
 
@@ -30,10 +32,18 @@ class MapsActivityTest {
 
     }
 
+    @Test
+    fun search_isCorrect(input:String){
+        assertNotNull(input)
+    }
+
+//    @Test
+//    fun
 
     @Test
     fun extractDirections_isCorrect(){
         val jsonResponse = File("/responseTest.json").toString()
+
         val jsonObj = JSONObject(jsonResponse)
         val routes = jsonObj.getJSONArray("routes")
         val legs = routes.getJSONObject(0).getJSONArray("legs")
@@ -43,5 +53,6 @@ class MapsActivityTest {
                 "2. Turn <b>left</b> onto <b>Boulevard René-Lévesque O S</b>'\n'" +
                 "3. Turn <b>right</b> onto <b>Rue Bishop</b>'\n'" +
                 "4. Turn <b>left</b> onto <b>Boulevard de Maisonneuve O</b><div style=\\\"font-size:0.9em\\\">Destination will be on the left</div>", activity.extractDirections(steps))
+
     }
 }
