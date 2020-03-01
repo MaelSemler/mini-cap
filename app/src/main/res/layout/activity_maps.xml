@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="1dp"
     android:paddingRight="1dp"
     android:orientation="vertical">
+
     <Button
         android:id="@+id/route_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Route"
-        android:layout_gravity="right"/>
+        android:layout_alignParentRight="true"
+        android:text="Route" />
+
     <fragment
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
         android:layout_width="match_parent"
-        android:layout_height="393dp"
+        android:layout_height="353dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="63dp"
         tools:context=".MapsActivity" />
 
     <TextView
         android:id="@+id/Directions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
         android:text="@string/directions"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/button_SGW"

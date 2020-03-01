@@ -20,10 +20,6 @@
     Once you have your key (it starts with "AIza"), replace the "google_maps_key"
     string in this file.
     -->
-<<<<<<< HEAD
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">@string/apiKey</string>
     <string name="DirectionAPI"><![CDATA[https://maps.googleapis.com/maps/api/directions/json?]]></string>
-=======
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false"> </string>
->>>>>>> 7b086fc2c54b5965a49183de97afe231c8975d03
 </resources>
