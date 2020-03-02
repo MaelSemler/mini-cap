@@ -21,7 +21,7 @@ class BuildingInformationTest {
 
     // SYSTEM TEST ST1-4.
     @Test
-    fun moveCampusesTest() {
+    fun showBuildingInformationTest() {
         // Open app.
         device.pressRecentApps()
 
