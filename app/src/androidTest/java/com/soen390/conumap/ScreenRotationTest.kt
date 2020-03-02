@@ -21,7 +21,7 @@ class ScreenRotationTest {
 
     // SYSTEM TEST ST1-7.
     @Test
-    fun displayUIInBothOrientations() {
+    fun displayUIInBothOrientationsTest() {
         // Open app.
         device.pressRecentApps()
 
