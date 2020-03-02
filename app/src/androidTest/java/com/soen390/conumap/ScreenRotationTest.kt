@@ -37,10 +37,35 @@ class ScreenRotationTest {
 
         device.setOrientationLeft()
         sleep(1000)
+        pressButtons()
         device.setOrientationNatural()
         sleep(1000)
+        pressButtons()
         device.setOrientationRight()
         sleep(1000)
+        pressButtons()
         device.setOrientationNatural()
+    }
+
+    // Presses all present UI buttons to make sure they work in both orientations.
+    fun pressButtons() {
+        // Press SGW button.
+        val sgwButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/button_SGW"))
+        sgwButton.click()
+
+        // Press LOY button.
+        val loyButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/button_LOY"))
+        loyButton.click()
+
+        // Press Zoom In button.
+        val zoomInButton: UiObject = device.findObject(UiSelector().description("Zoom in"))
+        zoomInButton.click()
+
+        // Press Zoom Out button.
+        val zoomOutButton: UiObject = device.findObject(UiSelector().description("Zoom out"))
+        zoomOutButton.click()
+
+        val locateUserButton: UiObject = device.findObject(UiSelector().description("My Location"))
+        locateUserButton.click()
     }
 }
