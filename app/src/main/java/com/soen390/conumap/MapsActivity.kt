@@ -790,29 +790,29 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     }
 
 
-    private fun changeBetweenCampuses (googleMap:GoogleMap) {
+    private fun changeBetweenCampuses (googleMap:GoogleMap) {   //Button to toggle between campuses
         //When either button is clicked, map moves to respective location.
         map = googleMap
         val buttonSGW = findViewById<Button>(R.id.button_SGW)
         val buttonLOY= findViewById<Button>(R.id.button_LOY)
         val loyola=LatLng(45.458275,-73.640469)
         val downTown=LatLng(45.4975,-73.579004)
-        buttonSGW?.setOnClickListener()
+        buttonSGW?.setOnClickListener()   //function for when SGW button is clicked
         {
             map.clear()
             map.addMarker(MarkerOptions().
                     position(downTown).
                 title("SGW").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
             addMarkersToMap()
-            map.moveCamera(CameraUpdateFactory.newLatLng(downTown))
+            map.animateCamera(CameraUpdateFactory.newLatLng(downTown)) //changed from move camera
             addShapesToMap()
         }
-        buttonLOY?.setOnClickListener()
+        buttonLOY?.setOnClickListener()     //function for when Loyola button is clicked
         {
             map.clear()
             map.addMarker(MarkerOptions().position(loyola).title("LOY").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
             addMarkersToMap()
-            map.moveCamera(CameraUpdateFactory.newLatLng(loyola))
+            map.animateCamera(CameraUpdateFactory.newLatLng(loyola)) ///changed from move camera
             addShapesToMap()
         }
     }
