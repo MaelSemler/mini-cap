@@ -1,12 +1,10 @@
 package com.soen390.conumap
 
 import android.content.pm.PackageManager
-import android.content.res.Resources
 import android.location.Location
 import android.os.Bundle
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -16,13 +14,6 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolygonOptions
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import org.json.JSONArray
-import org.json.JSONObject
-import java.io.StringReader
 
 import android.widget.Button
 import com.google.android.gms.maps.*
@@ -122,26 +113,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
-    companion object {
-        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
-    }
-
     override fun onMapReady(googleMap: GoogleMap) {
-        var options: GoogleMapOptions
         map = googleMap
+        if(map != null){
+            // Customise the styling of the map using a JSON object defined in the raw resource file
+            map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle ))
+            map.uiSettings.isMyLocationButtonEnabled = false
+            map.setOnInfoWindowClickListener(this)
 
-        
-        // Customise the styling of the map using a JSON object defined in the raw resource file
-        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle ))
-        map.uiSettings.isMyLocationButtonEnabled = false
-        map.setOnInfoWindowClickListener(this)
-
-        addShapesToMap()
-        addMarkersToMap()
-        setUpMap()
-        currentLocationButton()
-        changeBetweenCampuses(map)
-
+            addShapesToMap()
+            addMarkersToMap()
+            setUpMap()
+            currentLocationButton()
+            changeBetweenCampuses(map)
+        }
     }
 
     private fun addMarkersToMap() {
@@ -320,7 +305,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         if (ActivityCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), R.integer.LOCATION_PERMISSION_REQUEST_CODE)
             return
         }
 
