@@ -35,10 +35,6 @@ class BuildingInformationTest {
         // Give time for app to load.
         sleep(5000)
 
-        // Zoom into map.
-        val zoomInButton: UiObject = device.findObject(UiSelector().description("Zoom in"))
-        for (i in 0..3) zoomInButton.click()
-
         // Open building info of each SGW building.
         val sgwButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/button_SGW"))
         sgwButton.click()
@@ -48,6 +44,15 @@ class BuildingInformationTest {
         val sgwLBMarker: UiObject = device.findObject(UiSelector().description("J.W. McConnel Building. SGW Campus\n" +
                 "1400 De Maisonneuve Blvd. W.."))
         sgwLBMarker.click()
+
+        device.drag(
+            (width * 0.25).toInt(),
+            height / 2,
+            (width * 0.75).toInt(),
+            height / 2,
+            100
+        )
+
         val sgwLSMarker: UiObject = device.findObject(UiSelector().description("Learning Square. SGW Campus\n" +
                 "1535 De Maisonneuve Blvd. W.."))
         sgwLSMarker.click()
@@ -72,6 +77,23 @@ class BuildingInformationTest {
         val sgwGNMarker: UiObject = device.findObject(UiSelector().description("Grey Nuns Building. SGW Campus\n" +
                 "1190 Guy."))
         sgwGNMarker.click()
+
+
+    }
+
+   /* @Test
+    fun showBuildingInformationTestLOY() {
+        // Open app.
+        device.pressRecentApps()
+
+        sleep(1000)
+
+        device.click(
+            width / 2,
+            height / 2
+        )
+        // Give time for app to load.
+        sleep(5000)
 
         // Open building info of each LOY building.
         val loyButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/button_LOY"))
@@ -118,5 +140,5 @@ class BuildingInformationTest {
         val loyGEMarker: UiObject = device.findObject(UiSelector().description("Centre for Structural and Functional Genomics. Loyola Campus\n" +
                 "7141 Sherbrooke W.."))
         loyGEMarker.click()
-    }
+    }*/
 }

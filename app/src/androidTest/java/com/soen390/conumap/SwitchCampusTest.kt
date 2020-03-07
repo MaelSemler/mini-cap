@@ -35,12 +35,6 @@ class SwitchCampusTest {
         // Give time for app to load.
         sleep(5000)
 
-        // Zoom into map.
-        val zoomInButton: UiObject = device.findObject(UiSelector().description("Zoom in"))
-        zoomInButton.click()
-        zoomInButton.click()
-        zoomInButton.click()
-
         // Press SGW button.
         val sgwButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/button_SGW"))
         sgwButton.click()
