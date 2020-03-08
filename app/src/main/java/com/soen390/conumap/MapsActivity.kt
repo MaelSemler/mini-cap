@@ -32,7 +32,7 @@ import android.widget.Button
 import com.google.android.gms.maps.model.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
-    GoogleMap.OnInfoWindowClickListener, GoogleMap.OnPolygonClickListener {
+    GoogleMap.OnInfoWindowClickListener {
     // For locating user.
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -93,8 +93,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
     }
 
-
-
     // Adds Building objects for all campus buildings.
     private fun createBuildings() {
         // SGW Buildings.
@@ -104,13 +102,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             LatLng(45.497304, -73.578923),
             map
         )
-        sgwH.touchTarget.points = (listOf(
-            LatLng(45.497697, -73.579031),
-            LatLng(45.497171, -73.579529),
-            LatLng(45.496857, -73.578861),
-            LatLng(45.497371, -73.578369),
-            LatLng(45.497697, -73.579031)
-        ))
 
         val sgwGM = Building(
             resources.getString(R.string.sgwGMName),
@@ -743,9 +734,5 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     // Close info window when it is tapped.
     override fun onInfoWindowClick(mkr: Marker) {
         mkr.hideInfoWindow()
-    }
-
-    override fun onPolygonClick(plg: Polygon) {
-        
     }
 }
