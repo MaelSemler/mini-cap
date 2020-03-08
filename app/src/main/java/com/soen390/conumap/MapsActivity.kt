@@ -33,6 +33,7 @@ import com.google.android.gms.maps.model.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
     GoogleMap.OnInfoWindowClickListener {
+
     // For locating user.
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -340,7 +341,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             }
         }
     }
-    private fun addShapesToMap(){
+
+    private fun addShapesToMap() {
         val concordiaRed = Color.rgb(147,35,57)
         // Creates the shapes for Loyola Buildings
         val buildingCJ = PolygonOptions()
