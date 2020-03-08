@@ -33,11 +33,19 @@ import com.google.android.gms.maps.model.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
     GoogleMap.OnInfoWindowClickListener {
-
     // For locating user.
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
+
+    fun createBuildings() {
+        val sgwH = Building(
+            resources.getString(R.string.sgwHName),
+            resources.getString(R.string.sgwHInfo),
+            LatLng(45.497390, -73.578859),
+            map
+        )
+    }
 
     // Locations of campus buildings and info.
     // SGW buildings.
@@ -139,20 +147,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         map.setOnInfoWindowClickListener(this)
 
         addShapesToMap()
-        addMarkersToMap()
+        // addMarkersToMap()
+        createBuildings()
         setUpMap()
         changeBetweenCampuses(map)
     }
 
     private fun addMarkersToMap() {
         // SGW buildings.
-        map.addMarker(MarkerOptions()
-            .position(sgwHLocation)
-            .alpha(0.0F)
-            .title(sgwHName)
-            .snippet(sgwHInfo)
-        )
-
         map.addMarker(MarkerOptions()
             .position(sgwGMLocation)
             .alpha(0.0F)
