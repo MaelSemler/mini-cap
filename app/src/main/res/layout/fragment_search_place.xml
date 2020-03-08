@@ -12,7 +12,7 @@
         android:layout_marginTop="550dp"
         android:layout_marginRight="50dp"
         android:background="@drawable/blue_empty_rounded_square"
-        android:drawableLeft="@drawable/current_dot1"
+        android:drawableLeft="@drawable/search"
         android:drawablePadding="10dp"
         android:elevation="1dp"
         android:importantForAutofill="no"
