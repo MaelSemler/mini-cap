@@ -23,11 +23,11 @@
         <item>45.457598</item>
         <item>-73.640503</item>
         <item>45.457651</item>
-        <item>-73.640632)</item>
+        <item>-73.640632</item>
         <item>45.457830</item>
         <item>-73.640484</item>
         <item>45.457755</item>
-        <item>-73.640292)</item>
+        <item>-73.640292</item>
         <item>45.457726</item>
         <item>-73.640315</item>
         <item>45.457622</item>
@@ -43,7 +43,7 @@
         <item>45.457464</item>
         <item>-73.639955</item>
         <item>45.457480</item>
-        <item>-73.639823)</item>
+        <item>-73.639823</item>
         <item>45.457429</item>
         <item>-73.639771</item>
         <item>45.457400</item>
@@ -180,253 +180,253 @@
     </string-array>
 
     <string-array name="buildingRFPoints">
-        <item>45.458439<item>
-        </item>-73.640752</item>
-        <item>45.458465<item>
-        </item>-73.640813</item>
-        <item>45.458418<item>
-        </item>-73.640855</item>
-        <item>45.458472<item>
-        </item>-73.641009</item>
-        <item>45.458383<item>
-        </item>-73.641079</item>
-        <item>45.458434<item>
-        </item>-73.641204</item>
-        <item>45.458514<item>
-        </item>-73.641143</item>
-        <item>45.458546<item>
-        </item>-73.641230</item>
-        <item>45.458528<item>
-        </item>-73.641247</item>
-        <item>45.458540<item>
-        </item>-73.641277</item>
-        <item>45.458489<item>
-        </item>-73.641317</item>
-        <item>45.458512<item>
-        </item>-73.641377</item>
-        <item>45.458642<item>
-        </item>-73.641270</item>
-        <item>45.458648<item>
-        </item>-73.641283</item>
-        <item>45.458823<item>
-        </item>-73.641152</item>
-        <item>45.458783<item>
-        </item>-73.641031</item>
-        <item>45.458767<item>
-        </item>-73.641050</item>
-        <item>45.458684<item>
-        </item>-73.640808</item>
-        <item>45.458592<item>
-        </item>-73.640880</item>
-        <item>45.458544<item>
-        </item>-73.640753</item>
-        <item>45.458519<item>
-        </item>-73.640774</item>
-        <item>45.458492<item>
-        </item>-73.640710</item>
-        <item>45.458439<item>
-        </item>-73.640752</item>
+        <item>45.458439</item>
+        <item>-73.640752</item>
+        <item>45.458465</item>
+        <item>-73.640813</item>
+        <item>45.458418</item>
+        <item>-73.640855</item>
+        <item>45.458472</item>
+        <item>-73.641009</item>
+        <item>45.458383</item>
+        <item>-73.641079</item>
+        <item>45.458434</item>
+        <item>-73.641204</item>
+        <item>45.458514</item>
+        <item>-73.641143</item>
+        <item>45.458546</item>
+        <item>-73.641230</item>
+        <item>45.458528</item>
+        <item>-73.641247</item>
+        <item>45.458540</item>
+        <item>-73.641277</item>
+        <item>45.458489</item>
+        <item>-73.641317</item>
+        <item>45.458512</item>
+        <item>-73.641377</item>
+        <item>45.458642</item>
+        <item>-73.641270</item>
+        <item>45.458648</item>
+        <item>-73.641283</item>
+        <item>45.458823</item>
+        <item>-73.641152</item>
+        <item>45.458783</item>
+        <item>-73.641031</item>
+        <item>45.458767</item>
+        <item>-73.641050</item>
+        <item>45.458684</item>
+        <item>-73.640808</item>
+        <item>45.458592</item>
+        <item>-73.640880</item>
+        <item>45.458544</item>
+        <item>-73.640753</item>
+        <item>45.458519</item>
+        <item>-73.640774</item>
+        <item>45.458492</item>
+        <item>-73.640710</item>
+        <item>45.458439</item>
+        <item>-73.640752</item>
     </string-array>
 
     <string-array name="buildingADPoints">
-        <item>45.458003<item>
-        </item>-73.639682</item>
-        <item>45.458026<item>
-        </item>-73.639748</item>
-        <item>45.457924<item>
-        </item>-73.639833</item>
-        <item>45.457910<item>
-        </item>-73.639808</item>
-        <item>45.457901<item>
-        </item>-73.639815</item>
-        <item>45.457880<item>
-        </item>-73.639764</item>
-        <item>45.457798<item>
-        </item>-73.639829</item>
-        <item>45.457911<item>
-        </item>-73.640131</item>
-        <item>45.457993<item>
-        </item>-73.640070</item>
-        <item>45.457967<item>
-        </item>-73.640013</item>
-        <item>45.458274<item>
-        </item>-73.639756</item>
-        <item>45.458306<item>
-        </item>-73.639827</item>
-        <item>45.458385<item>
-        </item>-73.639761</item>
-        <item>45.458260<item>
-        </item>-73.639441</item>
-        <item>45.458175<item>
-        </item>-73.639510</item>
-        <item>45.458201<item>
-        </item>-73.639575</item>
-        <item>45.458192<item>
-        </item>-73.639581</item>
-        <item>45.458203<item>
-        </item>-73.639617</item>
-        <item>45.458088<item>
-        </item>-73.639694</item>
-        <item>45.458070<item>
-        </item>-73.639641</item>
-        <item>45.458003<item>
-        </item>-73.639682</item>
+        <item>45.458003</item>
+        <item>-73.639682</item>
+        <item>45.458026</item>
+        <item>-73.639748</item>
+        <item>45.457924</item>
+        <item>-73.639833</item>
+        <item>45.457910</item>
+        <item>-73.639808</item>
+        <item>45.457901</item>
+        <item>-73.639815</item>
+        <item>45.457880</item>
+        <item>-73.639764</item>
+        <item>45.457798</item>
+        <item>-73.639829</item>
+        <item>45.457911</item>
+        <item>-73.640131</item>
+        <item>45.457993</item>
+        <item>-73.640070</item>
+        <item>45.457967</item>
+        <item>-73.640013</item>
+        <item>45.458274</item>
+        <item>-73.639756</item>
+        <item>45.458306</item>
+        <item>-73.639827</item>
+        <item>45.458385</item>
+        <item>-73.639761</item>
+        <item>45.458260</item>
+        <item>-73.639441</item>
+        <item>45.458175</item>
+        <item>-73.639510</item>
+        <item>45.458201</item>
+        <item>-73.639575</item>
+        <item>45.458192</item>
+        <item>-73.639581</item>
+        <item>45.458203</item>
+        <item>-73.639617</item>
+        <item>45.458088</item>
+        <item>-73.639694</item>
+        <item>45.458070</item>
+        <item>-73.639641</item>
+        <item>45.458003</item>
+        <item>-73.639682</item>
     </string-array>
 
     <string-array name="buildingFCPoints">
-        <item>45.458424<item>
-        </item>-73.639163</item>
-        <item>45.458431<item>
-        </item>-73.639178</item>
-        <item>45.458423<item>
-        </item>-73.639194</item>
-        <item>45.458444<item>
-        </item>-73.639256</item>
-        <item>45.458460<item>
-        </item>-73.639246</item>
-        <item>45.458516<item>
-        </item>-73.639405</item>
-        <item>45.458512<item>
-        </item>-73.639412</item>
-        <item>45.458516<item>
-        </item>-73.639422</item>
-        <item>45.458488<item>
-        </item>-73.639444</item>
-        <item>45.458541<item>
-        </item>-73.639587</item>
-        <item>45.458560<item>
-        </item>-73.639596</item>
-        <item>45.458584<item>
-        </item>-73.639577</item>
-        <item>45.458591<item>
-        </item>-73.639596</item>
-        <item>45.458600<item>
-        </item>-73.639593</item>
-        <item>45.458629<item>
-        </item>-73.639666</item>
-        <item>45.458671<item>
-        </item>-73.639685</item>
-        <item>45.458748<item>
-        </item>-73.639623</item>
-        <item>45.458766<item>
-        </item>-73.639543</item>
-        <item>45.458718<item>
-        </item>-73.639422</item>
-        <item>45.458727<item>
-        </item>-73.639419</item>
-        <item>45.458710<item>
-        </item>-73.639365</item>
-        <item>45.458740<item>
-        </item>-73.639334</item>
-        <item>45.458729<item>
-        </item>-73.639296</item>
-        <item>45.458709<item>
-        </item>-73.639315</item>
-        <item>45.458702<item>
-        </item>-73.639302</item>
-        <item>45.458690<item>
-        </item>-73.639313</item>
-        <item>45.458674<item>
-        </item>-73.639287</item>
-        <item>45.458670<item>
-        </item>-73.639294</item>
-        <item>45.458613<item>
-        </item>-73.639134</item>
-        <item>45.458620<item>
-        </item>-73.639129</item>
-        <item>45.458627<item>
-        </item>-73.639101</item>
-        <item>45.458616<item>
-        </item>-73.639067</item>
-        <item>45.458592<item>
-        </item>-73.639056</item>
-        <item>45.458581<item>
-        </item>-73.639061</item>
-        <item>45.458577<item>
-        </item>-73.639050</item>
-        <item>45.458424<item>
-        </item>-73.639163</item>
+        <item>45.458424</item>
+        <item>-73.639163</item>
+        <item>45.458431</item>
+        <item>-73.639178</item>
+        <item>45.458423</item>
+        <item>-73.639194</item>
+        <item>45.458444</item>
+        <item>-73.639256</item>
+        <item>45.458460</item>
+        <item>-73.639246</item>
+        <item>45.458516</item>
+        <item>-73.639405</item>
+        <item>45.458512</item>
+        <item>-73.639412</item>
+        <item>45.458516</item>
+        <item>-73.639422</item>
+        <item>45.458488</item>
+        <item>-73.639444</item>
+        <item>45.458541</item>
+        <item>-73.639587</item>
+        <item>45.458560</item>
+        <item>-73.639596</item>
+        <item>45.458584</item>
+        <item>-73.639577</item>
+        <item>45.458591</item>
+        <item>-73.639596</item>
+        <item>45.458600</item>
+        <item>-73.639593</item>
+        <item>45.458629</item>
+        <item>-73.639666</item>
+        <item>45.458671</item>
+        <item>-73.639685</item>
+        <item>45.458748</item>
+        <item>-73.639623</item>
+        <item>45.458766</item>
+        <item>-73.639543</item>
+        <item>45.458718</item>
+        <item>-73.639422</item>
+        <item>45.458727</item>
+        <item>-73.639419</item>
+        <item>45.458710</item>
+        <item>-73.639365</item>
+        <item>45.458740</item>
+        <item>-73.639334</item>
+        <item>45.458729</item>
+        <item>-73.639296</item>
+        <item>45.458709</item>
+        <item>-73.639315</item>
+        <item>45.458702</item>
+        <item>-73.639302</item>
+        <item>45.458690</item>
+        <item>-73.639313</item>
+        <item>45.458674</item>
+        <item>-73.639287</item>
+        <item>45.458670</item>
+        <item>-73.639294</item>
+        <item>45.458613</item>
+        <item>-73.639134</item>
+        <item>45.458620</item>
+        <item>-73.639129</item>
+        <item>45.458627</item>
+        <item>-73.639101</item>
+        <item>45.458616</item>
+        <item>-73.639067</item>
+        <item>45.458592</item>
+        <item>-73.639056</item>
+        <item>45.458581</item>
+        <item>-73.639061</item>
+        <item>45.458577</item>
+        <item>-73.639050</item>
+        <item>45.458424</item>
+        <item>-73.639163</item>
     </string-array>
 
     <string-array name="buildingVLPoints">
         <item>45.458634</item>
-        </item>-73.638466</item>
+        <item>-73.638466</item>
         <item>45.458843</item>
-        </item>-73.639029</item>
+        <item>-73.639029</item>
         <item>45.459048</item>
-        </item>-73.638869</item>
+        <item>-73.638869</item>
         <item>45.459096</item>
-        </item>-73.638983</item>
+        <item>-73.638983</item>
         <item>45.459080</item>
-        </item>-73.638994</item>
+        <item>-73.638994</item>
         <item>45.459093</item>
-        </item>-73.639037</item>
+        <item>-73.639037</item>
         <item>45.458990</item>
-        </item>-73.639120</item>
+        <item>-73.639120</item>
         <item>45.459111</item>
-        </item>-73.639419</item>
+        <item>-73.639419</item>
         <item>45.459217</item>
-        </item>-73.639336</item>
+        <item>-73.639336</item>
         <item>45.459239</item>
-        </item>-73.639385</item>
+        <item>-73.639385</item>
         <item>45.459310</item>
-        </item>-73.639321</item>
+        <item>-73.639321</item>
         <item>45.459272</item>
-        </item>-73.639225</item>
+        <item>-73.639225</item>
         <item>45.459321</item>
-        </item>-73.639184</item>
+        <item>-73.639184</item>
         <item>45.459337</item>
-        </item>-73.639223</item>
+        <item>-73.639223</item>
         <item>45.459357</item>
-        </item>-73.639210</item>
+        <item>-73.639210</item>
         <item>45.459370</item>
-        </item>-73.639238</item>
+        <item>-73.639238</item>
         <item>45.459492</item>
-        </item>-73.639137</item>
+        <item>-73.639137</item>
         <item>45.459311</item>
-        </item>-73.638674</item>
+        <item>-73.638674</item>
         <item>45.459318</item>
-        </item>-73.638661</item>
+        <item>-73.638661</item>
         <item>45.459139</item>
-        </item>-73.638198</item>
+        <item>-73.638198</item>
         <item>45.459217</item>
-        </item>-73.638135</item>
+        <item>-73.638135</item>
         <item>45.459144</item>
-        </item>-73.637939</item>
+        <item>-73.637939</item>
         <item>45.459138</item>
-        </item>-73.637942</item>
+        <item>-73.637942</item>
         <item>45.459079</item>
-        </item>-73.637864</item>
+        <item>-73.637864</item>
         <item>45.459083</item>
-        </item>-73.637889</item>
+        <item>-73.637889</item>
         <item>45.459055</item>
-        </item>-73.637912</item>
+        <item>-73.637912</item>
         <item>45.459045</item>
-        </item>-73.637895</item>
+        <item>-73.637895</item>
         <item>45.458903</item>
-        </item>-73.638000</item>
+        <item>-73.638000</item>
         <item>45.458914</item>
-        </item>-73.638025</item>
+        <item>-73.638025</item>
         <item>45.458884</item>
-        </item>-73.638046</item>
+        <item>-73.638046</item>
         <item>45.458903</item>
-        </item>-73.638098</item>
+        <item>-73.638098</item>
         <item>45.458875</item>
-        </item>-73.638122</item>
+        <item>-73.638122</item>
         <item>45.458891</item>
-        </item>-73.638171</item>
+        <item>-73.638171</item>
         <item>45.458854</item>
-        </item>-73.638200</item>
+        <item>-73.638200</item>
         <item>45.458855</item>
-        </item>-73.638199</item>
+        <item>-73.638199</item>
         <item>45.458869</item>
-        </item>-73.638239</item>
+        <item>-73.638239</item>
         <item>45.458707</item>
-        </item>-73.638360</item>
+        <item>-73.638360</item>
         <item>45.458719</item>
-        </item>-73.638399</item>
+        <item>-73.638399</item>
         <item>45.458634</item>
-        </item>-73.638466</item>
+        <item>-73.638466</item>
     </string-array>
 
     <string-array name="buildingPYPoints">
@@ -490,7 +490,7 @@
 
     <string-array name="buildingGMPoints">
         <item>45.495651</item>
-        <item>-73.578809)</item>
+        <item>-73.578809</item>
         <item>45.495780</item>
         <item>-73.579088</item>
         <item>45.495761</item>
