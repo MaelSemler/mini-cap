@@ -99,13 +99,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         val sgwH = Building(
             resources.getString(R.string.sgwHName),
             resources.getString(R.string.sgwHInfo),
-            LatLng(45.497390, -73.578859),
+            LatLng(45.497304, -73.578923),
             map
         )
         val sgwGM = Building(
             resources.getString(R.string.sgwGMName),
             resources.getString(R.string.sgwGMInfo),
-            LatLng(45.496002, -73.578490),
+            LatLng(45.495850, -73.578766),
             map
         )
         val sgwMB = Building(
