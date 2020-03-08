@@ -36,7 +36,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     companion object {
-        private  const val LOCATION_PERMISSION_REQUEST_CODE = 1
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
     }
 
 
@@ -125,7 +125,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mapFragment.getMapAsync(this)
 
         val routeButton: Button = findViewById(R.id.route_button)
-        routeButton.setOnClickListener{ routeTest()}
+        routeButton.setOnClickListener { routeTest() }
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
@@ -142,17 +142,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-        
+
         // Customise the styling of the map using a JSON object defined in the raw resource file
-        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle ))
+        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle))
         map.uiSettings.isZoomControlsEnabled = true
         map.setOnMarkerClickListener(this)
-                setUpMap()
+        setUpMap()
         changeBetweenCampuses(map)
     }
 
 
-    fun routeTest(){
+    fun routeTest() {
         val originLatLng = LatLng(45.502516, -73.563929)//HardCoded for now
         val destinationLatLng = LatLng(45.497044, -73.578407)//HardCoded for now
         //TODO: Origin and Destination should have a title
@@ -163,42 +163,58 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         route(originLatLng, destinationLatLng)
     }
 
-    private fun route(originLatLng: LatLng, destinationLatLng:LatLng){
-        val path : MutableList<List<LatLng>> = ArrayList()
-        val urlDirections= getString(R.string.DirectionAPI) +"origin=" + originLatLng.latitude + "," + originLatLng.longitude +"&destination=" + destinationLatLng.latitude + "," + destinationLatLng.longitude + "&key=" + getString(R.string.apiKey)
+    private fun route(originLatLng: LatLng, destinationLatLng: LatLng) {
+        val path: MutableList<List<LatLng>> = ArrayList()
+        val urlDirections =
+            getString(R.string.DirectionAPI) + "origin=" + originLatLng.latitude + "," + originLatLng.longitude + "&destination=" + destinationLatLng.latitude + "," + destinationLatLng.longitude + "&key=" + getString(
+                R.string.apiKey
+            )
 
-        val directionsRequest = object : StringRequest(Request.Method.GET, urlDirections, com.android.volley.Response.Listener<String> {
-                response ->
-            val jsonResponse = JSONObject(response)
-            // Get routes
-            val routes = jsonResponse.getJSONArray("routes")
-            val legs = routes.getJSONObject(0).getJSONArray("legs")
-            val steps = legs.getJSONObject(0).getJSONArray("steps")
+        val directionsRequest = object : StringRequest(
+            Request.Method.GET,
+            urlDirections,
+            com.android.volley.Response.Listener<String> { response ->
+                val jsonResponse = JSONObject(response)
+                // Get routes
+                val routes = jsonResponse.getJSONArray("routes")
+                val legs = routes.getJSONObject(0).getJSONArray("legs")
+                val steps = legs.getJSONObject(0).getJSONArray("steps")
 
-            //TODO: Create function to clean up the directions
-            extractDirections(steps)
+                //Clean up the directions
+                extractDirections(steps)
 
-            for (i in 0 until steps.length()) {
-                val points = steps.getJSONObject(i).getJSONObject("polyline").getString("points")
-                path.add(PolyUtil.decode(points))
-            }
-            for (i in 0 until path.size) {
-                this.map!!.addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
-            }
-        }, com.android.volley.Response.ErrorListener {
-                _ ->
-        }){}
+                for (i in 0 until steps.length()) {
+                    val points =
+                        steps.getJSONObject(i).getJSONObject("polyline").getString("points")
+                    path.add(PolyUtil.decode(points))
+                }
+                for (i in 0 until path.size) {
+                    this.map!!.addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
+                }
+            },
+            com.android.volley.Response.ErrorListener { _ ->
+            }) {}
         val requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(directionsRequest)
     }
 
     fun extractDirections(steps: JSONArray) {
-        val directionText : TextView = findViewById(R.id.Directions)
-        var textConverted="Direction:" + '\n'
-        for (i in 0 until steps.length()){
-            textConverted+= (i+1).toString() +". " +  steps.getJSONObject(i).getString("html_instructions") + '\n'
+        val directionText: TextView = findViewById(R.id.Directions)
+        var textConverted = "Direction:" + '\n'
+
+        for (i in 0 until steps.length()) {
+            textConverted += (i + 1).toString() + ". " + steps.getJSONObject(i).getString("html_instructions") + '\n'
         }
-        directionText.text= textConverted
+
+        //Trimming all HTML tags out of the retrieved instructions
+        while(textConverted.contains('<',true)){
+            val leftBracketIndex = textConverted.indexOf('<')
+            val rightBracketIndex = textConverted.indexOf('>')
+
+            textConverted= textConverted.removeRange(leftBracketIndex,rightBracketIndex+1)
+        }
+        directionText.text = textConverted
+
         map.setOnInfoWindowClickListener(this)
 
         addShapesToMap()
@@ -209,181 +225,211 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     private fun addMarkersToMap() {
         // SGW buildings.
-        map.addMarker(MarkerOptions()
-            .position(sgwHLocation)
-            .alpha(0.0F)
-            .title(sgwHName)
-            .snippet(sgwHInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(sgwHLocation)
+                .alpha(0.0F)
+                .title(sgwHName)
+                .snippet(sgwHInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(sgwGMLocation)
-            .alpha(0.0F)
-            .title(sgwGMName)
-            .snippet(sgwGMInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(sgwGMLocation)
+                .alpha(0.0F)
+                .title(sgwGMName)
+                .snippet(sgwGMInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(sgwMBLocation)
-            .alpha(0.0F)
-            .title(sgwMBName)
-            .snippet(sgwMBInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(sgwMBLocation)
+                .alpha(0.0F)
+                .title(sgwMBName)
+                .snippet(sgwMBInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(sgwEVLocation)
-            .alpha(0.0F)
-            .title(sgwEVName)
-            .snippet(sgwEVInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(sgwEVLocation)
+                .alpha(0.0F)
+                .title(sgwEVName)
+                .snippet(sgwEVInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(sgwFGLocation)
-            .alpha(0.0F)
-            .title(sgwFGName)
-            .snippet(sgwFGInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(sgwFGLocation)
+                .alpha(0.0F)
+                .title(sgwFGName)
+                .snippet(sgwFGInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(sgwFBLocation)
-            .alpha(0.0F)
-            .title(sgwFBName)
-            .snippet(sgwFBInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(sgwFBLocation)
+                .alpha(0.0F)
+                .title(sgwFBName)
+                .snippet(sgwFBInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(sgwLBLocation)
-            .alpha(0.0F)
-            .title(sgwLBName)
-            .snippet(sgwLBInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(sgwLBLocation)
+                .alpha(0.0F)
+                .title(sgwLBName)
+                .snippet(sgwLBInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(sgwGNLocation)
-            .alpha(0.0F)
-            .title(sgwGNName)
-            .snippet(sgwGNInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(sgwGNLocation)
+                .alpha(0.0F)
+                .title(sgwGNName)
+                .snippet(sgwGNInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(sgwLSLocation)
-            .alpha(0.0F)
-            .title(sgwLSName)
-            .snippet(sgwLSInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(sgwLSLocation)
+                .alpha(0.0F)
+                .title(sgwLSName)
+                .snippet(sgwLSInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(sgwVALocation)
-            .alpha(0.0F)
-            .title(sgwVAName)
-            .snippet(sgwVAInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(sgwVALocation)
+                .alpha(0.0F)
+                .title(sgwVAName)
+                .snippet(sgwVAInfo)
         )
 
         // LOY buildings.
-        map.addMarker(MarkerOptions()
-            .position(loyGELocation)
-            .alpha(0.0F)
-            .title(loyGEName)
-            .snippet(loyGEInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(loyGELocation)
+                .alpha(0.0F)
+                .title(loyGEName)
+                .snippet(loyGEInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(loyCJLocation)
-            .alpha(0.0F)
-            .title(loyCJName)
-            .snippet(loyCJInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(loyCJLocation)
+                .alpha(0.0F)
+                .title(loyCJName)
+                .snippet(loyCJInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(loyADLocation)
-            .alpha(0.0F)
-            .title(loyADName)
-            .snippet(loyADInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(loyADLocation)
+                .alpha(0.0F)
+                .title(loyADName)
+                .snippet(loyADInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(loySPLocation)
-            .alpha(0.0F)
-            .title(loySPName)
-            .snippet(loySPInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(loySPLocation)
+                .alpha(0.0F)
+                .title(loySPName)
+                .snippet(loySPInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(loyCCLocation)
-            .alpha(0.0F)
-            .title(loyCCName)
-            .snippet(loyCCInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(loyCCLocation)
+                .alpha(0.0F)
+                .title(loyCCName)
+                .snippet(loyCCInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(loyFCLocation)
-            .alpha(0.0F)
-            .title(loyFCName)
-            .snippet(loyFCInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(loyFCLocation)
+                .alpha(0.0F)
+                .title(loyFCName)
+                .snippet(loyFCInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(loyVLLocation)
-            .alpha(0.0F)
-            .title(loyVLName)
-            .snippet(loyVLInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(loyVLLocation)
+                .alpha(0.0F)
+                .title(loyVLName)
+                .snippet(loyVLInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(loySCLocation)
-            .alpha(0.0F)
-            .title(loySCName)
-            .snippet(loySCInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(loySCLocation)
+                .alpha(0.0F)
+                .title(loySCName)
+                .snippet(loySCInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(loyPTLocation)
-            .alpha(0.0F)
-            .title(loyPTName)
-            .snippet(loyPTInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(loyPTLocation)
+                .alpha(0.0F)
+                .title(loyPTName)
+                .snippet(loyPTInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(loyPSLocation)
-            .alpha(0.0F)
-            .title(loyPSName)
-            .snippet(loyPSInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(loyPSLocation)
+                .alpha(0.0F)
+                .title(loyPSName)
+                .snippet(loyPSInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(loyPYLocation)
-            .alpha(0.0F)
-            .title(loyPYName)
-            .snippet(loyPYInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(loyPYLocation)
+                .alpha(0.0F)
+                .title(loyPYName)
+                .snippet(loyPYInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(loyHALocation)
-            .alpha(0.0F)
-            .title(loyHAName)
-            .snippet(loyHAInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(loyHALocation)
+                .alpha(0.0F)
+                .title(loyHAName)
+                .snippet(loyHAInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(loyHBLocation)
-            .alpha(0.0F)
-            .title(loyHBName)
-            .snippet(loyHBInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(loyHBLocation)
+                .alpha(0.0F)
+                .title(loyHBName)
+                .snippet(loyHBInfo)
         )
 
-        map.addMarker(MarkerOptions()
-            .position(loyHCLocation)
-            .alpha(0.0F)
-            .title(loyHCName)
-            .snippet(loyHCInfo)
+        map.addMarker(
+            MarkerOptions()
+                .position(loyHCLocation)
+                .alpha(0.0F)
+                .title(loyHCName)
+                .snippet(loyHCInfo)
         )
     }
 
     private fun setUpMap() {
-        if (ActivityCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_PERMISSION_REQUEST_CODE
+            )
             return
         }
 
@@ -404,8 +450,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             }
         }
     }
-    private fun addShapesToMap(){
-        val concordiaRed = Color.rgb(147,35,57)
+
+    private fun addShapesToMap() {
+        val concordiaRed = Color.rgb(147, 35, 57)
         // Creates the shapes for Loyola Buildings
         val buildingCJ = PolygonOptions()
             .add(
@@ -632,7 +679,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.458719, -73.638399),
                 LatLng(45.458634, -73.638466)
             ).fillColor(concordiaRed).strokeWidth(0.1f)
-        val buildingPY= PolygonOptions()
+        val buildingPY = PolygonOptions()
             .add(
                 LatLng(45.458731, -73.640448),
                 LatLng(45.458822, -73.640695),
@@ -685,7 +732,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.496133, -73.578808),
                 LatLng(45.495977, -73.578482)
             ).fillColor(concordiaRed).strokeWidth(0.1f)
-        val buildingH  = PolygonOptions()
+        val buildingH = PolygonOptions()
             .add(
                 LatLng(45.496832, -73.578850),
                 LatLng(45.497173, -73.579553),
@@ -854,19 +901,23 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     }
 
 
-    private fun changeBetweenCampuses (googleMap:GoogleMap) {
+    private fun changeBetweenCampuses(googleMap: GoogleMap) {
         //When either button is clicked, map moves to respective location.
         map = googleMap
         val buttonSGW = findViewById<Button>(R.id.button_SGW)
-        val buttonLOY= findViewById<Button>(R.id.button_LOY)
-        val loyola=LatLng(45.458275,-73.640469)
-        val downTown=LatLng(45.4975,-73.579004)
+        val buttonLOY = findViewById<Button>(R.id.button_LOY)
+        val loyola = LatLng(45.458275, -73.640469)
+        val downTown = LatLng(45.4975, -73.579004)
         buttonSGW?.setOnClickListener()
         {
             map.clear()
-            map.addMarker(MarkerOptions().
-                    position(downTown).
-                title("SGW").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
+            map.addMarker(
+                MarkerOptions().position(downTown).title("SGW").icon(
+                    BitmapDescriptorFactory.defaultMarker(
+                        342.toFloat()
+                    )
+                )
+            ) //sets color, title and position of marker
             addMarkersToMap()
             map.moveCamera(CameraUpdateFactory.newLatLng(downTown))
             addShapesToMap()
@@ -874,7 +925,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         buttonLOY?.setOnClickListener()
         {
             map.clear()
-            map.addMarker(MarkerOptions().position(loyola).title("LOY").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
+            map.addMarker(
+                MarkerOptions().position(loyola).title("LOY").icon(
+                    BitmapDescriptorFactory.defaultMarker(
+                        342.toFloat()
+                    )
+                )
+            ) //sets color, title and position of marker
             addMarkersToMap()
             map.moveCamera(CameraUpdateFactory.newLatLng(loyola))
             addShapesToMap()
@@ -888,6 +945,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     override fun onInfoWindowClick(mkr: Marker) {
         mkr.hideInfoWindow()
     }
+}
 
 
 

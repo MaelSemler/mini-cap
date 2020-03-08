@@ -27,15 +27,6 @@
         android:layout_marginTop="63dp"
         tools:context=".MapsActivity" />
 
-    <TextView
-        android:id="@+id/Directions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:text="@string/directions"
-        android:textSize="18sp" />
-
     <Button
         android:id="@+id/button_SGW"
         android:layout_width="40dp"
