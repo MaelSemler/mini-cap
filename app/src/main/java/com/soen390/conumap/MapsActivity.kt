@@ -344,7 +344,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         val concordiaRed = Color.rgb(147,35,57)
         // Creates the shapes for Loyola Buildings
         val buildingCJ = PolygonOptions()
-            .add(
+            .add(//Added to XML
                 LatLng(45.457218, -73.640016),
                 LatLng(45.457307, -73.640074),
                 LatLng(45.457311, -73.640049),
@@ -375,8 +375,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.457213, -73.639990),
                 LatLng(45.457218, -73.640016)
             ).fillColor(concordiaRed).strokeWidth(0.1f)
+
         val buildingGE = PolygonOptions()
-            .add(
+            .add(/added to XML
                 LatLng(45.457040, -73.640163),
                 LatLng(45.456800, -73.640347),
                 LatLng(45.456896, -73.640609),
@@ -478,11 +479,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 LatLng(45.458274, -73.639756),
                 LatLng(45.458306, -73.639827),
                 LatLng(45.458385, -73.639761),
-                LatLng(45.458260, -73.639441),//
+                LatLng(45.458260, -73.639441),
                 LatLng(45.458175, -73.639510),
                 LatLng(45.458201, -73.639575),
                 LatLng(45.458192, -73.639581),
-                LatLng(45.458203, -73.639617),//
+                LatLng(45.458203, -73.639617),
                 LatLng(45.458088, -73.639694),
                 LatLng(45.458070, -73.639641),
                 LatLng(45.458003, -73.639682)
