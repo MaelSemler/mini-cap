@@ -49,6 +49,6 @@ class LocateUserTest {
         locateUserButton.click()
 
         // Give time for app to load.
-        sleep(5000)
+        sleep(1000)
     }
 }
