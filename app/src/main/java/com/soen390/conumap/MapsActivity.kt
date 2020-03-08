@@ -125,7 +125,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mapFragment.getMapAsync(this)
 
         val routeButton: Button = findViewById(R.id.route_button)
-        routeButton.setOnClickListener { routeTest() }
+        routeButton.setOnClickListener {
+            routeTest()
+            this!!.supportFragmentManager.beginTransaction().replace(R.id.fragment_container, Directions.newInstance()).commit()
+        }
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
