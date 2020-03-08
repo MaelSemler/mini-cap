@@ -21,7 +21,7 @@ class Building {
     fun addBuildingMarker(map: GoogleMap) {
         map.addMarker(MarkerOptions()
             .position(location)
-            .visible(false)
+            .alpha(0.0F)
             .title(name)
             .snippet(info)
         )

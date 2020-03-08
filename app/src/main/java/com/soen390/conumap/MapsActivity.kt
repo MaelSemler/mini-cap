@@ -38,11 +38,35 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
 
-    fun createBuildings() {
+    private fun createBuildings() {
         val sgwH = Building(
             resources.getString(R.string.sgwHName),
             resources.getString(R.string.sgwHInfo),
             LatLng(45.497390, -73.578859),
+            map
+        )
+        val sgwGM = Building(
+            resources.getString(R.string.sgwGMName),
+            resources.getString(R.string.sgwGMInfo),
+            LatLng(45.496002, -73.578490),
+            map
+        )
+        val sgwMB = Building(
+            resources.getString(R.string.sgwMBName),
+            resources.getString(R.string.sgwMBInfo),
+            LatLng(45.495418, -73.579169),
+            map
+        )
+        val sgwEV = Building(
+            resources.getString(R.string.sgwEVName),
+            resources.getString(R.string.sgwEVInfo),
+            LatLng(45.495506, -73.577774),
+            map
+        )
+        val sgwFG = Building(
+            resources.getString(R.string.sgwFGName),
+            resources.getString(R.string.sgwFGInfo),
+            LatLng(45.494373, -73.578332),
             map
         )
     }
@@ -147,7 +171,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         map.setOnInfoWindowClickListener(this)
 
         addShapesToMap()
-        // addMarkersToMap()
         createBuildings()
         setUpMap()
         changeBetweenCampuses(map)
@@ -793,31 +816,38 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         map.addPolygon(buildingFB)
     }
 
-
     private fun changeBetweenCampuses (googleMap:GoogleMap) {
-        //When either button is clicked, map moves to respective location.
+        // When either button is clicked, map moves to respective location.
         map = googleMap
         val buttonSGW = findViewById<Button>(R.id.button_SGW)
         val buttonLOY= findViewById<Button>(R.id.button_LOY)
+
         val loyola=LatLng(45.458275,-73.640469)
         val downTown=LatLng(45.4975,-73.579004)
-        buttonSGW?.setOnClickListener()
-        {
-            map.clear()
-            map.addMarker(MarkerOptions().
-                    position(downTown).
-                title("SGW").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
-            addMarkersToMap()
+
+        val sgwCampusMarker = map.addMarker(MarkerOptions()
+            .position(downTown)
+            .title("SGW")
+            .icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))
+            .visible(false)
+        )
+        val loyCampusMarker = map.addMarker(MarkerOptions()
+            .position(loyola)
+            .title("LOY")
+            .icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))
+            .visible(false)
+        )
+
+        buttonSGW?.setOnClickListener() {
+            loyCampusMarker.isVisible = false
+            sgwCampusMarker.isVisible = true
             map.moveCamera(CameraUpdateFactory.newLatLng(downTown))
-            addShapesToMap()
         }
-        buttonLOY?.setOnClickListener()
-        {
-            map.clear()
-            map.addMarker(MarkerOptions().position(loyola).title("LOY").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
-            addMarkersToMap()
+
+        buttonLOY?.setOnClickListener() {
+            sgwCampusMarker.isVisible = false
+            loyCampusMarker.isVisible = true
             map.moveCamera(CameraUpdateFactory.newLatLng(loyola))
-            addShapesToMap()
         }
     }
 
