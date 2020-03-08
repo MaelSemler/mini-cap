@@ -57,15 +57,7 @@ class ScreenRotationTest {
         val loyButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/button_LOY"))
         loyButton.click()
 
-        // Press Zoom In button.
-        val zoomInButton: UiObject = device.findObject(UiSelector().description("Zoom in"))
-        zoomInButton.click()
-
-        // Press Zoom Out button.
-        val zoomOutButton: UiObject = device.findObject(UiSelector().description("Zoom out"))
-        zoomOutButton.click()
-
-        val locateUserButton: UiObject = device.findObject(UiSelector().description("My Location"))
+        val locateUserButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/button_current_location"))
         locateUserButton.click()
     }
 }
