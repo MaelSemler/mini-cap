@@ -20,6 +20,7 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolygonOptions
+import androidx.fragment.app.Fragment
 import androidx.core.app.ComponentActivity
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
@@ -117,10 +118,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+
+        val fragmentManager = supportFragmentManager
+        val ft = fragmentManager.beginTransaction()
+
+        val searchBarFragment = SearchPlaceFragment()
+        ft.add(R.id.map, searchBarFragment as Fragment)
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        ft.commit()
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
