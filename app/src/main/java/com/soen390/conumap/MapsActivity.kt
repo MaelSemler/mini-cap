@@ -122,7 +122,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         val fragmentManager = supportFragmentManager
         val ft = fragmentManager.beginTransaction()
 
-//        val searchBarFragment = SearchPlaceFragment()
+        /*
+        Following line on 'SearchPlaceFragment()' to be uncommented to see empty search bar
+         */
+      // val searchBarFragment = SearchPlaceFragment()
+
+        /*
+         Following line on 'SearchPlaceCompletedFragment()' to be uncommented to see full search bar
+         */
         val searchBarFragment = SearchPlaceCompletedFragment()
         ft.add(R.id.map, searchBarFragment as Fragment)
 
