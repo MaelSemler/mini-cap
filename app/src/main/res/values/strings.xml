@@ -4,4 +4,6 @@
     <string name="directions">DIRECTIONS:</string>
     <string name="campus_Downtown">SGW</string>
     <string name="campus_Loyola">LOY</string>
+    <string name="alternativeButton">Alt</string>
+    <string name="directionTitle">Direction</string>
 </resources>

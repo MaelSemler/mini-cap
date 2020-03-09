@@ -163,7 +163,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         this.map!!.addMarker(MarkerOptions().position(destinationLatLng).title("This is the destination"))
         this.map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(originLatLng, 14.5f))
 
-//        route(originLatLng, destinationLatLng)
+        route(originLatLng, destinationLatLng)
     }
 
     private fun route(originLatLng: LatLng, destinationLatLng: LatLng) {
@@ -182,13 +182,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 val routes = jsonResponse.getJSONArray("routes")
                 val legs = routes.getJSONObject(0).getJSONArray("legs")
                 val steps = legs.getJSONObject(0).getJSONArray("steps")
-
-                val totalDistance =legs.getJSONObject(0).getJSONArray("distance")
-                val totalDuration= legs.getJSONObject(0).getJSONArray("duration")
+//
+//                val totalDistance =legs.getJSONObject(0).getJSONArray("distance")
+//                val totalDuration= legs.getJSONObject(0).getJSONArray("duration")
 
 //                extractDirections2(legs)
                 //Clean up the directions
-//                extractDirections(steps)
+                extractDirections(steps)
 
                 for (i in 0 until steps.length()) {
                     val points =
@@ -219,27 +219,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
 
     fun extractDirections(steps: JSONArray) {
-//        val directionText: TextView = findViewById(R.id.Directions)
+        val directionText: TextView = findViewById(R.id.Directions)
         var textConverted = "Direction:" + '\n'
 
-//        var directionArray = ArrayList<String>()
-//        var distanceArray = ArrayList<String>()
-//        var
+        var directionArray = ArrayList<String>()
+        var distanceArray = ArrayList<String>()
 
 
-//
-//        for (i in 0 until steps.length()) {
-//            textConverted += (i + 1).toString() + ". " + steps.getJSONObject(i).getString("html_instructions") + '\n'
-//        }
-//
-//        //Trimming all HTML tags out of the retrieved instructions
-//        while(textConverted.contains('<',true)){
-//            val leftBracketIndex = textConverted.indexOf('<')
-//            val rightBracketIndex = textConverted.indexOf('>')
-//
-//            textConverted= textConverted.removeRange(leftBracketIndex,rightBracketIndex+1)
-//        }
-//        directionText.text = textConverted
+
+        for (i in 0 until steps.length()) {
+            textConverted += (i + 1).toString() + ". " + steps.getJSONObject(i).getString("html_instructions") + '\n'
+        }
+
+        //Trimming all HTML tags out of the retrieved instructions
+        while(textConverted.contains('<',true)){
+            val leftBracketIndex = textConverted.indexOf('<')
+            val rightBracketIndex = textConverted.indexOf('>')
+
+            textConverted= textConverted.removeRange(leftBracketIndex,rightBracketIndex+1)
+        }
+        directionText.text = textConverted
 
         map.setOnInfoWindowClickListener(this)
 

@@ -19,8 +19,8 @@
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="353dp"
+        android:layout_width="410dp"
+        android:layout_height="323dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
@@ -56,7 +56,8 @@
 
     <FrameLayout
         android:id="@+id/fragment_container"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"/>
+        android:layout_width="410dp"
+        android:layout_height="308dp"
+        android:layout_below="@id/map" />
 
 </RelativeLayout>

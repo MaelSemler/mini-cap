@@ -1,97 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:map="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:paddingLeft="1dp"
-android:paddingRight="1dp"
-android:orientation="vertical">
-
-<Button
-    android:id="@+id/route_button"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignParentRight="true"
-    android:text="Route" />
+    android:orientation="vertical"
+    android:paddingLeft="1dp"
+    android:paddingRight="1dp">
 
-<TextView
-    android:id="@+id/Directions"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_marginBottom="10dp"
-    android:text="@string/directions"
-    android:textSize="18sp" />
+    <TextView
+        android:id="@+id/Directions"
+        android:layout_width="410dp"
+        android:layout_height="554dp"
+        android:layout_below="@id/Direction_button"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:gravity="left"
+        android:text="@string/directions"
+        android:textSize="18sp" />
 
-<Button
-    android:id="@+id/Direction_button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/map"
-    android:layout_alignLeft="@id/Directions"
-    android:layout_alignParentRight="true"
-    android:layout_marginRight="275dp"
-    android:background="@drawable/direction_button"
-    android:padding="15dp"
-    android:text="Direction"
-    android:textColor="#ffff" />
+    <Button
+        android:id="@+id/Direction_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/Directions"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentBottom="false"
+        android:layout_marginEnd="275dp"
+        android:background="@drawable/direction_button"
+        android:padding="15dp"
+        android:text="@string/directionTitle"
+        android:textColor="#ffff" />
 
-<Button
-    android:id="@+id/Alt_button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/map"
-    android:layout_alignParentRight="true"
-    android:layout_marginRight="183dp"
-    android:background="@drawable/alt_button"
-    android:padding="15dp"
-    android:text="Alt"
-    android:textColor="#000000" />
+    <Button
+        android:id="@+id/Alt_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="false"
+        android:layout_marginEnd="183dp"
+        android:background="@drawable/alt_button"
+        android:padding="15dp"
+        android:text="@string/alternativeButton"
+        android:textColor="#000000" />
 
-<!--<Button-->
-<!--    android:id="@+id/button_SGW"-->
-<!--    android:layout_width="40dp"-->
-<!--    android:layout_height="40dp"-->
-<!--    android:text="@string/campus_Downtown"-->
-<!--    android:textColor="#932339"-->
-<!--    android:background="@drawable/circle"-->
-<!--    android:visibility="visible"-->
-<!--    android:layout_margin="10dp"-->
-<!--    android:layout_gravity="bottom"-->
-<!--    android:layout_centerInParent="true"-->
-<!--    android:layout_alignParentRight="true" />-->
-<!--    //Implements SGW button-->
-
-<!--    <Button-->
-<!--        android:id="@+id/button_LOY"-->
-<!--        android:layout_width="42dp"-->
-<!--        android:layout_height="39dp"-->
-<!--        android:layout_below="@id/button_SGW"-->
-<!--        android:layout_alignRight="@id/map"-->
-<!--        android:layout_alignBottom="@id/map"-->
-<!--        android:layout_alignParentRight="false"-->
-<!--        android:layout_alignParentBottom="false"-->
-<!--        android:layout_marginStart="10dp"-->
-<!--        android:layout_marginTop="42dp"-->
-<!--        android:layout_marginEnd="10dp"-->
-<!--        android:layout_marginRight="8dp"-->
-<!--        android:layout_marginBottom="4dp"-->
-<!--        android:background="@drawable/circle"-->
-<!--        android:text="@string/campus_Loyola"-->
-<!--        android:textColor="#932339"-->
-<!--        android:visibility="visible" />-->
 
     <Button
         android:id="@+id/favorite_button"
         android:layout_width="49dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/map"
-        android:layout_alignRight="@id/map"
+        android:layout_alignEnd="@id/Alt_button"
+        android:layout_alignParentEnd="true"
         android:background="@drawable/favorite_red" />
     //Implements Loyola button
-
 
 
 </RelativeLayout>
