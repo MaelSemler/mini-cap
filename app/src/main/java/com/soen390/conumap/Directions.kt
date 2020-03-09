@@ -29,4 +29,6 @@ class Directions : Fragment() {
         // TODO: Use the ViewModel
     }
 
+
+
 }

@@ -16,20 +16,6 @@ android:orientation="vertical">
     android:layout_alignParentRight="true"
     android:text="Route" />
 
-
-
-<fragment
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
-    android:layout_width="match_parent"
-    android:layout_height="353dp"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentTop="true"
-    android:layout_marginStart="0dp"
-    android:layout_marginTop="63dp"
-    tools:context=".MapsActivity" />
-
-
 <TextView
     android:id="@+id/Directions"
     android:layout_width="wrap_content"
@@ -64,37 +50,38 @@ android:orientation="vertical">
     android:text="Alt"
     android:textColor="#000000" />
 
-<Button
-    android:id="@+id/button_SGW"
-    android:layout_width="40dp"
-    android:layout_height="40dp"
-    android:text="@string/campus_Downtown"
-    android:textColor="#932339"
-    android:background="@drawable/circle"
-    android:visibility="visible"
-    android:layout_margin="10dp"
-    android:layout_gravity="bottom"
-    android:layout_centerInParent="true"
-    android:layout_alignParentRight="true" />
-    //Implements SGW button
+<!--<Button-->
+<!--    android:id="@+id/button_SGW"-->
+<!--    android:layout_width="40dp"-->
+<!--    android:layout_height="40dp"-->
+<!--    android:text="@string/campus_Downtown"-->
+<!--    android:textColor="#932339"-->
+<!--    android:background="@drawable/circle"-->
+<!--    android:visibility="visible"-->
+<!--    android:layout_margin="10dp"-->
+<!--    android:layout_gravity="bottom"-->
+<!--    android:layout_centerInParent="true"-->
+<!--    android:layout_alignParentRight="true" />-->
+<!--    //Implements SGW button-->
 
-    <Button
-        android:id="@+id/button_LOY"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_below="@id/button_SGW"
-        android:layout_alignRight="@id/map"
-        android:layout_alignBottom="@id/map"
-        android:layout_alignParentRight="false"
-        android:layout_alignParentBottom="false"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="-42dp"
-        android:background="@drawable/circle"
-        android:text="@string/campus_Loyola"
-        android:textColor="#932339"
-        android:visibility="visible" />
+<!--    <Button-->
+<!--        android:id="@+id/button_LOY"-->
+<!--        android:layout_width="42dp"-->
+<!--        android:layout_height="39dp"-->
+<!--        android:layout_below="@id/button_SGW"-->
+<!--        android:layout_alignRight="@id/map"-->
+<!--        android:layout_alignBottom="@id/map"-->
+<!--        android:layout_alignParentRight="false"-->
+<!--        android:layout_alignParentBottom="false"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:layout_marginTop="42dp"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:layout_marginRight="8dp"-->
+<!--        android:layout_marginBottom="4dp"-->
+<!--        android:background="@drawable/circle"-->
+<!--        android:text="@string/campus_Loyola"-->
+<!--        android:textColor="#932339"-->
+<!--        android:visibility="visible" />-->
 
     <Button
         android:id="@+id/favorite_button"
