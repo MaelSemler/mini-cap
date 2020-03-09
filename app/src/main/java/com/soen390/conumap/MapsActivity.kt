@@ -182,11 +182,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 val routes = jsonResponse.getJSONArray("routes")
                 val legs = routes.getJSONObject(0).getJSONArray("legs")
                 val steps = legs.getJSONObject(0).getJSONArray("steps")
-//
-//                val totalDistance =legs.getJSONObject(0).getJSONArray("distance")
-//                val totalDuration= legs.getJSONObject(0).getJSONArray("duration")
 
-//                extractDirections2(legs)
+                val totalDistance =legs.getJSONObject(0).getJSONObject("distance").getString("text")
+                val totalDuration= legs.getJSONObject(0).getJSONObject("duration").getString("text")
+
+
                 //Clean up the directions
                 extractDirections(steps)
 
@@ -205,18 +205,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         requestQueue.add(directionsRequest)
     }
 
-//    fun extractDirections2(legs:JSONArray){
-//        val directionText: TextView = findViewById(R.id.Directions)
-//        val totalDistance =legs.getJSONObject(0).getJSONArray("distance")
-//        val totalDuration= legs.getJSONObject(0).getJSONArray("duration")
-//
-////    directionText.text = totalDistance.toString()
-//    }
-
-
-
-
-
 
     fun extractDirections(steps: JSONArray) {
         val directionText: TextView = findViewById(R.id.Directions)
@@ -224,11 +212,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         var directionArray = ArrayList<String>()
         var distanceArray = ArrayList<String>()
+        var durationArray  = ArrayList<String>()
 
 
 
         for (i in 0 until steps.length()) {
-            textConverted += (i + 1).toString() + ". " + steps.getJSONObject(i).getString("html_instructions") + '\n'
+            distanceArray.add(steps.getJSONObject(i).getJSONObject("distance").getString("text"))
+            durationArray.add(steps.getJSONObject(i).getJSONObject("duration").getString("text"))
+
+            textConverted += (i + 1).toString() + ". " + steps.getJSONObject(i).getString("html_instructions") + '\n' + distanceArray[i] +'\n'
+
         }
 
         //Trimming all HTML tags out of the retrieved instructions
