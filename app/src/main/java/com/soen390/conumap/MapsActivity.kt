@@ -1,19 +1,13 @@
 package com.soen390.conumap
 
 import android.content.pm.PackageManager
-import android.content.res.Resources
 import android.location.Location
 import android.os.Bundle
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
 
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
@@ -21,15 +15,9 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolygonOptions
 import androidx.fragment.app.Fragment
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import org.json.JSONArray
-import org.json.JSONObject
-import java.io.StringReader
 
 import android.widget.Button
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
@@ -143,22 +131,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
-    companion object {
-        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
-    }
-
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-        
-        // Customise the styling of the map using a JSON object defined in the raw resource file
-        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle ))
-        map.uiSettings.isZoomControlsEnabled = true
-        map.setOnInfoWindowClickListener(this)
+        if(map != null){
+            // Customise the styling of the map using a JSON object defined in the raw resource file
+            map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle ))
+            map.uiSettings.isMyLocationButtonEnabled = false
+            map.setOnInfoWindowClickListener(this)
 
-        addShapesToMap()
-        addMarkersToMap()
-        setUpMap()
-        changeBetweenCampuses(map)
+            addShapesToMap()
+            addMarkersToMap()
+            setUpMap()
+            currentLocationButton()
+            changeBetweenCampuses(map)
+        }
     }
 
     private fun addMarkersToMap() {
@@ -333,6 +319,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         )
     }
 
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+    }
+
     private fun setUpMap() {
         if (ActivityCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -354,10 +344,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             if (location != null) {
                 lastLocation = location
                 val currentLatLng = LatLng(location.latitude, location.longitude)
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18f))
             }
         }
     }
+
     private fun addShapesToMap(){
         val concordiaRed = Color.rgb(147,35,57)
         // Creates the shapes for Loyola Buildings
@@ -805,6 +796,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         map.addPolygon(buildingLB)
         map.addPolygon(buildingGN)
         map.addPolygon(buildingFB)
+    }
+
+    //Listener for the current location button
+    private fun currentLocationButton (){
+        val buttonSGW = findViewById<Button>(R.id.button_current_location) //finds the button
+        buttonSGW?.setOnClickListener()
+        {
+            val currentLatLng = LatLng(lastLocation.latitude, lastLocation.longitude) //Get the latitude and longitude from the lastLocation of the user
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18f)) //Move the camera to the user's location
+        }
     }
 
 
