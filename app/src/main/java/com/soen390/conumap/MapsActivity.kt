@@ -205,7 +205,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         requestQueue.add(directionsRequest)
     }
 
-
     fun extractDirections(steps: JSONArray) {
         val directionText: TextView = findViewById(R.id.Directions)
         var textConverted = "Direction:" + '\n'
@@ -220,25 +219,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             distanceArray.add(steps.getJSONObject(i).getJSONObject("distance").getString("text"))
             durationArray.add(steps.getJSONObject(i).getJSONObject("duration").getString("text"))
 
-            textConverted += (i + 1).toString() + ". " + steps.getJSONObject(i).getString("html_instructions") + '\n' + distanceArray[i] +'\n'
-
+            var tempText = steps.getJSONObject(i).getString("html_instructions")
+            while(tempText.contains('<',true)){
+                val leftBracketIndex = tempText.indexOf('<')
+                val rightBracketIndex = tempText.indexOf('>')
+                tempText= tempText.removeRange(leftBracketIndex,rightBracketIndex+1)
+            }
+            directionArray.add(tempText)
         }
 
-        //Trimming all HTML tags out of the retrieved instructions
-        while(textConverted.contains('<',true)){
-            val leftBracketIndex = textConverted.indexOf('<')
-            val rightBracketIndex = textConverted.indexOf('>')
-
-            textConverted= textConverted.removeRange(leftBracketIndex,rightBracketIndex+1)
+        for(i in 0 until distanceArray.size){
+            textConverted += (i + 1).toString() + ". " +  directionArray[i] + '\n' + '\t' + distanceArray[i] +'\n'
         }
+        //Put everything inside of the directionTextBox
         directionText.text = textConverted
 
         map.setOnInfoWindowClickListener(this)
 
-//        addShapesToMap() TODO MIGHT NOT NEED THIS
-//        addMarkersToMap() TODO MIGHT NOT NEED THIS
         setUpMap()
-//        changeBetweenCampuses(map)
     }
 
 //    private fun addMarkersToMap() {
