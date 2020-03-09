@@ -122,7 +122,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         val fragmentManager = supportFragmentManager
         val ft = fragmentManager.beginTransaction()
 
-        val searchBarFragment = SearchPlaceFragment()
+//        val searchBarFragment = SearchPlaceFragment()
+        val searchBarFragment = SearchPlaceCompletedFragment()
         ft.add(R.id.map, searchBarFragment as Fragment)
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
