@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TopFieldFragment">
+
+    <ImageView
+        android:id="@+id/imgBack"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="5dp"
+        android:elevation="2dp"
+        android:padding="6dp"
+        android:src="@drawable/direction_left"
+        android:background="@drawable/circle"
+        />
+    <!--Back button-->
+
+    <ImageView
+        android:id="@+id/imgReverse"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:elevation="2dp"
+        android:src="@drawable/swap_arrow"
+        android:padding="3dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/circle"
+        />
+    <!--Flip location button-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rl"
+        android:elevation="10dp"
+        >
+
+        <EditText
+            android:textColor="#000"
+            android:id="@+id/edStartingLoc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/blue_empty_rounded_square"
+            android:text="My Location"
+            android:elevation="1dp"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:drawablePadding="10dp"
+            android:drawableLeft="@drawable/current_dot"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="5dp"
+            android:singleLine="true"
+            />
+        <!--Top field My Location-->
+
+        <EditText
+            android:textColor="#000"
+            android:id="@+id/edDestination"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/blue_empty_rounded_square"
+            android:text="Destination"
+            android:elevation="1dp"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:layout_marginTop="65dp"
+            android:singleLine="true"
+            android:drawablePadding="10dp"
+            android:drawableLeft="@drawable/current_dot1"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            />
+        <!--Top field, Destination-->
+
+    </RelativeLayout>
+
+    <ImageView
+        android:scaleType="fitXY"
+        android:layout_width="4dp"
+        android:layout_height="4dp"
+        android:elevation="12dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="39dp"
+        android:src="@drawable/current_dot2"
+        />
+
+    <ImageView
+        android:scaleType="fitXY"
+        android:layout_width="4dp"
+        android:layout_height="4dp"
+        android:elevation="12dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="54dp"
+        android:src="@drawable/current_dot2"
+        />
+
+    <ImageView
+        android:scaleType="fitXY"
+        android:layout_width="4dp"
+        android:layout_height="4dp"
+        android:elevation="12dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="67dp"
+        android:src="@drawable/current_dot2"
+        />
+        <!--My Location to Destination dots-->
+
+</RelativeLayout>
