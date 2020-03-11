@@ -810,7 +810,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                     position(downTown).
                 title("SGW").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
             addMarkersToMap()
-            map.animateCamera(CameraUpdateFactory.newLatLng(downTown)) //changed from move camera
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(downTown,18f)) //changed from move camera
             addShapesToMap()
         }
         buttonLOY?.setOnClickListener()     //function for when Loyola button is clicked
@@ -818,7 +818,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             map.clear()
             map.addMarker(MarkerOptions().position(loyola).title("LOY").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
             addMarkersToMap()
-            map.animateCamera(CameraUpdateFactory.newLatLng(loyola)) ///changed from move camera
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(loyola,18f)) ///changed from move camera
             addShapesToMap()
         }
     }
