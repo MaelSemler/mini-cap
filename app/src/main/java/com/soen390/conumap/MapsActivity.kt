@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolygonOptions
+import java.lang.Exception
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
@@ -168,10 +169,23 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     private fun route(originLatLng: LatLng, destinationLatLng: LatLng) {
         val path: MutableList<List<LatLng>> = ArrayList()
+
+        val directionTitleText=findViewById<TextView>(R.id.TitleDurationDistance)
+        this!!.supportFragmentManager.beginTransaction().replace(R.id.fragment_container, Directions.newInstance()).commit()
+        try {
+             directionTitleText.text=("literally anything");
+        } catch (e : Exception ) {
+             // Do something
+        }
+
+
         val urlDirections =
             getString(R.string.DirectionAPI) + "origin=" + originLatLng.latitude + "," + originLatLng.longitude + "&destination=" + destinationLatLng.latitude + "," + destinationLatLng.longitude + "&key=" + getString(
                 R.string.apiKey
             )
+//        val viaRouteText :TextView = findViewById(R.id.viaRoute) // This make it crashh
+
+//        directionTitleText.text = "HELLO"
 
         val directionsRequest = object : StringRequest(
             Request.Method.GET,
@@ -185,6 +199,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
                 val totalDistance =legs.getJSONObject(0).getJSONObject("distance").getString("text")
                 val totalDuration= legs.getJSONObject(0).getJSONObject("duration").getString("text")
+//                viaRouteText.text = routes.getJSONObject(0).getString("summary")
 
 
                 //Clean up the directions
