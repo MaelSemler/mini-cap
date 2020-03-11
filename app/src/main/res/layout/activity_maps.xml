@@ -25,30 +25,29 @@
         android:layout_height="match_parent"
         tools:context=".ActivityJava.MapsActivity" />
 
-    <Button
-        android:id="@+id/button_SGW"
+    <ImageView
+        android:id="@+id/imgBack"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:text="@string/campus_Downtown"
-        android:textColor="#932339"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:elevation="2dp"
+        android:padding="6dp"
+        android:src="@drawable/direction_left"
         android:background="@drawable/circle"
-        android:visibility="visible"
-        android:layout_margin="10dp"
-        android:layout_gravity="bottom"
-        android:layout_centerInParent="true"
-        android:layout_alignParentRight="true" />
-        //Implements SGW button
-    <Button
-        android:id="@+id/button_LOY"
-        android:layout_margin="10dp"
+        />
+
+    <ImageView
+        android:id="@+id/imgReverse"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:text="@string/campus_Loyola"
-        android:visibility="visible"
-        android:textColor="#932339"
-        android:background="@drawable/circle"
-        android:layout_below="@id/button_SGW"
-        android:layout_gravity="bottom"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:elevation="2dp"
+        android:src="@drawable/swap_arrow"
+        android:padding="3dp"
         android:layout_alignParentRight="true"
         />
     //Implements Loyola button
@@ -60,5 +59,123 @@
     </FrameLayout>
 
 
+        <!-- android:background="@drawable/circle"
+        /> -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rl"
+        android:elevation="10dp"
+        >
+
+        <EditText
+            android:id="@+id/edStartingLoc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/blue_empty_rounded_square"
+            android:text="My Location"
+            android:elevation="1dp"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:drawablePadding="10dp"
+            android:drawableLeft="@drawable/current_dot"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="10dp"
+            android:singleLine="true"
+            />
+        <EditText
+            android:id="@+id/edDestination"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/blue_empty_rounded_square"
+            android:text="Where to....?"
+            android:elevation="1dp"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:layout_marginTop="70dp"
+            android:singleLine="true"
+            android:drawablePadding="10dp"
+            android:drawableLeft="@drawable/current_dot1"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            />
+    </RelativeLayout>
+
+    <EditText
+        android:layout_width="4dp"
+        android:layout_height="4dp"
+        android:elevation="12dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/current_dot2"
+        />
+
+    <EditText
+        android:layout_width="4dp"
+        android:layout_height="4dp"
+        android:elevation="12dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="59dp"
+        android:background="@drawable/current_dot2"
+        />
+
+    <EditText
+        android:layout_width="4dp"
+        android:layout_height="4dp"
+        android:elevation="12dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="73dp"
+        android:background="@drawable/current_dot2"
+        />
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/button_SGW"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="@string/campus_Downtown"
+            android:textColor="#932339"
+            android:background="@drawable/circle"
+            android:visibility="visible"
+            android:layout_margin="10dp"
+            android:layout_gravity="bottom"
+            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true" />
+        <!--        Implements SGW button-->
+        <Button
+            android:id="@+id/button_LOY"
+            android:layout_margin="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="@string/campus_Loyola"
+            android:visibility="visible"
+            android:textColor="#932339"
+            android:background="@drawable/circle"
+            android:layout_below="@id/button_SGW"
+            android:layout_gravity="bottom"
+            android:layout_alignParentRight="true"
+            />
+        <!--        Implements Loyola button-->
+        <Button
+            android:id="@+id/button_current_location"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:textColor="#932339"
+            android:background="@drawable/user_location_button_off"
+            android:visibility="visible"
+            android:layout_margin="10dp"
+            android:layout_gravity="bottom"
+            android:layout_below="@id/button_LOY"
+            android:layout_alignParentRight="true" />
+        <!--        Implements Current location button-->
+
+    </RelativeLayout>
 
 </RelativeLayout>
