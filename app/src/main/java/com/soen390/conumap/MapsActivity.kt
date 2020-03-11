@@ -5,6 +5,7 @@ import com.google.android.gms.maps.model.*
 import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -49,7 +50,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         val routeButton: Button = findViewById(R.id.route_button)
         routeButton.setOnClickListener {
-            routeTest()
+            routeTest(it)
             this!!.supportFragmentManager.beginTransaction().replace(R.id.fragment_container, Directions.newInstance()).commit()
         }
 
@@ -85,8 +86,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     }
 
 
-    fun routeTest() {
-        val originLatLng = LatLng(45.502516, -73.563929)//HardCoded for now
+    fun routeTest(it: View) {
+        val originLatLng = LatLng(lastLocation.latitude, lastLocation.longitude)
         val destinationLatLng = LatLng(45.497044, -73.578407)//HardCoded for now
         //TODO: Origin and Destination should have a title
         this.map!!.addMarker(MarkerOptions().position(originLatLng).title("This is the origin"))
