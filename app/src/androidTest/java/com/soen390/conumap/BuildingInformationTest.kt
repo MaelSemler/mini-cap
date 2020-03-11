@@ -36,7 +36,7 @@ class BuildingInformationTest {
         sleep(5000)
 
         // Open building info of each SGW building.
-        /*val sgwButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/button_SGW"))
+        val sgwButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/button_SGW"))
         sgwButton.click()
         val sgwHMarker: UiObject = device.findObject(UiSelector().description("Henry F. Hall Building. SGW Campus\n" +
                 "1455 De Maisonneuve Blvd. W.."))
@@ -92,7 +92,7 @@ class BuildingInformationTest {
             (height * 0.60).toInt(),
             (width * 0.15).toInt(),
             (height * 0.40).toInt(),
-            10
+            50
         )
         val sgwGNMarker: UiObject = device.findObject(UiSelector().description("Grey Nuns Building. SGW Campus\n" +
                 "1190 Guy."))
@@ -114,7 +114,7 @@ class BuildingInformationTest {
         )
         val sgwVAMarker: UiObject = device.findObject(UiSelector().description("Visual Arts Building. SGW Campus\n" +
                 "1395 René Lévesque W.."))
-        sgwVAMarker.click()*/
+        sgwVAMarker.click()
 
         // Open building info of each LOY building.
         val loyButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/button_LOY"))
