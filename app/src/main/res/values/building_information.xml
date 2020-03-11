@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- SGW Buildings -->
+    <string name="sgwHName">Henry F. Hall Building</string>
+    <string name="sgwHInfo">SGW Campus\n1455 De Maisonneuve Blvd. W.</string>
+    <string name="sgwGMName">Guy-De Maisonneuve Building</string>
+    <string name="sgwGMInfo">SGW Campus\n1550 De Maisonneuve Blvd. W.</string>
+    <string name="sgwMBName">John Molson Building</string>
+    <string name="sgwMBInfo">SGW Campus\n1450 Guy</string>
+    <string name="sgwEVName">Engineering, Computer Science and Visual Arts Integrated Complex</string>
+    <string name="sgwEVInfo">SGW Campus\n1515 St. Catherine W.</string>
+    <string name="sgwFGName">Faubourg Ste-Catherine Building</string>
+    <string name="sgwFGInfo">SGW Campus\n1610 St. Catherine W.</string>
+    <string name="sgwFBName">Faubourg Building</string>
+    <string name="sgwFBInfo">SGW Campus\n1250 Guy</string>
+    <string name="sgwLBName">J.W. McConnell Building</string>
+    <string name="sgwLBInfo">SGW Campus\n1400 De Maisonneuve Blvd. W.</string>
+    <string name="sgwGNName">Grey Nuns Building</string>
+    <string name="sgwGNInfo">SGW Campus\n1190 Guy</string>
+    <string name="sgwLSName">Learning Square</string>
+    <string name="sgwLSInfo">SGW Campus\n1535 De Maisonneuve Blvd. W.</string>
+    <string name="sgwVAName">Visual Arts Building</string>
+    <string name="sgwVAInfo">SGW Campus\n1395 René Lévesque W.</string>
+
+    <!-- LOY buildings -->
+    <string name="loyGEName">Centre for Structural and Functional Genomics</string>
+    <string name="loyGEInfo">Loyola Campus\n7141 Sherbrooke W.</string>
+    <string name="loyCJName">Communication Studies and Journalism Building</string>
+    <string name="loyCJInfo">Loyola Campus\n7141 Sherbrooke W.</string>
+    <string name="loyADName">Administration Building</string>
+    <string name="loyADInfo">Loyola Campus\n7141 Sherbrooke W.</string>
+    <string name="loySPName">Richard J. Renaud Science Complex</string>
+    <string name="loySPInfo">Loyola Campus\n7141 Sherbrooke W.</string>
+    <string name="loyCCName">Central Building</string>
+    <string name="loyCCInfo">Loyola Campus\n7141 Sherbrooke W.</string>
+    <string name="loyFCName">F. C. Smith Building</string>
+    <string name="loyFCInfo">Loyola Campus\n7141 Sherbrooke W.</string>
+    <string name="loyVLName">Vanier Library Building</string>
+    <string name="loyVLInfo">Loyola Campus\n7141 Sherbrooke W.</string>
+    <string name="loySCName">Student Centre</string>
+    <string name="loySCInfo">Loyola Campus\n7141 Sherbrooke W.</string>
+    <string name="loyPTName">Oscar Peterson Concert Hall</string>
+    <string name="loyPTInfo">Loyola Campus\n7141 Sherbrooke W.</string>
+    <string name="loyPSName">Physical Services Building</string>
+    <string name="loyPSInfo">Loyola Campus\n7141 Sherbrooke W.</string>
+    <string name="loyPYName">Psychology Building</string>
+    <string name="loyPYInfo">Loyola Campus\n7141 Sherbrooke W.</string>
+    <string name="loyHAName">Hingston Hall, wing HA</string>
+    <string name="loyHAInfo">Loyola Campus\n7141 Sherbrooke W.</string>
+    <string name="loyHBName">Hingston Hall, wing HB</string>
+    <string name="loyHBInfo">Loyola Campus\n7141 Sherbrooke W.</string>
+    <string name="loyHCName">Hingston Hall, wing HC</string>
+    <string name="loyHCInfo">Loyola Campus\n7141 Sherbrooke W.</string>
+</resources>

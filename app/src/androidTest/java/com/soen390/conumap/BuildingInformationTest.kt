@@ -41,7 +41,7 @@ class BuildingInformationTest {
         val sgwHMarker: UiObject = device.findObject(UiSelector().description("Henry F. Hall Building. SGW Campus\n" +
                 "1455 De Maisonneuve Blvd. W.."))
         sgwHMarker.click()
-        val sgwLBMarker: UiObject = device.findObject(UiSelector().description("J.W. McConnel Building. SGW Campus\n" +
+        val sgwLBMarker: UiObject = device.findObject(UiSelector().description("J.W. McConnell Building. SGW Campus\n" +
                 "1400 De Maisonneuve Blvd. W.."))
         sgwLBMarker.click()
 
