@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="SGWLat" format="float" type="string">45.4975</item>
+    <item name="SGWLong" format="float" type="string">-73.579004</item>
+    <item name="LOYLat" format="float" type="string" >45.458275</item>
+    <item name="LOYLong" format="float" type="string">-73.640469</item>
+
+</resources>

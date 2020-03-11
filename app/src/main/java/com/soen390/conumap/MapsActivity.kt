@@ -4,6 +4,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.graphics.Color
+import android.util.TypedValue
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -796,8 +797,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         map = googleMap
         val buttonSGW = findViewById<Button>(R.id.button_SGW)
         val buttonLOY= findViewById<Button>(R.id.button_LOY)
-        val loyola=LatLng(45.458275,-73.640469)
-        val downTown=LatLng(45.4975,-73.579004)
+        val loyolaLAT= (resources.getValue(R.string.LOYLat,TypedValue(),true)).toString().toDouble()
+            print(loyolaLAT)
+        val loyolaLONG= (resources.getValue(R.string.LOYLong,TypedValue(),true)).toString().toDouble()
+        val loyola=LatLng(loyolaLAT,loyolaLONG)
+        val downtownLAT= (resources.getValue(R.string.SGWLat,TypedValue(),true)).toString().toDouble()
+        val downtownLONG= (resources.getValue(R.string.SGWLong,TypedValue(),true)).toString().toDouble()
+        val downTown=LatLng(downtownLAT,downtownLONG)
         buttonSGW?.setOnClickListener()   //function for when SGW button is clicked
         {
             map.clear()
