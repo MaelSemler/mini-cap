@@ -28,6 +28,7 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolygonOptions
+import androidx.fragment.app.Fragment
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
     GoogleMap.OnInfoWindowClickListener {
@@ -44,7 +45,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
 
+        val fragmentManager = supportFragmentManager
+        val ft = fragmentManager.beginTransaction()
 
+        /*
+        Following line on 'SearchPlaceFragment()' to be uncommented to see empty search bar
+         */
+        val searchBarFragment = SearchPlaceFragment()
+
+        /*
+         Following line on 'SearchPlaceCompletedFragment()' to be uncommented to see full search bar
+         */
+        // val searchBarFragment = SearchPlaceCompletedFragment()
+
+        // Replace the fragment on container
+        ft.replace(R.id.frame_container,searchBarFragment)
+        ft.addToBackStack(null)
+
+        ft.commit()
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
