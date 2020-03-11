@@ -462,6 +462,18 @@
         <item>-73.640448</item>
     </string-array>
 
+    <string-array name="buildingHAPoints">
+        <item>45.459338</item>
+        <item>-73.641162</item>
+        <item>45.459425</item>
+        <item>-73.641391</item>
+        <item>45.459584</item>
+        <item> -73.641268</item>
+        <item>45.459496</item>
+        <item>-73.641043</item>
+        <item>45.459338</item>
+        <item>-73.641162</item>
+    </string-array>
 
     <string-array name="buildingEVPoints">
         <item>45.495208</item>
@@ -797,6 +809,36 @@
         <item>-73.577218</item>
         <item>45.494397</item>
         <item>-73.577521</item>
+    </string-array>
+
+    <string-array name="buildingLSPoints">
+        <item>45.496167</item>
+        <item>-73.579452</item>
+        <item>45.496306</item>
+        <item>-73.579744</item>
+        <item>45.496521</item>
+        <item>-73.579541</item>
+        <item>45.496370</item>
+        <item>-73.579257</item>
+        <item>45.496167</item>
+        <item>-73.579452</item>
+    </string-array>
+
+    <string-array name="buildingVAPoints">
+        <item>45.495399</item>
+        <item>-73.573766</item>
+        <item>45.495676</item>
+        <item>-73.574311</item>
+        <item>45.496194</item>
+        <item>-73.573793</item>
+        <item>45.496075</item>
+        <item>-73.573554</item>
+        <item>45.495822</item>
+        <item>-73.573802</item>
+        <item>45.495670</item>
+        <item>-73.573500</item>
+        <item>45.495399</item>
+        <item>-73.573766</item>
     </string-array>
 
 </resources>

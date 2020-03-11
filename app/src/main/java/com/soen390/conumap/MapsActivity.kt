@@ -443,6 +443,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
         buildingPY.fillColor(concordiaRed).strokeWidth(0.1f)
 
+        val buildingHA = PolygonOptions()
+        val buildingHAArray = resources.getStringArray(R.array.buildingHAPoints)
+        for (i in buildingHAArray.indices) {
+            if (i % 2 == 0) {
+                var latitude = buildingHAArray[i].toDouble()
+                var longitude = buildingHAArray[i + 1].toDouble()
+                var latlng = LatLng(latitude, longitude)
+                buildingHA.add(latlng)
+            }
+        }
+        buildingHA.fillColor(concordiaRed).strokeWidth(0.1f)
+
         // Creates the buildings for SGW campus
         val buildingEV = PolygonOptions()
         val buildingEVArray = resources.getStringArray(R.array.buildingEVPoints)
@@ -529,7 +541,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         buildingGN.fillColor(concordiaRed).strokeWidth(0.1f)
 
         val buildingFB = PolygonOptions()
-        val buildingFBArray = resources.getStringArray(R.array.buildingGNPoints)
+        val buildingFBArray = resources.getStringArray(R.array.buildingFBPoints)
         for (i in buildingFBArray.indices) {
             if (i % 2 == 0) {
                 var latitude = buildingGNArray[i].toDouble()
@@ -539,6 +551,30 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             }
         }
         buildingFB.fillColor(concordiaRed).strokeWidth(0.1f)
+
+        val buildingLS = PolygonOptions()
+        val buildingLSArray = resources.getStringArray(R.array.buildingLSPoints)
+        for (i in buildingFBArray.indices) {
+            if (i % 2 == 0) {
+                var latitude = buildingGNArray[i].toDouble()
+                var longitude = buildingGNArray[i + 1].toDouble()
+                var latlng = LatLng(latitude, longitude)
+                buildingLS.add(latlng)
+            }
+        }
+        buildingLS.fillColor(concordiaRed).strokeWidth(0.1f)
+
+        val buildingVA = PolygonOptions()
+        val buildingVAArray = resources.getStringArray(R.array.buildingVAPoints)
+        for (i in buildingVAArray.indices) {
+            if (i % 2 == 0) {
+                var latitude = buildingGNArray[i].toDouble()
+                var longitude = buildingGNArray[i + 1].toDouble()
+                var latlng = LatLng(latitude, longitude)
+                buildingVA.add(latlng)
+            }
+        }
+        buildingVA.fillColor(concordiaRed).strokeWidth(0.1f)
 
         // Adds all buildings to Map
         map.addPolygon(buildingCJ)
@@ -550,6 +586,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         map.addPolygon(buildingFC)
         map.addPolygon(buildingVL)
         map.addPolygon(buildingPY)
+        map.addPolygon(buildingHA)
         map.addPolygon(buildingEV)
         map.addPolygon(buildingGM)
         map.addPolygon(buildingH)
@@ -558,6 +595,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         map.addPolygon(buildingLB)
         map.addPolygon(buildingGN)
         map.addPolygon(buildingFB)
+        map.addPolygon(buildingLS)
+        map.addPolygon(buildingVA)
     }
 
     //Listener for the current location button
