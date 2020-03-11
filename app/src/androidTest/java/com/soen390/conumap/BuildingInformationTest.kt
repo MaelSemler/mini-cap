@@ -162,6 +162,7 @@ class BuildingInformationTest {
         val loySPMarker: UiObject = device.findObject(UiSelector().description("Richard J. Renaud Science Complex. Loyola Campus\n" +
                 "7141 Sherbrooke W.."))
         loySPMarker.click()
+        sleep(1000)
         device.drag(
             (width * 0.75).toInt(),
             height / 2,
