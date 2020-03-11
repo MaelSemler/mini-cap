@@ -20,7 +20,7 @@
         android:drawableLeft="@drawable/search"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="250dp"
         android:singleLine="true"
         />
 </RelativeLayout>
