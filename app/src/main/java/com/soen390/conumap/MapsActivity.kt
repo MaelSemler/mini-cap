@@ -43,6 +43,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+
+
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -93,6 +96,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         this.map!!.addMarker(MarkerOptions().position(originLatLng).title("This is the origin"))
         this.map!!.addMarker(MarkerOptions().position(destinationLatLng).title("This is the destination"))
         this.map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(originLatLng, 14.5f))
+
+        //FOR SOME REASON THIS MAKES EVERYTHING CRASH
+//        val totalDist :TextView = findViewById(R.id.totalDistance)
+//        val totalTime: TextView = findViewById(R.id.totalTime)
 
         route(originLatLng, destinationLatLng)
     }
