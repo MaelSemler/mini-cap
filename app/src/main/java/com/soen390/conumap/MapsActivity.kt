@@ -68,7 +68,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-         if(map != null){
+      
+        if(map != null){
             // Customise the styling of the map using a JSON object defined in the raw resource file
             map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle ))
             map.uiSettings.isMyLocationButtonEnabled = false
@@ -76,9 +77,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
             addShapesToMap()
 //            addMarkersToMap()
+            createBuildings()
             setUpMap()
             currentLocationButton()
-            changeBetweenCampuses(map)
+            changeBetweenCampuses()
         }
     }
 
@@ -201,7 +203,159 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
     }
 
-    private fun addShapesToMap(){
+    // Adds Building objects for all campus buildings.
+    private fun createBuildings() {
+        // SGW Buildings.
+        var sgwH = Building(
+            resources.getString(R.string.sgwHName),
+            resources.getString(R.string.sgwHInfo),
+            LatLng(45.497304, -73.578923),
+            map
+        )
+
+        val sgwGM = Building(
+            resources.getString(R.string.sgwGMName),
+            resources.getString(R.string.sgwGMInfo),
+            LatLng(45.495850, -73.578766),
+            map
+        )
+        val sgwMB = Building(
+            resources.getString(R.string.sgwMBName),
+            resources.getString(R.string.sgwMBInfo),
+            LatLng(45.495418, -73.579169),
+            map
+        )
+        val sgwEV = Building(
+            resources.getString(R.string.sgwEVName),
+            resources.getString(R.string.sgwEVInfo),
+            LatLng(45.495506, -73.577774),
+            map
+        )
+        val sgwFG = Building(
+            resources.getString(R.string.sgwFGName),
+            resources.getString(R.string.sgwFGInfo),
+            LatLng(45.494373, -73.578332),
+            map
+        )
+        val sgwFB = Building(
+            resources.getString(R.string.sgwFBName),
+            resources.getString(R.string.sgwFBInfo),
+            LatLng(45.494753, -73.577731),
+            map
+        )
+        val sgwLB = Building(
+            resources.getString(R.string.sgwLBName),
+            resources.getString(R.string.sgwLBInfo),
+            LatLng(45.496990, -73.577951),
+            map
+        )
+        val sgwGN = Building(
+            resources.getString(R.string.sgwGNName),
+            resources.getString(R.string.sgwGNInfo),
+            LatLng(45.493652, -73.576985),
+            map
+        )
+        val sgwLS = Building(
+            resources.getString(R.string.sgwLSName),
+            resources.getString(R.string.sgwLSInfo),
+            LatLng(45.496232, -73.579491),
+            map
+        )
+        val sgwVA = Building(
+            resources.getString(R.string.sgwVAName),
+            resources.getString(R.string.sgwVAInfo),
+            LatLng(45.495683, -73.573565),
+            map
+        )
+
+        // LOY Buildings.
+        val loyGE = Building(
+            resources.getString(R.string.loyGEName),
+            resources.getString(R.string.loyGEInfo),
+            LatLng(45.456984, -73.640442),
+            map
+        )
+        val loyCJ = Building(
+            resources.getString(R.string.loyCJName),
+            resources.getString(R.string.loyCJInfo),
+            LatLng(45.457477, -73.640306),
+            map
+        )
+        val loyAD = Building(
+            resources.getString(R.string.loyADName),
+            resources.getString(R.string.loyADInfo),
+            LatLng(45.457973, -73.639890),
+            map
+        )
+        val loySP = Building(
+            resources.getString(R.string.loySPName),
+            resources.getString(R.string.loySPInfo),
+            LatLng(45.457879, -73.641682),
+            map
+        )
+        val loyCC = Building(
+            resources.getString(R.string.loyCCName),
+            resources.getString(R.string.loyCCInfo),
+            LatLng(45.458266, -73.640282),
+            map
+        )
+        val loyFC = Building(
+            resources.getString(R.string.loyFCName),
+            resources.getString(R.string.loyFCInfo),
+            LatLng(45.458564, -73.639295),
+            map
+        )
+        val loyVL = Building(
+            resources.getString(R.string.loyVLName),
+            resources.getString(R.string.loyVLInfo),
+            LatLng(45.458982, -73.638619),
+            map
+        )
+        val loySC = Building(
+            resources.getString(R.string.loySCName),
+            resources.getString(R.string.loySCInfo),
+            LatLng(45.459085, -73.639221),
+            map
+        )
+        val loyPT = Building(
+            resources.getString(R.string.loyPTName),
+            resources.getString(R.string.loyPTInfo),
+            LatLng(45.459325, -73.638907),
+            map
+        )
+        val loyPS = Building(
+            resources.getString(R.string.loyPSName),
+            resources.getString(R.string.loyPSInfo),
+            LatLng(45.459720, -73.639819),
+            map
+        )
+        val loyPY = Building(
+            resources.getString(R.string.loyPYName),
+            resources.getString(R.string.loyPYInfo),
+            LatLng(45.459028, -73.640591),
+            map
+        )
+        val loyHA = Building(
+            resources.getString(R.string.loyHAName),
+            resources.getString(R.string.loyHAInfo),
+            LatLng(45.459431, -73.641248),
+            map
+        )
+        val loyHB = Building(
+            resources.getString(R.string.loyHBName),
+            resources.getString(R.string.loyHBInfo),
+            LatLng(45.459081, -73.641940),
+            map
+        )
+        val loyHC = Building(
+            resources.getString(R.string.loyHCName),
+            resources.getString(R.string.loyHCInfo),
+            LatLng(45.459630, -73.642082),
+            map
+        )
+    }
+
+    private fun addShapesToMap() {
         val concordiaRed = Color.rgb(147,35,57)
         // Creates the shapes for Loyola Buildings
         val buildingCJ = PolygonOptions()
@@ -660,36 +814,42 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
     }
 
-
-    private fun changeBetweenCampuses (googleMap:GoogleMap) {
+    private fun changeBetweenCampuses() {
         //When either button is clicked, map moves to respective location.
-        map = googleMap
         val buttonSGW = findViewById<Button>(R.id.button_SGW)
         val buttonLOY= findViewById<Button>(R.id.button_LOY)
+
         val loyola=LatLng(45.458275,-73.640469)
         val downTown=LatLng(45.4975,-73.579004)
-        buttonSGW?.setOnClickListener()
-        {
-            map.clear()
-            map.addMarker(MarkerOptions().
-                    position(downTown).
-                title("SGW").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
-//            addMarkersToMap()
+
+        val sgwCampusMarker = map.addMarker(MarkerOptions()
+            .position(downTown)
+            .title("SGW")
+            .icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))
+            .visible(false)
+        )
+        val loyCampusMarker = map.addMarker(MarkerOptions()
+            .position(loyola)
+            .title("LOY")
+            .icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))
+            .visible(false)
+        )
+
+        buttonSGW?.setOnClickListener {
+            loyCampusMarker.isVisible = false
+            sgwCampusMarker.isVisible = true
             map.moveCamera(CameraUpdateFactory.newLatLng(downTown))
-            addShapesToMap()
         }
-        buttonLOY?.setOnClickListener()
-        {
-            map.clear()
-            map.addMarker(MarkerOptions().position(loyola).title("LOY").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
-//            addMarkersToMap()
+
+        buttonLOY?.setOnClickListener {
+            sgwCampusMarker.isVisible = false
+            loyCampusMarker.isVisible = true
             map.moveCamera(CameraUpdateFactory.newLatLng(loyola))
-            addShapesToMap()
         }
     }
 
     // Default marker behaviour (show popup).
-    override fun onMarkerClick(mkr: Marker?) = false
+    override fun onMarkerClick(mkr: Marker) = false
 
     // Close info window when it is tapped.
     override fun onInfoWindowClick(mkr: Marker) {
