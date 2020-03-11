@@ -113,20 +113,23 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         /*
         Following line on 'SearchPlaceFragment()' to be uncommented to see empty search bar
          */
-      // val searchBarFragment = SearchPlaceFragment()
+        val searchBarFragment = SearchPlaceFragment()
 
         /*
          Following line on 'SearchPlaceCompletedFragment()' to be uncommented to see full search bar
          */
-        val searchBarFragment = SearchPlaceCompletedFragment()
-        ft.add(R.id.map, searchBarFragment as Fragment)
+        // val searchBarFragment = SearchPlaceCompletedFragment()
+
+        // Replace the fragment on container
+        ft.replace(R.id.frame_container,searchBarFragment)
+        ft.addToBackStack(null)
+
+        ft.commit()
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
-        ft.commit()
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
