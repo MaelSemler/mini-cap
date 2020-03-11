@@ -797,13 +797,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         map = googleMap
         val buttonSGW = findViewById<Button>(R.id.button_SGW)
         val buttonLOY= findViewById<Button>(R.id.button_LOY)
-        val loyolaLAT= (resources.getValue(R.string.LOYLat,TypedValue(),true)).toString().toDouble()
-            print(loyolaLAT)
-        val loyolaLONG= (resources.getValue(R.string.LOYLong,TypedValue(),true)).toString().toDouble()
-        val loyola=LatLng(loyolaLAT,loyolaLONG)
-        val downtownLAT= (resources.getValue(R.string.SGWLat,TypedValue(),true)).toString().toDouble()
-        val downtownLONG= (resources.getValue(R.string.SGWLong,TypedValue(),true)).toString().toDouble()
-        val downTown=LatLng(downtownLAT,downtownLONG)
+
+        val loyola=LatLng((resources.getString(R.string.LoyLat)).toDouble(),(resources.getString(R.string.LOYLong)).toDouble())
+        //creates coordinates for loyola campus
+        val downTown=LatLng((resources.getString(R.string.SGWLat)).toDouble(),(resources.getString(R.string.SGWLong)).toDouble())
+        //creates coordinates for downtown campus
+
         buttonSGW?.setOnClickListener()   //function for when SGW button is clicked
         {
             map.clear()
