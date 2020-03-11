@@ -4,6 +4,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.graphics.Color
+import android.util.TypedValue
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -14,6 +15,7 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolygonOptions
+import androidx.fragment.app.Fragment
 
 import android.widget.Button
 import com.google.android.gms.maps.*
@@ -29,6 +31,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+
+        val fragmentManager = supportFragmentManager
+        val ft = fragmentManager.beginTransaction()
+
+        /*
+        Following line on 'SearchPlaceFragment()' to be uncommented to see empty search bar
+         */
+        val searchBarFragment = SearchPlaceFragment()
+
+        /*
+         Following line on 'SearchPlaceCompletedFragment()' to be uncommented to see full search bar
+         */
+        // val searchBarFragment = SearchPlaceCompletedFragment()
+
+        // Replace the fragment on container
+        ft.replace(R.id.frame_container,searchBarFragment)
+        ft.addToBackStack(null)
+
+        ft.commit()
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -50,7 +72,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             createBuildings()
             setUpMap()
             currentLocationButton()
-            changeBetweenCampuses()
+            changeBetweenCampuses(map)
         }
     }
 
@@ -695,37 +717,33 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
     }
 
-    private fun changeBetweenCampuses() {
+    private fun changeBetweenCampuses (googleMap:GoogleMap) {   //Button to toggle between campuses
         //When either button is clicked, map moves to respective location.
         val buttonSGW = findViewById<Button>(R.id.button_SGW)
         val buttonLOY= findViewById<Button>(R.id.button_LOY)
 
-        val loyola=LatLng(45.458275,-73.640469)
-        val downTown=LatLng(45.4975,-73.579004)
+        val loyola=LatLng((resources.getString(R.string.LoyLat)).toDouble(),(resources.getString(R.string.LOYLong)).toDouble())
+        //creates coordinates for loyola campus
+        val downTown=LatLng((resources.getString(R.string.SGWLat)).toDouble(),(resources.getString(R.string.SGWLong)).toDouble())
+        //creates coordinates for downtown campus
 
-        val sgwCampusMarker = map.addMarker(MarkerOptions()
-            .position(downTown)
-            .title("SGW")
-            .icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))
-            .visible(false)
-        )
-        val loyCampusMarker = map.addMarker(MarkerOptions()
-            .position(loyola)
-            .title("LOY")
-            .icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))
-            .visible(false)
-        )
-
-        buttonSGW?.setOnClickListener {
-            loyCampusMarker.isVisible = false
-            sgwCampusMarker.isVisible = true
-            map.moveCamera(CameraUpdateFactory.newLatLng(downTown))
+        buttonSGW?.setOnClickListener()   //function for when SGW button is clicked
+        {
+            map.clear()
+            map.addMarker(MarkerOptions().
+                    position(downTown).
+                title("SGW").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
+            createBuildings()
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(downTown,18f)) //changed from move camera
+            addShapesToMap()
         }
-
-        buttonLOY?.setOnClickListener {
-            sgwCampusMarker.isVisible = false
-            loyCampusMarker.isVisible = true
-            map.moveCamera(CameraUpdateFactory.newLatLng(loyola))
+        buttonLOY?.setOnClickListener()     //function for when Loyola button is clicked
+        {
+            map.clear()
+            map.addMarker(MarkerOptions().position(loyola).title("LOY").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
+            createBuildings()
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(loyola,18f)) ///changed from move camera
+            addShapesToMap()
         }
     }
 
