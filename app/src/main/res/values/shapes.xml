@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    // Building Arrays alternate between Latitude and Longitude
+    <!-- Building Arrays alternate between Latitude and Longitude -->
     <string-array name="buildingCJPoints">
         <item>45.457218</item>
         <item>-73.640016</item>

@@ -452,6 +452,104 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
         buildingPY.fillColor(concordiaRed).strokeWidth(0.1f)
 
+        // Creates the buildings for SGW campus
+        val buildingEV = PolygonOptions()
+        val buildingEVArray = resources.getStringArray(R.array.buildingEVPoints)
+        for (i in buildingEVArray.indices) {
+            if (i % 2 == 0) {
+                var latitude = buildingEVArray[i].toDouble()
+                var longitude = buildingEVArray[i + 1].toDouble()
+                var latlng = LatLng(latitude, longitude)
+                buildingEV.add(latlng)
+            }
+        }
+        buildingEV.fillColor(concordiaRed).strokeWidth(0.1f)
+
+        val buildingGM = PolygonOptions()
+        val buildingGMArray = resources.getStringArray(R.array.buildingGMPoints)
+        for (i in buildingGMArray.indices) {
+            if (i % 2 == 0) {
+                var latitude = buildingGMArray[i].toDouble()
+                var longitude = buildingGMArray[i + 1].toDouble()
+                var latlng = LatLng(latitude, longitude)
+                buildingGM.add(latlng)
+            }
+        }
+        buildingGM.fillColor(concordiaRed).strokeWidth(0.1f)
+
+        val buildingH = PolygonOptions()
+        val buildingHArray = resources.getStringArray(R.array.buildingHPoints)
+        for (i in buildingHArray.indices) {
+            if (i % 2 == 0) {
+                var latitude = buildingHArray[i].toDouble()
+                var longitude = buildingHArray[i + 1].toDouble()
+                var latlng = LatLng(latitude, longitude)
+                buildingH.add(latlng)
+            }
+        }
+        buildingH.fillColor(concordiaRed).strokeWidth(0.1f)
+
+        val buildingFG = PolygonOptions()
+        val buildingFGArray = resources.getStringArray(R.array.buildingFGPoints)
+        for (i in buildingFGArray.indices) {
+            if (i % 2 == 0) {
+                var latitude = buildingFGArray[i].toDouble()
+                var longitude = buildingFGArray[i + 1].toDouble()
+                var latlng = LatLng(latitude, longitude)
+                buildingFG.add(latlng)
+            }
+        }
+        buildingFG.fillColor(concordiaRed).strokeWidth(0.1f)
+
+        val buildingMB = PolygonOptions()
+        val buildingMBArray = resources.getStringArray(R.array.buildingMBPoints)
+        for (i in buildingMBArray.indices) {
+            if (i % 2 == 0) {
+                var latitude = buildingMBArray[i].toDouble()
+                var longitude = buildingMBArray[i + 1].toDouble()
+                var latlng = LatLng(latitude, longitude)
+                buildingMB.add(latlng)
+            }
+        }
+        buildingMB.fillColor(concordiaRed).strokeWidth(0.1f)
+
+        val buildingLB = PolygonOptions()
+        val buildingLBArray = resources.getStringArray(R.array.buildingLBPoints)
+        for (i in buildingLBArray.indices) {
+            if (i % 2 == 0) {
+                var latitude = buildingLBArray[i].toDouble()
+                var longitude = buildingLBArray[i + 1].toDouble()
+                var latlng = LatLng(latitude, longitude)
+                buildingLB.add(latlng)
+            }
+        }
+        buildingLB.fillColor(concordiaRed).strokeWidth(0.1f)
+
+        val buildingGN = PolygonOptions()
+        val buildingGNArray = resources.getStringArray(R.array.buildingGNPoints)
+        for (i in buildingGNArray.indices) {
+            if (i % 2 == 0) {
+                var latitude = buildingGNArray[i].toDouble()
+                var longitude = buildingGNArray[i + 1].toDouble()
+                var latlng = LatLng(latitude, longitude)
+                buildingGN.add(latlng)
+            }
+        }
+        buildingGN.fillColor(concordiaRed).strokeWidth(0.1f)
+
+        val buildingFB = PolygonOptions()
+        val buildingFBArray = resources.getStringArray(R.array.buildingGNPoints)
+        for (i in buildingFBArray.indices) {
+            if (i % 2 == 0) {
+                var latitude = buildingGNArray[i].toDouble()
+                var longitude = buildingGNArray[i + 1].toDouble()
+                var latlng = LatLng(latitude, longitude)
+                buildingFB.add(latlng)
+            }
+        }
+        buildingFB.fillColor(concordiaRed).strokeWidth(0.1f)
+
+        // Adds all buildings to Map
         map.addPolygon(buildingCJ)
         map.addPolygon(buildingGE)
         map.addPolygon(buildingCC)
@@ -461,189 +559,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         map.addPolygon(buildingFC)
         map.addPolygon(buildingVL)
         map.addPolygon(buildingPY)
-
-        // Creates the buildings for SGW campus
-        val buildingEV = PolygonOptions()
-            .add(
-                LatLng(45.495208, -73.577884),
-                LatLng(45.495626, -73.578831),
-                LatLng(45.495961, -73.578492),
-                LatLng(45.495733, -73.578015),
-                LatLng(45.496052, -73.577709),
-                LatLng(45.495832, -73.577246),
-                LatLng(45.495540, -73.577528),
-                LatLng(45.495552, -73.577557),
-                LatLng(45.495474, -73.577626),
-                LatLng(45.495456, -73.577598),
-                LatLng(45.495208, -73.577884)
-            ).fillColor(concordiaRed).strokeWidth(0.1f)
-        val buildingGM = PolygonOptions()
-            .add(
-                LatLng(45.495651, -73.578809),
-                LatLng(45.495780, -73.579088),
-                LatLng(45.495761, -73.579105),
-                LatLng(45.495783, -73.579151),
-                LatLng(45.496133, -73.578808),
-                LatLng(45.495977, -73.578482)
-            ).fillColor(concordiaRed).strokeWidth(0.1f)
-        val buildingH  = PolygonOptions()
-            .add(
-                LatLng(45.496832, -73.578850),
-                LatLng(45.497173, -73.579553),
-                LatLng(45.497729, -73.579034),
-                LatLng(45.497380, -73.5783300),
-                LatLng(45.496832, -73.578850)
-            ).fillColor(concordiaRed).strokeWidth(0.1f)
-        val buildingFG = PolygonOptions()
-            .add(
-                LatLng(45.494703, -73.578041),
-                LatLng(45.494456, -73.577615),
-                LatLng(45.494397, -73.577691),
-                LatLng(45.494425, -73.577763),
-                LatLng(45.494404, -73.577802),
-                LatLng(45.494374, -73.577766),
-                LatLng(45.494188, -73.577990),
-                LatLng(45.494201, -73.578011),
-                LatLng(45.494117, -73.578118),
-                LatLng(45.494104, -73.578113),
-                LatLng(45.493911, -73.578345),
-                LatLng(45.493922, -73.578360),
-                LatLng(45.493898, -73.578391),
-                LatLng(45.493881, -73.578384),
-                LatLng(45.493837, -73.578437),
-                LatLng(45.493847, -73.578465),
-                LatLng(45.493626, -73.578731),
-                LatLng(45.493832, -73.579068),
-                LatLng(45.494301, -73.578518),
-                LatLng(45.494310, -73.578532),
-                LatLng(45.494378, -73.578443),
-                LatLng(45.494703, -73.578041)
-            ).fillColor(concordiaRed).strokeWidth(0.1f)
-        val buildingMB = PolygonOptions()
-            .add(
-                LatLng(45.495188, -73.578524),
-                LatLng(45.495004, -73.578724),
-                LatLng(45.495035, -73.578790),
-                LatLng(45.495005, -73.578822),
-                LatLng(45.495172, -73.579177),
-                LatLng(45.495225, -73.579120),
-                LatLng(45.495364, -73.579369),
-                LatLng(45.495527, -73.579199),
-                LatLng(45.495450, -73.578964),
-                LatLng(45.495188, -73.578524)
-            ).fillColor(concordiaRed).strokeWidth(0.1f)
-        val buildingLB = PolygonOptions()
-            .add(
-                LatLng(45.496254, -73.577697),
-                LatLng(45.496676, -73.578576),
-                LatLng(45.496713, -73.578538),
-                LatLng(45.496734, -73.578586),
-                LatLng(45.496913, -73.578417),
-                LatLng(45.496888, -73.578369),
-                LatLng(45.496931, -73.578331),
-                LatLng(45.496918, -73.578293),
-                LatLng(45.496948, -73.578260),
-                LatLng(45.496970, -73.578306),
-                LatLng(45.497009, -73.578271),
-                LatLng(45.497028, -73.578307),
-                LatLng(45.497278, -73.578058),
-                LatLng(45.497152, -73.577808),
-                LatLng(45.497123, -73.577837),
-                LatLng(45.497099, -73.577789),
-                LatLng(45.497136, -73.577743),
-                LatLng(45.497048, -73.577581),
-                LatLng(45.497017, -73.577611),
-                LatLng(45.496998, -73.577568),
-                LatLng(45.497025, -73.577536),
-                LatLng(45.496903, -73.577285),
-                LatLng(45.496617, -73.577555),
-                LatLng(45.496635, -73.577602),
-                LatLng(45.496596, -73.577637),
-                LatLng(45.496508, -73.577458),
-                LatLng(45.496254, -73.577697)
-            ).fillColor(concordiaRed).strokeWidth(0.1f)
-        val buildingGN = PolygonOptions()
-            .add(
-                LatLng(45.492593, -73.576533),
-                LatLng(45.492617, -73.576577),
-                LatLng(45.492609, -73.576584),
-                LatLng(45.492747, -73.576869),
-                LatLng(45.492728, -73.576874),
-                LatLng(45.492678, -73.576923),
-                LatLng(45.492678, -73.576965),
-                LatLng(45.492712, -73.577033),
-                LatLng(45.492774, -73.576973),
-                LatLng(45.492796, -73.576978),
-                LatLng(45.492810, -73.576960),
-                LatLng(45.492897, -73.577142),
-                LatLng(45.492838, -73.577198),
-                LatLng(45.492927, -73.577380),
-                LatLng(45.492993, -73.577314),
-                LatLng(45.493089, -73.577512),
-                LatLng(45.493198, -73.577402),
-                LatLng(45.493108, -73.577214),
-                LatLng(45.493364, -73.576962),
-                LatLng(45.493353, -73.576939),
-                LatLng(45.493441, -73.576854),
-                LatLng(45.493479, -73.576934),
-                LatLng(45.493450, -73.576964),
-                LatLng(45.493530, -73.577127),
-                LatLng(45.493576, -73.577082),
-                LatLng(45.493601, -73.577134),
-                LatLng(45.493581, -73.577153),
-                LatLng(45.493581, -73.577153),
-                LatLng(45.493633, -73.577266),
-                LatLng(45.493747, -73.577157),
-                LatLng(45.493671, -73.577004),
-                LatLng(45.493727, -73.576947),
-                LatLng(45.493665, -73.576825),
-                LatLng(45.493615, -73.576875),
-                LatLng(45.493554, -73.576746),
-                LatLng(45.493898, -73.576408),
-                LatLng(45.494193, -73.577022),
-                LatLng(45.493869, -73.577336),
-                LatLng(45.493973, -73.577561),
-                LatLng(45.494124, -73.577411),
-                LatLng(45.494093, -73.577348),
-                LatLng(45.494391, -73.577056),
-                LatLng(45.494019, -73.576281),
-                LatLng(45.494121, -73.576177),
-                LatLng(45.494034, -73.575996),
-                LatLng(45.493932, -73.576098),
-                LatLng(45.493713, -73.575641),
-                LatLng(45.493570, -73.575782),
-                LatLng(45.493794, -73.576246),
-                LatLng(45.493493, -73.576541),
-                LatLng(45.493470, -73.576499),
-                LatLng(45.493341, -73.576625),
-                LatLng(45.493025, -73.577006),
-                LatLng(45.492940, -73.576833),
-                LatLng(45.492948, -73.576799),
-                LatLng(45.492926, -73.576746),
-                LatLng(45.492927, -73.576749),
-                LatLng(45.492898, -73.576745),
-                LatLng(45.492732, -73.576396),
-                LatLng(45.492593, -73.576533)
-            ).fillColor(concordiaRed).strokeWidth(0.1f)
-
-        val buildingFB = PolygonOptions()
-            .add(
-                LatLng(45.494397, -73.577521),
-                LatLng(45.494700, -73.578035),
-                LatLng(45.494911, -73.577788),
-                LatLng(45.494870, -73.577714),
-                LatLng(45.494877, -73.577705),
-                LatLng(45.494836, -73.577633),
-                LatLng(45.494844, -73.577627),
-                LatLng(45.494798, -73.577550),
-                LatLng(45.494764, -73.577468),
-                LatLng(45.494764, -73.577467),
-                LatLng(45.494777, -73.577456),
-                LatLng(45.494692, -73.577310),
-                LatLng(45.494700, -73.577298),
-                LatLng(45.494656, -73.577218),
-                LatLng(45.494397, -73.577521)
-            ).fillColor(concordiaRed).strokeWidth(0.1f)
         map.addPolygon(buildingEV)
         map.addPolygon(buildingGM)
         map.addPolygon(buildingH)
