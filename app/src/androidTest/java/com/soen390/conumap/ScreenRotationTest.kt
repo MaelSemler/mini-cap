@@ -25,7 +25,7 @@ class ScreenRotationTest {
         // Open app.
         device.pressRecentApps()
 
-        sleep(1000)
+        sleep(5000)
 
         device.click(
             width / 2,
