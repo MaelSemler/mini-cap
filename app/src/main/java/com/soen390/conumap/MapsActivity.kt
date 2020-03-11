@@ -4,6 +4,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.graphics.Color
+import android.util.TypedValue
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -812,29 +813,33 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     }
 
 
-    private fun changeBetweenCampuses (googleMap:GoogleMap) {
+    private fun changeBetweenCampuses (googleMap:GoogleMap) {   //Button to toggle between campuses
         //When either button is clicked, map moves to respective location.
         map = googleMap
         val buttonSGW = findViewById<Button>(R.id.button_SGW)
         val buttonLOY= findViewById<Button>(R.id.button_LOY)
-        val loyola=LatLng(45.458275,-73.640469)
-        val downTown=LatLng(45.4975,-73.579004)
-        buttonSGW?.setOnClickListener()
+
+        val loyola=LatLng((resources.getString(R.string.LoyLat)).toDouble(),(resources.getString(R.string.LOYLong)).toDouble())
+        //creates coordinates for loyola campus
+        val downTown=LatLng((resources.getString(R.string.SGWLat)).toDouble(),(resources.getString(R.string.SGWLong)).toDouble())
+        //creates coordinates for downtown campus
+
+        buttonSGW?.setOnClickListener()   //function for when SGW button is clicked
         {
             map.clear()
             map.addMarker(MarkerOptions().
                     position(downTown).
                 title("SGW").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
             addMarkersToMap()
-            map.moveCamera(CameraUpdateFactory.newLatLng(downTown))
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(downTown,18f)) //changed from move camera
             addShapesToMap()
         }
-        buttonLOY?.setOnClickListener()
+        buttonLOY?.setOnClickListener()     //function for when Loyola button is clicked
         {
             map.clear()
             map.addMarker(MarkerOptions().position(loyola).title("LOY").icon(BitmapDescriptorFactory.defaultMarker(342.toFloat()))) //sets color, title and position of marker
             addMarkersToMap()
-            map.moveCamera(CameraUpdateFactory.newLatLng(loyola))
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(loyola,18f)) ///changed from move camera
             addShapesToMap()
         }
     }
