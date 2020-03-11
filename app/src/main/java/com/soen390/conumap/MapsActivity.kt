@@ -131,8 +131,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             }) {}
         val requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(directionsRequest)
+
+        map.setOnInfoWindowClickListener(this)
+
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(originLatLng, 18f))
     }
 
+    
     fun extractDirections(steps: JSONArray) {
         val directionText: TextView = findViewById(R.id.Directions)
         var textConverted = "Direction:" + '\n'
@@ -162,9 +167,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         //Put everything inside of the directionTextBox
         directionText.text = textConverted
 
-        map.setOnInfoWindowClickListener(this)
-
-        setUpMap()
     }
 
     private fun setUpMap() {
