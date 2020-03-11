@@ -544,8 +544,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         val buildingFBArray = resources.getStringArray(R.array.buildingFBPoints)
         for (i in buildingFBArray.indices) {
             if (i % 2 == 0) {
-                var latitude = buildingGNArray[i].toDouble()
-                var longitude = buildingGNArray[i + 1].toDouble()
+                var latitude = buildingFBArray[i].toDouble()
+                var longitude = buildingFBArray[i + 1].toDouble()
                 var latlng = LatLng(latitude, longitude)
                 buildingFB.add(latlng)
             }
@@ -554,10 +554,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         val buildingLS = PolygonOptions()
         val buildingLSArray = resources.getStringArray(R.array.buildingLSPoints)
-        for (i in buildingFBArray.indices) {
+        for (i in buildingLSArray.indices) {
             if (i % 2 == 0) {
-                var latitude = buildingGNArray[i].toDouble()
-                var longitude = buildingGNArray[i + 1].toDouble()
+                var latitude = buildingLSArray[i].toDouble()
+                var longitude = buildingLSArray[i + 1].toDouble()
                 var latlng = LatLng(latitude, longitude)
                 buildingLS.add(latlng)
             }
@@ -568,8 +568,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         val buildingVAArray = resources.getStringArray(R.array.buildingVAPoints)
         for (i in buildingVAArray.indices) {
             if (i % 2 == 0) {
-                var latitude = buildingGNArray[i].toDouble()
-                var longitude = buildingGNArray[i + 1].toDouble()
+                var latitude = buildingVAArray[i].toDouble()
+                var longitude = buildingVAArray[i + 1].toDouble()
                 var latlng = LatLng(latitude, longitude)
                 buildingVA.add(latlng)
             }
