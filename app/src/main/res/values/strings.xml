@@ -12,4 +12,13 @@
     <string name="menu_slideshow">Slideshow</string>
 
     <string name="home_second">Home Second</string>
+
+    <!--Strings from master -->
+    <string name="title_activity_maps">Map</string>
+    <string name="campus_Downtown">SGW</string>
+    <string name="campus_Loyola">LOY</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="vanier">Vanier Library, Con.</string>
 </resources>
