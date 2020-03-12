@@ -1,4 +1,4 @@
-package com.soen390.conumap.Building
+package com.soen390.conumap.building
 
 import android.content.Context
 import android.view.LayoutInflater
