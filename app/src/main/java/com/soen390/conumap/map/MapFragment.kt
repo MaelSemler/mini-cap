@@ -34,7 +34,7 @@ class MapFragment : Fragment() {
         Map.setUpMap(googleMap, activity!!)
 
         //Added a marker to test the method
-        Map.addMarker(LatLng(45.495418, -73.579169), "Bonjour", googleMap)
+        //Map.addMarker(LatLng(45.495418, -73.579169), "Bonjour")
 
 
     }
