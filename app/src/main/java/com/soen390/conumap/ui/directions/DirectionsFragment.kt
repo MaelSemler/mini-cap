@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.NavHostFragment
 
 import com.soen390.conumap.R
 
@@ -21,7 +22,23 @@ class DirectionsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.directions_fragment, container, false)
+        val root = inflater.inflate(R.layout.directions_fragment, container, false)
+
+        val start_button = root.findViewById<View>(R.id.start_button)
+        val end_button = root.findViewById<View>(R.id.end_button)
+        val return_button = root.findViewById<View>(R.id.return_button)
+        //TODO: change from button to text. it should't listen for a button click but an imput text
+        start_button.setOnClickListener{
+            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_directionsSearchFragment)
+        }
+        end_button.setOnClickListener{
+            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_directionsSearchFragment)
+        }
+        //TODO: look in if this is the best way to implement a "back" function
+        return_button.setOnClickListener{
+            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_searchCompletedFragment)
+        }
+        return root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
