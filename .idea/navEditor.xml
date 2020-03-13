@@ -24,6 +24,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_directionsFragment_to_searchCompletedFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -76,8 +81,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="379" />
-                            <option name="y" value="75" />
+                            <option name="x" value="375" />
+                            <option name="y" value="68" />
                           </Point>
                         </option>
                         <option name="myPositions">
