@@ -9,60 +9,50 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!-- for debugging purposes-->
 
-        <EditText
-            android:id="@+id/edSearchResults"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginEnd="80dp"
-
-            android:background="@drawable/round_rectangle_white"
-            android:drawableLeft="@drawable/search"
-            android:paddingEnd="40dp"
-            android:drawablePadding="10dp"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="10dp"
-            android:singleLine="true"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:focusable="true" />
-
-        <ImageButton
-            android:id="@+id/cancel_search"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/edSearchResults"
-            android:layout_alignBottom="@+id/edSearchResults"
-            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp">
 
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="0dp"
+            <Button
+                android:id="@+id/clear_input"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignEnd="@+id/edSearchResults"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/exit_red"
+                android:elevation="15dp"/>
 
-            android:backgroundTint="@android:color/transparent"
-            android:src="@drawable/return_arrow_search" />
+            <EditText
+                android:id="@+id/edSearchResults"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_toStartOf="@+id/cancel_search"
+                android:background="@drawable/round_rectangle_white"
+                android:drawableLeft="@drawable/search"
+                android:drawablePadding="10dp"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="10dp"
+                android:paddingEnd="40dp"
+                android:singleLine="true"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <ImageButton
-            android:id="@+id/clear_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/edSearchResults"
-            android:layout_alignEnd="@+id/edSearchResults"
-            android:layout_alignBottom="@+id/edSearchResults"
+            <Button
+                android:id="@+id/cancel_search"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/return_arrow_search" />
 
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="0dp"
-            android:backgroundTint="@android:color/transparent"
-            android:src="@drawable/exit_red" />
-
+            </RelativeLayout>
     </RelativeLayout>
-
 </FrameLayout>

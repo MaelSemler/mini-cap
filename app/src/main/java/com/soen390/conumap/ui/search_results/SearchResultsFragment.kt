@@ -1,5 +1,7 @@
 package com.soen390.conumap.ui.search_results
 
+import android.app.Activity
+import android.content.Context
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.KeyEvent
@@ -7,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -32,10 +35,12 @@ class SearchResultsFragment : Fragment() {
         //TODO: send the result of the search
 
         //Getting the Views from the fragment
-        val cancel_button = root.findViewById<View>(R.id.cancel_search) as ImageButton
-        val clear_button = root.findViewById<View>(R.id.clear_input) as ImageButton
+        val cancel_button = root.findViewById<View>(R.id.cancel_search) as Button
+        val clear_button = root.findViewById<View>(R.id.clear_input) as Button
         val search_bar = root.findViewById<View>(R.id.edSearchResults) as EditText
 
+        //Selects the search bar input
+        search_bar.requestFocus()
         //This is the search bar edit text
         //this method waits for the "ENTER" key to be pressed
         //It changes fragment when it is pressed
@@ -55,6 +60,9 @@ class SearchResultsFragment : Fragment() {
         //TODO: look in if this is the best way to implement a "back" function
         cancel_button.setOnClickListener{
             NavHostFragment.findNavController(this).navigateUp()
+            //TODO:if keyboard is shown hide the keyboard
+            hideKeyboard()
+
         }
         return root
     }
@@ -63,6 +71,38 @@ class SearchResultsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(SearchResultsViewModel::class.java)
         // TODO: Use the ViewModel
+        //Shows the keyboard
+        showKeyboard()
+    }
+
+    //TODO:simply the logic!!!
+    //This function is to make the keyboard close
+    fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
+
+    fun Activity.hideKeyboard() {
+        hideKeyboard(currentFocus ?: View(this))
+    }
+
+    fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken,0)
+    }
+
+    //TODO:simply the logic!!!
+    //This function is to make the keyboard open
+    fun Fragment.showKeyboard() {
+        view?.let { activity?.showKeyboard(it) }
+    }
+
+    fun Activity.showKeyboard() {
+        showKeyboard(currentFocus ?: View(this))
+    }
+
+    fun Context.showKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED,0)
     }
 
 }
