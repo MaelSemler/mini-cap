@@ -29,6 +29,7 @@ class SearchCompletedFragment : Fragment() {
         val go_button = root.findViewById<View>(R.id.go_button)
         val restart_button = root.findViewById<View>(R.id.restart_button)
         go_button.setOnClickListener{
+            routeTest(it)
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }
         restart_button.setOnClickListener{
