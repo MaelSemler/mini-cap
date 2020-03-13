@@ -17,9 +17,7 @@ import com.soen390.conumap.R
 import com.soen390.conumap.permission.Permission
 
 class MapFragment : Fragment() {
-    companion object {
-        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
-    }
+
 
     private val callback = OnMapReadyCallback { googleMap ->
         /**
@@ -31,9 +29,8 @@ class MapFragment : Fragment() {
          * install it inside the SupportMapFragment. This method will only be triggered once the
          * user has installed Google Play services and returned to the app.
          */
-        if(!Permission.checkPermission(activity!!)){
-            Permission.requestPermission(activity!!, LOCATION_PERMISSION_REQUEST_CODE)
-        }
+
+        Map.setUpMap(googleMap,activity!!)
 
         val sydney = LatLng(-34.0, 151.0)
         googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
