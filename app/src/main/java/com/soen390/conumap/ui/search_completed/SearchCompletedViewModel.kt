@@ -1,4 +1,4 @@
-package com.soen390.conumap.ui.searchBar
+package com.soen390.conumap.ui.search_completed
 
 import androidx.lifecycle.ViewModel
 

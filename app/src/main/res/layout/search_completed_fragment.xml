@@ -3,11 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.searchBar.SearchCompletedFragment">
+    tools:context=".ui.search_completed.SearchCompletedFragment">
 
-    <TextView
+    <EditText
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="550dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/blue_empty_rounded_square"
+        android:drawableLeft="@drawable/exit_red"
+        android:drawableRight="@drawable/go_to_arrow_red"
+        android:drawablePadding="10dp"
+        android:elevation="1dp"
+        android:importantForAutofill="no"
+        android:paddingLeft="10dp"
+        android:singleLine="true"
+        android:text="@string/vanier"
+        android:textStyle="bold" />
 
 </FrameLayout>

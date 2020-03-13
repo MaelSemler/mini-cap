@@ -1,4 +1,4 @@
-package com.soen390.conumap.ui.searchBar
+package com.soen390.conumap.ui.search_completed
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -12,7 +12,8 @@ import com.soen390.conumap.R
 class SearchCompletedFragment : Fragment() {
 
     companion object {
-        fun newInstance() = SearchCompletedFragment()
+        fun newInstance() =
+            SearchCompletedFragment()
     }
 
     private lateinit var viewModel: SearchCompletedViewModel
