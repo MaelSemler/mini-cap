@@ -1,22 +1,19 @@
 package com.soen390.conumap.Directions
 
 import android.graphics.Color
-import android.widget.TextView
-import com.android.volley.toolbox.Volley
-import com.soen390.conumap.MainActivity
-import android.view.View
-import android.widget.Button
-import com.soen390.conumap.R
-import org.json.JSONObject
-import org.json.JSONArray
+import android.provider.Settings.Global.getString
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
-import com.google.maps.android.PolyUtil
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.android.volley.toolbox.Volley
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.PolylineOptions
+import com.google.maps.android.PolyUtil
+import com.soen390.conumap.MainActivity
+import com.soen390.conumap.R
+import org.json.JSONArray
+import org.json.JSONObject
 
 
 class directions(map:GoogleMap) {
@@ -24,7 +21,7 @@ class directions(map:GoogleMap) {
 
 
     fun routeTest(activity: MainActivity) {
-        val originLatLng = LatLng(lastLocation.latitude, lastLocation.longitude)
+        val originLatLng = LatLng(49.497044,-72.578407 )
         val destinationLatLng = LatLng(45.497044, -73.578407)//HardCoded for now
 //        //TODO: Origin and Destination should have a title
 //        this.map!!.addMarker(MarkerOptions().position(originLatLng).title("This is the origin"))
@@ -35,15 +32,13 @@ class directions(map:GoogleMap) {
 //        val totalDist :TextView = findViewById(R.id.totalDistance)
 //        val totalTime: TextView = findViewById(R.id.totalTime)
 
-        route(originLatLng, destinationLatLng)
+        route(activity,originLatLng, destinationLatLng)
     }
 
-    private fun route(originLatLng: LatLng, destinationLatLng: LatLng) {
+    private fun route(activity: MainActivity, originLatLng: LatLng, destinationLatLng:LatLng) {
         val path: MutableList<List<LatLng>> = ArrayList()
         val urlDirections =
-            getString(R.string.DirectionAPI) + "origin=" + originLatLng.latitude + "," + originLatLng.longitude + "&destination=" + destinationLatLng.latitude + "," + destinationLatLng.longitude + "&key=" + getString(
-                R.string.apiKey
-            )
+            (R.string.DirectionAPI.toString() + "origin=" + originLatLng.latitude + "," + originLatLng.longitude + "&destination=" + destinationLatLng.latitude + "," + destinationLatLng.longitude + "&key=" +  R.string.apiKey)
 
         val directionsRequest = object : StringRequest(
             Request.Method.GET,
@@ -73,10 +68,10 @@ class directions(map:GoogleMap) {
             },
             com.android.volley.Response.ErrorListener { _ ->
             }) {}
-        val requestQueue = Volley.newRequestQueue(this)
+        val requestQueue = Volley.newRequestQueue(activity)
         requestQueue.add(directionsRequest)
 
-        map.setOnInfoWindowClickListener(this)
+//        map.setOnInfoWindowClickListener()
 
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(originLatLng, 18f))
     }
