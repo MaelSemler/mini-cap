@@ -31,7 +31,8 @@
             android:paddingVertical="10dp"
             android:singleLine="true"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:focusable="true" />
 
         <ImageButton
             android:id="@+id/cancel_search"
