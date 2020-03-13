@@ -33,7 +33,7 @@
             android:id="@+id/sgw_button"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/toggle_sgw" />
+            android:background="@drawable/sgw_button_off" />
 
         <Button
             android:id="@+id/loy_button"
@@ -41,7 +41,7 @@
             android:layout_height="50dp"
             android:layout_below="@+id/sgw_button"
             android:layout_marginTop="10dp"
-            android:background="@drawable/toggle_loy" />
+            android:background="@drawable/loy_button_off" />
 
         <Button
             android:id="@+id/user_location_button"
@@ -49,7 +49,7 @@
             android:layout_height="50dp"
             android:layout_below="@+id/loy_button"
             android:layout_marginTop="10dp"
-            android:background="@drawable/toggle_user" />
+            android:background="@drawable/user_location_button_off" />
 
     </RelativeLayout>
 </RelativeLayout>
