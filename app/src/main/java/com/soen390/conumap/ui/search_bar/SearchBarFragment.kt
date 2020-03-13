@@ -21,7 +21,12 @@ class SearchBarFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.search_bar_fragment, container, false)
+        val root = inflater.inflate(R.layout.search_bar_fragment, container, false)
+        val search_button = root.findViewById<View>(R.id.search_input_button)
+        search_button.setOnClickListener{
+
+        }
+        return root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

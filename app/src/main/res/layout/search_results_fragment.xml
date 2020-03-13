@@ -5,9 +5,40 @@
     android:layout_height="match_parent"
     tools:context=".ui.search_results.SearchResultsFragment">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="match_parent">
+        <!-- for debugging purposes-->
+
+        <Button
+            android:id="@+id/search_send_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="180dp"
+            android:layout_marginBottom="70dp"
+            android:text="Send" />
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="69dp"
+            android:layout_marginBottom="69dp"
+            android:text="cancel" />
+
+        <Button
+            android:id="@+id/delete_input_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="290dp"
+            android:layout_marginBottom="77dp"
+            android:text="DELETE" />
+    </RelativeLayout>
 
 </FrameLayout>

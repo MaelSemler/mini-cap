@@ -1,28 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.search_bar.SearchBarFragment">
 
-    <EditText
-        android:textColor="#000"
-        android:id="@+id/edSearch"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/blue_empty_rounded_square"
-        android:hint="@android:string/search_go"
-        android:elevation="1dp"
-        android:padding="5dp"
-        android:textStyle="bold"
-        android:drawablePadding="10dp"
-        android:drawableLeft="@drawable/search"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="500dp"
-        android:singleLine="true"
-        />
+        android:layout_height="match_parent"
+        >
 
-</RelativeLayout>
+        <EditText
+            android:textColor="#000"
+            android:id="@+id/edSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/blue_empty_rounded_square"
+            android:hint="@android:string/search_go"
+            android:elevation="1dp"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:drawablePadding="10dp"
+            android:drawableLeft="@drawable/search"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="500dp"
+            android:singleLine="true"
+            />
+<!-- for debugging purposes-->
+        <Button
+            android:id="@+id/search_input_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="159dp"
+            android:layout_marginBottom="96dp"
+            android:text="Search" />
 
+    </RelativeLayout>
+
+</FrameLayout>
 
