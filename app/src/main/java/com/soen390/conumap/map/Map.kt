@@ -1,28 +1,30 @@
 package com.soen390.conumap.map
 
+import android.graphics.Color.rgb
 import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.soen390.conumap.R
+import com.soen390.conumap.building.Building
+import com.soen390.conumap.building.BuildingCreator
 import com.soen390.conumap.permission.Permission
 
-object Map {
+object Map: GoogleMap.OnPolygonClickListener{
 
     private const val LOCATION_PERMISSION_REQUEST_CODE = 1 //The constant for the permission code
-    private lateinit var lastLocation: LatLng //This is the last location of the user
+    private var lastLocation: LatLng = LatLng(45.497304, -73.578923) //This is the last location of the user
     private lateinit var gMap: GoogleMap
-    
+    private var buildings: ArrayList<Building> = arrayListOf()
+
     //This is function is called from MapFragment when the Map has loaded.
     //It sets all the default stuff for the map, like permission, centering on location, etc.
     fun setUpMap(googleMap: GoogleMap, activity: FragmentActivity){
 
         gMap = googleMap
+        gMap.setOnPolygonClickListener(this)
 
         //Checks the permissions and ask the user if the app does not have the permission to use the localisation feature
         if(!Permission.checkPermission(activity)){
@@ -35,6 +37,8 @@ object Map {
         var fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity) //Create the fusedLocation
         centerMapOnUserLocation(activity, fusedLocationClient) //Center the map on the user
 
+        buildings = BuildingCreator.createBuildings(gMap)
+        BuildingCreator.createPolygons(gMap)
     }
 
     fun getMapInstance(): GoogleMap{
@@ -76,6 +80,15 @@ object Map {
         gMap.addMarker(MarkerOptions().position(position).title(title).icon(BitmapDescriptorFactory.defaultMarker(342.toFloat())))
     }
 
+    override fun onPolygonClick(p0: Polygon?) {
+        //Search in the Building array to see which Building has been clicked, depending on the polygon ID (zIndex)
+        buildings.forEach {
+            if(p0?.zIndex == it.polygonID){ //We  know this is the building that has been clicked
+                it.marker.showInfoWindow()
+
+            }
+        }
+    }
 
 
 }

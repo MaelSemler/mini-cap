@@ -6,4 +6,5 @@
     <color name="buildingInfoText">#ffffff</color>
     <color name="colorAccent">#932339 </color>
     <color name="buttonColor">#FFFFFF</color>
+    <color name="buildingOutline">#934323</color>
 </resources>
