@@ -16,13 +16,13 @@ object Map {
 
     private const val LOCATION_PERMISSION_REQUEST_CODE = 1 //The constant for the permission code
     private lateinit var lastLocation: LatLng //This is the last location of the user
-    private lateinit var map: GoogleMap
-
+    private lateinit var gMap: GoogleMap
+    
     //This is function is called from MapFragment when the Map has loaded.
     //It sets all the default stuff for the map, like permission, centering on location, etc.
     fun setUpMap(googleMap: GoogleMap, activity: FragmentActivity){
 
-        map = googleMap
+        gMap = googleMap
 
         //Checks the permissions and ask the user if the app does not have the permission to use the localisation feature
         if(!Permission.checkPermission(activity)){
@@ -31,27 +31,27 @@ object Map {
 
         //Calls the uiSettings function to set the defaults for the map
         uiSettings(activity)
-        map.isMyLocationEnabled = true //Makes sure the mylocation  is enabled
+        gMap.isMyLocationEnabled = true //Makes sure the mylocation  is enabled
         var fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity) //Create the fusedLocation
         centerMapOnUserLocation(activity, fusedLocationClient) //Center the map on the user
 
     }
 
     fun getMapInstance(): GoogleMap{
-        return map
+        return gMap
     }
 
     //This sets the UI settings for the map
     private fun uiSettings(activity: FragmentActivity){
 
         // Hide toolbar to open destination in Google Maps externally.
-        map.uiSettings.isMapToolbarEnabled = false
+        gMap.uiSettings.isMapToolbarEnabled = false
 
         // Customise the styling of the map using a JSON object defined in the raw resource file
-        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(activity, R.raw.mapstyle ))
+        gMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(activity, R.raw.mapstyle ))
 
         //Remove the location button given by Google
-        map.uiSettings.isMyLocationButtonEnabled = false
+        gMap.uiSettings.isMyLocationButtonEnabled = false
 
     }
 
@@ -68,12 +68,14 @@ object Map {
 
     //This animate the camera to the given LatLng with the given zoom on the map
     fun moveCamera(position: LatLng, zoom: Float){
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(position, zoom))
+        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, zoom))
     }
 
     //This adds a marker to the map, with the given position and title
     fun addMarker(position: LatLng, title: String) {
-        map.addMarker(MarkerOptions().position(position).title(title).icon(BitmapDescriptorFactory.defaultMarker(342.toFloat())))
+        gMap.addMarker(MarkerOptions().position(position).title(title).icon(BitmapDescriptorFactory.defaultMarker(342.toFloat())))
     }
+
+
 
 }
