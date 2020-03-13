@@ -10,6 +10,7 @@ import com.google.android.gms.maps.model.*
 import com.soen390.conumap.R
 import com.soen390.conumap.building.Building
 import com.soen390.conumap.building.BuildingCreator
+import com.soen390.conumap.building.BuildingInfoWindowAdapter
 import com.soen390.conumap.permission.Permission
 
 object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener{
@@ -26,6 +27,8 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
         gMap = googleMap
         gMap.setOnPolygonClickListener(this)
         gMap.setOnInfoWindowClickListener(this)
+        // Change to show building info on tap.
+        gMap.setInfoWindowAdapter(BuildingInfoWindowAdapter(activity))
 
         //Checks the permissions and ask the user if the app does not have the permission to use the localisation feature
         if(!Permission.checkPermission(activity)){
