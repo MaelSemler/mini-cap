@@ -15,16 +15,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
-            <Button
-                android:id="@+id/clear_input"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignEnd="@+id/edSearchResults"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/exit_red"
-                android:elevation="15dp"/>
-
             <EditText
                 android:id="@+id/edSearchResults"
                 android:layout_width="match_parent"
@@ -42,7 +32,7 @@
                 android:paddingEnd="40dp"
                 android:singleLine="true"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/cancel_search"
@@ -52,6 +42,15 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/return_arrow_search" />
+
+            <Button
+                android:id="@+id/clear_input"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignEnd="@+id/edSearchResults"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/exit_red"/>
 
             </RelativeLayout>
     </RelativeLayout>

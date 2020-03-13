@@ -26,13 +26,17 @@ class SearchCompletedFragment : Fragment() {
         val root = inflater.inflate(R.layout.search_completed_fragment, container, false)
 
         //TODO: send the result of the search
-        val go_button = root.findViewById<View>(R.id.go_button)
-        val restart_button = root.findViewById<View>(R.id.restart_button)
-        go_button.setOnClickListener{
+        val travel_button = root.findViewById<View>(R.id.travel_button)
+        val restart_button = root.findViewById<View>(R.id.restart_search)
+        val location_button = root.findViewById<View>(R.id.found_location_button)
+        travel_button.setOnClickListener{
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }
         restart_button.setOnClickListener{
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_searchBarFragment)
+        }
+        location_button.setOnClickListener{
+            NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_searchResultsFragment)
         }
         return root
     }

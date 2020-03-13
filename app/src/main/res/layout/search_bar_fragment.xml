@@ -9,23 +9,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-        <Button
-            android:id="@+id/search_button"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="30dp"
-            android:paddingHorizontal="20dp"
-            android:background="@drawable/round_rectangle_white"
-            android:drawableLeft="@drawable/search"
-            android:elevation="0dp"
-            />
+            android:layout_marginBottom="30dp">
+            <Button
+                android:id="@+id/search_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/round_rectangle_white"
+                android:drawableLeft="@drawable/search"
+                android:paddingHorizontal="20dp"/>
 
+        </RelativeLayout>
     </RelativeLayout>
-
 </FrameLayout>
 

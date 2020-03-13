@@ -13,8 +13,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="675" />
-                            <option name="y" value="11" />
+                            <option name="x" value="711" />
+                            <option name="y" value="26" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -81,8 +81,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="375" />
-                            <option name="y" value="68" />
+                            <option name="x" value="436" />
+                            <option name="y" value="46" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -93,6 +93,11 @@
                               </value>
                             </entry>
                             <entry key="action_searchCompletedFragment_to_searchBarFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_searchCompletedFragment_to_searchResultsFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
