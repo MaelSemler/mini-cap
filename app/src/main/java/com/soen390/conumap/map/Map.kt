@@ -37,6 +37,10 @@ object Map {
 
     }
 
+    fun getMapInstance(): GoogleMap{
+        return map
+    }
+
     //This sets the UI settings for the map
     private fun uiSettings(activity: FragmentActivity){
 
