@@ -40,4 +40,9 @@
         android:name="com.soen390.conumap.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@id/mapFragment"
+        android:name="com.soen390.conumap.map.MapFragment"
+        android:label="Map"
+        tools:layout="@layout/map_fragment" />
 </navigation>
