@@ -65,7 +65,7 @@ class directions(map:Map) {
                     path.add(PolyUtil.decode(points))
                 }
                 for (i in 0 until path.size) {
-                    this.map!!.addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
+//                    map.getMapInstance()!!.PolylineOptions().addAll(path[i]).color(Color.RED)
                 }
             },
             com.android.volley.Response.ErrorListener { _ ->
@@ -75,7 +75,7 @@ class directions(map:Map) {
 
 //        map.setOnInfoWindowClickListener()
 
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(originLatLng, 18f))
+        map.moveCamera (originLatLng,18f)
     }
 
 

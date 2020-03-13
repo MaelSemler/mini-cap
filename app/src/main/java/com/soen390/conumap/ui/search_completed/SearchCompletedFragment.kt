@@ -12,7 +12,7 @@ import com.soen390.conumap.Directions.directions
 
 import com.soen390.conumap.R
 import com.soen390.conumap.map.Map
-import com.soen390.conumap.map.Map.getMap
+//import com.soen390.conumap.map.Map.getMap
 
 class SearchCompletedFragment : Fragment() {
 

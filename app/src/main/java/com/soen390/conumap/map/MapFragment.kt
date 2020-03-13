@@ -30,11 +30,13 @@ class MapFragment : Fragment() {
          * user has installed Google Play services and returned to the app.
          */
 
-        Map.setUpMap(googleMap,activity!!)
+        //Call the Map setup method to set all the default stuff for the map
+        Map.setUpMap(googleMap, activity!!)
 
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        //Added a marker to test the method
+        //Map.addMarker(LatLng(45.495418, -73.579169), "Bonjour")
+
+
     }
 
     override fun onCreateView(
