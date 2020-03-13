@@ -12,6 +12,9 @@ import com.soen390.conumap.permission.Permission
 object Map {
     private const val LOCATION_PERMISSION_REQUEST_CODE = 1
     private lateinit var lastLocation: Location
+    fun getMap(): Map {
+        return this
+    }
 
     //This is function is called from MapFragment when the Map has loaded.
     //It sets all the default stuff for the map, like permission, centering on location, etc.

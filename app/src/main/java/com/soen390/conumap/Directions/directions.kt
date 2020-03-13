@@ -1,5 +1,6 @@
 package com.soen390.conumap.Directions
 
+import android.app.Activity
 import android.graphics.Color
 import android.provider.Settings.Global.getString
 import com.android.volley.Request
@@ -12,15 +13,16 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.PolyUtil
 import com.soen390.conumap.MainActivity
 import com.soen390.conumap.R
+import com.soen390.conumap.map.Map
 import org.json.JSONArray
 import org.json.JSONObject
 
 
-class directions(map:GoogleMap) {
+class directions(map:Map) {
     val map = map
 
 
-    fun routeTest(activity: MainActivity) {
+    fun routeTest(activity:Activity) {
         val originLatLng = LatLng(49.497044,-72.578407 )
         val destinationLatLng = LatLng(45.497044, -73.578407)//HardCoded for now
 //        //TODO: Origin and Destination should have a title
@@ -35,7 +37,7 @@ class directions(map:GoogleMap) {
         route(activity,originLatLng, destinationLatLng)
     }
 
-    private fun route(activity: MainActivity, originLatLng: LatLng, destinationLatLng:LatLng) {
+    private fun route(activity: Activity, originLatLng: LatLng, destinationLatLng:LatLng) {
         val path: MutableList<List<LatLng>> = ArrayList()
         val urlDirections =
             (R.string.DirectionAPI.toString() + "origin=" + originLatLng.latitude + "," + originLatLng.longitude + "&destination=" + destinationLatLng.latitude + "," + destinationLatLng.longitude + "&key=" +  R.string.apiKey)

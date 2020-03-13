@@ -7,14 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.gms.maps.GoogleMap
+import com.soen390.conumap.Directions.directions
 
 import com.soen390.conumap.R
+import com.soen390.conumap.map.Map
+import com.soen390.conumap.map.Map.getMap
 
 class SearchCompletedFragment : Fragment() {
 
     companion object {
         fun newInstance() =
             SearchCompletedFragment()
+        val dir = directions(Map)
     }
 
     private lateinit var viewModel: SearchCompletedViewModel
@@ -29,7 +34,7 @@ class SearchCompletedFragment : Fragment() {
         val go_button = root.findViewById<View>(R.id.go_button)
         val restart_button = root.findViewById<View>(R.id.restart_button)
         go_button.setOnClickListener{
-            routeTest(it)
+            dir.routeTest(activity!!)
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }
         restart_button.setOnClickListener{

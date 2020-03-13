@@ -30,9 +30,6 @@ class MapFragment : Fragment() {
          * user has installed Google Play services and returned to the app.
          */
 
-        if(!Permission.checkPermission(activity!!)){
-            Permission.requestPermission(activity!!, LOCATION_PERMISSION_REQUEST_CODE)
-        }
         Map.setUpMap(googleMap,activity!!)
 
         val sydney = LatLng(-34.0, 151.0)
