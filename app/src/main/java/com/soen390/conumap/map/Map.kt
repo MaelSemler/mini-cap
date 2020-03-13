@@ -16,10 +16,13 @@ object Map {
 
     private const val LOCATION_PERMISSION_REQUEST_CODE = 1 //The constant for the permission code
     private lateinit var lastLocation: LatLng //This is the last location of the user
+    private lateinit var map: GoogleMap
 
     //This is function is called from MapFragment when the Map has loaded.
     //It sets all the default stuff for the map, like permission, centering on location, etc.
-    fun setUpMap(map: GoogleMap, activity: FragmentActivity){
+    fun setUpMap(googleMap: GoogleMap, activity: FragmentActivity){
+
+        map = googleMap
 
         //Checks the permissions and ask the user if the app does not have the permission to use the localisation feature
         if(!Permission.checkPermission(activity)){
@@ -27,36 +30,15 @@ object Map {
         }
 
         //Calls the uiSettings function to set the defaults for the map
-        uiSettings(map, activity)
+        uiSettings(activity)
         map.isMyLocationEnabled = true //Makes sure the mylocation  is enabled
         var fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity) //Create the fusedLocation
-        centerMapOnUserLocation(map, activity, fusedLocationClient) //Center the map on the user
+        centerMapOnUserLocation(activity, fusedLocationClient) //Center the map on the user
 
-    }
-
-    //This method centers the map on the user's current location
-    fun centerMapOnUserLocation(map: GoogleMap, activity: FragmentActivity, fusedLocationClient: FusedLocationProviderClient) {
-        fusedLocationClient.lastLocation.addOnSuccessListener(activity) { location ->
-            // Got last known location. In some rare situations this can be null.
-            if (location != null) {
-                lastLocation = LatLng(location.latitude, location.longitude)
-                moveCamera(lastLocation, 18f, map)
-            }
-        }
-    }
-
-    //This animate the camera to the given LatLng with the given zoom on the map
-    fun moveCamera(position: LatLng, zoom: Float, map: GoogleMap){
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(position, zoom))
-    }
-
-    //This adds a marker to the map, with the given position and title
-    fun addMarker(position: LatLng, title: String, map: GoogleMap) {
-        map.addMarker(MarkerOptions().position(position).title(title).icon(BitmapDescriptorFactory.defaultMarker(342.toFloat())))
     }
 
     //This sets the UI settings for the map
-    private fun uiSettings(map: GoogleMap, activity: FragmentActivity){
+    private fun uiSettings(activity: FragmentActivity){
 
         // Hide toolbar to open destination in Google Maps externally.
         map.uiSettings.isMapToolbarEnabled = false
@@ -68,4 +50,26 @@ object Map {
         map.uiSettings.isMyLocationButtonEnabled = false
 
     }
+
+    //This method centers the map on the user's current location
+    fun centerMapOnUserLocation(activity: FragmentActivity, fusedLocationClient: FusedLocationProviderClient) {
+        fusedLocationClient.lastLocation.addOnSuccessListener(activity) { location ->
+            // Got last known location. In some rare situations this can be null.
+            if (location != null) {
+                lastLocation = LatLng(location.latitude, location.longitude)
+                moveCamera(lastLocation, 18f)
+            }
+        }
+    }
+
+    //This animate the camera to the given LatLng with the given zoom on the map
+    fun moveCamera(position: LatLng, zoom: Float){
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(position, zoom))
+    }
+
+    //This adds a marker to the map, with the given position and title
+    fun addMarker(position: LatLng, title: String) {
+        map.addMarker(MarkerOptions().position(position).title(title).icon(BitmapDescriptorFactory.defaultMarker(342.toFloat())))
+    }
+
 }
