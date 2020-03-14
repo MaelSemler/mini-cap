@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="buildingInfoBackground">#ff2c55</color>
     <color name="buildingInfoText">#ffffff</color>
-    <color name="colorAccent">#932339 </color>
+    <color name="colorAccent">#932339</color>
     <color name="buttonColor">#FFFFFF</color>
-    <color name="buildingOutline">#934323</color>
+    <color name="transparent">#00000000</color>
 </resources>

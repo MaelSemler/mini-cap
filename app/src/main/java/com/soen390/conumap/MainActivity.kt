@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.soen390.conumap.building.BuildingCreator.setContext
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,6 +39,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,R.id.mapFragment), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        // Pass context to these files so they can access the resources.
+        setContext(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
