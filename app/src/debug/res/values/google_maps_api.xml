@@ -4,15 +4,15 @@
 
     To get one, follow this link, follow the directions and press "Create" at the end:
 
-    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=CC:A5:28:45:08:FE:1F:1D:FA:F1:6C:AD:37:EC:DB:C3:40:92:BF:78%3Bcom.soen390.conumap
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=45:3C:43:51:79:E2:ED:DD:62:A1:BB:41:F0:ED:DE:67:E7:03:33:03%3Bcom.soen390.conumap.map
 
     You can also add your credentials to an existing key, using these values:
 
     Package name:
-    CC:A5:28:45:08:FE:1F:1D:FA:F1:6C:AD:37:EC:DB:C3:40:92:BF:78
+    com.soen390.conumap.map
 
     SHA-1 certificate fingerprint:
-    CC:A5:28:45:08:FE:1F:1D:FA:F1:6C:AD:37:EC:DB:C3:40:92:BF:78
+    45:3C:43:51:79:E2:ED:DD:62:A1:BB:41:F0:ED:DE:67:E7:03:33:03
 
     Alternatively, follow the directions here:
     https://developers.google.com/maps/documentation/android/start#get-key
@@ -21,4 +21,6 @@
     string in this file.
     -->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">@string/apiKey</string>
+    <string name="DirectionAPI">"https://maps.googleapis.com/maps/api/directions/json?origin="</string>
+
 </resources>

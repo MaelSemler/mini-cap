@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment
+    android:id="@+id/map"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".map.MapFragment" />
+
+    <fragment
+    android:id="@+id/map_container_fragment"
+    android:name="androidx.navigation.fragment.NavHostFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:navGraph="@navigation/map_navigation"/>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="20dp">
+
+        <Button
+            android:id="@+id/sgw_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/sgw_button_off"/>
+
+        <Button
+            android:id="@+id/loy_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/sgw_button"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/loy_button_off"/>
+
+        <Button
+            android:id="@+id/user_location_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/loy_button"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/user_location_button_off"/>
+
+    </RelativeLayout>
+</RelativeLayout>
+
+
+</FrameLayout>
+
