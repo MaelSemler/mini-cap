@@ -11,11 +11,13 @@ import com.soen390.conumap.R
 import com.soen390.conumap.building.Building
 import com.soen390.conumap.building.BuildingCreator
 import com.soen390.conumap.building.BuildingInfoWindowAdapter
+import com.soen390.conumap.campus.Campus
 import com.soen390.conumap.permission.Permission
 
 object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener{
 
     private const val LOCATION_PERMISSION_REQUEST_CODE = 1 //The constant for the permission code
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var lastLocation: LatLng = LatLng(45.497304, -73.578923) //This is the last location of the user
     private lateinit var gMap: GoogleMap
     private var buildings: ArrayList<Building> = arrayListOf()
@@ -38,8 +40,8 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
         //Calls the uiSettings function to set the defaults for the map
         uiSettings(activity)
         gMap.isMyLocationEnabled = true //Makes sure the mylocation  is enabled
-        var fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity) //Create the fusedLocation
-        centerMapOnUserLocation(activity, fusedLocationClient) //Center the map on the user
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity) //Create the fusedLocation
+        centerMapOnUserLocation(activity) //Center the map on the user
 
         buildings = BuildingCreator.createBuildings(gMap)
         BuildingCreator.createPolygons(gMap)
@@ -64,7 +66,7 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
     }
 
     //This method centers the map on the user's current location
-    fun centerMapOnUserLocation(activity: FragmentActivity, fusedLocationClient: FusedLocationProviderClient) {
+    fun centerMapOnUserLocation(activity: FragmentActivity) {
         fusedLocationClient.lastLocation.addOnSuccessListener(activity) { location ->
             // Got last known location. In some rare situations this can be null.
             if (location != null) {
@@ -82,6 +84,19 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
     //This adds a marker to the map, with the given position and title
     fun addMarker(position: LatLng, title: String) {
         gMap.addMarker(MarkerOptions().position(position).title(title).icon(BitmapDescriptorFactory.defaultMarker(342.toFloat())))
+    }
+
+    private fun createCampuses(){
+        var loyola = Campus(
+            "Loyola Campus",
+            LatLng(45.497304, -73.578923),
+            gMap
+        )
+        var sgw = Campus(
+            "Sir George Williams Campus",
+            LatLng(45.497304, -73.578923),
+            gMap
+        )
     }
 
     override fun onPolygonClick(p0: Polygon?) {
