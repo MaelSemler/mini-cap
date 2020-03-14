@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Even-numbered indices are latitudes. -->
+    <!-- Odd-numbered indices are longitudes. -->
+    <!-- SGW Buildings -->
+    <string-array name="sgwHTarget">
+        <item>45.496832</item>
+        <item>-73.578850</item>
+        <item>45.497173</item>
+        <item>-73.579553</item>
+        <item>45.497729</item>
+        <item>-73.579034</item>
+        <item>45.497380</item>
+        <item>-73.5783300</item>
+        <item>45.496832</item>
+        <item> -73.578850</item>
+    </string-array>
+
+    <!-- LOY Buildings -->
+</resources>

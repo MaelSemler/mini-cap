@@ -45,7 +45,7 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
 
         buildings = BuildingCreator.createBuildings(gMap)
         // BuildingCreator.createOutlines(gMap)
-        BuildingCreator.createTouchTargets(gMap)
+        // BuildingCreator.createTouchTargets(gMap)
 
        //Create the two campuses
         createCampuses()
@@ -120,7 +120,7 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
     override fun onPolygonClick(p0: Polygon?) {
         //Search in the Building array to see which Building has been clicked, depending on the polygon ID (zIndex)
         buildings.forEach {
-            if(p0?.zIndex == it.polygonID){
+            if(p0?.zIndex == it.touchTargetID){
                 // Show info for the building that was clicked.
                 it.marker.showInfoWindow()
             }

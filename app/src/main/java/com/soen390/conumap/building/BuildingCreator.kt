@@ -23,20 +23,21 @@ object BuildingCreator {
             context.getString(R.string.sgwHName),
             context.getString(R.string.sgwHInfo),
             LatLng(45.497304, -73.578923),
+            context.resources.getStringArray(R.array.buildingHPoints),
+            context.resources.getStringArray(R.array.sgwHTarget),
             map,
-            0.0f,
-            context.resources.getStringArray(R.array.buildingHPoints)
+            0.0f
         )
         buildings.add(sgwH)
-        val sgwGM = Building(
-            context.getString(R.string.sgwGMName),
-            context.getString(R.string.sgwGMInfo),
-            LatLng(45.495850, -73.578766),
-            map,
-            1.0f,
-            context.resources.getStringArray(R.array.buildingGMPoints)
-        )
-        buildings.add(sgwGM)
+//        val sgwGM = Building(
+//            context.getString(R.string.sgwGMName),
+//            context.getString(R.string.sgwGMInfo),
+//            LatLng(45.495850, -73.578766),
+//            map,
+//            1.0f,
+//            context.resources.getStringArray(R.array.buildingGMPoints)
+//        )
+//        buildings.add(sgwGM)
         //TODO ADD THE BUILDINGS IN THE ARRAYLIST
 
         return buildings
@@ -71,19 +72,19 @@ object BuildingCreator {
 
     // Adds clickable touch targets, which are transparent polygons over each building.
     // When these are clicked, the popup with the building information is displayed.
-    fun createTouchTargets(map: GoogleMap) {
-        val sgwHTarget = PolygonOptions()
-            .add(
-                LatLng(45.496832, -73.578850),
-                LatLng(45.497173, -73.579553),
-                LatLng(45.497729, -73.579034),
-                LatLng(45.497380, -73.5783300),
-                LatLng(45.496832, -73.578850)
-            )
-            .fillColor(Color.argb(0, 0, 0, 0))
-            .strokeColor(Color.argb(0, 0, 0, 0))
-            .clickable(true)
-            .zIndex(0.0f)
-        map.addPolygon(sgwHTarget)
-    }
+//    fun createTouchTargets(map: GoogleMap) {
+//        val sgwHTarget = PolygonOptions()
+//            .add(
+//                LatLng(45.496832, -73.578850),
+//                LatLng(45.497173, -73.579553),
+//                LatLng(45.497729, -73.579034),
+//                LatLng(45.497380, -73.5783300),
+//                LatLng(45.496832, -73.578850)
+//            )
+//            .fillColor(Color.argb(0, 0, 0, 0))
+//            .strokeColor(Color.argb(0, 0, 0, 0))
+//            .clickable(true)
+//            .zIndex(0.0f)
+//        map.addPolygon(sgwHTarget)
+//    }
 }

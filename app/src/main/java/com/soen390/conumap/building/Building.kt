@@ -5,9 +5,8 @@ import android.graphics.Color.rgb
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 
-class Building(var name: String, var info: String, var location: LatLng, map: GoogleMap,
-               var polygonID: Float, var outlineArray: Array<String>,
-               var touchTargetArray: Array<String>, var touchTargetID: Float) {
+class Building(var name: String, var info: String, var location: LatLng, var outlineArray: Array<String>,
+               var touchTargetArray: Array<String>, map: GoogleMap, var touchTargetID: Float) {
     var marker: Marker
     var outline: PolygonOptions
     var touchTarget: PolygonOptions
@@ -28,7 +27,7 @@ class Building(var name: String, var info: String, var location: LatLng, map: Go
         )
     }
 
-    // Add the visual outline of the building.
+    // Add the precise visual outline of the building.
     private fun addBuildingOutline(map: GoogleMap): PolygonOptions {
         val outline = PolygonOptions()
         for (i in outlineArray.indices) {
@@ -54,6 +53,7 @@ class Building(var name: String, var info: String, var location: LatLng, map: Go
         map.addPolygon(target
             .fillColor(Color.argb(0, 0, 0, 0))
             .strokeColor(Color.argb(0, 0, 0, 0))
+            .clickable(true)
             .zIndex(touchTargetID)
         )
         return target
