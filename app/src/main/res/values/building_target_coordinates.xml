@@ -51,26 +51,28 @@
         <item>-73.578524</item>
     </string-array>
     <string-array name="sgwEVTarget">
-        <item>45.495188</item>
-        <item>-73.578524</item>
-        <item>45.495004</item>
-        <item>-73.578724</item>
-        <item>45.495035</item>
-        <item>-73.578790</item>
-        <item>45.495005</item>
-        <item>-73.578822</item>
-        <item>45.495172</item>
-        <item>-73.579177</item>
-        <item>45.495225</item>
-        <item>-73.579120</item>
-        <item>45.495364</item>
-        <item>-73.579369</item>
-        <item>45.495527</item>
-        <item>-73.579199</item>
-        <item>45.495450</item>
-        <item>-73.578964</item>
-        <item>45.495188</item>
-        <item>-73.578524</item>
+        <item>45.495208</item>
+        <item>-73.577884</item>
+        <item>45.495626</item>
+        <item>-73.578831</item>
+        <item>45.495961</item>
+        <item>-73.578492</item>
+        <item>45.495733</item>
+        <item>-73.578015</item>
+        <item>45.496052</item>
+        <item>-73.577709</item>
+        <item>45.495832</item>
+        <item>-73.577246</item>
+        <item>45.495540</item>
+        <item>-73.577528</item>
+        <item>45.495552</item>
+        <item>-73.577557</item>
+        <item>45.495474</item>
+        <item>-73.577626</item>
+        <item>45.495456</item>
+        <item>-73.577598</item>
+        <item>45.495208</item>
+        <item>-73.577884</item>
     </string-array>
     <string-array name="sgwFGTarget">
         <item>45.494703</item>
