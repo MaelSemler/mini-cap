@@ -178,6 +178,39 @@
         <item>-73.640828</item>
     </string-array>
 
+    <string-array name="buildingPSPoints">
+        <item>45.459285</item>
+        <item>-73.639451</item>
+        <item>45.459338</item>
+        <item>-73.639579</item>
+        <item>45.459403</item>
+        <item>-73.639540</item>
+        <item>45.459442</item>
+        <item>-73.639632</item>
+        <item>45.459414</item>
+        <item>-73.639654</item>
+        <item>45.459610</item>
+        <item>-73.640156</item>
+        <item>45.459639</item>
+        <item>-73.640141</item>
+        <item>45.459712</item>
+        <item>-73.640315</item>
+        <item>45.459854</item>
+        <item>-73.640202</item>
+        <item>45.459870</item>
+        <item>-73.640229</item>
+        <item>45.459987</item>
+        <item>-73.640136</item>
+        <item>45.459670</item>
+        <item>-73.639312</item>
+        <item>45.459628</item>
+        <item>-73.639343</item>
+        <item>45.459575</item>
+        <item>-73.639224</item>
+        <item>45.459288</item>
+        <item>-73.639451</item>
+    </string-array>
+
     <string-array name="buildingRFPoints">
         <item>45.458439</item>
         <item>-73.640752</item>
@@ -474,6 +507,40 @@
         <item>-73.641162</item>
     </string-array>
 
+    <string-array name="buildingHBPoints">
+        <item>45.459048</item>
+        <item>-73.641929</item>
+        <item>45.459135</item>
+        <item>-73.642149</item>
+        <item>45.459289</item>
+        <item>-73.642028</item>
+        <item>45.459202</item>
+        <item>-73.641809</item>
+        <item>45.459048</item>
+        <item>-73.641929</item>
+    </string-array>
+
+    <string-array name="buildingHCPoints">
+        <item>45.459526</item>
+        <item>-73.642023</item>
+        <item>45.459627</item>
+        <item>-73.642275</item>
+        <item>45.459799</item>
+        <item>-73.642134</item>
+        <item>45.459785</item>
+        <item>-73.642100</item>
+        <item>45.459900</item>
+        <item>-73.642009</item>
+        <item>45.459828</item>
+        <item>-73.641828</item>
+        <item>45.459716</item>
+        <item>-73.641920</item>
+        <item>45.459702</item>
+        <item>-73.641881</item>
+        <item>45.459526</item>
+        <item>-73.642023</item>
+    </string-array>
+
     <string-array name="buildingEVPoints">
         <item>45.495208</item>
         <item>-73.577884</item>
@@ -537,7 +604,7 @@
         <item>45.494425</item>
         <item>-73.577763</item>
         <item>45.494404</item>
-        <item>73.577802</item>
+        <item>-73.577802</item>
         <item>45.494374</item>
         <item>-73.577766</item>
         <item>45.494188</item>

@@ -1,7 +1,5 @@
 package com.soen390.conumap.map
 
-import android.graphics.Color.rgb
-import android.location.Location
 import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -32,11 +30,10 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
         gMap = googleMap
         gMap.setOnPolygonClickListener(this)
         gMap.setOnInfoWindowClickListener(this)
-        // Change to show building info on tap.
         gMap.setInfoWindowAdapter(BuildingInfoWindowAdapter(activity))
 
         //Checks the permissions and ask the user if the app does not have the permission to use the localisation feature
-        if(!Permission.checkPermission(activity)){
+        if(!Permission.checkPermission(activity)) {
             Permission.requestPermission(activity, LOCATION_PERMISSION_REQUEST_CODE)
         }
 
@@ -47,7 +44,6 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
         centerMapOnUserLocation(activity) //Center the map on the user
 
         buildings = BuildingCreator.createBuildings(gMap)
-        BuildingCreator.createPolygons(gMap)
 
        //Create the two campuses
         createCampuses()
@@ -72,7 +68,6 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
 
         //Remove the location button given by Google
         gMap.uiSettings.isMyLocationButtonEnabled = false
-
     }
 
     //This method centers the map on the user's current location
@@ -97,7 +92,7 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
     }
 
     //Create the two campuses object with their markers
-    private fun createCampuses(){
+    private fun createCampuses() {
         loyolaCampus = Campus(
             "Loyola Campus",
             LatLng(45.458275, -73.640469),
@@ -105,7 +100,7 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
         )
         sgwCampus = Campus(
             "Sir George Williams Campus",
-            LatLng(45.4975, -73.579004),
+            LatLng(45.496061, -73.578467),
             gMap
         )
     }
@@ -122,21 +117,23 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
         }
     }
 
+    // Specifies behaviour when a clickable polygon is clicked.
+    // We determine which building is represented by this polygon, and show that building name and info.
     override fun onPolygonClick(p0: Polygon?) {
         //Search in the Building array to see which Building has been clicked, depending on the polygon ID (zIndex)
         buildings.forEach {
-            if(p0?.zIndex == it.polygonID){ //We  know this is the building that has been clicked
+            if(p0?.zIndex == it.touchTargetID){
+                // Show info for the building that was clicked.
                 it.marker.showInfoWindow()
-
             }
         }
     }
 
+    // False means default onMarkerClick behaviour, which is to show info window.
     override fun onMarkerClick(p0: Marker?): Boolean = false
 
+    // Close the info window when it is tapped.
     override fun onInfoWindowClick(p0: Marker?) {
         p0?.hideInfoWindow()
     }
-
-
 }

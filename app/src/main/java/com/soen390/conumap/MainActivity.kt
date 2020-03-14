@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.soen390.conumap.Directions.directions
 import com.soen390.conumap.databinding.DirectionsFragmentBinding
 import com.soen390.conumap.ui.directions.DirectionsViewModel
+import com.soen390.conumap.building.BuildingCreator.setContext
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,6 +47,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home, R.id.Directions, R.id.nav_slideshow,R.id.mapFragment), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        // Pass context to these files so they can access the resources.
+        setContext(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
