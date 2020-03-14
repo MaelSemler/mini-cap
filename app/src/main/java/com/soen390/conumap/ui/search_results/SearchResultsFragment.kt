@@ -32,21 +32,24 @@ class SearchResultsFragment : Fragment() {
     ): View? {
         val root =  inflater.inflate(R.layout.search_results_fragment, container, false)
 
-        //TODO: send the result of the search
-        //TODO: RESEARCH ON SEARCHVIEWS and if we have to change this entire thing!!!
+        //TODO: the search suggestions, recently visited
+        //TODO: DO RESEARCH ON SEARCHVIEWS and if we have to change this entire thing!!!!!!!!!!!
 
         //Getting the Views from the fragment
         val cancel_button = root.findViewById<View>(R.id.cancel_search) as Button
         val clear_button = root.findViewById<View>(R.id.clear_input) as Button
         val search_bar = root.findViewById<View>(R.id.edSearchResults) as EditText
 
-        //Selects the search bar input
+        //Selects the searchbar input
+        //it's like if the mouse had already clicked on the editbox
         search_bar.requestFocus()
+
         //This is the search bar edit text
         //this method waits for the "ENTER" key to be pressed
         //It changes fragment when it is pressed
         search_bar.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                //TODO: send the result (SearchCompletedFragment)
                 NavHostFragment.findNavController(this).navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
             }
             false
@@ -58,10 +61,11 @@ class SearchResultsFragment : Fragment() {
         }
 
         //This button goes to the previous fragment
-        //TODO: look in if this is the best way to implement a "back" function
+
         cancel_button.setOnClickListener{
+            //TODO: look in if this is the best way to implement a "back" function
             NavHostFragment.findNavController(this).navigateUp()
-            //TODO:if keyboard is shown hide the keyboard
+            //TODO:if keyboard is shown, hide the keyboard
             hideKeyboard()
 
         }
@@ -78,10 +82,13 @@ class SearchResultsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //Shows the keyboard
+        //TODO:if keyboard is hidden, show the keyboard
         showKeyboard()
     }
 
-    //TODO:simply the logic!!!
+    //TODO:simply the logic of hideKeyboard() and showKeyboard
+    //TODO: issue when the app closes the keyboard doesn't
+
     //This function is to make the keyboard close
     fun Fragment.hideKeyboard() {
         view?.let { activity?.hideKeyboard(it) }
@@ -96,7 +103,6 @@ class SearchResultsFragment : Fragment() {
         inputMethodManager.hideSoftInputFromWindow(view.windowToken,0)
     }
 
-    //TODO:simply the logic!!!
     //This function is to make the keyboard open
     fun Fragment.showKeyboard() {
         view?.let { activity?.showKeyboard(it) }

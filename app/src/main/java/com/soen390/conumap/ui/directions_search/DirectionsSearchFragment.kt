@@ -30,6 +30,10 @@ class DirectionsSearchFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.directions_search_fragment, container, false)
 
+        //TODO: check if this class is necessary or if we could just use SearchResultsFragment
+        //TODO: the search suggestions, recently visited
+        //TODO: DO RESEARCH ON SEARCHVIEWS and if we have to change this entire thing!!!!!!!!!!!
+
         val return_button = root.findViewById<View>(R.id.return_direction) as Button
         val clear_button = root.findViewById<View>(R.id.clear_search) as Button
         val search_bar = root.findViewById<View>(R.id.DirectionSearchResults) as EditText
@@ -41,6 +45,7 @@ class DirectionsSearchFragment : Fragment() {
         //It changes fragment when it is pressed
         search_bar.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                //TODO: send the results back ti DirectionsFragment
                 NavHostFragment.findNavController(this)
                     .navigate(R.id.action_directionsSearchFragment_to_directionsFragment)
             }

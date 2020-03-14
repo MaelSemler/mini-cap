@@ -33,16 +33,13 @@ class SearchBarFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.search_bar_fragment, container, false)
 
-        //This is the search bar edit text
-        //this method waits for the "ENTER" key to be pressed
-        //It changes fragment when it is pressed
+        //This is the search bar
         val search_button = root.findViewById<View>(R.id.search_button) as Button
-
+        //It is a button that calls a change of fragment
+        //this method waits for the "ENTER" key to be pressed
         search_button.setOnClickListener{
             NavHostFragment.findNavController(this).navigate(R.id.action_searchBarFragment_to_searchResultsFragment)
         }
-
-
         return root
     }
 
