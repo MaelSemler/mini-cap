@@ -28,7 +28,15 @@ object BuildingCreator {
             0.0f
         )
         buildings.add(sgwH)
-        //TODO ADD THE BUILDINGS IN THE ARRAYLIST
+
+        // LOY Buildings.
+//        val loyGE = Building(
+//            context.getString(R.string.loyGEName),
+//            context.getString(R.string.loyGEInfo),
+//            LatLng(45.456984, -73.640442),
+//            context.resources.getStringArray(R.array.buildingGEPoints),
+//            context.resources.getStringArray(R.array.sgwHTarget)
+//        )
 
         return buildings
     }
