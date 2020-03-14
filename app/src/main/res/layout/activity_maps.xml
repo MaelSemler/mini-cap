@@ -61,5 +61,13 @@
 
     </RelativeLayout>
 
+    <FrameLayout
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:id="@+id/frame_container"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"  >
+    </FrameLayout>
 
 </RelativeLayout>

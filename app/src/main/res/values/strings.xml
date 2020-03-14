@@ -4,4 +4,8 @@
     <string name="campus_Downtown">SGW</string>
     <string name="campus_Loyola">LOY</string>
 
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="vanier">Vanier Library, Con.</string>
+
 </resources>
