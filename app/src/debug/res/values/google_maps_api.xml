@@ -21,6 +21,6 @@
     string in this file.
     -->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">@string/apiKey</string>
-    <string name="DirectionAPI"><![CDATA[https://maps.googleapis.com/maps/api/directions/json?]]></string>
+    <string name="DirectionAPI">"https://maps.googleapis.com/maps/api/directions/json?origin="</string>
 
 </resources>

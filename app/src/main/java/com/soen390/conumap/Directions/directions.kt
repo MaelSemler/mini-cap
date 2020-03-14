@@ -37,11 +37,7 @@ class directions(map:Map) {
 
     private fun route(activity: Activity, originLatLng: LatLng, destinationLatLng: LatLng) {
         val path: MutableList<List<LatLng>> = ArrayList()
-//        val urlDirections =
-//            R.string.DirectionAPI.toString() + "origin=" + originLatLng.latitude + "," + originLatLng.longitude + "&destination=" + destinationLatLng.latitude + "," + destinationLatLng.longitude + "&key=" +
-//                R.string.apiKey.toString()
-        //TODO: Need to check why getString(R.string.STUFF) does not work anymore
-        val urlDirections = "https://maps.googleapis.com/maps/api/directions/json?origin=" + originLatLng.latitude + "," + originLatLng.longitude + "&destination=" + destinationLatLng.latitude + "," + destinationLatLng.longitude + "&key=" + NEED TO ADD KEY HERE TO RUN IT
+        val urlDirections = activity.getString(R.string.DirectionAPI)+ originLatLng.latitude + "," + originLatLng.longitude + "&destination=" + destinationLatLng.latitude + "," + destinationLatLng.longitude + "&key=" + activity.getString(R.string.apiKey)
 
 
         val directionsRequest = object : StringRequest(
@@ -82,7 +78,7 @@ class directions(map:Map) {
 
 
     fun extractDirections(steps: JSONArray) {
-        val directionText: TextView = findViewById(R.id.Directions)
+//        val directionText: TextView = findViewById(R.id.Directions)
         var textConverted = "Direction:" + '\n'
 
         var directionArray = ArrayList<String>()
