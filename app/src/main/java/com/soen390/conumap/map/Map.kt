@@ -44,8 +44,6 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
         centerMapOnUserLocation(activity) //Center the map on the user
 
         buildings = BuildingCreator.createBuildings(gMap)
-        // BuildingCreator.createOutlines(gMap)
-        // BuildingCreator.createTouchTargets(gMap)
 
        //Create the two campuses
         createCampuses()
