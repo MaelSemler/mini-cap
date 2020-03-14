@@ -21,6 +21,7 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentManager
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 
@@ -50,9 +51,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         // Replace the fragment on container
         ft.replace(R.id.frame_container,searchBarFragment)
-        ft.addToBackStack(null)
 
+        val topSearchBarFragment = TopFieldFragment()
+        //Top search field, uncomment next line to display
+        //ft.replace(R.id.top_frame, topSearchBarFragment)
+
+        ft.addToBackStack(null)
         ft.commit()
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
