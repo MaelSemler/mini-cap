@@ -650,7 +650,7 @@
         <item>45.458424</item>
         <item>-73.639163</item>
     </string-array>
-    <string name="loyVLTarget">
+    <string-array name="loyVLTarget">
         <item>45.458864</item>
         <item>-73.639003</item>
         <item>45.459288</item>
@@ -669,7 +669,7 @@
         <item>-73.638474</item>
         <item>45.458864</item>
         <item>-73.639003</item>
-    </string>
+    </string-array>
     <string-array name="loySCTarget">
         <item>45.459158</item>
         <item>-73.638791</item>

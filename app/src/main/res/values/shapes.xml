@@ -178,6 +178,10 @@
         <item>-73.640828</item>
     </string-array>
 
+    <string-array name="buildingPSPoints">
+        <!-- TODO: Leslie please add these! -Johnston -->
+    </string-array>
+
     <string-array name="buildingRFPoints">
         <item>45.458439</item>
         <item>-73.640752</item>
