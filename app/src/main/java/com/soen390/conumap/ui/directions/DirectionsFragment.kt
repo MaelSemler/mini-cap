@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 
 import com.soen390.conumap.R
+import com.soen390.conumap.databinding.DirectionsFragmentBinding
 
 class DirectionsFragment : Fragment() {
 
@@ -27,6 +29,16 @@ class DirectionsFragment : Fragment() {
         //TODO: get the results from SearchCompletedFragment
         //TODO: get the currentlocation
         //TODO: add the name of the result and the curent location to the start and end buttons (get them from the actual objects)
+
+        val directionViewModel = ViewModelProviders.of(this)
+            .get(DirectionsViewModel::class.java)
+
+        DataBindingUtil.setContentView<DirectionsFragmentBinding>(activity!!, R.layout.directions_fragment).apply{
+            this.setLifecycleOwner(activity)
+            this.viewmodel = directionViewModel
+
+        }
+
 
         val start_button = root.findViewById<View>(R.id.start_location_button)
         val end_button = root.findViewById<View>(R.id.end_location_button)

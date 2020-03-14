@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.maps.GoogleMap
 import com.soen390.conumap.Directions.directions
+import com.soen390.conumap.Directions.directions.routeTest
 
 import com.soen390.conumap.R
 import com.soen390.conumap.map.Map
@@ -19,7 +20,7 @@ class SearchCompletedFragment : Fragment() {
     companion object {
         fun newInstance() =
             SearchCompletedFragment()
-        val dir = directions(Map)
+//        val dir = directions(Map)
     }
 
     private lateinit var viewModel: SearchCompletedViewModel
@@ -48,7 +49,7 @@ class SearchCompletedFragment : Fragment() {
         //This changes fragment when the "45 degree" arrow is pressed
         travel_button.setOnClickListener{
             //TODO: send the result of the search (DirectionsFragment)
-            dir.routeTest(activity!!)
+            routeTest(activity!!)
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }
         restart_button.setOnClickListener{

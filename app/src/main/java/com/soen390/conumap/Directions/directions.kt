@@ -3,6 +3,8 @@ package com.soen390.conumap.Directions
 import android.app.Activity
 import android.graphics.Color
 import android.provider.Settings.Global.getString
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -18,9 +20,17 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 
-class directions(map:Map) {
-    val map = map
+object directions {
+    val map = Map
 
+    val _directionText = MutableLiveData<String>()
+    val directionText:LiveData<String>
+        get() = _directionText
+
+    init {
+        _directionText.value = "Directions: Null"
+    }
+    var textConverted = ""
 
     fun routeTest(activity:Activity) {
         //TODO: Default origin is the current location
@@ -53,9 +63,8 @@ class directions(map:Map) {
                 val totalDistance =legs.getJSONObject(0).getJSONObject("distance").getString("text")
                 val totalDuration= legs.getJSONObject(0).getJSONObject("duration").getString("text")
 
-
                 //Clean up the directions
-                extractDirections(steps)
+                updateSteps(extractDirections(steps))
 
                 for (i in 0 until steps.length()) {
                     val points =
@@ -77,8 +86,7 @@ class directions(map:Map) {
     }
 
 
-    fun extractDirections(steps: JSONArray) {
-//        val directionText: TextView = findViewById(R.id.Directions)
+    fun extractDirections(steps: JSONArray): String {
         var textConverted = "Direction:" + '\n'
 
         var directionArray = ArrayList<String>()
@@ -104,7 +112,12 @@ class directions(map:Map) {
             textConverted += (i + 1).toString() + ". " +  directionArray[i] + '\n' + '\t' + distanceArray[i] +'\n'
         }
         //Put everything inside of the directionTextBox
-//        directionText.text = textConverted
-
+        return textConverted
     }
+
+    fun updateSteps(textSteps:String){
+        _directionText.value = textSteps
+    }
+
+
 }
