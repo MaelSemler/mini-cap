@@ -228,6 +228,16 @@ object BuildingCreator {
             2.0f
         )
         buildings.add(loyPY)
+        val loyRF = Building(
+            context.getString(R.string.loyRFName),
+            context.getString(R.string.loyRFInfo),
+            LatLng(45.458588, -73.641055),
+            context.resources.getStringArray(R.array.buildingRFPoints),
+            context.resources.getStringArray(R.array.loyRFTarget),
+            map,
+            2.1f
+        )
+        buildings.add(loyRF)
         val loyHA = Building(
             context.getString(R.string.loyHAName),
             context.getString(R.string.loyHAInfo),
@@ -235,7 +245,7 @@ object BuildingCreator {
             context.resources.getStringArray(R.array.buildingHAPoints),
             context.resources.getStringArray(R.array.loyHATarget),
             map,
-            2.1f
+            2.2f
         )
         buildings.add(loyHA)
         val loyHB = Building(
@@ -245,7 +255,7 @@ object BuildingCreator {
             context.resources.getStringArray(R.array.buildingHAPoints),
             context.resources.getStringArray(R.array.loyHBTarget),
             map,
-            2.2f
+            2.3f
         )
         buildings.add(loyHB)
         val loyHC = Building(
@@ -255,7 +265,7 @@ object BuildingCreator {
             context.resources.getStringArray(R.array.buildingHAPoints),
             context.resources.getStringArray(R.array.loyHCTarget),
             map,
-            2.3f
+            2.4f
         )
         buildings.add(loyHC)
 

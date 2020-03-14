@@ -758,6 +758,54 @@
         <item>45.458731</item>
         <item>-73.640448</item>
     </string-array>
+    <string-array name="loyRFTarget">
+        <item>45.458439</item>
+        <item>-73.640752</item>
+        <item>45.458465</item>
+        <item>-73.640813</item>
+        <item>45.458418</item>
+        <item>-73.640855</item>
+        <item>45.458472</item>
+        <item>-73.641009</item>
+        <item>45.458383</item>
+        <item>-73.641079</item>
+        <item>45.458434</item>
+        <item>-73.641204</item>
+        <item>45.458514</item>
+        <item>-73.641143</item>
+        <item>45.458546</item>
+        <item>-73.641230</item>
+        <item>45.458528</item>
+        <item>-73.641247</item>
+        <item>45.458540</item>
+        <item>-73.641277</item>
+        <item>45.458489</item>
+        <item>-73.641317</item>
+        <item>45.458512</item>
+        <item>-73.641377</item>
+        <item>45.458642</item>
+        <item>-73.641270</item>
+        <item>45.458648</item>
+        <item>-73.641283</item>
+        <item>45.458823</item>
+        <item>-73.641152</item>
+        <item>45.458783</item>
+        <item>-73.641031</item>
+        <item>45.458767</item>
+        <item>-73.641050</item>
+        <item>45.458684</item>
+        <item>-73.640808</item>
+        <item>45.458592</item>
+        <item>-73.640880</item>
+        <item>45.458544</item>
+        <item>-73.640753</item>
+        <item>45.458519</item>
+        <item>-73.640774</item>
+        <item>45.458492</item>
+        <item>-73.640710</item>
+        <item>45.458439</item>
+        <item>-73.640752</item>
+    </string-array>
     <string-array name="loyHATarget">
         <item>45.459680</item>
         <item>-73.641334</item>
