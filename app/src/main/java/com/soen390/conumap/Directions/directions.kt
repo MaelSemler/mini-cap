@@ -23,12 +23,12 @@ class directions(map:Map) {
 
 
     fun routeTest(activity:Activity) {
-        val originLatLng = LatLng(49.497044,-72.578407 )
+        val originLatLng = map.getCurrentLocation()
         val destinationLatLng = LatLng(45.497044, -73.578407)//HardCoded for now
 //        //TODO: Origin and Destination should have a title
-//        this.map!!.addMarker(MarkerOptions().position(originLatLng).title("This is the origin"))
-//        this.map!!.addMarker(MarkerOptions().position(destinationLatLng).title("This is the destination"))
-//        this.map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(originLatLng, 14.5f))
+        map.addMarker(originLatLng,("This is the origin"))
+        map.addMarker(destinationLatLng, "Destination")
+        map.moveCamera(originLatLng, 14.5f)
 
         //FOR SOME REASON THIS MAKES EVERYTHING CRASH
 //        val totalDist :TextView = findViewById(R.id.totalDistance)
@@ -37,10 +37,14 @@ class directions(map:Map) {
         route(activity,originLatLng, destinationLatLng)
     }
 
-    private fun route(activity: Activity, originLatLng: LatLng, destinationLatLng:LatLng) {
+    private fun route(activity: Activity, originLatLng: LatLng, destinationLatLng: LatLng) {
         val path: MutableList<List<LatLng>> = ArrayList()
-        val urlDirections =
-            (R.string.DirectionAPI.toString() + "origin=" + originLatLng.latitude + "," + originLatLng.longitude + "&destination=" + destinationLatLng.latitude + "," + destinationLatLng.longitude + "&key=" +  R.string.apiKey)
+//        val urlDirections =
+//            R.string.DirectionAPI.toString() + "origin=" + originLatLng.latitude + "," + originLatLng.longitude + "&destination=" + destinationLatLng.latitude + "," + destinationLatLng.longitude + "&key=" +
+//                R.string.apiKey.toString()
+        //TODO: Need to check why getString(R.string.STUFF) does not work anymore
+        val urlDirections = "https://maps.googleapis.com/maps/api/directions/json?origin=" + originLatLng.latitude + "," + originLatLng.longitude + "&destination=" + destinationLatLng.latitude + "," + destinationLatLng.longitude + "&key=" + NEED TO ADD KEY HERE TO RUN IT
+
 
         val directionsRequest = object : StringRequest(
             Request.Method.GET,
@@ -65,7 +69,7 @@ class directions(map:Map) {
                     path.add(PolyUtil.decode(points))
                 }
                 for (i in 0 until path.size) {
-//                    map.getMapInstance()!!.PolylineOptions().addAll(path[i]).color(Color.RED)
+                    map.getMapInstance().addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
                 }
             },
             com.android.volley.Response.ErrorListener { _ ->
@@ -73,9 +77,9 @@ class directions(map:Map) {
         val requestQueue = Volley.newRequestQueue(activity)
         requestQueue.add(directionsRequest)
 
-//        map.setOnInfoWindowClickListener()
+//        map.getMapInstance().setOnInfoWindowClickListener()
 
-        map.moveCamera (originLatLng,18f)
+        map.moveCamera(destinationLatLng, 18f)
     }
 
 

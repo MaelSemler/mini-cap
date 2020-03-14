@@ -1,6 +1,7 @@
 package com.soen390.conumap.map
 
 import android.graphics.Color.rgb
+import android.location.Location
 import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -54,6 +55,10 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
 
     fun getMapInstance(): GoogleMap{
         return gMap
+    }
+
+    fun getCurrentLocation():LatLng{
+        return lastLocation
     }
 
     //This sets the UI settings for the map

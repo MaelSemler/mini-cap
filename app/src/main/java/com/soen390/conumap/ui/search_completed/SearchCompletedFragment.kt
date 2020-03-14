@@ -30,11 +30,11 @@ class SearchCompletedFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.search_completed_fragment, container, false)
 
-        //TODO: send the result of the search
-        val go_button = root.findViewById<View>(R.id.go_button)
-        go_button.setOnClickListener{
-            dir.routeTest(activity!!)
-        }
+//        //TODO: send the result of the search
+//        val go_button = root.findViewById<View>(R.id.go_button)
+//        go_button.setOnClickListener{
+//            dir.routeTest(activity!!)
+//        }
 
         //TODO: receive the result of the search result (SearchResultFragment)
         //TODO: put name of the location result on the button
@@ -48,6 +48,7 @@ class SearchCompletedFragment : Fragment() {
         //This changes fragment when the "45 degree" arrow is pressed
         travel_button.setOnClickListener{
             //TODO: send the result of the search (DirectionsFragment)
+            dir.routeTest(activity!!)
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }
         restart_button.setOnClickListener{
@@ -66,4 +67,4 @@ class SearchCompletedFragment : Fragment() {
     }
 
 }
-}
+
