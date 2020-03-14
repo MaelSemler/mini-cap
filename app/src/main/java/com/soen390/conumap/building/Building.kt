@@ -2,8 +2,10 @@ package com.soen390.conumap.building
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
+import android.graphics.Color
 
-class Building(var name: String, var info: String, var location: LatLng, map: GoogleMap) {
+class Building(var name: String, var info: String, var location: LatLng, map: GoogleMap, var polygonID: Float) {
+
     var marker: Marker
     var touchTarget: Polygon
 

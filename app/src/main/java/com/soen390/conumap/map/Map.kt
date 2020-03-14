@@ -1,28 +1,38 @@
 package com.soen390.conumap.map
 
+import android.graphics.Color.rgb
 import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.soen390.conumap.R
+import com.soen390.conumap.building.Building
+import com.soen390.conumap.building.BuildingCreator
+import com.soen390.conumap.building.BuildingInfoWindowAdapter
+import com.soen390.conumap.campus.Campus
 import com.soen390.conumap.permission.Permission
 
-object Map {
+object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener{
 
     private const val LOCATION_PERMISSION_REQUEST_CODE = 1 //The constant for the permission code
-    private lateinit var lastLocation: LatLng //This is the last location of the user
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var lastLocation: LatLng = LatLng(45.497304, -73.578923) //This is the last location of the user
     private lateinit var gMap: GoogleMap
-    
+    private var buildings: ArrayList<Building> = arrayListOf()
+    private lateinit var loyolaCampus: Campus
+    private lateinit var sgwCampus: Campus
+
     //This is function is called from MapFragment when the Map has loaded.
     //It sets all the default stuff for the map, like permission, centering on location, etc.
     fun setUpMap(googleMap: GoogleMap, activity: FragmentActivity){
 
         gMap = googleMap
+        gMap.setOnPolygonClickListener(this)
+        gMap.setOnInfoWindowClickListener(this)
+        // Change to show building info on tap.
+        gMap.setInfoWindowAdapter(BuildingInfoWindowAdapter(activity))
 
         //Checks the permissions and ask the user if the app does not have the permission to use the localisation feature
         if(!Permission.checkPermission(activity)){
@@ -32,9 +42,14 @@ object Map {
         //Calls the uiSettings function to set the defaults for the map
         uiSettings(activity)
         gMap.isMyLocationEnabled = true //Makes sure the mylocation  is enabled
-        var fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity) //Create the fusedLocation
-        centerMapOnUserLocation(activity, fusedLocationClient) //Center the map on the user
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity) //Create the fusedLocation
+        centerMapOnUserLocation(activity) //Center the map on the user
 
+        buildings = BuildingCreator.createBuildings(gMap)
+        BuildingCreator.createPolygons(gMap)
+
+       //Create the two campuses
+        createCampuses()
     }
 
     fun getMapInstance(): GoogleMap{
@@ -56,7 +71,7 @@ object Map {
     }
 
     //This method centers the map on the user's current location
-    fun centerMapOnUserLocation(activity: FragmentActivity, fusedLocationClient: FusedLocationProviderClient) {
+    fun centerMapOnUserLocation(activity: FragmentActivity) {
         fusedLocationClient.lastLocation.addOnSuccessListener(activity) { location ->
             // Got last known location. In some rare situations this can be null.
             if (location != null) {
@@ -76,6 +91,47 @@ object Map {
         gMap.addMarker(MarkerOptions().position(position).title(title).icon(BitmapDescriptorFactory.defaultMarker(342.toFloat())))
     }
 
+    //Create the two campuses object with their markers
+    private fun createCampuses(){
+        loyolaCampus = Campus(
+            "Loyola Campus",
+            LatLng(45.458275, -73.640469),
+            gMap
+        )
+        sgwCampus = Campus(
+            "Sir George Williams Campus",
+            LatLng(45.4975, -73.579004),
+            gMap
+        )
+    }
+
+    //When the campuses button are clicked, this function is called. It determines which button has been clicked, and then move the camera to it.
+    fun focusOnCampus(campusSelected: String){
+        if(campusSelected.equals("Loyola")){
+            moveCamera(loyolaCampus.location, 16f)
+            loyolaCampus.marker.showInfoWindow()
+        }
+        else{
+            moveCamera(sgwCampus.location, 16f)
+            sgwCampus.marker.showInfoWindow()
+        }
+    }
+
+    override fun onPolygonClick(p0: Polygon?) {
+        //Search in the Building array to see which Building has been clicked, depending on the polygon ID (zIndex)
+        buildings.forEach {
+            if(p0?.zIndex == it.polygonID){ //We  know this is the building that has been clicked
+                it.marker.showInfoWindow()
+
+            }
+        }
+    }
+
+    override fun onMarkerClick(p0: Marker?): Boolean = false
+
+    override fun onInfoWindowClick(p0: Marker?) {
+        p0?.hideInfoWindow()
+    }
 
 
 }

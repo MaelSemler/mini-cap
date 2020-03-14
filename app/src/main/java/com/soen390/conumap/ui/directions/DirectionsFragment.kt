@@ -23,15 +23,23 @@ class DirectionsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.directions_fragment, container, false)
+        //TODO:show the steps of the Direction in a subfragment
+        //TODO: get the results from SearchCompletedFragment
+        //TODO: get the currentlocation
+        //TODO: add the name of the result and the curent location to the start and end buttons (get them from the actual objects)
 
-        val start_button = root.findViewById<View>(R.id.start_button)
-        val end_button = root.findViewById<View>(R.id.end_button)
+        val start_button = root.findViewById<View>(R.id.start_location_button)
+        val end_button = root.findViewById<View>(R.id.end_location_button)
         val return_button = root.findViewById<View>(R.id.return_button)
-        //TODO: change from button to text. it should't listen for a button click but an imput text
+        val switch_button = root.findViewById<View>(R.id.switch_button)//TODO: impletment the swap locations feature
+
+        //To change starting and ending location, just click on the buttons to be sent to a search fragment
         start_button.setOnClickListener{
+            //TODO: send info to the search bar (DirectionSearchFragment)
             NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_directionsSearchFragment)
         }
         end_button.setOnClickListener{
+            //TODO: send info to the search bar (DirectionSearchFragment)
             NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_directionsSearchFragment)
         }
         //TODO: look in if this is the best way to implement a "back" function

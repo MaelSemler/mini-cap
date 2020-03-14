@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.NavHostFragment
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -44,7 +45,22 @@ class MapFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.map_fragment, container, false)
+        val root = inflater.inflate(R.layout.map_fragment, container, false)
+        val userLocationButton = root.findViewById<View>(R.id.user_location_button)
+        val loyolaButton = root.findViewById<View>(R.id.loy_button)
+        val sgwButton = root.findViewById<View>(R.id.sgw_button)
+
+        userLocationButton.setOnClickListener{
+            Map.centerMapOnUserLocation(activity!!)
+        }
+        loyolaButton.setOnClickListener{
+            Map.focusOnCampus("Loyola")
+        }
+        sgwButton.setOnClickListener{
+            Map.focusOnCampus("SGW")
+        }
+
+        return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

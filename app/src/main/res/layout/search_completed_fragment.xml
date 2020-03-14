@@ -4,47 +4,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.search_completed.SearchCompletedFragment">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="550dp"
-            android:layout_marginRight="50dp"
-            android:background="@drawable/blue_empty_rounded_square"
-            android:drawableLeft="@drawable/exit_red"
-            android:drawableRight="@drawable/go_to_arrow_red"
-            android:drawablePadding="10dp"
-            android:elevation="1dp"
-            android:importantForAutofill="no"
-            android:paddingLeft="10dp"
-            android:singleLine="true"
-            android:text="@string/vanier"
-            android:textStyle="bold" />
 
-
-        <!-- for debugging purposes-->
-
-        <Button
-            android:id="@+id/go_button"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="105dp"
-            android:layout_marginBottom="49dp"
-            android:text="Go" />
+            android:layout_marginBottom="30dp">
 
-        <Button
-            android:id="@+id/restart_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="260dp"
-            android:layout_marginBottom="48dp"
-            android:text="restart" />
+            <Button
+                android:id="@+id/found_location_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/round_rectangle_white"
+                />
+
+            <Button
+                android:id="@+id/restart_search"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignStart="@+id/found_location_button"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/exit_red" />
+
+            <Button
+                android:id="@+id/travel_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignEnd="@+id/found_location_button"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/go_to_arrow_red" />
+
+        </RelativeLayout>
     </RelativeLayout>
 </FrameLayout>

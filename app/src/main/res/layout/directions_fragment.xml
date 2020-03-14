@@ -4,41 +4,107 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.directions.DirectionsFragment">
+
     <RelativeLayout
         android:id="@+id/Directions"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <!-- for debugging purposes-->
 
-        <Button
-            android:id="@+id/return_button"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="77dp"
-            android:text="return" />
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:id="@+id/relative_location">
 
-        <Button
-            android:id="@+id/start_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="146dp"
-            android:layout_marginTop="102dp"
-            android:text="start search" />
+            <Button
+                android:id="@+id/start_location_button"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/return_button"
+                android:layout_toStartOf="@+id/switch_button"
+                android:background="@drawable/round_rectangle_white" />
 
-        <Button
-            android:id="@+id/end_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="149dp"
-            android:layout_marginTop="42dp"
-            android:text="end search" />
+            <Button
+                android:id="@+id/end_location_button"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_below="@+id/start_location_button"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/return_button"
+                android:layout_toStartOf="@+id/switch_button"
+                android:background="@drawable/round_rectangle_white" />
+
+            <Button
+                android:id="@+id/return_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/return_arrow_search"
+                android:rotation="90" />
+
+            <Button
+                android:id="@+id/switch_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/swap_arrow" />
+
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/relative_location"
+            android:layout_marginTop="10dp"
+            >
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/transportation_car"
+                    android:button="@android:color/transparent"
+                    android:layout_margin="10dp"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/transportation_walk"
+                    android:button="@android:color/transparent"
+                    android:layout_margin="10dp"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/transportation_bus"
+                    android:button="@android:color/transparent"
+                    android:layout_margin="10dp"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/transportation_bike"
+                    android:button="@android:color/transparent"
+                    android:layout_margin="10dp"/>
+
+            </RadioGroup>
+        </RelativeLayout>
 
     </RelativeLayout>
 
