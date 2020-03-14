@@ -32,6 +32,7 @@ object directions {
     }
     var textConverted = ""
 
+    //TODO: This will be removed later. It is simply a Temporary helper method for now
     fun routeTest(activity:Activity) {
         //TODO: Default origin is the current location
         val originLatLng = map.getCurrentLocation()
@@ -44,7 +45,8 @@ object directions {
 
         route(activity,originLatLng, destinationLatLng)
     }
-
+    
+    //Route method to be called once we are given the origin and destination 
     private fun route(activity: Activity, originLatLng: LatLng, destinationLatLng: LatLng) {
         val path: MutableList<List<LatLng>> = ArrayList()
         val urlDirections = activity.getString(R.string.DirectionAPI)+ originLatLng.latitude + "," + originLatLng.longitude + "&destination=" + destinationLatLng.latitude + "," + destinationLatLng.longitude + "&key=" + activity.getString(R.string.apiKey)
@@ -80,12 +82,11 @@ object directions {
         val requestQueue = Volley.newRequestQueue(activity)
         requestQueue.add(directionsRequest)
 
-//        map.getMapInstance().setOnInfoWindowClickListener()
-
         map.moveCamera(destinationLatLng, 18f)
     }
 
 
+    //Method to trim all the tags from the JSON directions retrieved from Google API
     fun extractDirections(steps: JSONArray): String {
         var textConverted = "Direction:" + '\n'
 
@@ -111,10 +112,11 @@ object directions {
         for(i in 0 until distanceArray.size){
             textConverted += (i + 1).toString() + ". " +  directionArray[i] + '\n' + '\t' + distanceArray[i] +'\n'
         }
-        //Put everything inside of the directionTextBox
+        //Return the cleaned instructions
         return textConverted
     }
 
+    //Update the Direction text box
     fun updateSteps(textSteps:String){
         _directionText.value = textSteps
     }
