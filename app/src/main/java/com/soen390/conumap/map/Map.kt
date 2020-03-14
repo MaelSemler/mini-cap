@@ -21,6 +21,8 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
     private var lastLocation: LatLng = LatLng(45.497304, -73.578923) //This is the last location of the user
     private lateinit var gMap: GoogleMap
     private var buildings: ArrayList<Building> = arrayListOf()
+    private lateinit var loyolaCampus: Campus
+    private lateinit var sgwCampus: Campus
 
     //This is function is called from MapFragment when the Map has loaded.
     //It sets all the default stuff for the map, like permission, centering on location, etc.
@@ -45,6 +47,9 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
 
         buildings = BuildingCreator.createBuildings(gMap)
         BuildingCreator.createPolygons(gMap)
+
+       //Create the two campuses
+        createCampuses()
     }
 
     fun getMapInstance(): GoogleMap{
@@ -86,17 +91,30 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
         gMap.addMarker(MarkerOptions().position(position).title(title).icon(BitmapDescriptorFactory.defaultMarker(342.toFloat())))
     }
 
+    //Create the two campuses object with their markers
     private fun createCampuses(){
-        var loyola = Campus(
+        loyolaCampus = Campus(
             "Loyola Campus",
-            LatLng(45.497304, -73.578923),
+            LatLng(45.458275, -73.640469),
             gMap
         )
-        var sgw = Campus(
+        sgwCampus = Campus(
             "Sir George Williams Campus",
-            LatLng(45.497304, -73.578923),
+            LatLng(45.4975, -73.579004),
             gMap
         )
+    }
+
+    //When the campuses button are clicked, this function is called. It determines which button has been clicked, and then move the camera to it.
+    fun focusOnCampus(campusSelected: String){
+        if(campusSelected.equals("Loyola")){
+            moveCamera(loyolaCampus.location, 16f)
+            loyolaCampus.marker.showInfoWindow()
+        }
+        else{
+            moveCamera(sgwCampus.location, 16f)
+            sgwCampus.marker.showInfoWindow()
+        }
     }
 
     override fun onPolygonClick(p0: Polygon?) {
