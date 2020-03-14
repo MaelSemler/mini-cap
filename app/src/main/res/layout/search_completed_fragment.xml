@@ -37,8 +37,8 @@
 
             <Button
                 android:id="@+id/travel_button"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignEnd="@+id/found_location_button"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
