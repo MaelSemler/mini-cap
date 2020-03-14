@@ -212,7 +212,7 @@ object BuildingCreator {
             context.getString(R.string.loyPSName),
             context.getString(R.string.loyPSInfo),
             LatLng(45.459720, -73.639819),
-            context.resources.getStringArray(R.array.loyPSTarget), // TODO: Change to buildingPSPoints once it is created.
+            context.resources.getStringArray(R.array.buildingPSPoints),
             context.resources.getStringArray(R.array.loyPSTarget),
             map,
             1.9f
@@ -252,7 +252,7 @@ object BuildingCreator {
             context.getString(R.string.loyHBName),
             context.getString(R.string.loyHBInfo),
             LatLng(45.459081, -73.641940),
-            context.resources.getStringArray(R.array.buildingHAPoints),
+            context.resources.getStringArray(R.array.buildingHBPoints),
             context.resources.getStringArray(R.array.loyHBTarget),
             map,
             2.3f
@@ -262,7 +262,7 @@ object BuildingCreator {
             context.getString(R.string.loyHCName),
             context.getString(R.string.loyHCInfo),
             LatLng(45.459630, -73.642082),
-            context.resources.getStringArray(R.array.buildingHAPoints),
+            context.resources.getStringArray(R.array.buildingHCPoints),
             context.resources.getStringArray(R.array.loyHCTarget),
             map,
             2.4f
