@@ -24,10 +24,12 @@ class DirectionsFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.directions_fragment, container, false)
 
-        val start_button = root.findViewById<View>(R.id.start_button)
-        val end_button = root.findViewById<View>(R.id.end_button)
+        val start_button = root.findViewById<View>(R.id.start_location_button)
+        val end_button = root.findViewById<View>(R.id.end_location_button)
         val return_button = root.findViewById<View>(R.id.return_button)
-        //TODO: change from button to text. it should't listen for a button click but an imput text
+        val switch_button = root.findViewById<View>(R.id.switch_button)//TODO: impltment the swap locations feature
+
+
         start_button.setOnClickListener{
             NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_directionsSearchFragment)
         }

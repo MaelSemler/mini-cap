@@ -33,6 +33,7 @@ class SearchResultsFragment : Fragment() {
         val root =  inflater.inflate(R.layout.search_results_fragment, container, false)
 
         //TODO: send the result of the search
+        //TODO: RESEARCH ON SEARCHVIEWS and if we have to change this entire thing!!!
 
         //Getting the Views from the fragment
         val cancel_button = root.findViewById<View>(R.id.cancel_search) as Button
@@ -71,6 +72,11 @@ class SearchResultsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(SearchResultsViewModel::class.java)
         // TODO: Use the ViewModel
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         //Shows the keyboard
         showKeyboard()
     }

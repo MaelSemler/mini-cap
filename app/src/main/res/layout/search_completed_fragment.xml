@@ -13,7 +13,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-
             android:layout_marginBottom="30dp">
 
             <Button
@@ -38,13 +37,12 @@
 
             <Button
                 android:id="@+id/travel_button"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignEnd="@+id/found_location_button"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/go_to_arrow_red"
-                android:padding="10dp"/>
+                android:background="@drawable/go_to_arrow_red" />
 
         </RelativeLayout>
     </RelativeLayout>
