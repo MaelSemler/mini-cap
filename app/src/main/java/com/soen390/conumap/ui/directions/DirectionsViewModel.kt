@@ -9,4 +9,6 @@ class DirectionsViewModel : ViewModel() {
 
     val directionText : LiveData<String>
         get() = directions.directionText
+
+
 }
