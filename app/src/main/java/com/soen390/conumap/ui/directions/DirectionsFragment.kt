@@ -26,7 +26,6 @@ class DirectionsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 //        val root = inflater.inflate(R.layout.directions_fragment, container, false)
-        //TODO:show the steps of the Direction in a subfragment
         //TODO: get the results from SearchCompletedFragment
         //TODO: get the currentlocation
         //TODO: add the name of the result and the curent location to the start and end buttons (get them from the actual objects)
@@ -34,25 +33,11 @@ class DirectionsFragment : Fragment() {
         val directionViewModel = ViewModelProviders.of(this)
             .get(DirectionsViewModel::class.java)
 
-        //TODO: Only binding that would allow us to show the steps
-//        binding = DataBindingUtil.setContentView<DirectionsFragmentBinding>(activity!!, R.layout.directions_fragment).apply{
-//            this.setLifecycleOwner(activity)
-//            this.viewmodel = directionViewModel
-//
-//        }
-
-        //TODO: THIS DOES NOT WORK
+        //This permit to inflate the fragment
         binding = DataBindingUtil.inflate<DirectionsFragmentBinding>(inflater, R.layout.directions_fragment, container, false).apply {
             this.setLifecycleOwner(activity)
             this.viewmodel = directionViewModel
         }
-
-
-
-//        val start_button = root.findViewById<View>(R.id.start_location_button)
-//        val end_button = root.findViewById<View>(R.id.end_location_button)
-//        val return_button = root.findViewById<View>(R.id.return_button)
-//        val switch_button = root.findViewById<View>(R.id.switch_button)//TODO: impletment the swap locations feature
 
         //To change starting and ending location, just click on the buttons to be sent to a search fragment
         binding.startLocationButton.setOnClickListener{
@@ -73,7 +58,7 @@ class DirectionsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
-        // TODO: Use the ViewModel
+
     }
 
 }
