@@ -1,12 +1,10 @@
 package com.soen390.conumap.building
 
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.Color
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import com.soen390.conumap.R
-import java.security.AccessController.getContext
 
 // Responsible for creating all buildings on both campuses.
 object BuildingCreator {
