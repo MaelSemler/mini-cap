@@ -23,16 +23,14 @@ class directions(map:Map) {
 
 
     fun routeTest(activity:Activity) {
+        //TODO: Default origin is the current location
         val originLatLng = map.getCurrentLocation()
+        //TODO:Destination is hardcoded for now
         val destinationLatLng = LatLng(45.497044, -73.578407)//HardCoded for now
-//        //TODO: Origin and Destination should have a title
+       //TODO: Origin and Destination should have a title
         map.addMarker(originLatLng,("This is the origin"))
         map.addMarker(destinationLatLng, "Destination")
         map.moveCamera(originLatLng, 14.5f)
-
-        //FOR SOME REASON THIS MAKES EVERYTHING CRASH
-//        val totalDist :TextView = findViewById(R.id.totalDistance)
-//        val totalTime: TextView = findViewById(R.id.totalTime)
 
         route(activity,originLatLng, destinationLatLng)
     }
@@ -84,7 +82,7 @@ class directions(map:Map) {
 
 
     fun extractDirections(steps: JSONArray) {
-//        val directionText: TextView = findViewById(R.id.Directions)
+        val directionText: TextView = findViewById(R.id.Directions)
         var textConverted = "Direction:" + '\n'
 
         var directionArray = ArrayList<String>()

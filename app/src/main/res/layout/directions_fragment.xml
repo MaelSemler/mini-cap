@@ -104,8 +104,27 @@
                     android:layout_margin="10dp"/>
 
             </RadioGroup>
-        </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-    </RelativeLayout>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="150dp"
+                android:background="@android:color/white">
+
+                <TextView
+                    android:id="@+id/DirectionsTextBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/directionsStep"
+                    android:layout_marginLeft="30sp"
+                    android:layout_marginRight="30sp"
+                    android:textSize="20sp" />
+
+            </ScrollView>
+            </RelativeLayout>
+        </RelativeLayout>
 
 </FrameLayout>
