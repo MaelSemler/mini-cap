@@ -38,7 +38,7 @@ class SearchBarFragment : Fragment() {
         //It is a button that calls a change of fragment
         //this method waits for the "ENTER" key to be pressed
         search_button.setOnClickListener{
-            NavHostFragment.findNavController(this).navigate(R.id.action_searchBarFragment_to_searchResultsFragment)
+          NavHostFragment.findNavController(this).navigate(R.id.action_searchBarFragment_to_searchResultsFragment)
         }
         return root
     }
