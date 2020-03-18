@@ -35,11 +35,7 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
         gMap.setOnPolygonClickListener(this)
         gMap.setOnInfoWindowClickListener(this)
         gMap.setInfoWindowAdapter(BuildingInfoWindowAdapter(activity))
-
-        //Checks the permissions and ask the user if the app does not have the permission to use the localisation feature
-//        if(!Permission.checkPermission(activity)) {
-//            Permission.requestPermission(activity, LOCATION_PERMISSION_REQUEST_CODE)
-//        }
+        
         if(ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED) {
             // We don't have the location permission; request it.
