@@ -2,6 +2,7 @@ package com.soen390.conumap
 
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.Gravity
 import android.view.Menu
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -71,11 +72,14 @@ class MainActivity : AppCompatActivity() {
                     Map.centerMapOnUserLocation(this)
                 } else {
                     // User rejected the location permission.
-                    Toast.makeText(
+                    val locationDeniedMessage: Toast = Toast.makeText(
                         applicationContext,
-                        "Please allow location access, otherwise the functionality of the app will be limited.",
+                        "Please allow location access to use all app features.",
                         Toast.LENGTH_LONG
-                    ).show()
+                    )
+                    // Position the toast in the center so it is more likely to be seen by user.
+                    locationDeniedMessage.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                    locationDeniedMessage.show()
                 }
                 return
             }
