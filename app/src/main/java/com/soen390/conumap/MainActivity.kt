@@ -66,6 +66,8 @@ class MainActivity : AppCompatActivity() {
             LOCATION_PERMISSION_REQUEST_CODE -> {
                 if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // User accepted the location permission.
+                    Map.getMapInstance().isMyLocationEnabled = true
+                    Map.centerMapOnUserLocation(this)
                 } else {
                     // User rejected the location permission.
                 }
