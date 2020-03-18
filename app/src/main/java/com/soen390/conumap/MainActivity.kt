@@ -3,6 +3,7 @@ package com.soen390.conumap
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -70,6 +71,11 @@ class MainActivity : AppCompatActivity() {
                     Map.centerMapOnUserLocation(this)
                 } else {
                     // User rejected the location permission.
+                    Toast.makeText(
+                        applicationContext,
+                        "Please allow location access, otherwise the functionality of the app will be limited.",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
                 return
             }

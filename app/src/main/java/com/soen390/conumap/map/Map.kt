@@ -29,13 +29,13 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
 
     //This is function is called from MapFragment when the Map has loaded.
     //It sets all the default stuff for the map, like permission, centering on location, etc.
-    fun setUpMap(googleMap: GoogleMap, activity: FragmentActivity){
+    fun setUpMap(googleMap: GoogleMap, activity: FragmentActivity) {
 
         gMap = googleMap
         gMap.setOnPolygonClickListener(this)
         gMap.setOnInfoWindowClickListener(this)
         gMap.setInfoWindowAdapter(BuildingInfoWindowAdapter(activity))
-        
+
         if(ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED) {
             // We don't have the location permission; request it.
