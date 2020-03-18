@@ -13,21 +13,19 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
-import com.soen390.conumap.MainActivity
 import com.soen390.conumap.R
 import com.soen390.conumap.building.Building
 import com.soen390.conumap.building.BuildingCreator
 import com.soen390.conumap.building.BuildingInfoWindowAdapter
 import com.soen390.conumap.campus.Campus
-import com.soen390.conumap.permission.Permission
 
 object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
 
     const val LOCATION_PERMISSION_REQUEST_CODE = 1 //The constant for the permission code
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var lastLocation: LatLng = LatLng(45.497304, -73.578923) //This is the last location of the user
-    private lateinit var gMap: GoogleMap
     private var buildings: ArrayList<Building> = arrayListOf()
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var gMap: GoogleMap
     private lateinit var loyolaCampus: Campus
     private lateinit var sgwCampus: Campus
     private lateinit var context: Context
