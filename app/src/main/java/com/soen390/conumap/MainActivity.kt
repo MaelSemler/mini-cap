@@ -20,7 +20,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.soen390.conumap.Directions.directions
-import com.soen390.conumap.databinding.DirectionsFragmentBinding
+//import com.soen390.conumap.databinding.DirectionsFragmentBinding
 import com.soen390.conumap.ui.directions.DirectionsViewModel
 import com.soen390.conumap.building.BuildingCreator.setContext
 

@@ -68,11 +68,15 @@ class SearchResultsFragment : Fragment() {
                 var intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,fields).setCountry("CAN")
                     .build(context);
                 startActivityForResult(intent, 1);
+
+
+
                 //TODO: send the result (SearchCompletedFragment)
                 NavHostFragment.findNavController(this).navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
             }
             false
         })
+        
 
         //This button clears the edit text input when it is pressed
         clear_button.setOnClickListener{
