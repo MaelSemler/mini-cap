@@ -1,8 +1,8 @@
 package com.soen390.conumap.ui.search_results
 
+import android.R.attr
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -14,10 +14,6 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.soen390.conumap.R
 
 
@@ -43,33 +39,12 @@ class SearchResultsFragment : Fragment() {
         val clear_button = root.findViewById<View>(R.id.clear_input) as Button
         val search_bar = root.findViewById<View>(R.id.edSearchResults) as EditText
 
-        //Selects the searchbar input
-        //it's like if the mouse had already clicked on the editbox
+        //Selects the search bar input. It's like if the mouse had already clicked on the editbox
         search_bar.requestFocus()
 
-        search_bar.setOnClickListener {
-            //Initializes Places API using the context of the "search bar" activity
-            var context= search_bar.context
-            Places.initialize(context, R.string.apiKey.toString())
 
-            //Specifies fields to return to user including place's ID, name, address and location.
-            val fields: List<Place.Field> = arrayListOf(
-                Place.Field.NAME,
-                Place.Field.ADDRESS,
-                Place.Field.LAT_LNG
-            )
-            //Creating an intent for autocomplete
-            var intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,fields).setCountry("CAN")
-                .build(context);
-            startActivityForResult(intent, 1);
-        }
-
-
-        /*
-        This is the search bar edit text
-        this method waits for the "ENTER" key to be pressed
-        It changes fragment when it is pressed
-        */
+        /* This is the search bar edit text. This method waits for the "ENTER" key to be pressed
+        It changes fragment when it is pressed*/
         search_bar.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 //TODO: send the result (SearchCompletedFragment)
@@ -77,7 +52,7 @@ class SearchResultsFragment : Fragment() {
             }
             false
         })
-        
+
 
         //This button clears the edit text input when it is pressed
         clear_button.setOnClickListener{
@@ -95,6 +70,7 @@ class SearchResultsFragment : Fragment() {
         }
         return root
     }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
