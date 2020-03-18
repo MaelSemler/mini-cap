@@ -1,5 +1,9 @@
 package com.soen390.conumap.map
 
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -13,9 +17,9 @@ import com.soen390.conumap.building.BuildingInfoWindowAdapter
 import com.soen390.conumap.campus.Campus
 import com.soen390.conumap.permission.Permission
 
-object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener{
+object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
 
-    private const val LOCATION_PERMISSION_REQUEST_CODE = 1 //The constant for the permission code
+    const val LOCATION_PERMISSION_REQUEST_CODE = 1 //The constant for the permission code
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var lastLocation: LatLng = LatLng(45.497304, -73.578923) //This is the last location of the user
     private lateinit var gMap: GoogleMap
@@ -33,16 +37,29 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
         gMap.setInfoWindowAdapter(BuildingInfoWindowAdapter(activity))
 
         //Checks the permissions and ask the user if the app does not have the permission to use the localisation feature
-        if(!Permission.checkPermission(activity)) {
-            Permission.requestPermission(activity, LOCATION_PERMISSION_REQUEST_CODE)
+//        if(!Permission.checkPermission(activity)) {
+//            Permission.requestPermission(activity, LOCATION_PERMISSION_REQUEST_CODE)
+//        }
+        if(ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
+            // We don't have the location permission; request it.
+            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            LOCATION_PERMISSION_REQUEST_CODE)
+            // After this happens, onRequestPermissionsResult is called automatically in MainActivity.
+        } else {
+            // Makes sure the mylocation is enabled
+            // We do this only when we are sure that the location permission has been allowed.
+            // Doing so before location granted will cause the app to crash.
+            gMap.isMyLocationEnabled = true
         }
 
         //Calls the uiSettings function to set the defaults for the map
         uiSettings(activity)
-        gMap.isMyLocationEnabled = true //Makes sure the mylocation  is enabled
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity) //Create the fusedLocation
         centerMapOnUserLocation(activity) //Center the map on the user
 
+        // Create all building objects, their corresponding markers, and their outlines.
         buildings = BuildingCreator.createBuildings(gMap)
 
        //Create the two campuses

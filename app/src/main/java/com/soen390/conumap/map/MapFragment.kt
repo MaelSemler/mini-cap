@@ -19,7 +19,6 @@ import com.soen390.conumap.permission.Permission
 
 class MapFragment : Fragment() {
 
-
     private val callback = OnMapReadyCallback { googleMap ->
         /**
          * Manipulates the map once available.
@@ -36,8 +35,6 @@ class MapFragment : Fragment() {
 
         //Added a marker to test the method
         //Map.addMarker(LatLng(45.495418, -73.579169), "Bonjour")
-
-
     }
 
     override fun onCreateView(
