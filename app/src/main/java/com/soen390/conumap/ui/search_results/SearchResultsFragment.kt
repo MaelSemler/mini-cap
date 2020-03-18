@@ -47,6 +47,24 @@ class SearchResultsFragment : Fragment() {
         //it's like if the mouse had already clicked on the editbox
         search_bar.requestFocus()
 
+        search_bar.setOnClickListener {
+            //Initializes Places API using the context of the "search bar" activity
+            var context= search_bar.context
+            Places.initialize(context, R.string.apiKey.toString())
+
+            //Specifies fields to return to user including place's ID, name, address and location.
+            val fields: List<Place.Field> = arrayListOf(
+                Place.Field.NAME,
+                Place.Field.ADDRESS,
+                Place.Field.LAT_LNG
+            )
+            //Creating an intent for autocomplete
+            var intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,fields).setCountry("CAN")
+                .build(context);
+            startActivityForResult(intent, 1);
+        }
+
+
         /*
         This is the search bar edit text
         this method waits for the "ENTER" key to be pressed
@@ -54,23 +72,6 @@ class SearchResultsFragment : Fragment() {
         */
         search_bar.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                //Initializes Places API using the context of the "search bar" activity
-                var context= search_bar.context
-                Places.initialize(context, R.string.apiKey.toString())
-
-                //Specifies fields to return to user including place's ID, name, address and location.
-                val fields: List<Place.Field> = arrayListOf(
-                    Place.Field.NAME,
-                    Place.Field.ADDRESS,
-                    Place.Field.LAT_LNG
-                )
-                //Creating an intent for autocomplete
-                var intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,fields).setCountry("CAN")
-                    .build(context);
-                startActivityForResult(intent, 1);
-
-
-
                 //TODO: send the result (SearchCompletedFragment)
                 NavHostFragment.findNavController(this).navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
             }
