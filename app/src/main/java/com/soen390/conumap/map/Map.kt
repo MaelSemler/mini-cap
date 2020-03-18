@@ -1,7 +1,10 @@
 package com.soen390.conumap.map
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
+import android.view.Gravity
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -10,6 +13,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
+import com.soen390.conumap.MainActivity
 import com.soen390.conumap.R
 import com.soen390.conumap.building.Building
 import com.soen390.conumap.building.BuildingCreator
@@ -26,6 +30,10 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
     private var buildings: ArrayList<Building> = arrayListOf()
     private lateinit var loyolaCampus: Campus
     private lateinit var sgwCampus: Campus
+    private lateinit var context: Context
+
+    // Context is needed to show toast.
+    fun setContext(ctx: Context) { context = ctx }
 
     //This is function is called from MapFragment when the Map has loaded.
     //It sets all the default stuff for the map, like permission, centering on location, etc.
@@ -43,17 +51,16 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
             LOCATION_PERMISSION_REQUEST_CODE)
             // After this happens, onRequestPermissionsResult is called automatically in MainActivity.
         } else {
-            // Makes sure the mylocation is enabled
             // We do this only when we are sure that the location permission has been allowed.
             // Doing so before location granted will cause the app to crash.
-            gMap.isMyLocationEnabled = true
+            gMap.isMyLocationEnabled = true // Makes sure the mylocation is enabled
+            centerMapOnUserLocation(activity) // Center the map on the user
         }
 
         //Calls the uiSettings function to set the defaults for the map
         uiSettings(activity)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity) //Create the fusedLocation
-        centerMapOnUserLocation(activity) //Center the map on the user
 
         // Create all building objects, their corresponding markers, and their outlines.
         buildings = BuildingCreator.createBuildings(gMap)
@@ -85,11 +92,25 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
 
     //This method centers the map on the user's current location
     fun centerMapOnUserLocation(activity: FragmentActivity) {
-        fusedLocationClient.lastLocation.addOnSuccessListener(activity) { location ->
-            // Got last known location. In some rare situations this can be null.
-            if (location != null) {
-                lastLocation = LatLng(location.latitude, location.longitude)
-                moveCamera(lastLocation, 18f)
+        if(ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
+            // Show toast if user attempts to locate but location permission is denied.
+            val locationDeniedMessage: Toast = Toast.makeText(
+                context,
+                "Can't locate because location permission was denied.",
+                Toast.LENGTH_LONG
+            )
+            // Position the toast in the center so it is more likely to be seen by user.
+            locationDeniedMessage.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+            locationDeniedMessage.show()
+        } else {
+            // Permission enabled, locate user.
+            fusedLocationClient.lastLocation.addOnSuccessListener(activity) { location ->
+                // Got last known location. In some rare situations this can be null.
+                if (location != null) {
+                    lastLocation = LatLng(location.latitude, location.longitude)
+                    moveCamera(lastLocation, 18f)
+                }
             }
         }
     }

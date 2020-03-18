@@ -21,9 +21,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.soen390.conumap.Directions.directions
+import com.soen390.conumap.building.BuildingCreator
 import com.soen390.conumap.databinding.DirectionsFragmentBinding
 import com.soen390.conumap.ui.directions.DirectionsViewModel
-import com.soen390.conumap.building.BuildingCreator.setContext
 import com.soen390.conumap.map.Map
 import com.soen390.conumap.map.Map.LOCATION_PERMISSION_REQUEST_CODE
 
@@ -49,7 +49,8 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         // Pass context to these files so they can access the resources.
-        setContext(this)
+        Map.setContext(this)
+        BuildingCreator.setContext(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
