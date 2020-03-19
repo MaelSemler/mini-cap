@@ -36,17 +36,17 @@ class SwitchCampusTest {
         sleep(5000)
 
         // Press SGW button.
-        val sgwButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/button_SGW"))
+        val sgwButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/sgw_button"))
         sgwButton.click()
 
-        val sgwMarker: UiObject = device.findObject(UiSelector().description("SGW. "))
+        val sgwMarker: UiObject = device.findObject(UiSelector().description(""))
         sgwMarker.click()
 
         // Press LOY button.
-        val loyButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/button_LOY"))
+        val loyButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/loy_button"))
         loyButton.click()
 
-        val loyMarker: UiObject = device.findObject(UiSelector().description("LOY. "))
+        val loyMarker: UiObject = device.findObject(UiSelector().description(""))
         loyMarker.click()
     }
 }

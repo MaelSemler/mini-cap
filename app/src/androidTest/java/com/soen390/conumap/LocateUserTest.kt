@@ -45,7 +45,7 @@ class LocateUserTest {
         )
 
         // Press locate user button.
-        val locateUserButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/button_current_location"))
+        val locateUserButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/user_location_button"))
         locateUserButton.click()
 
         // Give time for app to load.
