@@ -1,8 +1,10 @@
 package com.soen390.conumap.map
 
 import android.content.Context
+import android.os.Build
 import android.view.Gravity
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -14,6 +16,7 @@ import com.soen390.conumap.building.Building
 import com.soen390.conumap.building.BuildingCreator
 import com.soen390.conumap.building.BuildingInfoWindowAdapter
 import com.soen390.conumap.campus.Campus
+import com.soen390.conumap.helper.DeviceLocationChecker
 import com.soen390.conumap.permission.Permission
 
 object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
@@ -84,7 +87,12 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
     }
 
     //This method centers the map on the user's current location
+    @RequiresApi(Build.VERSION_CODES.P)
     fun centerMapOnUserLocation(activity: FragmentActivity) {
+        var loc: Toast = Toast.makeText(context, "DeviceLocationChecker.isDeviceLocationEnabled is " +
+        DeviceLocationChecker.isDeviceLocationEnabled(), Toast.LENGTH_LONG)
+        loc.show()
+
         if(!Permission.checkLocationPermission(activity)) {
             // Show toast if user attempts to locate but location permission is denied.
             val locationDeniedMessage: Toast = Toast.makeText(
@@ -135,12 +143,11 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
     }
 
     //When the campuses button are clicked, this function is called. It determines which button has been clicked, and then move the camera to it.
-    fun focusOnCampus(campusSelected: String){
-        if(campusSelected.equals("Loyola")){
+    fun focusOnCampus(campusSelected: String) {
+        if(campusSelected.equals("Loyola")) {
             moveCamera(loyolaCampus.location, 16f)
             loyolaCampus.marker.showInfoWindow()
-        }
-        else{
+        } else {
             moveCamera(sgwCampus.location, 16f)
             sgwCampus.marker.showInfoWindow()
         }
