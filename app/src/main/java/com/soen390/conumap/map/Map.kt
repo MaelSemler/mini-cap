@@ -122,11 +122,13 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
     private fun createCampuses() {
         loyolaCampus = Campus(
             "Loyola Campus",
+            "Notre-Dame-de-Grâce, QC",
             LatLng(45.458275, -73.640469),
             gMap
         )
         sgwCampus = Campus(
             "Sir George Williams Campus",
+            "Montreal, QC",
             LatLng(45.496061, -73.578467),
             gMap
         )
