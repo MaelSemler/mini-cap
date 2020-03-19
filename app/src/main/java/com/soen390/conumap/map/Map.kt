@@ -1,10 +1,8 @@
 package com.soen390.conumap.map
 
 import android.content.Context
-import android.os.Build
 import android.view.Gravity
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -97,8 +95,7 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
             )
             locationDisabledMessage.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
             locationDisabledMessage.show()
-        }
-        if(!Permission.checkLocationPermission(activity)) {
+        } else if(!Permission.checkLocationPermission(activity)) {
             // Show toast if user attempts to locate but location permission is denied.
             val locationDeniedMessage: Toast = Toast.makeText(
                 context,

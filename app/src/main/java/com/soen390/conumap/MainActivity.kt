@@ -12,6 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.soen390.conumap.building.BuildingCreator
+import com.soen390.conumap.helper.ContextPasser
 import com.soen390.conumap.helper.DeviceLocationChecker
 import com.soen390.conumap.map.Map
 import com.soen390.conumap.permission.Permission
@@ -37,11 +38,8 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        // Pass context to these files so they can access the resources.
-        Map.setContext(this)
-        BuildingCreator.setContext(this)
-        Permission.setContext(this)
-        DeviceLocationChecker.setUp(this)
+        // Pass context to other files that require it.
+        ContextPasser.setContexts(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

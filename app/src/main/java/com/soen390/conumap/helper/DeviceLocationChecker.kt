@@ -1,12 +1,9 @@
 package com.soen390.conumap.helper
 
 import android.content.Context
-import android.location.Location
 import android.location.LocationManager
 import android.os.Build
 import android.provider.Settings
-import androidx.annotation.RequiresApi
-import kotlin.properties.Delegates
 
 // An object used to check if the location service on the device is enabled.
 object DeviceLocationChecker {
