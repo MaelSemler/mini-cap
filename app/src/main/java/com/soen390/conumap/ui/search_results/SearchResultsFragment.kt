@@ -1,9 +1,10 @@
 package com.soen390.conumap.ui.search_results
 
-import android.R.attr
 import android.app.Activity
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -14,14 +15,17 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken
+import com.google.android.libraries.places.api.model.RectangularBounds
+import com.google.android.libraries.places.api.model.TypeFilter
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.soen390.conumap.R
 
 
 class SearchResultsFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = SearchResultsFragment()
-    }
 
     private lateinit var viewModel: SearchResultsViewModel
 
@@ -31,16 +35,36 @@ class SearchResultsFragment : Fragment() {
     ): View? {
         val root =  inflater.inflate(R.layout.search_results_fragment, container, false)
 
-        //TODO: the search suggestions, recently visited
+        //TODO: Recently visited
         //TODO: DO RESEARCH ON SEARCHVIEWS and if we have to change this entire thing!!!!!!!!!!!
 
         //Getting the Views from the fragment
         val cancel_button = root.findViewById<View>(R.id.cancel_search) as Button
         val clear_button = root.findViewById<View>(R.id.clear_input) as Button
-        val search_bar = root.findViewById<View>(R.id.edSearchResults) as EditText
+        val search_bar= root.findViewById<View>(R.id.search_button) as Button
+        val search_bar_text = root.findViewById<View>(R.id.search_button_text) as EditText
+        val search_results=root.findViewById<View>(R.id.SearchResults)
 
-        //Selects the search bar input. It's like if the mouse had already clicked on the editbox
-        search_bar.requestFocus()
+
+        search_bar.setOnClickListener {
+
+            this.context?.let { Places.initialize(it, R.string.apiKey.toString()) };  //initialize context
+            var placesClient = this.context?.let { Places.createClient(it) };   //initialize placesClient
+            val token = AutocompleteSessionToken.newInstance()
+            val bounds = RectangularBounds.newInstance(LatLng(45.425579,-73.687204),LatLng(45.706574,-73.475121))
+            val request =
+                FindAutocompletePredictionsRequest.builder()
+                      .setLocationBias(bounds)
+                    .setTypeFilter(TypeFilter.ADDRESS)
+                    .setCountries("CA")
+                    .setSessionToken(token)
+                    .setQuery(search_bar_text.getText().toString())
+                    .build()
+            placesClient?.findAutocompletePredictions(request)?.addOnSuccessListener(
+                request: OnSuccessListener<> {
+                    for (prediction : response.getAutocompletePredictions()) {
+                    Log.i(TAG, prediction.getPlaceId());
+                    Log.i(TAG, prediction.getPrimaryText(null).toString()); } })
 
 
         /* This is the search bar edit text. This method waits for the "ENTER" key to be pressed
@@ -53,23 +77,22 @@ class SearchResultsFragment : Fragment() {
             false
         })
 
+        search_bar.requestFocus()                     //Selects the search bar input. It's like if the mouse had already clicked on the editbox
 
-        //This button clears the edit text input when it is pressed
         clear_button.setOnClickListener{
             search_bar.setText("")
-        }
-
-        //This button goes to the previous fragment
+        }         //This button clears the edit text input when it is pressed
 
         cancel_button.setOnClickListener{
             //TODO: look in if this is the best way to implement a "back" function
             NavHostFragment.findNavController(this).navigateUp()
             //TODO:if keyboard is shown, hide the keyboard
             hideKeyboard()
+        }        //This button goes to the previous fragment
 
-        }
         return root
     }
+
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -78,7 +101,6 @@ class SearchResultsFragment : Fragment() {
         // TODO: Use the ViewModel
 
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //Shows the keyboard
@@ -93,11 +115,6 @@ class SearchResultsFragment : Fragment() {
     fun Fragment.hideKeyboard() {
         view?.let { activity?.hideKeyboard(it) }
     }
-
-    fun Activity.hideKeyboard() {
-        hideKeyboard(currentFocus ?: View(this))
-    }
-
     fun Context.hideKeyboard(view: View) {
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken,0)
@@ -107,11 +124,6 @@ class SearchResultsFragment : Fragment() {
     fun Fragment.showKeyboard() {
         view?.let { activity?.showKeyboard(it) }
     }
-
-    fun Activity.showKeyboard() {
-        showKeyboard(currentFocus ?: View(this))
-    }
-
     fun Context.showKeyboard(view: View) {
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED,0)
