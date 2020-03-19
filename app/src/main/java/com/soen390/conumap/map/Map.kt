@@ -1,12 +1,8 @@
 package com.soen390.conumap.map
 
-import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
 import android.view.Gravity
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -50,7 +46,7 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
         } else {
             // We do this only when we are sure that the location permission has been allowed.
             // Doing so before location granted will cause the app to crash.
-            gMap.isMyLocationEnabled = true // Makes sure the mylocation is enabled
+            gMap.isMyLocationEnabled = true // Makes sure the myLocation is enabled
             centerMapOnUserLocation(activity) // Center the map on the user
         }
 

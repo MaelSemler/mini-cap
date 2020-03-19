@@ -1,10 +1,7 @@
 package com.soen390.conumap
 
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.Gravity
 import android.view.Menu
-import android.widget.Toast
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -16,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.soen390.conumap.building.BuildingCreator
 import com.soen390.conumap.map.Map
-import com.soen390.conumap.map.Map.LOCATION_PERMISSION_REQUEST_CODE
 import com.soen390.conumap.permission.Permission
 
 class MainActivity : AppCompatActivity() {
