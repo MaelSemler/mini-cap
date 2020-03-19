@@ -97,6 +97,7 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
             locationDeniedMessage.show()
         } else {
             // Permission enabled, locate user.
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
             fusedLocationClient.lastLocation.addOnSuccessListener(activity) { location ->
                 // Got last known location. In some rare situations this can be null.
                 if (location != null) {
