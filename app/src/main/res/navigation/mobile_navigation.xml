@@ -50,4 +50,9 @@
         android:name="com.soen390.conumap.ui.directions.DirectionsFragment"
         android:label="directions_fragment"
         tools:layout="@layout/directions_fragment" />
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.soen390.conumap.ui.calendar.CalendarFragment"
+        android:label="Shedule"
+        tools:layout="@layout/calendar_fragment" />
 </navigation>
