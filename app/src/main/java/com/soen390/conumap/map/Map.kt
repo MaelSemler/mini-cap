@@ -18,6 +18,7 @@ import com.soen390.conumap.building.Building
 import com.soen390.conumap.building.BuildingCreator
 import com.soen390.conumap.building.BuildingInfoWindowAdapter
 import com.soen390.conumap.campus.Campus
+import com.soen390.conumap.permission.Permission
 
 object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
 
@@ -42,11 +43,9 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
         gMap.setOnInfoWindowClickListener(this)
         gMap.setInfoWindowAdapter(BuildingInfoWindowAdapter(activity))
 
-        if(ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
+        if(!Permission.checkLocationPermission(activity)) {
             // We don't have the location permission; request it.
-            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-            LOCATION_PERMISSION_REQUEST_CODE)
+            Permission.requestLocationPermission(activity, LOCATION_PERMISSION_REQUEST_CODE)
             // After this happens, onRequestPermissionsResult is called automatically in MainActivity.
         } else {
             // We do this only when we are sure that the location permission has been allowed.
@@ -90,8 +89,7 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
 
     //This method centers the map on the user's current location
     fun centerMapOnUserLocation(activity: FragmentActivity) {
-        if(ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
+        if(!Permission.checkLocationPermission(activity)) {
             // Show toast if user attempts to locate but location permission is denied.
             val locationDeniedMessage: Toast = Toast.makeText(
                 context,

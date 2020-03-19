@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar
 import com.soen390.conumap.building.BuildingCreator
 import com.soen390.conumap.map.Map
 import com.soen390.conumap.map.Map.LOCATION_PERMISSION_REQUEST_CODE
+import com.soen390.conumap.permission.Permission
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         // Pass context to these files so they can access the resources.
         Map.setContext(this)
         BuildingCreator.setContext(this)
+        Permission.setContext(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -56,25 +58,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        when(requestCode) {
-            LOCATION_PERMISSION_REQUEST_CODE -> {
-                if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // User accepted the location permission.
-                    Map.getMapInstance().isMyLocationEnabled = true
-                    Map.centerMapOnUserLocation(this)
-                } else {
-                    // User rejected the location permission.
-                    val locationDeniedMessage: Toast = Toast.makeText(
-                        applicationContext,
-                        "Please allow location access to use all app features.",
-                        Toast.LENGTH_LONG
-                    )
-                    // Position the toast in the center so it is more likely to be seen by user.
-                    locationDeniedMessage.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
-                    locationDeniedMessage.show()
-                }
-                return
-            }
-        }
+        Permission.handlePermissionResults(requestCode, permissions, grantResults, this)
     }
 }
