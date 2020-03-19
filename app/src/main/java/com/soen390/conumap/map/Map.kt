@@ -87,12 +87,17 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
     }
 
     //This method centers the map on the user's current location
-    @RequiresApi(Build.VERSION_CODES.P)
     fun centerMapOnUserLocation(activity: FragmentActivity) {
-        var loc: Toast = Toast.makeText(context, "DeviceLocationChecker.isDeviceLocationEnabled is " +
-        DeviceLocationChecker.isDeviceLocationEnabled(), Toast.LENGTH_LONG)
-        loc.show()
-
+        if(!DeviceLocationChecker.isDeviceLocationEnabled()) {
+            // Show toast if user attempts to locate but device location is turned off.
+            val locationDisabledMessage: Toast = Toast.makeText(
+                context,
+                "Can't locate because device location is turned off.",
+                Toast.LENGTH_LONG
+            )
+            locationDisabledMessage.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+            locationDisabledMessage.show()
+        }
         if(!Permission.checkLocationPermission(activity)) {
             // Show toast if user attempts to locate but location permission is denied.
             val locationDeniedMessage: Toast = Toast.makeText(
@@ -100,7 +105,6 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
                 "Can't locate because location permission was denied.",
                 Toast.LENGTH_LONG
             )
-            // Position the toast in the center so it is more likely to be seen by user.
             locationDeniedMessage.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
             locationDeniedMessage.show()
         } else {

@@ -11,16 +11,32 @@ import kotlin.properties.Delegates
 // An object used to check if the location service on the device is enabled.
 object DeviceLocationChecker {
     private lateinit var context: Context
-    fun setContext(ctx: Context) { context = ctx
+    // For API level > 23 (newer than Marshmallow)
+    private lateinit var locationManager: LocationManager
+    // For API level <= 23 (Marshmallow or older)
+    private var locationMode = -1 // 0 means off, != 0  means on
+
+    fun setUp(ctx: Context) {
+        context = ctx
         locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        mode = Settings.Secure.getInt(context.contentResolver, Settings.Secure.LOCATION_MODE, Settings.Secure.LOCATION_MODE_OFF)
+        locationMode = Settings.Secure.getInt(context.contentResolver, Settings.Secure.LOCATION_MODE, Settings.Secure.LOCATION_MODE_OFF)
     }
 
-    var mode = -1
-    lateinit var locationManager: LocationManager
+    // This will be called before checking locationMode.
+    // For the case where the user opens the app and toggles device location while app is open.
+    private fun updateLocationMode() {
+        locationMode = Settings.Secure.getInt(context.contentResolver, Settings.Secure.LOCATION_MODE, Settings.Secure.LOCATION_MODE_OFF)
+    }
 
-    @RequiresApi(Build.VERSION_CODES.P)
-    fun isDeviceLocationEnabled(): Int {
-        return mode
+    // Returns true if device location is enabled, false otherwise.
+    fun isDeviceLocationEnabled(): Boolean {
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
+            // Use locationMode since old version of Android.
+            updateLocationMode()
+            return locationMode != 0
+        } else {
+            // Use locationManager for newer versions.
+            return locationManager.isLocationEnabled
+        }
     }
 }

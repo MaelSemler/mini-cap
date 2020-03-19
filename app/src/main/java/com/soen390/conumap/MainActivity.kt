@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         Map.setContext(this)
         BuildingCreator.setContext(this)
         Permission.setContext(this)
-        DeviceLocationChecker.setContext(this)
+        DeviceLocationChecker.setUp(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
