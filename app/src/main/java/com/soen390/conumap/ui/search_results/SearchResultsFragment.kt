@@ -56,26 +56,29 @@ class SearchResultsFragment : Fragment() {
         //val searchResults = root.findViewById<View>(R.id.search_results) as TextView
         //val result = StringBuilder("")
 
+
+
+        //Autocomplete using Intent
         this.context?.let {
-            Places.initialize(it, R.string.apiKey.toString())
+            Places.initialize(it, context?.getString(R.string.apiKey)!!)
         };  //initialize context
         val placesClient = this.context?.let { Places.createClient(it) }   //initialize placesClient
         val autoCompleteRequestCode= 1
-
+        val bounds = RectangularBounds.newInstance(
+            LatLng(45.425579, -73.687204),
+            LatLng(45.706574, -73.475121))
        searchBar.setOnClickListener {
            val fields = arrayListOf (Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS)
            val intent = Autocomplete.IntentBuilder(
-                 AutocompleteActivityMode.OVERLAY, fields)
+                 AutocompleteActivityMode.OVERLAY, fields).setCountry("CA").setLocationBias(bounds)
                 .build(this.requireContext());
          startActivityForResult(intent, autoCompleteRequestCode);
        }
-//        val bounds = RectangularBounds.newInstance(
-//            LatLng(45.425579, -73.687204),
-//            LatLng(45.706574, -73.475121)
-//        )
+
+
+        //    TODO:Programmatically Enforce Autocomplete
+
 //        val token = AutocompleteSessionToken.newInstance() //initialize session token
-//
-//
 //        while (searchBar.setOnKeyListener() //Create a while loop here to constantly take user input and display accordingly to what's typed
 //        {
 //            val searchInput = searchBar.getText().toString()
@@ -114,16 +117,16 @@ class SearchResultsFragment : Fragment() {
  //         }
         // }
 
-//        /* This is the search bar edit text. This method waits for the "ENTER" key to be pressed
-//        It changes fragment when it is pressed*/
-//        searchBar.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-//            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-//                //TODO: send the result (SearchCompletedFragment)
-//                NavHostFragment.findNavController(this)
-//                    .navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
-//            }
-//            false
-//        })
+        /* This is the search bar edit text. This method waits for the "ENTER" key to be pressed
+        It changes fragment when it is pressed*/
+        searchBar.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                //TODO: send the result (SearchCompletedFragment)
+                NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
+            }
+            false
+        })
 
         // This button clears the edit text input when it is pressed
         clearButton.setOnClickListener {
@@ -154,7 +157,7 @@ class SearchResultsFragment : Fragment() {
 //
 //    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) { //Displays the appropriate thing according to what the user selected.
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode==RESULT_OK)
         {
@@ -168,11 +171,12 @@ class SearchResultsFragment : Fragment() {
             Log.i(TAG, status.statusMessage)
             searchBar.setText("Error")
         }
-        else if (resultCode== RESULT_CANCELED)
-            searchBar.setText("What was that?")
     }
+
+
     //TODO:simply the logic of hideKeyboard() and showKeyboard
     //TODO: issue when the app closes the keyboard doesn't
+    // TODO: Understand what this does.
 
 //    //This function is to make the keyboard close
 //    fun Fragment.hideKeyboard() {
