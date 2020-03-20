@@ -43,45 +43,59 @@ class SearchResultsFragment : Fragment() {
         //Getting the Views from the fragment
         val cancelButton = root.findViewById<View>(R.id.cancel_search) as Button
         val clearButton = root.findViewById<View>(R.id.clear_input) as Button
-        val searchBar = root.findViewById<View>(R.id.search_button) as EditText
-        val searchResults = root.findViewById<View>(R.id.SearchResults) as TextView
-        val result= StringBuilder("")
-        this.context?.let { Places.initialize(it, R.string.apiKey.toString())
-            };  //initialize context
-        val placesClient = this.context?.let { Places.createClient(it) }   //initialize placesClient
+        val searchBar = root.findViewById<View>(R.id.searchBar) as EditText
+        val searchResults = root.findViewById<View>(R.id.search_results) as TextView
+        val result = StringBuilder("")
 
-        searchBar.setOnClickListener {
-            Toast.makeText(this.context, searchBar.getText().toString(), Toast.LENGTH_SHORT).show();
-            val bounds = RectangularBounds.newInstance(
-                LatLng(45.425579, -73.687204),
-                LatLng(45.706574, -73.475121))
-            val token = AutocompleteSessionToken.newInstance() //initalize session token
+        this.context?.let {
+            Places.initialize(it, R.string.apiKey.toString())
+        };  //initialize context
+        val placesClient = this.context?.let { Places.createClient(it) }   //initialize placesClient
+        val bounds = RectangularBounds.newInstance(
+            LatLng(45.425579, -73.687204),
+            LatLng(45.706574, -73.475121)
+        )
+        val token = AutocompleteSessionToken.newInstance() //initialize session token
+
+        
+        while (searchBar.setOnKeyListener {}.equals(false))
+        {
+            val searchInput = searchBar.getText().toString()
             val request = //Requesting predictions with these specific parameters
                 FindAutocompletePredictionsRequest.builder()
                     .setLocationBias(bounds)
                     .setTypeFilter(TypeFilter.ADDRESS)
                     .setCountries("CA")
                     .setSessionToken(token)
-                    .setQuery(searchBar.getText().toString())
+                    .setQuery(searchInput)
                     .build()
+            Toast.makeText(this.context, searchBar.getText().toString(), Toast.LENGTH_SHORT).show();
             placesClient?.findAutocompletePredictions(request)
                 ?.addOnSuccessListener { response: FindAutocompletePredictionsResponse ->
                     for (prediction in response.autocompletePredictions) {
                         result.append(prediction.getFullText(null)).append("\n")
                         Log.i(SearchResultsFragment().getTag(), prediction.placeId)
-                        Log.i(SearchResultsFragment().getTag(), prediction.getPrimaryText(null).toString())
-                        Toast.makeText(this.context, prediction.getPrimaryText(null), Toast.LENGTH_SHORT).show();
+                        Log.i(
+                            SearchResultsFragment().getTag(),
+                            prediction.getPrimaryText(null).toString()
+                        )
+                        Toast.makeText(
+                            this.context,
+                            prediction.getPrimaryText(null),
+                            Toast.LENGTH_SHORT
+                        ).show();
                     }
-                    searchResults.setText(result)
+                    searchResults.text = result
                 }?.addOnFailureListener { exception: Exception? ->
                     if (exception is ApiException) {
-                        Log.e(SearchResultsFragment().getTag(),"Place not found: " + exception.statusCode)
+                        Log.e(
+                            SearchResultsFragment().getTag(),
+                            "Place not found: " + exception.statusCode
+                        )
                     }
                 }
 
         }
-
-
 
         /* This is the search bar edit text. This method waits for the "ENTER" key to be pressed
         It changes fragment when it is pressed*/
