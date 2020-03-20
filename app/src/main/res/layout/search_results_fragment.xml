@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
-            <EditText
+            <Button
                 android:id="@+id/searchBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_toStartOf="@+id/cancel_search"
                 android:background="@drawable/round_rectangle_white"
-                android:drawableLeft="@drawable/search"/>
+                android:drawableLeft="@drawable/search"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:drawableTint="@color/red_transparent"
@@ -33,19 +33,20 @@
                 android:paddingEnd="40dp"
                 android:singleLine="true"
                 android:textSize="18sp"
-                android:textStyle="bold"
+                android:textStyle="bold"/>
 
-            <TextView
-                android:layout_marginTop="10dp"
-                android:id="@+id/search_results"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/searchBar"
-                android:background="@drawable/round_rectangle_white"
-                android:paddingHorizontal="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                />
+
+<!--            <TextView-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:id="@+id/search_results"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignBottom="@+id/searchBar"-->
+<!--                android:background="@drawable/round_rectangle_white"-->
+<!--                android:paddingHorizontal="20dp"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:layout_marginEnd="20dp"-->
+<!--                />-->
             <Button
                 android:id="@+id/cancel_search"
                 android:layout_width="40dp"
