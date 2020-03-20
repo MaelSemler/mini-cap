@@ -58,7 +58,7 @@ class SearchResultsFragment : Fragment() {
         val token = AutocompleteSessionToken.newInstance() //initialize session token
 
         
-        while (searchBar.setOnKeyListener {}.equals(false))
+        while (searchBar.setOnKeyListener() //Create a while loop here to constantly take user input and display accordingly to what's typed
         {
             val searchInput = searchBar.getText().toString()
             val request = //Requesting predictions with these specific parameters
