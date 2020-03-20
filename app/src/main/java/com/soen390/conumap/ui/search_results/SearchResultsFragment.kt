@@ -1,7 +1,6 @@
 package com.soen390.conumap.ui.search_results
 
 import android.app.Activity
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +11,9 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.widget.ButtonBarLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
@@ -39,54 +41,51 @@ class SearchResultsFragment : Fragment() {
         //TODO: DO RESEARCH ON SEARCHVIEWS and if we have to change this entire thing!!!!!!!!!!!
 
         //Getting the Views from the fragment
-        val cancel_button = root.findViewById<View>(R.id.cancel_search) as Button
-        val clear_button = root.findViewById<View>(R.id.clear_input) as Button
-        val search_bar = root.findViewById<View>(R.id.search_button) as Button
-        val search_bar_text = root.findViewById<View>(R.id.search_button_text) as EditText
-        val search_results = root.findViewById<View>(R.id.SearchResults)
-
-
-        search_bar.setOnClickListener {
-            this.context?.let {
-                Places.initialize(
-                    it,
-                    R.string.apiKey.toString()
-                )
+        val cancelButton = root.findViewById<View>(R.id.cancel_search) as Button
+        val clearButton = root.findViewById<View>(R.id.clear_input) as Button
+        val searchBar = root.findViewById<View>(R.id.search_button) as EditText
+        val searchResults = root.findViewById<View>(R.id.SearchResults) as TextView
+        val result= StringBuilder("")
+        this.context?.let { Places.initialize(it, R.string.apiKey.toString())
             };  //initialize context
-            var placesClient =
-                this.context?.let { Places.createClient(it) };   //initialize placesClient
-            val token = AutocompleteSessionToken.newInstance() //initalize session token
+        val placesClient = this.context?.let { Places.createClient(it) }   //initialize placesClient
+
+        searchBar.setOnClickListener {
+            Toast.makeText(this.context, searchBar.getText().toString(), Toast.LENGTH_SHORT).show();
             val bounds = RectangularBounds.newInstance(
                 LatLng(45.425579, -73.687204),
-                LatLng(45.706574, -73.475121)
-            )
+                LatLng(45.706574, -73.475121))
+            val token = AutocompleteSessionToken.newInstance() //initalize session token
             val request = //Requesting predictions with these specific parameters
                 FindAutocompletePredictionsRequest.builder()
                     .setLocationBias(bounds)
                     .setTypeFilter(TypeFilter.ADDRESS)
                     .setCountries("CA")
                     .setSessionToken(token)
-                    .setQuery(search_bar_text.getText().toString())
+                    .setQuery(searchBar.getText().toString())
                     .build()
-            placesClient!!.findAutocompletePredictions(request)
-                .addOnSuccessListener { response: FindAutocompletePredictionsResponse ->
+            placesClient?.findAutocompletePredictions(request)
+                ?.addOnSuccessListener { response: FindAutocompletePredictionsResponse ->
                     for (prediction in response.autocompletePredictions) {
-                        Log.i(TAG, prediction.placeId)
-                        Log.i(TAG, prediction.getPrimaryText(null).toString())
+                        result.append(prediction.getFullText(null)).append("\n")
+                        Log.i(SearchResultsFragment().getTag(), prediction.placeId)
+                        Log.i(SearchResultsFragment().getTag(), prediction.getPrimaryText(null).toString())
+                        Toast.makeText(this.context, prediction.getPrimaryText(null), Toast.LENGTH_SHORT).show();
                     }
-                }.addOnFailureListener { exception: Exception? ->
+                    searchResults.setText(result)
+                }?.addOnFailureListener { exception: Exception? ->
                     if (exception is ApiException) {
-                        Log.e(TAG, "Place not found: " + exception.statusCode)
+                        Log.e(SearchResultsFragment().getTag(),"Place not found: " + exception.statusCode)
                     }
                 }
+
         }
 
-        search_bar.requestFocus()                     //Selects the search bar input. It's like if the mouse had already clicked on the editbox
 
 
         /* This is the search bar edit text. This method waits for the "ENTER" key to be pressed
         It changes fragment when it is pressed*/
-        search_bar.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+        searchBar.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 //TODO: send the result (SearchCompletedFragment)
                 NavHostFragment.findNavController(this)
@@ -96,11 +95,11 @@ class SearchResultsFragment : Fragment() {
         })
 
         // This button clears the edit text input when it is pressed
-        clear_button.setOnClickListener {
-            search_bar.setText("")
+        clearButton.setOnClickListener {
+            searchBar.setText("")
         }
 
-        cancel_button.setOnClickListener {
+        cancelButton.setOnClickListener {
             //TODO: look in if this is the best way to implement a "back" function
             NavHostFragment.findNavController(this).navigateUp()
             //TODO:if keyboard is shown, hide the keyboard
