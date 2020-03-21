@@ -1,6 +1,7 @@
 package com.soen390.conumap.helper
 
 import android.content.Context
+import com.soen390.conumap.building.BuildingCreator
 import com.soen390.conumap.map.Map
 import com.soen390.conumap.permission.Permission
 
@@ -13,6 +14,7 @@ object ContextPasser {
 
         Map.setContext(ctx)
         Permission.setContext(ctx)
+        BuildingCreator.setContext(ctx)
         DeviceLocationChecker.setUp(ctx)
     }
 }
