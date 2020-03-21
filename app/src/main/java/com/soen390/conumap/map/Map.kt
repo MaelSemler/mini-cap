@@ -45,7 +45,7 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
 
         buildings = BuildingCreator.createBuildings(gMap)
 
-       //Create the two campuses
+        //Create the two campuses
         createCampuses()
     }
 
