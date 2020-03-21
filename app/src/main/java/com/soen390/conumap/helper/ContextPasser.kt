@@ -12,9 +12,9 @@ object ContextPasser {
     fun setContexts(ctx: Context) {
         context = ctx
 
-        Map.setContext(ctx)
-        Permission.setContext(ctx)
-        BuildingCreator.setContext(ctx)
-        DeviceLocationChecker.setUp(ctx)
+        Map.setContext(context)
+        Permission.setContext(context)
+        BuildingCreator.setContext(context)
+        DeviceLocationChecker.setUp(context)
     }
 }
