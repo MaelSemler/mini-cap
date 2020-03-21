@@ -24,12 +24,21 @@ object directions {
     val map = Map
 
     val _directionText = MutableLiveData<String>()
+    val _totalDistanceText = MutableLiveData<String>()
+    val _totalTimeText = MutableLiveData<String>()
     val directionText:LiveData<String>
         get() = _directionText
+    val totalDistanceText: LiveData<String>
+        get() = _totalDistanceText
+    val totalTimeText: LiveData<String>
+        get() = _totalTimeText
 
     init {
         _directionText.value = "Directions: Null"
+        _totalDistanceText.value = "Total Distance : Null"
+        _totalTimeText.value = "Total Duration : Null"
     }
+    
     var textConverted = ""
 
     fun routeTest(activity:Activity) {
