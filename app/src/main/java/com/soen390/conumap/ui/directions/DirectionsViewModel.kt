@@ -2,19 +2,19 @@ package com.soen390.conumap.ui.directions
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.soen390.conumap.Directions.directions
-import com.soen390.conumap.map.Map
+import com.soen390.conumap.Directions.Directions
+import com.soen390.conumap.path.path
 
 class DirectionsViewModel : ViewModel() {
 
     val directionText : LiveData<String>
-        get() = directions.directionText
+        get() = path.directionText
     val totalDistanceText: LiveData<String>
-        get() = directions.totalDistanceText
+        get() = path.totalDistanceText
     val totalTimeText: LiveData<String>
-        get() = directions.totalTimeText
+        get() = path.totalTimeText
     val infoPathText : LiveData<String>
-        get() = directions.infoPathText
+        get() = path.infoPathText
 
 
 }
