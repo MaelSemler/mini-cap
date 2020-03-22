@@ -10,7 +10,7 @@ import com.soen390.conumap.Directions.directions
 //TODO: Implement Live Data Binding as in directions.kt
 object path {
     //origin
-    val destination= Location()
+   // val destination= Location()
     private var distance=0.0
     private var transportationMethod="Car"
     //time
