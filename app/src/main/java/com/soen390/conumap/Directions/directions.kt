@@ -30,9 +30,9 @@ object directions {
         get() = _totalTimeText
 
     init {
-        _directionText.value = "Directions: Null"
-        _totalDistanceText.value = "Total Distance : Null"
-        _totalTimeText.value = "Total Duration : Null"
+        _directionText.value = "Directions: "
+        _totalDistanceText.value = "("
+        _totalTimeText.value = ""
     }
 
     var textConverted = ""
@@ -167,7 +167,7 @@ object directions {
 
     //Update TotalDistance
     fun updateTotalDistance(distance:String){
-        _totalDistanceText.value = distance
+        _totalDistanceText.value += distance + ")"
     }
 
     //Update TotalDuration
