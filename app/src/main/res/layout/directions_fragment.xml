@@ -122,9 +122,28 @@
                     android:background="@android:color/white">
 
                     <TextView
+                        android:id="@+id/totalTimeText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30sp"
+                        android:layout_marginTop="30dp"
+                        android:text="@{viewmodel.totalTimeText}"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/totalDistanceText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="30dp"
+                        android:text="@{viewmodel.totalDistanceText}"
+                        android:textSize="20sp" />
+
+                    <TextView
                         android:id="@+id/DirectionsTextBox"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="@{viewmodel.directionText}"
                         android:layout_marginLeft="30sp"
                         android:layout_marginRight="30sp"

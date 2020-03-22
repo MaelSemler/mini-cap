@@ -9,6 +9,10 @@ class DirectionsViewModel : ViewModel() {
 
     val directionText : LiveData<String>
         get() = directions.directionText
+    val totalDistanceText: LiveData<String>
+        get() = directions.totalDistanceText
+    val totalTimeText: LiveData<String>
+        get() = directions.totalTimeText
 
 
 }

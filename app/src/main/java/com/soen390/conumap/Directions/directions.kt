@@ -90,11 +90,14 @@ object directions {
                 val legs = routes.getJSONObject(0).getJSONArray("legs")
                 val steps = legs.getJSONObject(0).getJSONArray("steps")
 
+                //Retrieval total duration of the whole trip and total distance of the whole trip
                 val totalDistance =legs.getJSONObject(0).getJSONObject("distance").getString("text")
                 val totalDuration= legs.getJSONObject(0).getJSONObject("duration").getString("text")
 
                 //ExtractDirections and save it into the directionText blocks
                 updateSteps(extractDirections(steps))
+                updateTotalDistance(totalDistance)
+                updateTotalDuration(totalDuration)
 
                 //Draw the path in path in red color
                 for (i in 0 until steps.length()) {
@@ -160,6 +163,16 @@ object directions {
     //Update the directionText
     fun updateSteps(textSteps:String){
         _directionText.value = textSteps
+    }
+
+    //Update TotalDistance
+    fun updateTotalDistance(distance:String){
+        _totalDistanceText.value = distance
+    }
+
+    //Update TotalDuration
+    fun updateTotalDuration(duration:String){
+        _totalTimeText.value = duration
     }
 
 
