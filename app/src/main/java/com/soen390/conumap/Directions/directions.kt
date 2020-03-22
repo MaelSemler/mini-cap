@@ -2,18 +2,14 @@ package com.soen390.conumap.Directions
 
 import android.app.Activity
 import android.graphics.Color
-import android.provider.Settings.Global.getString
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.PolyUtil
-import com.soen390.conumap.MainActivity
 import com.soen390.conumap.R
 import com.soen390.conumap.map.Map
 import org.json.JSONArray
@@ -38,26 +34,45 @@ object directions {
         _totalDistanceText.value = "Total Distance : Null"
         _totalTimeText.value = "Total Duration : Null"
     }
-    
+
     var textConverted = ""
+
 
     fun routeTest(activity:Activity) {
         //TODO: Default origin is the current location
         val originLatLng = map.getCurrentLocation()
         //TODO:Destination is hardcoded for now
         val destinationLatLng = LatLng(45.497044, -73.578407)//HardCoded for now
+
+        //TODO: Set Transportation mode
+        //This can be walking, driving, bicycling, transit
+        //val transportationMode = getTransportationMode()
+        val transportationMode = "walking"
+
+        //TODO: Set Alternative On/Off
+        //val alternativesOn = getAlternatives()
+        val alternativesOn = false
+
        //TODO: Origin and Destination should have a title
         map.addMarker(originLatLng,("This is the origin"))
         map.addMarker(destinationLatLng, "Destination")
         map.moveCamera(originLatLng, 14.5f)
 
-        route(activity,originLatLng, destinationLatLng)
+        route(activity,originLatLng, destinationLatLng, transportationMode, alternativesOn)
     }
 
-    private fun route(activity: Activity, originLatLng: LatLng, destinationLatLng: LatLng) {
-        val path: MutableList<List<LatLng>> = ArrayList()
-        val urlDirections = activity.getString(R.string.DirectionAPI)+ originLatLng.latitude + "," + originLatLng.longitude + "&destination=" + destinationLatLng.latitude + "," + destinationLatLng.longitude + "&key=" + activity.getString(R.string.apiKey)
+    //Put the correct parameters inside the api call
+    private fun getGoogleMapRequestURL(activity: Activity, originLatLng: LatLng, destinationLatLng: LatLng, transportationMode: String, alternativesOn:Boolean):String{
+        if(alternativesOn)
+            return activity.getString(R.string.DirectionAPI)+ originLatLng.latitude + "," + originLatLng.longitude + "&destination=" + destinationLatLng.latitude + "," + destinationLatLng.longitude + "&mode=" + transportationMode + "&alternative=true"+ "&key=" + activity.getString(R.string.apiKey)
 
+        return activity.getString(R.string.DirectionAPI)+ originLatLng.latitude + "," + originLatLng.longitude + "&destination=" + destinationLatLng.latitude + "," + destinationLatLng.longitude + "&mode=" + transportationMode + "&key=" + activity.getString(R.string.apiKey)
+    }
+
+
+    private fun route(activity: Activity, originLatLng: LatLng, destinationLatLng: LatLng, transportationMode: String, alternativesOn: Boolean) {
+        val path: MutableList<List<LatLng>> = ArrayList()
+        val urlDirections = getGoogleMapRequestURL(activity, originLatLng, destinationLatLng, transportationMode, alternativesOn)
 
         val directionsRequest = object : StringRequest(
             Request.Method.GET,
