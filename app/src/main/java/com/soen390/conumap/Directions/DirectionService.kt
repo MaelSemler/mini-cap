@@ -14,6 +14,7 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.PolyUtil
 import com.soen390.conumap.R
 import com.soen390.conumap.map.Map
+import kotlinx.coroutines.internal.SynchronizedObject
 import org.json.JSONObject
 
 
@@ -38,7 +39,7 @@ object DirectionService {
     }
 
     //Route methods which makes the call get the response from Google Directions API and parse the JSON files to store everything inside arrays
-   fun route(activity: FragmentActivity, originLatLng: LatLng, destinationLatLng: LatLng, transportationMode: String, alternativesOn: Boolean) {
+   @Synchronized fun route(activity: FragmentActivity, originLatLng: LatLng, destinationLatLng: LatLng, transportationMode: String, alternativesOn: Boolean) {
         //Path is an arrayList that store every "steps"/path =>Will be used to draw the path
         val path: MutableList<List<LatLng>> = ArrayList()
 
@@ -48,7 +49,7 @@ object DirectionService {
         var dirObj : Directions = Directions()
 
         //Making the Request
-        
+
         val directionsRequest = object : StringRequest(
             Request.Method.GET,
             urlDirections,
