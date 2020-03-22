@@ -121,34 +121,51 @@
                     android:layout_marginTop="150dp"
                     android:background="@android:color/white">
 
-                    <TextView
-                        android:id="@+id/totalTimeText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30sp"
-                        android:layout_marginTop="30dp"
-                        android:text="@{viewmodel.totalTimeText}"
-                        android:textColor="@android:color/black"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/totalDistanceText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="30dp"
-                        android:text="@{viewmodel.totalDistanceText}"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/DirectionsTextBox"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@{viewmodel.directionText}"
-                        android:layout_marginLeft="30sp"
-                        android:layout_marginRight="30sp"
-                        android:textSize="20sp" />
+                        android:layout_height="match_parent">
 
+                        <Button
+                            android:id="@+id/directions_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="30sp"
+                            android:textColor="@color/buttonColor"
+                            android:backgroundTint="@color/colorAccent"
+                            android:text="Direction" />
+
+                        <Button
+                            android:id="@+id/alt_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/directions_button"
+                            android:layout_marginStart="20dp"
+                            android:backgroundTint="@color/buttonColor"
+                            android:text="ALT" />
+
+                        <ImageButton
+                            android:id="@+id/imageButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/alt_button"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:backgroundTint="@android:color/transparent"
+                            android:src="@drawable/like_off" />t
+
+                        <TextView
+                            android:id="@+id/DirectionsTextBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@{viewmodel.directionText}"
+                            android:layout_below="@+id/alt_button"
+                            android:layout_marginLeft="30sp"
+                            android:layout_marginRight="30sp"
+                            android:textSize="20sp" />
+
+                    </RelativeLayout>
 
                 </ScrollView>
 
