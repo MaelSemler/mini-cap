@@ -83,32 +83,43 @@
                     android:orientation="horizontal">
 
                     <RadioButton
+                        android:id="@+id/transportation_car"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/transportation_car"
                         android:button="@android:color/transparent"
-                        android:layout_margin="10dp" />
+                        android:layout_margin="10dp"
+                        android:onClick="radioButtonClicked"
 
+                        />
                     <RadioButton
+                        android:id="@+id/transportation_walk"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/transportation_walk"
                         android:button="@android:color/transparent"
-                        android:layout_margin="10dp" />
-
+                        android:layout_margin="10dp"
+                        android:onClick="radioButtonClicked"
+                        />
                     <RadioButton
+                        android:id="@+id/transportation_bus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/transportation_bus"
                         android:button="@android:color/transparent"
-                        android:layout_margin="10dp" />
+                        android:layout_margin="10dp"
+                        android:onClick="radioButtonClicked"
 
+                        />
                     <RadioButton
+                        android:id="@+id/transportation_bike"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/transportation_bike"
                         android:button="@android:color/transparent"
-                        android:layout_margin="10dp" />
+                        android:layout_margin="10dp"
+                        android:onClick="radioButtonClicked"
+                        />
 
                 </RadioGroup>
 
