@@ -36,10 +36,6 @@ class SearchBarFragment : Fragment() {
         return root
     }
 
-    internal interface SendMessage {
-        fun sendData(message: String?)
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
         super.onActivityCreated(savedInstanceState)
