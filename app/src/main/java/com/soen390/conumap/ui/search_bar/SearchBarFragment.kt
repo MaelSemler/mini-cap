@@ -1,29 +1,27 @@
 package com.soen390.conumap.ui.search_bar
 
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import android.widget.Button
-
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
-
-
 import com.soen390.conumap.R
-import kotlinx.android.synthetic.main.nav_header_main.*
+import kotlinx.android.synthetic.main.search_bar_fragment.*
+
 
 class SearchBarFragment : Fragment() {
+
 
     companion object {
         fun newInstance() = SearchBarFragment()
     }
 
-    private lateinit var viewModel: SearchBarViewModel
+//DELETE        private lateinit var viewModel: SearchBarViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,18 +29,31 @@ class SearchBarFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.search_bar_fragment, container, false)
 
-        //This is the search bar
+        //Getting the search bar from the fragment
         val search_button = root.findViewById<View>(R.id.search_button) as Button
+
         search_button.setOnClickListener{
             NavHostFragment.findNavController(this).navigate(R.id.action_searchBarFragment_to_searchResultsFragment)
         }
         return root
     }
 
+    internal interface SendMessage {
+        fun sendData(message: String?)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(SearchBarViewModel::class.java)
+//DELETE        viewModel = ViewModelProviders.of(this).get(SearchBarViewModel::class.java)
         // TODO: Use the ViewModel
+//DEBUG        Toast.makeText(getActivity(), "SearchBarFragment: ViewModel", Toast.LENGTH_SHORT).show()
+
+        val model: SearchBarViewModel by activityViewModels()
+        val destination = model.getDestination()
+        search_button.setText(destination)
+//DEBUG                Toast.makeText(getActivity(), "SearchBarFragment: $destination", Toast.LENGTH_SHORT).show()
+
     }
 
 
