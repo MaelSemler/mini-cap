@@ -6,20 +6,28 @@ import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import com.google.android.gms.maps.GoogleMap
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
+import com.google.android.gms.maps.UiSettings
+import com.google.android.gms.maps.model.MapStyleOptions
+import com.nhaarman.mockitokotlin2.*
 import com.soen390.conumap.map.Map
 import com.soen390.conumap.map.MapFragment
 import com.soen390.conumap.permission.Permission
 import org.junit.Assert
 import org.junit.Test
+import org.mockito.stubbing.Answer
+
 
 class MapTests {
 
-    var gMap: GoogleMap = mock()
+    var uisettingsMock: UiSettings = mock()
     var activity: FragmentActivity = mock()
+    var mapStyleOptionsMock: MapStyleOptions = mock()
+
+    var gMap: GoogleMap = mock<GoogleMap>{
+        on {uiSettings}.doReturn(uisettingsMock)
+        on {setMapStyle(mapStyleOptionsMock)}.doAnswer(Answer { true })
+    }
+
     var map: Map = mock()
 
     @Test
@@ -32,7 +40,7 @@ class MapTests {
 
     @Test
     fun setupMapTest(){
-       // Map.setUpMap(gMap, activity)
+       //Map.setUpMap(gMap, activity)
     }
 
     @Test
@@ -44,7 +52,7 @@ class MapTests {
         val factory = FragmentFactory()
         val scenario = launchFragmentInContainer<MapFragment>()*/
 
-        FragmentScenario.launchInContainer(MapFragment::class.java)
+       // FragmentScenario.launchInContainer(MapFragment::class.java)
 
     }
 

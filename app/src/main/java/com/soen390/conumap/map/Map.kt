@@ -63,11 +63,12 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
         // Hide toolbar to open destination in Google Maps externally.
         gMap.uiSettings.isMapToolbarEnabled = false
 
-        // Customise the styling of the map using a JSON object defined in the raw resource file
-        gMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(activity, R.raw.mapstyle ))
 
         //Remove the location button given by Google
         gMap.uiSettings.isMyLocationButtonEnabled = false
+
+        // Customise the styling of the map using a JSON object defined in the raw resource file
+        gMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(activity, R.raw.mapstyle))
     }
 
     //This method centers the map on the user's current location
