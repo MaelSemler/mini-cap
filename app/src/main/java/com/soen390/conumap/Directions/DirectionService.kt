@@ -1,8 +1,12 @@
 package com.soen390.conumap.Directions
 
 import android.app.Activity
+import android.content.Context
 import android.graphics.Color
+import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
 import com.android.volley.Request
+import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.gms.maps.model.LatLng
@@ -15,6 +19,7 @@ import org.json.JSONObject
 
 object DirectionService {
     val map = Map
+//    private val context: Context
 
     init {
 
@@ -33,7 +38,7 @@ object DirectionService {
     }
 
     //Route methods which makes the call get the response from Google Directions API and parse the JSON files to store everything inside arrays
-   fun route(activity: Activity, originLatLng: LatLng, destinationLatLng: LatLng, transportationMode: String, alternativesOn: Boolean) :Directions {
+   fun route(activity: FragmentActivity, originLatLng: LatLng, destinationLatLng: LatLng, transportationMode: String, alternativesOn: Boolean) {
         //Path is an arrayList that store every "steps"/path =>Will be used to draw the path
         val path: MutableList<List<LatLng>> = ArrayList()
 
@@ -43,6 +48,7 @@ object DirectionService {
         var dirObj : Directions = Directions()
 
         //Making the Request
+        
         val directionsRequest = object : StringRequest(
             Request.Method.GET,
             urlDirections,
@@ -74,19 +80,19 @@ object DirectionService {
                     map.getMapInstance().addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
                 }
             },
-            com.android.volley.Response.ErrorListener { error ->
-                val responseBody = String(error.networkResponse.data)
-                val data = JSONObject(responseBody)
-                val message = data.optString("msg")
-                print(message)
-                dirObj.updateSteps(error.message.toString())
+            com.android.volley.Response.ErrorListener() {
+                @Override
+                fun onErrorResponse(error:VolleyError) {
+
+                    Toast.makeText(activity,  (error.toString()), Toast.LENGTH_SHORT).show();
+                }
             }) {}
         val requestQueue = Volley.newRequestQueue(activity)
         requestQueue.add(directionsRequest)
 
         //Move the camera and zoom into the destination
         map.moveCamera(destinationLatLng, 18f)
-        return dirObj
+//        return dirObj
     }
 
 

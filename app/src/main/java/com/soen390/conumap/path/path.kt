@@ -1,6 +1,7 @@
 package com.soen390.conumap.path
 
 import android.app.Activity
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
@@ -44,7 +45,7 @@ object path {
     }
 
 
-    @Synchronized fun findShortestDirections(activity:Activity){
+    @Synchronized fun findShortestDirections(activity: FragmentActivity){
         //TODO: Default origin is the current location
         val originLatLng = map.getCurrentLocation()
         //TODO:Destination is hardcoded for now
@@ -64,7 +65,8 @@ object path {
         map.addMarker(destinationLatLng, "Destination")
         map.moveCamera(originLatLng, 14.5f)
 
-        var dirObj : Directions = route(activity,originLatLng, destinationLatLng, transportationMode, alternativesOn)//Calling the actual route function and passing all the needed parameters
+        var dirObj = Directions()
+        route(activity,originLatLng, destinationLatLng, transportationMode, alternativesOn)//Calling the actual route function and passing all the needed parameters
         _directionText.postValue(dirObj.textConverted)
         updatePathInfo(dirObj.infoPathText.value.toString())
 //        updateSteps((dirObj.directionText).value.toString())
