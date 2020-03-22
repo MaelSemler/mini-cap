@@ -28,6 +28,7 @@
                 android:drawableLeft="@drawable/search"
                 android:paddingHorizontal="20dp"/>
 
+
         </RelativeLayout>
 
     </RelativeLayout>

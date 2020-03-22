@@ -42,6 +42,7 @@ object directions {
     var textConverted = ""
 
 
+    //TODO: This will be removed later. It is simply a Temporary helper method for now
     fun routeTest(activity:Activity) {
         //TODO: Default origin is the current location
         val originLatLng = map.getCurrentLocation()
@@ -78,6 +79,9 @@ object directions {
     //Route methods which makes the call get the response from Google Directions API and parse the JSON files to store everything inside arrays
     private fun route(activity: Activity, originLatLng: LatLng, destinationLatLng: LatLng, transportationMode: String, alternativesOn: Boolean) {
         //Path is an arrayList that store every "steps"/path =>Will be used to draw the path
+
+    //Route method to be called once we are given the origin and destination 
+    private fun route(activity: Activity, originLatLng: LatLng, destinationLatLng: LatLng) {
         val path: MutableList<List<LatLng>> = ArrayList()
 
         //Retrieve the correct URL to call the API
@@ -126,6 +130,8 @@ object directions {
 
 
     //From the JSON response, extract all needed informations such as direction(instruction), the distance and the duration
+
+    //Method to trim all the tags from the JSON directions retrieved from Google API
     fun extractDirections(steps: JSONArray): String {
         var textConverted = "Direction:" + '\n'
 
@@ -167,6 +173,11 @@ object directions {
     }
 
     //Update the directionText
+        //Return the cleaned instructions
+        return textConverted
+    }
+
+    //Update the Direction text box
     fun updateSteps(textSteps:String){
         _directionText.value = textSteps
     }

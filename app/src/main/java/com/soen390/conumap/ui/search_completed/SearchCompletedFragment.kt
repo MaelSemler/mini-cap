@@ -31,17 +31,12 @@ class SearchCompletedFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.search_completed_fragment, container, false)
 
-//        //TODO: send the result of the search
-//        val go_button = root.findViewById<View>(R.id.go_button)
-//        go_button.setOnClickListener{
-//            dir.routeTest(activity!!)
-//        }
-
         //TODO: receive the result of the search result (SearchResultFragment)
         //TODO: put name of the location result on the button
         //TODO: get the map to focus on the search result location
 
-
+        //TODO: Change this to a two way bindings using binding.travelButton.setOnclickListener 
+        //directly instead of findViewByID=> Look into DirectionsFragment.kt 
         val travel_button = root.findViewById<View>(R.id.travel_button)
         val restart_button = root.findViewById<View>(R.id.restart_search)
         val location_button = root.findViewById<View>(R.id.found_location_button)
