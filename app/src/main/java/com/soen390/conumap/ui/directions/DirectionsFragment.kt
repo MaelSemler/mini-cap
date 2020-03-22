@@ -7,10 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
 
 import com.soen390.conumap.R
 import com.soen390.conumap.databinding.DirectionsFragmentBinding
+import com.soen390.conumap.ui.search_bar.SearchBarViewModel
+import kotlinx.android.synthetic.main.directions_fragment.*
 
 class DirectionsFragment : Fragment() {
 
@@ -57,7 +60,12 @@ class DirectionsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
+        //DELETE viewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
+
+        val model: SearchBarViewModel by activityViewModels()
+        val destination = model.getDestination()
+
+        end_location_button.setText(destination)
 
     }
 

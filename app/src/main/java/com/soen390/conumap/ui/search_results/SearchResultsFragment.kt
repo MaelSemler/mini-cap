@@ -20,9 +20,9 @@ import android.widget.Toast
 import androidx.appcompat.widget.ButtonBarLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.NavHostFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
@@ -42,7 +42,6 @@ import kotlinx.android.synthetic.main.search_results_fragment.*
 
 class SearchResultsFragment : Fragment() {
 
-//DELETE        private lateinit var viewModel: SearchResultsViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -137,7 +136,11 @@ class SearchResultsFragment : Fragment() {
         }
 
         cancelButton.setOnClickListener {
-            Toast.makeText(getActivity(), "Search Results Fragment: cancelButton", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(getActivity(), "Search Results Fragment: cancelButton", Toast.LENGTH_SHORT).show()
+
+            // Cancel destination in modelView
+            val model: SearchBarViewModel by activityViewModels()
+            model.setDestination("")
             //TODO: look in if this is the best way to implement a "back" function
             NavHostFragment.findNavController(this).navigateUp()
             //TODO:if keyboard is shown, hide the keyboard
@@ -149,7 +152,6 @@ class SearchResultsFragment : Fragment() {
 
         override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-//DELETE        viewModel = ViewModelProviders.of(this).get(SearchResultsViewModel::class.java)
         // TODO: Use the ViewModel
 
     }
@@ -171,8 +173,9 @@ class SearchResultsFragment : Fragment() {
 
             val model: SearchBarViewModel by activityViewModels()
             model.setDestination(place.name)
-            NavHostFragment.findNavController(this).navigateUp()
-//DEBUG                    Toast.makeText(getActivity(), "Search Results Fragment: " + place.name, Toast.LENGTH_SHORT).show()
+            NavHostFragment.findNavController(this).navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
+
+//                Toast.makeText(getActivity(), "Search Results Fragment: " + place.name, Toast.LENGTH_SHORT).show()
         }
         else if (resultCode==AutocompleteActivity.RESULT_ERROR)
         {

@@ -21,8 +21,6 @@ class SearchBarFragment : Fragment() {
         fun newInstance() = SearchBarFragment()
     }
 
-//DELETE        private lateinit var viewModel: SearchBarViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,14 +43,13 @@ class SearchBarFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
         super.onActivityCreated(savedInstanceState)
-//DELETE        viewModel = ViewModelProviders.of(this).get(SearchBarViewModel::class.java)
         // TODO: Use the ViewModel
-//DEBUG        Toast.makeText(getActivity(), "SearchBarFragment: ViewModel", Toast.LENGTH_SHORT).show()
+//    Toast.makeText(getActivity(), "SearchBarFragment: ViewModel", Toast.LENGTH_SHORT).show()
 
         val model: SearchBarViewModel by activityViewModels()
         val destination = model.getDestination()
         search_button.setText(destination)
-//DEBUG                Toast.makeText(getActivity(), "SearchBarFragment: $destination", Toast.LENGTH_SHORT).show()
+//               Toast.makeText(getActivity(), "SearchBarFragment: $destination", Toast.LENGTH_SHORT).show()
 
     }
 
