@@ -2,6 +2,7 @@ package com.soen390.conumap
 
 import android.os.Bundle
 import android.view.Menu
+import android.widget.Toast
 
 import com.google.android.material.navigation.NavigationView
 
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 
 import com.soen390.conumap.helper.ContextPasser
+import com.soen390.conumap.map.Map
 import com.soen390.conumap.permission.Permission
 
 class MainActivity : AppCompatActivity() {
@@ -46,6 +48,17 @@ class MainActivity : AppCompatActivity() {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Makes sure locating circle is visible map moves to user location.
+        // This is primarily used when user exits app and toggles the app's location permission.
+        if(Map.mapLateinitsAreInitialized() && Permission.checkLocationPermission(this)) {
+            Map.getMapInstance().isMyLocationEnabled = true // Makes sure blue "I am here" dot shows.
+            Map.centerMapOnUserLocation(this)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

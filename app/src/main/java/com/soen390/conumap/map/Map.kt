@@ -72,7 +72,7 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
     }
 
     //This sets the UI settings for the map
-    private fun uiSettings(activity: FragmentActivity){
+    private fun uiSettings(activity: FragmentActivity) {
 
         // Hide toolbar to open destination in Google Maps externally.
         gMap.uiSettings.isMapToolbarEnabled = false
@@ -152,6 +152,14 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
             moveCamera(sgwCampus.location, 16f)
             sgwCampus.marker.showInfoWindow()
         }
+    }
+
+    // Can be used to determine if all lateinit fields were enabled to prevent app crash.
+    fun mapLateinitsAreInitialized(): Boolean {
+        return  ::gMap.isInitialized &&
+                ::loyolaCampus.isInitialized &&
+                ::sgwCampus.isInitialized &&
+                ::context.isInitialized
     }
 
     // Specifies behaviour when a clickable polygon is clicked.
