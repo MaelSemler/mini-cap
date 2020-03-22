@@ -40,12 +40,11 @@ class SearchBarFragment : Fragment() {
 
         super.onActivityCreated(savedInstanceState)
         // TODO: Use the ViewModel
-//    Toast.makeText(getActivity(), "SearchBarFragment: ViewModel", Toast.LENGTH_SHORT).show()
 
         val model: SearchBarViewModel by activityViewModels()
         val destination = model.getDestination()
         search_button.setText(destination)
-//               Toast.makeText(getActivity(), "SearchBarFragment: $destination", Toast.LENGTH_SHORT).show()
+
 
     }
 

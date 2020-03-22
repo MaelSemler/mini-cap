@@ -33,8 +33,6 @@ class SearchCompletedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-//        Toast.makeText(getActivity(), "Search Completed Fragment: On Create", Toast.LENGTH_SHORT).show()
-
         val root = inflater.inflate(R.layout.search_completed_fragment, container, false)
 
         //TODO: Change this to a two way bindings using binding.travelButton.setOnclickListener
@@ -69,7 +67,6 @@ class SearchCompletedFragment : Fragment() {
         //TODO: receive the result of the search result (SearchResultFragment)
         val model: SearchBarViewModel by activityViewModels()
         val destination = model.getDestination()
-        // Toast.makeText(getActivity(), "Search Completed Fragment: Destination $destination", Toast.LENGTH_SHORT).show()
 
         //TODO: put name of the location result on the button
         found_location_button.setText(destination)
