@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.soen390.conumap.ui.directions.DirectionsViewModel" />
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.directions.DirectionsFragment">
+
+        <RelativeLayout
+            android:id="@+id/Directions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="20dp"
+                android:id="@+id/relative_location">
+
+                <Button
+                    android:id="@+id/start_location_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/return_button"
+                    android:layout_toStartOf="@+id/switch_button"
+                    android:background="@drawable/round_rectangle_white" />
+
+                <Button
+                    android:id="@+id/end_location_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/start_location_button"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@+id/return_button"
+                    android:layout_toStartOf="@+id/switch_button"
+                    android:background="@drawable/round_rectangle_white" />
+
+                <Button
+                    android:id="@+id/return_button"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/return_arrow_search"
+                    android:rotation="90" />
+
+                <Button
+                    android:id="@+id/switch_button"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/swap_arrow" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/relative_location"
+                android:layout_marginTop="10dp">
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/transportation_car"
+                        android:button="@android:color/transparent"
+                        android:layout_margin="10dp" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/transportation_walk"
+                        android:button="@android:color/transparent"
+                        android:layout_margin="10dp" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/transportation_bus"
+                        android:button="@android:color/transparent"
+                        android:layout_margin="10dp" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/transportation_bike"
+                        android:button="@android:color/transparent"
+                        android:layout_margin="10dp" />
+
+                </RadioGroup>
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="150dp"
+                    android:background="@android:color/white">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/totalTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30sp"
+                            android:layout_marginTop="20dp"
+                            android:layout_alignParentTop="true"
+                            android:text="@{viewmodel.totalTimeText}"
+                            android:textColor="@android:color/black"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/totalDistance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/totalTime"
+                            android:layout_marginStart="20dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginTop="20dp"
+                            android:text="@{viewmodel.totalDistanceText}"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/info_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/totalDistance"
+                            android:layout_marginLeft="30sp"
+                            android:layout_marginTop="50dp"
+                            android:layout_alignParentTop="true"
+                            android:text="@{viewmodel.infoPathText}"
+                            android:textSize="15sp" />
+
+                        <Button
+                            android:id="@+id/directions_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginLeft="30sp"
+                            android:layout_below="@+id/info_text"
+                            android:textColor="@color/buttonColor"
+                            android:backgroundTint="@color/colorAccent"
+                            android:text="Direction" />
+
+                        <Button
+                            android:id="@+id/alt_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_toRightOf="@id/directions_button"
+                            android:layout_below="@+id/info_text"
+                            android:layout_marginStart="20dp"
+                            android:backgroundTint="@color/buttonColor"
+                            android:text="ALT" />
+
+                        <ImageButton
+                            android:id="@+id/imageButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/alt_button"
+                            android:layout_marginStart="20dp"
+                            android:layout_below="@+id/info_text"
+                            android:layout_marginTop="20dp"
+                            android:backgroundTint="@android:color/transparent"
+                            android:src="@drawable/like_off" />t
+
+                        <TextView
+                            android:id="@+id/DirectionsTextBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@{viewmodel.directionText}"
+                            android:layout_below="@+id/directions_button"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginLeft="30sp"
+                            android:layout_marginRight="30sp"
+                            android:textSize="20sp" />
+
+                    </RelativeLayout>
+
+                </ScrollView>
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </FrameLayout>
+</layout>
