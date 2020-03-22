@@ -125,12 +125,35 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
+                        <TextView
+                            android:id="@+id/totalTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30sp"
+                            android:layout_marginTop="20dp"
+                            android:layout_alignParentTop="true"
+                            android:text="@{viewmodel.totalTimeText}"
+                            android:textColor="@android:color/black"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/totalDistance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/totalTime"
+                            android:layout_marginStart="20dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginTop="20dp"
+                            android:text="@{viewmodel.totalDistanceText}"
+                            android:textSize="20sp" />
+
                         <Button
                             android:id="@+id/directions_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="20dp"
                             android:layout_marginLeft="30sp"
+                            android:layout_below="@+id/totalDistance"
                             android:textColor="@color/buttonColor"
                             android:backgroundTint="@color/colorAccent"
                             android:text="Direction" />
@@ -139,8 +162,9 @@
                             android:id="@+id/alt_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_toEndOf="@id/directions_button"
+                            android:layout_marginTop="20dp"
+                            android:layout_toRightOf="@id/directions_button"
+                            android:layout_below="@+id/totalDistance"
                             android:layout_marginStart="20dp"
                             android:backgroundTint="@color/buttonColor"
                             android:text="ALT" />
@@ -149,9 +173,10 @@
                             android:id="@+id/imageButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toEndOf="@id/alt_button"
+                            android:layout_toRightOf="@id/alt_button"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_below="@+id/totalDistance"
+                            android:layout_marginTop="20dp"
                             android:backgroundTint="@android:color/transparent"
                             android:src="@drawable/like_off" />t
 
@@ -160,7 +185,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="@{viewmodel.directionText}"
-                            android:layout_below="@+id/alt_button"
+                            android:layout_below="@+id/directions_button"
                             android:layout_marginLeft="30sp"
                             android:layout_marginRight="30sp"
                             android:textSize="20sp" />
