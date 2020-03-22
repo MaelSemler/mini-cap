@@ -22,17 +22,21 @@ object directions {
     val _directionText = MutableLiveData<String>()
     val _totalDistanceText = MutableLiveData<String>()
     val _totalTimeText = MutableLiveData<String>()
+    val _infoPathText = MutableLiveData<String>()
     val directionText:LiveData<String>
         get() = _directionText
     val totalDistanceText: LiveData<String>
         get() = _totalDistanceText
     val totalTimeText: LiveData<String>
         get() = _totalTimeText
+    val infoPathText : LiveData<String>
+        get() = _infoPathText
 
     init {
         _directionText.value = "Directions: "
         _totalDistanceText.value = "("
         _totalTimeText.value = ""
+        _infoPathText.value ="via "
     }
 
     var textConverted = ""
@@ -93,11 +97,13 @@ object directions {
                 //Retrieval total duration of the whole trip and total distance of the whole trip
                 val totalDistance =legs.getJSONObject(0).getJSONObject("distance").getString("text")
                 val totalDuration= legs.getJSONObject(0).getJSONObject("duration").getString("text")
+                val pathInfo = routes.getJSONObject(0).getString("summary")
 
                 //ExtractDirections and save it into the directionText blocks
                 updateSteps(extractDirections(steps))
                 updateTotalDistance(totalDistance)
                 updateTotalDuration(totalDuration)
+                updatePathInfo(pathInfo)
 
                 //Draw the path in path in red color
                 for (i in 0 until steps.length()) {
@@ -173,6 +179,11 @@ object directions {
     //Update TotalDuration
     fun updateTotalDuration(duration:String){
         _totalTimeText.value = duration
+    }
+
+    //Update the information of the path
+    fun updatePathInfo(routeDescription: String){
+        _infoPathText.value += routeDescription
     }
 
 

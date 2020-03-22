@@ -13,6 +13,8 @@ class DirectionsViewModel : ViewModel() {
         get() = directions.totalDistanceText
     val totalTimeText: LiveData<String>
         get() = directions.totalTimeText
+    val infoPathText : LiveData<String>
+        get() = directions.infoPathText
 
 
 }
