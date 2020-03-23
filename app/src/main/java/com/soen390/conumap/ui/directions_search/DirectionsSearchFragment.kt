@@ -45,7 +45,7 @@ class DirectionsSearchFragment : Fragment() {
         //It changes fragment when it is pressed
         search_bar.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                //TODO: send the results back ti DirectionsFragment
+                //TODO: send the results back to DirectionsFragment
                 NavHostFragment.findNavController(this)
                     .navigate(R.id.action_directionsSearchFragment_to_directionsFragment)
             }

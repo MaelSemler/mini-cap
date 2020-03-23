@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.maps.model.LatLng
 
 import com.soen390.conumap.R
 import com.soen390.conumap.databinding.DirectionsFragmentBinding
+import com.soen390.conumap.path.PathViewModel
 
 class DirectionsFragment : Fragment() {
 
@@ -20,6 +22,7 @@ class DirectionsFragment : Fragment() {
     }
 
     private lateinit var viewModel: DirectionsViewModel
+    private lateinit var pathviewModel: PathViewModel
     lateinit var binding : DirectionsFragmentBinding
 
     override fun onCreateView(
@@ -28,7 +31,7 @@ class DirectionsFragment : Fragment() {
     ): View? {
         //TODO: get the results from SearchCompletedFragment
         //TODO: get the currentlocation
-        //TODO: add the name of the result and the curent location to the start and end buttons (get them from the actual objects)
+        //TODO: add the name of the result and the current location to the start and end buttons (get them from the actual objects)
         val root = inflater.inflate(R.layout.directions_fragment, container, false)
         val directionViewModel = ViewModelProviders.of(this)
             .get(DirectionsViewModel::class.java)
@@ -52,18 +55,31 @@ class DirectionsFragment : Fragment() {
         binding.returnButton.setOnClickListener{
             NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_searchCompletedFragment)
         }
-
+        binding.transportationWalk.setOnClickListener {   //This binds the radio button to an onclick listener event that sets the transportation mode
+            pathviewModel.setTransportationMode("walking") //TODO: Make sure this is the correct spelling
+            //TODO: redisplay new directions
+        }
+        binding.transportationBike.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
+            pathviewModel.setTransportationMode("bicycling") //TODO: Make sure this is the correct spelling
+            //TODO: redisplay new directions
+        }
+        binding.transportationCar.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
+            pathviewModel.setTransportationMode("driving") //TODO: Make sure this is the correct spelling
+            //TODO: redisplay new directions
+        }
+        binding.transportationBus.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
+            pathviewModel.setTransportationMode("transit") //TODO: Make sure this is the correct spelling
+            //TODO: redisplay new directions
+        }
+        //TODO: enable switchOriginAndDestination button
+        //TODO: implement alternative button and set the alternative here. Display the changed directions.
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
-
-    }
-
-    fun radioButtonClicked()
-    {
+        pathviewModel=ViewModelProviders.of(this).get(PathViewModel::class.java)
 
     }
 

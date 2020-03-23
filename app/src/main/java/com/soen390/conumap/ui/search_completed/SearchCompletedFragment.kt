@@ -10,7 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 //import com.soen390.conumap.Directions.Directions.routeTest
 
 import com.soen390.conumap.R
-import com.soen390.conumap.path.path.findShortestDirections
+import com.soen390.conumap.path.Path.findShortestDirections
 
 //import com.soen390.conumap.map.Map.getMap
 

@@ -5,13 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 
 class SearchCompletedViewModel : ViewModel() {
-    val placeLocation : LiveData<Location>
-        get()=
-    val placeName: LiveData<String>
-        get() {
-            TODO()
-        }
-
 
     // TODO: Implement the ViewModel
 }

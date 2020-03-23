@@ -1,6 +1,5 @@
 package com.soen390.conumap.path
 
-import android.app.Activity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,19 +8,18 @@ import com.soen390.conumap.Directions.DirectionService.route
 import com.soen390.conumap.Directions.Directions
 import com.soen390.conumap.map.Map
 
-
-//TODO: Implement Live Data Binding as in directions.kt
-object path {
+object Path {
     //origin
     // val destination= Location()
-    private var distance=0.0
-    //time
     //accessibilityFriendly
+    var pathViewModel= PathViewModel()
+    private var distance=0.0
+    private var alternativesOn: Boolean = false //initial value is false
+    private lateinit var transportationMode: String
     val _directionText = MutableLiveData<String>()
     val _totalDistanceText = MutableLiveData<String>()
     val _totalTimeText = MutableLiveData<String>()
     val _infoPathText = MutableLiveData<String>()
-    val _transportationMode= MutableLiveData<String>()
 
     var directionsArray : ArrayList<Directions> = arrayListOf()
 
@@ -33,8 +31,7 @@ object path {
         get() = _totalTimeText
     val infoPathText : LiveData<String>
         get() = _infoPathText
-    val transportationMode : LiveData<String>
-        get()= _transportationMode
+
 
     val map = Map
 
@@ -52,14 +49,12 @@ object path {
         //TODO:Destination is hardcoded for now
         val destinationLatLng = LatLng(45.497044, -73.578407)//HardCoded for now
 
-        //TODO: Set Transportation mode
+        //Retrieves transportation mode
         //This can be walking, driving, bicycling, transit
-        //val transportationMode = getTransportationMode()
-        val transportationMode = "driving"//TODO: Hardcoded for now look at the line just before we should be able to retrieve it this way
+        transportationMode = pathViewModel.getTransportationMode()
 
         //TODO: Set Alternative On/Off
-        //val alternativesOn = getAlternatives()
-        val alternativesOn = false//TODO: Hardcoded that alternatives are turned off for now look at line right before: to be implemented
+        //val alternativesOn = pathViewModel.getAlternative()
 
         //TODO: Origin and Destination should have a title
         map.addMarker(originLatLng,("This is the origin"))
@@ -70,7 +65,7 @@ object path {
         route(activity,originLatLng, destinationLatLng, transportationMode, alternativesOn)//Calling the actual route function and passing all the needed parameters
         _directionText.postValue(dirObj.textConverted)
         updatePathInfo(dirObj.infoPathText.value.toString())
-//        updateSteps((dirObj.directionText).value.toString())
+        updateSteps((dirObj.directionText).value.toString())
         updateTotalDistance(dirObj.totalDistanceText.value.toString())
         updateTotalDuration(dirObj.totalTimeText.value.toString())
     }
