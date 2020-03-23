@@ -26,6 +26,7 @@ import com.google.api.client.util.ExponentialBackOff
 import com.google.api.services.calendar.CalendarScopes
 
 import com.soen390.conumap.R
+import com.soen390.conumap.calendar.Schedule
 import com.soen390.conumap.ui.calendar_schedule.CalendarScheduleFragment
 import java.io.IOException
 import java.util.ArrayList
@@ -37,7 +38,7 @@ class CalendarLoginFragment : Fragment() {
     }
     private lateinit var viewModel: CalendarLoginViewModel
     private lateinit var mGoogleSignInClient: GoogleSignInClient
-    val RC_SIGN_IN: Int = 1000
+    val RC_SIGN_IN: Int = 1
     val PREF_ACCOUNT_NAME = "accountName"//TODO: figure out if this is needed
     var mCredential: GoogleAccountCredential? = null
 
@@ -45,6 +46,7 @@ class CalendarLoginFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.calendar_login_fragment, container, false)
         val signInButton = root.findViewById<View>(R.id.sign_in_button)
+
         val gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
         mGoogleSignInClient = GoogleSignIn.getClient(activity!!, gso)
@@ -75,7 +77,7 @@ class CalendarLoginFragment : Fragment() {
 
     }
     fun change(){
-        activity!!.supportFragmentManager.beginTransaction().replace(R.id.calendar_container,CalendarScheduleFragment.newInstance()).addToBackStack(null).commit()
+        activity!!.supportFragmentManager.beginTransaction().replace(R.id.calendar_container,CalendarScheduleFragment.newInstance()).commit()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -84,8 +86,7 @@ class CalendarLoginFragment : Fragment() {
             val task =
                 GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
-
-            CalendarRequestTask(mCredential!!).execute()
+            Schedule.initSchedule(mCredential!!)
             change()
 
         }
@@ -112,57 +113,6 @@ class CalendarLoginFragment : Fragment() {
     }
 
 
-    private class CalendarRequestTask(credential: GoogleAccountCredential) : AsyncTask<Void, Void, MutableList<String>>() {
-        private var mService: Calendar? = null
 
-
-
-        val dataFromApi: MutableList<String>
-            @Throws(IOException::class)
-            get() {
-                val now = DateTime(System.currentTimeMillis())
-                val eventStrings = ArrayList<String>()
-                val events = mService!!.events().list("primary")
-                    .setMaxResults(10)
-                    .setTimeMin(now)
-                    .setOrderBy("startTime")
-                    .setSingleEvents(true)
-                    .execute()
-                val items = events.items
-
-                for (event in items) {
-                    var start = event.start.dateTime
-                    if (start == null) {
-                        start = event.start.date
-                    }
-                    eventStrings.add(String.format("%s (%s)", event.summary, start))
-                }
-                return eventStrings
-            }
-
-        init {
-            val transport = AndroidHttp.newCompatibleTransport()
-            val jsonFactory = JacksonFactory.getDefaultInstance()
-            mService = com.google.api.services.calendar.Calendar.Builder(
-                transport, jsonFactory, credential)
-                .setApplicationName("Google Calendar API Android Quickstart")
-                .build()
-        }
-
-
-        override fun onPreExecute() {
-            super.onPreExecute()
-            // ...
-        }
-        override fun doInBackground(vararg params: Void?): MutableList<String>? {
-            // ...
-            return dataFromApi
-        }
-        override fun onPostExecute(result: MutableList<String>?) {
-            super.onPostExecute(result)
-
-            // ...
-        }
-    }
 
 }

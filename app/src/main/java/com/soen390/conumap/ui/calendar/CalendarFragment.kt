@@ -48,6 +48,7 @@ class CalendarFragment : Fragment() {
         init()
         activity!!.supportFragmentManager.beginTransaction().add(R.id.calendar_container,containee).commit()
         return inflater.inflate(R.layout.calendar_fragment, container, false)
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
