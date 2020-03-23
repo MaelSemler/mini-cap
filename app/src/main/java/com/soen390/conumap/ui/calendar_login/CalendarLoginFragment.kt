@@ -95,7 +95,7 @@ class CalendarLoginFragment : Fragment() {
         try {
             val account =
                 completedTask.getResult(ApiException::class.java)
-                initCredentials(account!!.email!!)
+            initCredentials(account!!.email!!)
         } catch (e: ApiException) {
             //Todo: handle it
         }

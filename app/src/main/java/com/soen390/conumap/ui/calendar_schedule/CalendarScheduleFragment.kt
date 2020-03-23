@@ -4,6 +4,7 @@ import android.os.AsyncTask
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,7 @@ import com.google.api.services.calendar.Calendar
 import com.soen390.conumap.R
 import com.soen390.conumap.calendar.Schedule
 import com.soen390.conumap.ui.calendar_login.CalendarLoginFragment
+import org.w3c.dom.Text
 import java.io.IOException
 import java.util.ArrayList
 
@@ -48,12 +50,21 @@ class CalendarScheduleFragment : Fragment() {
         if(Schedule.mCredential!= null){
             CalendarRequestTask(Schedule.mCredential!!).execute()
         }
+        val classNumberValue = root.findViewById<TextView>(R.id.class_number_value)
+        val timeValue = root.findViewById<TextView>(R.id.time_value)
+        val locationValue = root.findViewById<TextView>(R.id.location_value)
+        val comingUpTestButton = root.findViewById<View>(R.id.coming_up)
         val gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
         mGoogleSignInClient = GoogleSignIn.getClient(activity!!, gso)
 
         signOutButton.setOnClickListener {
             signOut()
+        }
+        comingUpTestButton.setOnClickListener{
+            classNumberValue.setText(CalendarRequestTask(Schedule.mCredential!!).getFirstEventName())
+            timeValue.setText(CalendarRequestTask(Schedule.mCredential!!).getFirstEventTime())
+            locationValue.setText(CalendarRequestTask(Schedule.mCredential!!).getFirstEventLocation())
         }
         return root
     }
@@ -80,6 +91,20 @@ class CalendarScheduleFragment : Fragment() {
     private inner class CalendarRequestTask(credential: GoogleAccountCredential) : AsyncTask<Void, Void, MutableList<String>>() {
         private var mService: com.google.api.services.calendar.Calendar? = null
         private var mLastError: Exception? = null
+        private var firstEventName: String = ""
+        private var firstEventStartTime = ""
+        private var firstEventEndTime = ""
+        private  var firstEventLocation = ""
+
+        fun getFirstEventName(): String{
+            return firstEventName
+        }
+        fun getFirstEventTime(): String{
+            return (firstEventStartTime +"WOW"+firstEventEndTime)
+        }
+        fun getFirstEventLocation(): String{
+            return firstEventLocation
+        }
 
         /**
          * Fetch a list of the next 10 events from the primary calendar.
@@ -94,6 +119,7 @@ class CalendarScheduleFragment : Fragment() {
             get() {
                 val now = DateTime(System.currentTimeMillis())
                 val eventStrings = ArrayList<String>()
+                Log.d("QUESTIONMARK", "DATAFROMAPI IS RUNNING WOWOWOOW")
                 /*
                 *
                 *
@@ -116,12 +142,27 @@ class CalendarScheduleFragment : Fragment() {
                     .execute()
                 val items = events.items
 
+                firstEventName = items.first().summary
+                Log.d("QUESTIONMARK", firstEventName)
+                firstEventStartTime = items.first().start.dateTime.toString()
+                Log.d("QUESTIONMARK", firstEventStartTime)
+                firstEventEndTime = items.first().end.dateTime.toString()
+                Log.d("QUESTIONMARK", firstEventEndTime)
+                firstEventLocation = items.first().location
+                Log.d("QUESTIONMARK", firstEventLocation)
                 for (event in items) {
                     var start = event.start.dateTime
+                    var end = event.end.dateTime
+                    var location = event.location
                     if (start == null) {
                         start = event.start.date
                     }
-                    eventStrings.add(String.format("%s (%s)", event.summary, start))
+                    if (event.endTimeUnspecified){
+                        end = event.end.date
+                    }
+                    eventStrings.add(String.format("%s (%s) ((%s))", event.summary, start))
+
+
                 }
                 return eventStrings
             }

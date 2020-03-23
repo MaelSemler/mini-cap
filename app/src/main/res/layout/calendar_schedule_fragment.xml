@@ -23,15 +23,16 @@
             android:layout_height="match_parent"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="20dp">
-            <TextView
+
+            <Button
                 android:id="@+id/coming_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:layout_marginBottom="30dp"
                 android:text="Coming up"
                 android:textColor="@android:color/black"
-                android:textSize="30dp"
-                android:layout_marginBottom="30dp"/>
+                android:textSize="30dp" />
 
             <TextView
                 android:id="@+id/class_number_value"
