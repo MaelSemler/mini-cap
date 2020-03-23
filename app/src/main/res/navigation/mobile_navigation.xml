@@ -53,6 +53,15 @@
     <fragment
         android:id="@+id/calendarFragment"
         android:name="com.soen390.conumap.ui.calendar.CalendarFragment"
-        android:label="Schedule"
+        android:label="Shedule"
         tools:layout="@layout/calendar_fragment" />
+    <fragment
+        android:id="@+id/calendarLoginFragment"
+        android:name="com.soen390.conumap.ui.calendar_login.CalendarLoginFragment"
+        android:label="calendar_login_fragment"
+        tools:layout="@layout/calendar_login_fragment" >
+        <action
+            android:id="@+id/action_calendarLoginFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
+    </fragment>
 </navigation>

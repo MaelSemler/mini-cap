@@ -192,8 +192,20 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-318" />
-                            <option name="y" value="468" />
+                            <option name="x" value="-242" />
+                            <option name="y" value="536" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="calendarLoginFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-502" />
+                            <option name="y" value="522" />
                           </Point>
                         </option>
                       </LayoutPositions>
