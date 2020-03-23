@@ -8,15 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.soen390.conumap.event.Event
-
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.soen390.conumap.R
+import com.soen390.conumap.ui.calendar_login.CalendarLoginFragment
+import com.soen390.conumap.ui.calendar_schedule.CalendarScheduleFragment
 
 class CalendarFragment : Fragment() {
 
     companion object {
         fun newInstance() = CalendarFragment()
-    }
 
+    }
+    private lateinit var containee: Fragment
     private lateinit var viewModel: CalendarViewModel
 
     override fun onCreateView(
@@ -41,7 +45,10 @@ class CalendarFragment : Fragment() {
             timeValue.setText("2:45 PM - 6:00 PM")
             locationValue.setText("FG B030")
         }
-        return root
+        init()
+        activity!!.supportFragmentManager.beginTransaction().add(R.id.calendar_container,containee).commit()
+        return inflater.inflate(R.layout.calendar_fragment, container, false)
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -50,4 +57,14 @@ class CalendarFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
+    fun init() {
+        val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(activity)
+        if (account != null) {
+            containee = CalendarScheduleFragment()
+        }
+        else{
+            containee = CalendarLoginFragment()
+        }
+
+    }
 }
