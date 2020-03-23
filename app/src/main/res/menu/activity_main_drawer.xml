@@ -24,9 +24,5 @@
             android:id="@+id/calendarFragment"
             android:icon="@drawable/schedule_white"
             android:title="Shedule" />
-        <item
-            android:id="@+id/calendarLoginFragment"
-            android:icon="@drawable/schedule_white"
-            android:title="Shedule Login" />
     </group>
 </menu>

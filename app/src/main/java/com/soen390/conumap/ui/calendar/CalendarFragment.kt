@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 
 import com.soen390.conumap.R
+import com.soen390.conumap.ui.calendar_login.CalendarLoginFragment
 
 class CalendarFragment : Fragment() {
 
@@ -21,6 +23,7 @@ class CalendarFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        activity!!.supportFragmentManager.beginTransaction().add(R.id.calendar_container,CalendarLoginFragment.newInstance()).commit()
         return inflater.inflate(R.layout.calendar_fragment, container, false)
     }
 
@@ -29,5 +32,6 @@ class CalendarFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(CalendarViewModel::class.java)
         // TODO: Use the ViewModel
     }
+
 
 }
