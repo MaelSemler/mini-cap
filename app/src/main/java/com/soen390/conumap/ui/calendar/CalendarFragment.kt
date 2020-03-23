@@ -6,24 +6,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 
 import com.soen390.conumap.R
 import com.soen390.conumap.ui.calendar_login.CalendarLoginFragment
+import com.soen390.conumap.ui.calendar_schedule.CalendarScheduleFragment
 
 class CalendarFragment : Fragment() {
 
     companion object {
         fun newInstance() = CalendarFragment()
-    }
 
+    }
+    private lateinit var containee: Fragment
     private lateinit var viewModel: CalendarViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        activity!!.supportFragmentManager.beginTransaction().add(R.id.calendar_container,CalendarLoginFragment.newInstance()).commit()
+        init()
+        activity!!.supportFragmentManager.beginTransaction().add(R.id.calendar_container,containee).commit()
         return inflater.inflate(R.layout.calendar_fragment, container, false)
     }
 
@@ -33,5 +37,14 @@ class CalendarFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
+    fun init() {
+        val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(activity)
+        if (account != null) {
+            containee = CalendarScheduleFragment()
+        }
+        else{
+            containee = CalendarLoginFragment()
+        }
 
+    }
 }

@@ -7,6 +7,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <Button
+            android:id="@+id/debug_sign_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="debug sign out"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
