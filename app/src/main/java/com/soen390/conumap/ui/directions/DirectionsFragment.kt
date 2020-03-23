@@ -8,12 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.maps.model.LatLng
 
 import com.soen390.conumap.R
 import com.soen390.conumap.databinding.DirectionsFragmentBinding
 import com.soen390.conumap.path.PathViewModel
+import com.soen390.conumap.ui.search_bar.SearchBarViewModel
+import kotlinx.android.synthetic.main.directions_fragment.*
 
 class DirectionsFragment : Fragment() {
 
@@ -80,6 +83,12 @@ class DirectionsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
         pathviewModel=ViewModelProviders.of(this).get(PathViewModel::class.java)
+        //DELETE viewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
+
+        val model: SearchBarViewModel by activityViewModels()
+        val destination = model.getDestination()
+
+        end_location_button.setText(destination)
 
     }
 
