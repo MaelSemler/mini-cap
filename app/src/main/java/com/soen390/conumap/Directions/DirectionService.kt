@@ -14,7 +14,10 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.PolyUtil
 import com.soen390.conumap.R
 import com.soen390.conumap.map.Map
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.internal.SynchronizedObject
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 
@@ -39,60 +42,73 @@ object DirectionService {
     }
 
     //Route methods which makes the call get the response from Google Directions API and parse the JSON files to store everything inside arrays
-   @Synchronized fun route(activity: FragmentActivity, originLatLng: LatLng, destinationLatLng: LatLng, transportationMode: String, alternativesOn: Boolean) {
+    suspend fun route(activity: FragmentActivity, originLatLng: LatLng, destinationLatLng: LatLng, transportationMode: String, alternativesOn: Boolean) = coroutineScope{
         //Path is an arrayList that store every "steps"/path =>Will be used to draw the path
         val path: MutableList<List<LatLng>> = ArrayList()
 
         //Retrieve the correct URL to call the API
-        val urlDirections = getGoogleMapRequestURL(activity, originLatLng, destinationLatLng, transportationMode, alternativesOn)
+        GlobalScope.launch {
+            val urlDirections = getGoogleMapRequestURL(activity, originLatLng, destinationLatLng, transportationMode, alternativesOn)
 
-        var dirObj : Directions = Directions()
+            var dirObj : Directions = Directions()
 
-        //Making the Request
+            //Making the Request
 
-        val directionsRequest = object : StringRequest(
-            Request.Method.GET,
-            urlDirections,
-            com.android.volley.Response.Listener<String> { response ->
-                val jsonResponse = JSONObject(response)
-                // This part to understand it look carefully at the JSON response sent by the API
-                val routes = jsonResponse.getJSONArray("routes")
-                val legs = routes.getJSONObject(0).getJSONArray("legs")
-                val steps = legs.getJSONObject(0).getJSONArray("steps")
+            val directionsRequest = object : StringRequest(
+                Request.Method.GET,
+                urlDirections,
+                com.android.volley.Response.Listener<String> { response ->
+                    val jsonResponse = JSONObject(response)
+                    // This part to understand it look carefully at the JSON response sent by the API
+                    val routes = jsonResponse.getJSONArray("routes")
+                    val legs = routes.getJSONObject(0).getJSONArray("legs")
+                    val steps = legs.getJSONObject(0).getJSONArray("steps")
 
-                //Retrieval total duration of the whole trip and total distance of the whole trip
-                val totalDistance =legs.getJSONObject(0).getJSONObject("distance").getString("text")
-                val totalDuration= legs.getJSONObject(0).getJSONObject("duration").getString("text")
-                val pathInfo = routes.getJSONObject(0).getString("summary")
+                    //Retrieval total duration of the whole trip and total distance of the whole trip
+                    val totalDistance =legs.getJSONObject(0).getJSONObject("distance").getString("text")
+                    val totalDuration= legs.getJSONObject(0).getJSONObject("duration").getString("text")
+                    val pathInfo = routes.getJSONObject(0).getString("summary")
 
-                //ExtractDirections and save it into the directionText blocks
-                dirObj.updateSteps(dirObj.extractDirections(steps))
-                dirObj.updateTotalDistance(totalDistance)
-                dirObj.updateTotalDuration(totalDuration)
-                dirObj.updatePathInfo(pathInfo)
+                    //ExtractDirections and save it into the directionText blocks
+                    suspend {
 
-                //Draw the path in path in red color
-                for (i in 0 until steps.length()) {
-                    val points =
-                        steps.getJSONObject(i).getJSONObject("polyline").getString("points")
-                    path.add(PolyUtil.decode(points))
-                }
-                for (i in 0 until path.size) {
-                    map.getMapInstance().addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
-                }
-            },
-            com.android.volley.Response.ErrorListener() {
-                @Override
-                fun onErrorResponse(error:VolleyError) {
+                        dirObj.updateSteps(dirObj.extractDirections(steps))
+                        dirObj.updateTotalDistance(totalDistance)
+                        dirObj.updateTotalDuration(totalDuration)
+                        dirObj.updatePathInfo(pathInfo)
 
-                    Toast.makeText(activity,  (error.toString()), Toast.LENGTH_SHORT).show();
-                }
-            }) {}
-        val requestQueue = Volley.newRequestQueue(activity)
-        requestQueue.add(directionsRequest)
+                    }
+
+
+                    //Draw the path in path in red color
+                    for (i in 0 until steps.length()) {
+                        val points =
+                            steps.getJSONObject(i).getJSONObject("polyline").getString("points")
+                        path.add(PolyUtil.decode(points))
+                    }
+                    for (i in 0 until path.size) {
+                        map.getMapInstance().addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
+                    }
+                },
+                com.android.volley.Response.ErrorListener() {
+                    @Override
+                    fun onErrorResponse(error:VolleyError) {
+
+                        Toast.makeText(activity,  (error.toString()), Toast.LENGTH_SHORT).show();
+                    }
+                }) {}
+            val requestQueue = Volley.newRequestQueue(activity)
+            requestQueue.add(directionsRequest)
+
+        }
+
 
         //Move the camera and zoom into the destination
-        map.moveCamera(destinationLatLng, 18f)
+        activity.runOnUiThread {
+            map.moveCamera(destinationLatLng, 18f)
+
+        }
+
 //        return dirObj
     }
 

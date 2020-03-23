@@ -1,6 +1,7 @@
 package com.soen390.conumap.path
 
 import android.app.Activity
+import android.provider.Settings
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +9,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.soen390.conumap.Directions.DirectionService.route
 import com.soen390.conumap.Directions.Directions
 import com.soen390.conumap.map.Map
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 
 //TODO: Implement Live Data Binding as in directions.kt
@@ -45,7 +49,7 @@ object path {
     }
 
 
-    @Synchronized fun findShortestDirections(activity: FragmentActivity){
+ fun findShortestDirections(activity: FragmentActivity){
         //TODO: Default origin is the current location
         val originLatLng = map.getCurrentLocation()
         //TODO:Destination is hardcoded for now
@@ -66,12 +70,25 @@ object path {
         map.moveCamera(originLatLng, 14.5f)
 
         var dirObj = Directions()
-        route(activity,originLatLng, destinationLatLng, transportationMode, alternativesOn)//Calling the actual route function and passing all the needed parameters
-        _directionText.postValue(dirObj.textConverted)
-        updatePathInfo(dirObj.infoPathText.value.toString())
+
+
+            GlobalScope.launch {
+                route(
+                    activity,
+                    originLatLng,
+                    destinationLatLng,
+                    transportationMode,
+                    alternativesOn
+                )//Calling the actual route function and passing all the needed parameters
+            }
+            _directionText.postValue(dirObj.textConverted)
+            updatePathInfo(dirObj._infoPathText)
 //        updateSteps((dirObj.directionText).value.toString())
-        updateTotalDistance(dirObj.totalDistanceText.value.toString())
-        updateTotalDuration(dirObj.totalTimeText.value.toString())
+            updateTotalDistance(dirObj._totalDistanceText)
+            updateTotalDuration(dirObj._totalTimeText)
+
+
+
     }
 
     fun switchOriginAndDestination()

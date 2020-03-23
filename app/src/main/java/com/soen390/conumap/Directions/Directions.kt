@@ -19,10 +19,11 @@ import org.json.JSONObject
 class Directions() {
     val map = Map
 
-    val _directionText = MutableLiveData<String>()
-    val _totalDistanceText = MutableLiveData<String>()
-    val _totalTimeText = MutableLiveData<String>()
-    val _infoPathText = MutableLiveData<String>()
+    lateinit var _directionText :String
+
+    lateinit var _totalDistanceText:String
+    lateinit var _totalTimeText : String
+    lateinit var _infoPathText :String
 
     val directionArray : MutableList<String> = ArrayList<String>()
     val distanceArray: MutableList<String> = ArrayList<String>()
@@ -30,27 +31,27 @@ class Directions() {
 
 
     init {
-        _directionText.value = "Directions: "
-        _totalDistanceText.value = "("
-        _totalTimeText.value = ""
-        _infoPathText.value ="via "
+        _directionText ="Directions: "
+        _totalDistanceText = "("
+        _totalTimeText = ""
+        _infoPathText="via "
     }
 
-    val directionText:LiveData<String>
-        get() = _directionText
-    val totalDistanceText: LiveData<String>
-        get() = _totalDistanceText
-    val totalTimeText: LiveData<String>
-        get() = _totalTimeText
-    val infoPathText : LiveData<String>
-        get() = _infoPathText
+//    val directionText:LiveData<String>
+//        get() = return _directionText
+//    val totalDistanceText: LiveData<String>
+//        get() = _totalDistanceText
+//    val totalTimeText: LiveData<String>
+//        get() = _totalTimeText
+//    val infoPathText : LiveData<String>
+//        get() = _infoPathText
 
     var textConverted = ""
 
 
     //From the JSON response, extract all needed informations such as direction(instruction), the distance and the duration
 
-    @Synchronized fun extractDirections(steps: JSONArray): String {
+    suspend fun extractDirections(steps: JSONArray): String {
         var textConverted = "Direction:" + '\n'
 
 
@@ -73,7 +74,7 @@ class Directions() {
     }
     //Function to get rid of all HTML tags from the direction instructions
     //return the instruction cleared of HTML tags
-    fun cleanUpDirections(tempText:String):String{
+    suspend fun cleanUpDirections(tempText:String):String{
         var tempText = tempText
 
         while(tempText.contains('<',true)){
@@ -90,23 +91,23 @@ class Directions() {
 
 
     //Update the directionText
-    @Synchronized fun updateSteps(textSteps:String){
-        _directionText.postValue(textSteps)
+   fun updateSteps(textSteps:String){
+        _directionText = (textSteps)
     }
 
     //Update TotalDistance
-    @Synchronized fun updateTotalDistance(distance:String){
-        _totalDistanceText.value += distance + ")"
+    fun updateTotalDistance(distance:String){
+        _totalDistanceText += distance + ")"
     }
 
     //Update TotalDuration
-    @Synchronized fun updateTotalDuration(duration:String){
-        _totalTimeText.value = duration
+    fun updateTotalDuration(duration:String){
+        _totalTimeText = duration
     }
 
     //Update the information of the path
-    @Synchronized fun updatePathInfo(routeDescription: String){
-        _infoPathText.value += routeDescription
+    fun updatePathInfo(routeDescription: String){
+        _infoPathText += routeDescription
     }
 
 
