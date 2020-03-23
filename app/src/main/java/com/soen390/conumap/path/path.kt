@@ -13,17 +13,15 @@ import com.soen390.conumap.map.Map
 //TODO: Implement Live Data Binding as in directions.kt
 object path {
     //origin
-   // val destination= Location()
-
+    // val destination= Location()
     private var distance=0.0
-    private var transportationMethod="Car"
     //time
     //accessibilityFriendly
-
     val _directionText = MutableLiveData<String>()
     val _totalDistanceText = MutableLiveData<String>()
     val _totalTimeText = MutableLiveData<String>()
     val _infoPathText = MutableLiveData<String>()
+    val _transportationMode= MutableLiveData<String>()
 
     var directionsArray : ArrayList<Directions> = arrayListOf()
 
@@ -35,6 +33,8 @@ object path {
         get() = _totalTimeText
     val infoPathText : LiveData<String>
         get() = _infoPathText
+    val transportationMode : LiveData<String>
+        get()= _transportationMode
 
     val map = Map
 
