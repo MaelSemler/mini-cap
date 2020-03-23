@@ -7,12 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment
-import com.google.android.gms.maps.GoogleMap
-import com.soen390.conumap.Directions.directions
-import com.soen390.conumap.Directions.directions.routeTest
+//import com.soen390.conumap.Directions.Directions.routeTest
 
 import com.soen390.conumap.R
-import com.soen390.conumap.map.Map
+import com.soen390.conumap.path.path.findShortestDirections
+
 //import com.soen390.conumap.map.Map.getMap
 
 class SearchCompletedFragment : Fragment() {
@@ -44,7 +43,7 @@ class SearchCompletedFragment : Fragment() {
         //This changes fragment when the "45 degree" arrow is pressed
         travel_button.setOnClickListener{
             //TODO: send the result of the search (DirectionsFragment)
-            routeTest(activity!!)
+            findShortestDirections(activity!!)
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }
         restart_button.setOnClickListener{

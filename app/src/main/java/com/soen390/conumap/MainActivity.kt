@@ -2,7 +2,6 @@ package com.soen390.conumap
 
 import android.os.Bundle
 import android.view.Menu
-import androidx.activity.viewModels
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
@@ -19,10 +18,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.soen390.conumap.Directions.directions
+//import com.soen390.conumap.Directions.directions
 //import com.soen390.conumap.databinding.DirectionsFragmentBinding
 import com.soen390.conumap.ui.directions.DirectionsViewModel
 import com.soen390.conumap.building.BuildingCreator.setContext
+
 
 class MainActivity : AppCompatActivity() {
 
