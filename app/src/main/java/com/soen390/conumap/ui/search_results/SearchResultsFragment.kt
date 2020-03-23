@@ -6,6 +6,7 @@ import android.app.Activity.RESULT_OK
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -164,6 +165,16 @@ class SearchResultsFragment : Fragment() {
             val place= data?.let { Autocomplete.getPlaceFromIntent(it) }
             Log.i(TAG,"Place: "+ place!!.name+ ","+place.id)
             searchBar.setText(place.name)
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
+            val sharedPreferences: SharedPreferences =requireContext().getSharedPreferences("SearchDest",0)
+
+            val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+            editor.putString("destinationLocation",searchBar.text.toString())
+
+            editor.apply()
+            editor.commit()
+
         }
         else if (resultCode==AutocompleteActivity.RESULT_ERROR)
         {

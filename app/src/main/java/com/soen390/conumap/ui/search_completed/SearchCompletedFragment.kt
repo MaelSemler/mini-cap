@@ -1,11 +1,13 @@
 package com.soen390.conumap.ui.search_completed
 
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.maps.GoogleMap
 import com.soen390.conumap.Directions.directions
@@ -16,6 +18,7 @@ import com.soen390.conumap.map.Map
 //import com.soen390.conumap.map.Map.getMap
 
 class SearchCompletedFragment : Fragment() {
+    var prefs: SharedPreferences? = null
 
     companion object {
         fun newInstance() =
@@ -39,12 +42,14 @@ class SearchCompletedFragment : Fragment() {
         //directly instead of findViewByID=> Look into DirectionsFragment.kt 
         val travel_button = root.findViewById<View>(R.id.travel_button)
         val restart_button = root.findViewById<View>(R.id.restart_search)
-        val location_button = root.findViewById<View>(R.id.found_location_button)
-
+        val location_button = root.findViewById<Button>(R.id.found_location_button)
+        prefs = requireContext().getSharedPreferences("SearchDest", 0)
+        val endLocation = prefs!!.getString("destinationLocation","" )
+        location_button.setText(endLocation)
         //This changes fragment when the "45 degree" arrow is pressed
         travel_button.setOnClickListener{
             //TODO: send the result of the search (DirectionsFragment)
-            routeTest(activity!!)
+            //routeTest(activity!!)
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }
         restart_button.setOnClickListener{

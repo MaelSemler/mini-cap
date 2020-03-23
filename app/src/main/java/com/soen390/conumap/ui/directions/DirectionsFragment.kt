@@ -1,19 +1,27 @@
 package com.soen390.conumap.ui.directions
 
+import android.content.SharedPreferences
+import android.location.Address
+import android.location.Geocoder
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.gms.maps.model.LatLng
+import com.soen390.conumap.Directions.directions
 
 import com.soen390.conumap.R
 import com.soen390.conumap.databinding.DirectionsFragmentBinding
+import java.util.*
 
 class DirectionsFragment : Fragment() {
-
+    var prefs: SharedPreferences? = null
+    val map = com.soen390.conumap.map.Map
     companion object {
         fun newInstance() = DirectionsFragment()
     }
@@ -40,13 +48,74 @@ class DirectionsFragment : Fragment() {
         }
 
         //To change starting and ending location, just click on the buttons to be sent to a search fragment
+        prefs = requireContext().getSharedPreferences("SearchCount", 0)
+        val count=  prefs!!.getString("result","" )
+        prefs = requireContext().getSharedPreferences("SearchCurrent", 0)
+        val startLocation=  prefs!!.getString("currentLocation","" )
+        binding.startLocationButton.setText(startLocation)
+        prefs = requireContext().getSharedPreferences("SearchDest", 0)
+        val endLocation=  prefs!!.getString("destinationLocation","" )
+        binding.endLocationButton.setText(endLocation)
+        if(startLocation.equals("")){
+            val originLatLng = map.getCurrentLocation()
+            val geocoder: Geocoder
+            val addresses: List<Address>
+            geocoder = Geocoder(requireContext(), Locale.getDefault())
+
+            addresses = geocoder.getFromLocation(
+                originLatLng.latitude,
+                originLatLng.longitude,
+                1
+            )
+
+            val address =
+                addresses[0].getAddressLine(0)
+            val city = addresses[0].getLocality()
+
+            binding.startLocationButton.setText(address)
+
+        }
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("SearchCount",0)
+
+        val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+        val geocoderLocation :Geocoder= Geocoder(requireContext(), Locale.getDefault())
+        val addressesStart: List<Address>?= geocoderLocation.getFromLocationName( binding.startLocationButton.text.toString(), 1)
+        val straddress = addressesStart!![0]
+
+        val latitudeStart = straddress .latitude
+        val longitudeStart = straddress .longitude
+        val addressesEnd: List<Address>?= geocoderLocation.getFromLocationName( binding.endLocationButton.text.toString(), 1)
+        val addressEnd = addressesEnd!![0]
+
+        val latitudeEnd = addressEnd .latitude
+        val longitudeEnd = addressEnd .longitude
+        val originLatLng = LatLng(latitudeStart, longitudeStart)
+
+        val destinationLatLng = LatLng(latitudeEnd, longitudeEnd)
+
+        map.addMarker(originLatLng,("This is the origin"))
+        map.addMarker(destinationLatLng, "Destination")
+        map.moveCamera(originLatLng, 14.5f)
+        //Toast.makeText(requireContext(), ""+latitudeStart.toString()+longitudeStart.toString()+",,"+latitudeEnd.toString ()+longitudeEnd.toString(), Toast.LENGTH_LONG).show()
+
+        directions.route(requireActivity(), originLatLng, destinationLatLng)
+
+
         binding.startLocationButton.setOnClickListener{
             //TODO: send info to the search bar (DirectionSearchFragment)
             NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_directionsSearchFragment)
+            editor.putString("result","1")
+            editor.apply()
+            editor.commit()
+
         }
         binding.endLocationButton.setOnClickListener{
             //TODO: send info to the search bar (DirectionSearchFragment)
             NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_directionsSearchFragment)
+            editor.putString("result","2")
+            editor.apply()
+            editor.commit()
+
         }
         //TODO: look in if this is the best way to implement a "back" function
         binding.returnButton.setOnClickListener{
