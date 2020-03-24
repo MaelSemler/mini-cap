@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.testing.FragmentScenario
+import androidx.fragment.app.testing.launchFragment
 import androidx.fragment.app.testing.launchFragmentInContainer
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.UiSettings
@@ -12,10 +13,12 @@ import com.nhaarman.mockitokotlin2.*
 import com.soen390.conumap.map.Map
 import com.soen390.conumap.map.MapFragment
 import com.soen390.conumap.permission.Permission
+import com.soen390.conumap.ui.home.HomeFragment
 import org.junit.Assert
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.stubbing.Answer
-
+import org.robolectric.RobolectricTestRunner
 
 class MapTests {
 
@@ -45,14 +48,9 @@ class MapTests {
 
     @Test
     fun mapFragmentTest() {
-       /* val fragmentArgs = Bundle().apply {
-            putInt("selectedListItem", 0)
-        }
+        //val scenario = launchFragment<MapFragment>()
 
-        val factory = FragmentFactory()
-        val scenario = launchFragmentInContainer<MapFragment>()*/
-
-       // FragmentScenario.launchInContainer(MapFragment::class.java)
+       // FragmentScenario.launchInContainer(HomeFragment::class.java)
 
     }
 
