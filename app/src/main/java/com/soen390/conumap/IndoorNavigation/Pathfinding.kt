@@ -12,7 +12,7 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
     val moveCost: Int = 1
     var origin: Node = origin
     var destination: Node = destination
-    var mapArray = arrayOf<Array<Node>>()
+    var mapArray: Array<Array<Node>> = Array(rows) {Array(cols) {Node(0,0)}}
     var openSet = mutableListOf<Node>()
     var closedSet = mutableListOf<Node>()
 
