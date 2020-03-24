@@ -51,8 +51,6 @@ class DirectionsSearchFragment : Fragment() {
         val clear_button = root.findViewById<View>(R.id.clear_search) as Button
         search_bar = root.findViewById<View>(R.id.DirectionSearchResults) as Button
 
-        //     search_bar = root.findViewById<View>(R.id.DirectionSearchResults) as Button
-
         //Selects the search bar input
         this.context?.let {
             Places.initialize(it, context?.getString(R.string.apiKey)!!)
@@ -129,7 +127,7 @@ class DirectionsSearchFragment : Fragment() {
                 val editor:SharedPreferences.Editor =  sharedPreferences.edit()
 
 
-                editor.putString("currentLocation",search_bar.text.toString())
+                editor.putString("currentLocation",place.address)
 
                 editor.apply()
                 editor.commit()}
@@ -137,7 +135,7 @@ class DirectionsSearchFragment : Fragment() {
                 val sharedPreferences: SharedPreferences =requireContext().getSharedPreferences("SearchDest",0)
 
                 val editor:SharedPreferences.Editor =  sharedPreferences.edit()
-                editor.putString("destinationLocation",search_bar.text.toString())
+                editor.putString("destinationLocation",place.address)
 
                 editor.apply()
                 editor.commit()

@@ -170,7 +170,7 @@ class SearchResultsFragment : Fragment() {
             val sharedPreferences: SharedPreferences =requireContext().getSharedPreferences("SearchDest",0)
 
             val editor: SharedPreferences.Editor =  sharedPreferences.edit()
-            editor.putString("destinationLocation",searchBar.text.toString())
+            editor.putString("destinationLocation",place.address)
 
             editor.apply()
             editor.commit()

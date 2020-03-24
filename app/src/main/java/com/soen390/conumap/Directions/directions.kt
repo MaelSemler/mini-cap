@@ -62,8 +62,8 @@ object directions {
                 val legs = routes.getJSONObject(0).getJSONArray("legs")
                 val steps = legs.getJSONObject(0).getJSONArray("steps")
 
-                val totalDistance =legs.getJSONObject(0).getJSONObject("distance").getString("text")
-                val totalDuration= legs.getJSONObject(0).getJSONObject("duration").getString("text")
+               // val totalDistance =legs.getJSONObject(0).getJSONObject("distance").getString("text")
+               // val totalDuration= legs.getJSONObject(0).getJSONObject("duration").getString("text")
 
                 //Clean up the directions
                 updateSteps(extractDirections(steps))
