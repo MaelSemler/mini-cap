@@ -40,6 +40,9 @@ class CalendarScheduleFragment : Fragment() {
     private lateinit var debugText: TextView
     val REQUEST_GOOGLE_PLAY_SERVICES = 1002
     val REQUEST_AUTHORIZATION = 1001
+    var classNumber:String = ""
+    var time: String = ""
+    var location: String = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,9 +65,9 @@ class CalendarScheduleFragment : Fragment() {
             signOut()
         }
         comingUpTestButton.setOnClickListener{
-            classNumberValue.setText(CalendarRequestTask(Schedule.mCredential!!).getFirstEventName())
-            timeValue.setText(CalendarRequestTask(Schedule.mCredential!!).getFirstEventTime())
-            locationValue.setText(CalendarRequestTask(Schedule.mCredential!!).getFirstEventLocation())
+            classNumberValue.setText(classNumber)
+            timeValue.setText(time)
+            locationValue.setText(location)
         }
         return root
     }
@@ -88,23 +91,19 @@ class CalendarScheduleFragment : Fragment() {
             REQUEST_GOOGLE_PLAY_SERVICES)
         dialog.show()
     }
+
+    private fun onCalendarRequestTaskCompleted(results: MutableList<String> ){
+        Log.d("QUESTIONMARK", "Made it to onCalendarRequestTaskCompleted!")
+        var firstEventArray = results[0].split("|").toTypedArray()
+        classNumber = firstEventArray[0]
+        time = firstEventArray[1] +"-" + firstEventArray[2]
+        location = firstEventArray[3]
+    }
+
     private inner class CalendarRequestTask(credential: GoogleAccountCredential) : AsyncTask<Void, Void, MutableList<String>>() {
         private var mService: com.google.api.services.calendar.Calendar? = null
         private var mLastError: Exception? = null
-        private var firstEventName: String = ""
-        private var firstEventStartTime = ""
-        private var firstEventEndTime = ""
-        private  var firstEventLocation = ""
 
-        fun getFirstEventName(): String{
-            return firstEventName
-        }
-        fun getFirstEventTime(): String{
-            return (firstEventStartTime +"WOW"+firstEventEndTime)
-        }
-        fun getFirstEventLocation(): String{
-            return firstEventLocation
-        }
 
         /**
          * Fetch a list of the next 10 events from the primary calendar.
@@ -119,7 +118,7 @@ class CalendarScheduleFragment : Fragment() {
             get() {
                 val now = DateTime(System.currentTimeMillis())
                 val eventStrings = ArrayList<String>()
-                Log.d("QUESTIONMARK", "DATAFROMAPI IS RUNNING WOWOWOOW")
+                Log.d("QUESTIONMARK", "Obtaining events from calendar")
                 /*
                 *
                 *
@@ -140,16 +139,10 @@ class CalendarScheduleFragment : Fragment() {
                     .setOrderBy("startTime")
                     .setSingleEvents(true)
                     .execute()
+                Log.d("QUESTIONMARK", "data is obtained, now getting items from events")
                 val items = events.items
 
-                firstEventName = items.first().summary
-                Log.d("QUESTIONMARK", firstEventName)
-                firstEventStartTime = items.first().start.dateTime.toString()
-                Log.d("QUESTIONMARK", firstEventStartTime)
-                firstEventEndTime = items.first().end.dateTime.toString()
-                Log.d("QUESTIONMARK", firstEventEndTime)
-                firstEventLocation = items.first().location
-                Log.d("QUESTIONMARK", firstEventLocation)
+                Log.d("QUESTIONMARK", "sorting through events and adding to eventString")
                 for (event in items) {
                     var start = event.start.dateTime
                     var end = event.end.dateTime
@@ -160,17 +153,17 @@ class CalendarScheduleFragment : Fragment() {
                     if (event.endTimeUnspecified){
                         end = event.end.date
                     }
-                    eventStrings.add(String.format("%s (%s) ((%s))", event.summary, start))
-
-
+                    eventStrings.add(String.format("%s|%s|%s|%s", event.summary, start, end, event.location))
                 }
+                Log.d("QUESTIONMARK", "DATAFROMAPI IS done WOWOWOOW")
                 return eventStrings
             }
 
         init {
+            Log.d("QUESTIONMARK", "init")
             val transport = AndroidHttp.newCompatibleTransport()
             val jsonFactory = JacksonFactory.getDefaultInstance()
-            mService = com.google.api.services.calendar.Calendar.Builder(
+            mService = Calendar.Builder(
                 transport, jsonFactory, credential)
                 .setApplicationName("Google Calendar API Android Quickstart")
                 .build()
@@ -181,6 +174,7 @@ class CalendarScheduleFragment : Fragment() {
          * @param params no parameters needed for this task.
          */
         override fun doInBackground(vararg params: Void): MutableList<String>? {
+            Log.d("QUESTIONMARK", "doInBackground")
             try {
                 return dataFromApi
             } catch (e: Exception) {
@@ -193,17 +187,19 @@ class CalendarScheduleFragment : Fragment() {
 
 
         override fun onPreExecute() {
+            Log.d("QUESTIONMARK", "onPreExecute")
             debugText.text = "loading...tool long? sign out"
 
         }
 
         override fun onPostExecute(output: MutableList<String>?) {
-
+            Log.d("QUESTIONMARK", "onPostExecute")
             if (output == null || output.size == 0) {
                 debugText.text = "No results returned."
             } else {
-                output.add(0, "Data retrieved using the Google Calendar API:")
-                debugText.text = (TextUtils.join("\n", output))
+                //output.add(0, "Data retrieved using the Google Calendar API:")
+                //debugText.text = (TextUtils.join("\n", output))
+                this@CalendarScheduleFragment.onCalendarRequestTaskCompleted(output)
             }
         }
 
