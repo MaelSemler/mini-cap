@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.soen390.conumap.Directions.DirectionService.route
-import com.soen390.conumap.Directions.DirectionService.route2
 import com.soen390.conumap.Directions.Directions
 import com.soen390.conumap.map.Map
 import kotlinx.coroutines.GlobalScope
@@ -76,15 +75,6 @@ object path {
      dirObj = Directions()
 
         GlobalScope.launch {
-        if (alternativesOn)
-            route2(
-                activity,
-                originLatLng,
-                destinationLatLng,
-                transportationMode,
-                alternativesOn)
-
-        else
             route(
                 activity,
                 originLatLng,
