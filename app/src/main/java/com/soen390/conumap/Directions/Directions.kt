@@ -19,11 +19,10 @@ import org.json.JSONObject
 class Directions() {
     val map = Map
 
-    lateinit var _directionText :String
-
-    lateinit var _totalDistanceText:String
-    lateinit var _totalTimeText : String
-    lateinit var _infoPathText :String
+    var _directionText :String
+    var _totalDistanceText: String
+    var _totalTimeText  :String
+    var _infoPathText :String
 
     val directionArray : MutableList<String> = ArrayList<String>()
     val distanceArray: MutableList<String> = ArrayList<String>()
@@ -37,14 +36,21 @@ class Directions() {
         _infoPathText="via "
     }
 
-//    val directionText:LiveData<String>
-//        get() = return _directionText
-//    val totalDistanceText: LiveData<String>
-//        get() = _totalDistanceText
-//    val totalTimeText: LiveData<String>
-//        get() = _totalTimeText
-//    val infoPathText : LiveData<String>
-//        get() = _infoPathText
+    fun getDirectionText():String{
+        return _directionText
+    }
+
+    fun getTotalDistanceText():String{
+        return _totalDistanceText
+    }
+
+    fun getTotalTimeText():String{
+        return _totalTimeText
+    }
+
+    fun getInfoPathText():String{
+        return _infoPathText
+    }
 
     var textConverted = ""
 

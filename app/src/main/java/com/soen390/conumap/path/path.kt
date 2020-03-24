@@ -41,6 +41,8 @@ object path {
 
     val map = Map
 
+    lateinit var dirObj :Directions
+
     init {
         _directionText.value = "Directions: "
         _totalDistanceText.value = "("
@@ -69,10 +71,11 @@ object path {
         map.addMarker(destinationLatLng, "Destination")
         map.moveCamera(originLatLng, 14.5f)
 
-        var dirObj = Directions()
 
+     dirObj = Directions()
 
         GlobalScope.launch {
+
             route(
                 activity,
                 originLatLng,
@@ -82,13 +85,14 @@ object path {
             )//Calling the actual route function and passing all the needed parameters
 
         }
-
-
-            _directionText.postValue(dirObj.textConverted)
-            updatePathInfo(dirObj._infoPathText)
+     _directionText.postValue(dirObj.textConverted)
+     updatePathInfo(dirObj._infoPathText)
 //        updateSteps((dirObj.directionText).value.toString())
-            updateTotalDistance(dirObj._totalDistanceText)
-            updateTotalDuration(dirObj._totalTimeText)
+     updateTotalDistance(dirObj._totalDistanceText)
+     updateTotalDuration(dirObj._totalTimeText)
+
+
+
 
 
 
