@@ -12,13 +12,10 @@ import androidx.navigation.fragment.NavHostFragment
 //import com.soen390.conumap.Directions.Directions.routeTest
 
 import com.soen390.conumap.R
-<<<<<<< HEAD
 import com.soen390.conumap.path.path.findDirections
-=======
 import com.soen390.conumap.map.Map
 import com.soen390.conumap.ui.search_bar.SearchBarViewModel
 import kotlinx.android.synthetic.main.search_completed_fragment.*
->>>>>>> abe25fbf947dff9de1956686b43ac38af893008b
 
 //import com.soen390.conumap.map.Map.getMap
 
@@ -45,13 +42,8 @@ class SearchCompletedFragment : Fragment() {
 
         //This changes fragment when the "45 degree" arrow is pressed
         travel_button.setOnClickListener{
-            //TODO: send the result of the search (DirectionsFragment)
-//            GlobalScope.launch(Dispatchers.Main) {
 
                 findDirections(activity!!)
-
-//            }
-
 
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }

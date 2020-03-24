@@ -2,13 +2,10 @@ package com.soen390.conumap
 
 import android.os.Bundle
 import android.view.Menu
-<<<<<<< HEAD
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-=======
 import android.widget.Toast
 
->>>>>>> abe25fbf947dff9de1956686b43ac38af893008b
 import com.google.android.material.navigation.NavigationView
 
 import androidx.navigation.findNavController
@@ -19,13 +16,10 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-<<<<<<< HEAD
-=======
 
 import com.soen390.conumap.helper.ContextPasser
 import com.soen390.conumap.map.Map
 import com.soen390.conumap.permission.Permission
->>>>>>> abe25fbf947dff9de1956686b43ac38af893008b
 
 class MainActivity : AppCompatActivity() {
 
