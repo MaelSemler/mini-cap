@@ -43,6 +43,9 @@ class CalendarScheduleFragment : Fragment() {
     var classNumber:String = ""
     var time: String = ""
     var location: String = ""
+    lateinit var classNumberValue: TextView
+    lateinit var timeValue: TextView
+    lateinit var locationValue: TextView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,9 +56,9 @@ class CalendarScheduleFragment : Fragment() {
         if(Schedule.mCredential!= null){
             CalendarRequestTask(Schedule.mCredential!!).execute()
         }
-        val classNumberValue = root.findViewById<TextView>(R.id.class_number_value)
-        val timeValue = root.findViewById<TextView>(R.id.time_value)
-        val locationValue = root.findViewById<TextView>(R.id.location_value)
+        classNumberValue = root.findViewById<TextView>(R.id.class_number_value)
+        timeValue = root.findViewById<TextView>(R.id.time_value)
+        locationValue = root.findViewById<TextView>(R.id.location_value)
         val comingUpTestButton = root.findViewById<View>(R.id.coming_up)
         val gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
@@ -82,7 +85,7 @@ class CalendarScheduleFragment : Fragment() {
         mGoogleSignInClient.signOut()
         activity!!.supportFragmentManager.beginTransaction().replace(R.id.calendar_container,CalendarLoginFragment.newInstance()).commit()
     }
-
+/*
     fun showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode: Int) {
         val apiAvailability = GoogleApiAvailability.getInstance()
         val dialog = apiAvailability.getErrorDialog(
@@ -90,7 +93,7 @@ class CalendarScheduleFragment : Fragment() {
             connectionStatusCode,
             REQUEST_GOOGLE_PLAY_SERVICES)
         dialog.show()
-    }
+    }*/
 
     private fun onCalendarRequestTaskCompleted(results: MutableList<String> ){
         Log.d("QUESTIONMARK", "Made it to onCalendarRequestTaskCompleted!")
@@ -98,6 +101,14 @@ class CalendarScheduleFragment : Fragment() {
         classNumber = firstEventArray[0]
         time = firstEventArray[1] +"-" + firstEventArray[2]
         location = firstEventArray[3]
+
+        showit()
+    }
+
+    private fun  showit(){
+        classNumberValue.setText(classNumber)
+        timeValue.setText(time)
+        locationValue.setText(location)
     }
 
     private inner class CalendarRequestTask(credential: GoogleAccountCredential) : AsyncTask<Void, Void, MutableList<String>>() {
@@ -150,9 +161,9 @@ class CalendarScheduleFragment : Fragment() {
                     if (start == null) {
                         start = event.start.date
                     }
-                    if (event.endTimeUnspecified){
+                    /*if (event.endTimeUnspecified){
                         end = event.end.date
-                    }
+                    }*/
                     eventStrings.add(String.format("%s|%s|%s|%s", event.summary, start, end, event.location))
                 }
                 Log.d("QUESTIONMARK", "DATAFROMAPI IS done WOWOWOOW")
@@ -207,9 +218,9 @@ class CalendarScheduleFragment : Fragment() {
 
             if (mLastError != null) {
                 if (mLastError is GooglePlayServicesAvailabilityIOException) {
-                    showGooglePlayServicesAvailabilityErrorDialog(
+                    /*showGooglePlayServicesAvailabilityErrorDialog(
                         (mLastError as GooglePlayServicesAvailabilityIOException)
-                            .connectionStatusCode)
+                            .connectionStatusCode)*/
                 } else if (mLastError is UserRecoverableAuthIOException) {
                     startActivityForResult(
                         (mLastError as UserRecoverableAuthIOException).intent,

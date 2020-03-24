@@ -10,6 +10,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 
 import com.soen390.conumap.R
+import com.soen390.conumap.calendar.Schedule
 import com.soen390.conumap.ui.calendar_login.CalendarLoginFragment
 import com.soen390.conumap.ui.calendar_schedule.CalendarScheduleFragment
 
@@ -39,8 +40,9 @@ class CalendarFragment : Fragment() {
     }
 
     fun init() {
-        val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(activity)
-        if (account != null) {
+        //val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(activity)
+
+        if (Schedule.mCredential != null) {
             containee = CalendarScheduleFragment()
         }
         else{
