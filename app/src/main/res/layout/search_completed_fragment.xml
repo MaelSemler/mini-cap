@@ -16,34 +16,54 @@
             android:layout_marginBottom="30dp">
 
             <Button
-                android:id="@+id/found_location_button"
+                android:id="@+id/background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/round_rectangle_white"
-                />
+                android:background="@drawable/round_rectangle_white" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp">
 
             <Button
                 android:id="@+id/restart_search"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_alignStart="@+id/found_location_button"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="30dp"
                 android:background="@drawable/exit_red" />
+
+            <Button
+                android:id="@+id/found_location_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/restart_search"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="60dp"
+                android:background="#00000000"
+                android:elevation="0dp" />
 
             <Button
                 android:id="@+id/travel_button"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_alignEnd="@+id/found_location_button"
+                android:layout_alignParentEnd="true"
+                android:layout_alignRight="@+id/found_location_button"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/go_to_arrow_red" />
 
         </RelativeLayout>
+
     </RelativeLayout>
 </FrameLayout>
