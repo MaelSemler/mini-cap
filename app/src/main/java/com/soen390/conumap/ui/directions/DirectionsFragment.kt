@@ -58,6 +58,11 @@ class DirectionsFragment : Fragment() {
         binding.returnButton.setOnClickListener{
             NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_searchCompletedFragment)
         }
+        // Alternate Routes
+        binding.altButton.setOnClickListener{
+            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_alternateFragment)
+        }
+
         return binding.root
     }
 
