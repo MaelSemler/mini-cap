@@ -14,6 +14,7 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.PolyUtil
 import com.soen390.conumap.R
 import com.soen390.conumap.map.Map
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.internal.SynchronizedObject
@@ -42,12 +43,15 @@ object DirectionService {
     }
 
     //Route methods which makes the call get the response from Google Directions API and parse the JSON files to store everything inside arrays
-    suspend fun route(activity: FragmentActivity, originLatLng: LatLng, destinationLatLng: LatLng, transportationMode: String, alternativesOn: Boolean) = coroutineScope{
+    suspend fun route(activity: FragmentActivity, originLatLng: LatLng, destinationLatLng: LatLng, transportationMode: String, alternativesOn: Boolean) {
+        coroutineScope {
+
+
         //Path is an arrayList that store every "steps"/path =>Will be used to draw the path
         val path: MutableList<List<LatLng>> = ArrayList()
 
         //Retrieve the correct URL to call the API
-        GlobalScope.launch {
+
             val urlDirections = getGoogleMapRequestURL(activity, originLatLng, destinationLatLng, transportationMode, alternativesOn)
 
             var dirObj : Directions = Directions()
@@ -70,14 +74,13 @@ object DirectionService {
                     val pathInfo = routes.getJSONObject(0).getString("summary")
 
                     //ExtractDirections and save it into the directionText blocks
-                    suspend {
 
-                        dirObj.updateSteps(dirObj.extractDirections(steps))
+//                        dirObj.updateSteps(dirObj.extractDirections(steps))
                         dirObj.updateTotalDistance(totalDistance)
                         dirObj.updateTotalDuration(totalDuration)
                         dirObj.updatePathInfo(pathInfo)
 
-                    }
+
 
 
                     //Draw the path in path in red color
@@ -100,7 +103,7 @@ object DirectionService {
             val requestQueue = Volley.newRequestQueue(activity)
             requestQueue.add(directionsRequest)
 
-        }
+
 
 
         //Move the camera and zoom into the destination
@@ -110,6 +113,7 @@ object DirectionService {
         }
 
 //        return dirObj
+        }
     }
 
 

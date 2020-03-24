@@ -72,15 +72,18 @@ object path {
         var dirObj = Directions()
 
 
-            GlobalScope.launch {
-                route(
-                    activity,
-                    originLatLng,
-                    destinationLatLng,
-                    transportationMode,
-                    alternativesOn
-                )//Calling the actual route function and passing all the needed parameters
-            }
+        GlobalScope.launch {
+            route(
+                activity,
+                originLatLng,
+                destinationLatLng,
+                transportationMode,
+                alternativesOn
+            )//Calling the actual route function and passing all the needed parameters
+
+        }
+
+
             _directionText.postValue(dirObj.textConverted)
             updatePathInfo(dirObj._infoPathText)
 //        updateSteps((dirObj.directionText).value.toString())
