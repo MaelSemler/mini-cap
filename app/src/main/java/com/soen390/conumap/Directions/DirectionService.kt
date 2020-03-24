@@ -71,8 +71,9 @@ object DirectionService {
                         val pathInfo = routes.getJSONObject(0).getString("summary")
 
                         //ExtractDirections and save it into the directionText blocks
+                        val extractedCleanedDirections = dirObj.extractDirections(steps)
 
-//                        dirObj.updateSteps(dirObj.extractDirections(steps))
+                        dirObj.updateSteps(extractedCleanedDirections)
                         dirObj.updateTotalDistance(totalDistance)
                         dirObj.updateTotalDuration(totalDuration)
                         dirObj.updatePathInfo(pathInfo)
@@ -82,6 +83,7 @@ object DirectionService {
                             com.soen390.conumap.path.path.updatePathInfo(pathInfo)
                             com.soen390.conumap.path.path.updateTotalDuration(totalDuration)
                             com.soen390.conumap.path.path.updateTotalDistance(totalDistance)
+                            com.soen390.conumap.path.path.updateSteps(extractedCleanedDirections)
                         }
 
 

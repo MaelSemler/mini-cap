@@ -57,7 +57,7 @@ class Directions() {
 
     //From the JSON response, extract all needed informations such as direction(instruction), the distance and the duration
 
-    suspend fun extractDirections(steps: JSONArray): String {
+    fun extractDirections(steps: JSONArray): String {
         var textConverted = "Direction:" + '\n'
 
 
@@ -80,7 +80,7 @@ class Directions() {
     }
     //Function to get rid of all HTML tags from the direction instructions
     //return the instruction cleared of HTML tags
-    suspend fun cleanUpDirections(tempText:String):String{
+    fun cleanUpDirections(tempText:String):String{
         var tempText = tempText
 
         while(tempText.contains('<',true)){
