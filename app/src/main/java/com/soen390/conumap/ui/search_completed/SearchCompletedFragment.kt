@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.maps.GoogleMap
 import com.soen390.conumap.Directions.directions
@@ -13,6 +15,9 @@ import com.soen390.conumap.Directions.directions.routeTest
 
 import com.soen390.conumap.R
 import com.soen390.conumap.map.Map
+import com.soen390.conumap.ui.search_bar.SearchBarViewModel
+import kotlinx.android.synthetic.main.search_completed_fragment.*
+
 //import com.soen390.conumap.map.Map.getMap
 
 class SearchCompletedFragment : Fragment() {
@@ -23,19 +28,14 @@ class SearchCompletedFragment : Fragment() {
 //        val dir = directions(Map)
     }
 
-    private lateinit var viewModel: SearchCompletedViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val root = inflater.inflate(R.layout.search_completed_fragment, container, false)
 
-        //TODO: receive the result of the search result (SearchResultFragment)
-        //TODO: put name of the location result on the button
-        //TODO: get the map to focus on the search result location
-
-        //TODO: Change this to a two way bindings using binding.travelButton.setOnclickListener 
+        //TODO: Change this to a two way bindings using binding.travelButton.setOnclickListener
         //directly instead of findViewByID=> Look into DirectionsFragment.kt 
         val travel_button = root.findViewById<View>(R.id.travel_button)
         val restart_button = root.findViewById<View>(R.id.restart_search)
@@ -48,6 +48,10 @@ class SearchCompletedFragment : Fragment() {
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }
         restart_button.setOnClickListener{
+            // Cancel destination in modelView
+            val model: SearchBarViewModel by activityViewModels()
+            model.setDestination("")
+
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_searchBarFragment)
         }
         location_button.setOnClickListener{
@@ -58,8 +62,16 @@ class SearchCompletedFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(SearchCompletedViewModel::class.java)
+
         // TODO: Use the ViewModel
+        //TODO: receive the result of the search result (SearchResultFragment)
+        val model: SearchBarViewModel by activityViewModels()
+        val destination = model.getDestination()
+
+        //TODO: put name of the location result on the button
+        found_location_button.setText(destination)
+        //TODO: get the map to focus on the search result location
+
     }
 
 }
