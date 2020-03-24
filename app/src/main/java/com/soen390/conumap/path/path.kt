@@ -85,11 +85,11 @@ object path {
             )//Calling the actual route function and passing all the needed parameters
 
         }
-     _directionText.postValue(dirObj.textConverted)
-     updatePathInfo(dirObj._infoPathText)
-//        updateSteps((dirObj.directionText).value.toString())
-     updateTotalDistance(dirObj._totalDistanceText)
-     updateTotalDuration(dirObj._totalTimeText)
+//     _directionText.postValue(dirObj.textConverted)
+//     updatePathInfo(dirObj._infoPathText)
+////        updateSteps((dirObj.directionText).value.toString())
+//     updateTotalDistance(dirObj._totalDistanceText)
+//     updateTotalDuration(dirObj._totalTimeText)
 
 
 

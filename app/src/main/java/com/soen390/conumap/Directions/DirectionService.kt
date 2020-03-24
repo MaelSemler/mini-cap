@@ -77,6 +77,13 @@ object DirectionService {
                         dirObj.updateTotalDuration(totalDuration)
                         dirObj.updatePathInfo(pathInfo)
 
+                        //Update the display on the main thread
+                        activity.runOnUiThread {
+                            com.soen390.conumap.path.path.updatePathInfo(pathInfo)
+                            com.soen390.conumap.path.path.updateTotalDuration(totalDuration)
+                            com.soen390.conumap.path.path.updateTotalDistance(totalDistance)
+                        }
+
 
 
 
@@ -99,6 +106,9 @@ object DirectionService {
                     }) {}
                 val requestQueue = Volley.newRequestQueue(activity)
                 requestQueue.add(directionsRequest)
+
+
+
 
 
             }
