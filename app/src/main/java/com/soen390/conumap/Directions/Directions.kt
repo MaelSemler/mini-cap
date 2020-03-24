@@ -19,10 +19,10 @@ import org.json.JSONObject
 class Directions() {
     val map = Map
 
-    var _directionText :String
-    var _totalDistanceText: String
-    var _totalTimeText  :String
-    var _infoPathText :String
+    private var _directionText :String
+    private var _totalDistanceText: String
+    private var _totalTimeText  :String
+    private var _infoPathText :String
 
     val directionArray : MutableList<String> = ArrayList<String>()
     val distanceArray: MutableList<String> = ArrayList<String>()
@@ -90,10 +90,6 @@ class Directions() {
         }
         return tempText
     }
-
-
-
-
 
 
     //Update the directionText

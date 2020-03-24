@@ -27,7 +27,6 @@ object DirectionService {
 
     }
 
-
     //Put the correct parameters inside the api call
     //This function returns the URL to make the GoogleMap API call
     fun getGoogleMapRequestURL(activity: Activity, originLatLng: LatLng, destinationLatLng: LatLng, transportationMode: String, alternativesOn:Boolean):String{
@@ -42,7 +41,6 @@ object DirectionService {
     //Route methods which makes the call get the response from Google Directions API and parse the JSON files to store everything inside arrays
     suspend fun route(activity: FragmentActivity, originLatLng: LatLng, destinationLatLng: LatLng, transportationMode: String, alternativesOn: Boolean) {
         coroutineScope{
-
 
         //Path is an arrayList that store every "steps"/path =>Will be used to draw the path
         val path: MutableList<List<LatLng>> = ArrayList()
@@ -73,10 +71,12 @@ object DirectionService {
                         //ExtractDirections and save it into the directionText blocks
                         val extractedCleanedDirections = dirObj.extractDirections(steps)
 
+                        //TODO: Here, we create directionsObject, when alternative is off this is useless
                         dirObj.updateSteps(extractedCleanedDirections)
                         dirObj.updateTotalDistance(totalDistance)
                         dirObj.updateTotalDuration(totalDuration)
                         dirObj.updatePathInfo(pathInfo)
+                        ///////////////////////////////////////////////////
 
                         //Update the display on the main thread
                         activity.runOnUiThread {
@@ -85,9 +85,6 @@ object DirectionService {
                             com.soen390.conumap.path.path.updateTotalDistance(totalDistance)
                             com.soen390.conumap.path.path.updateSteps(extractedCleanedDirections)
                         }
-
-
-
 
                         //Draw the path in path in red color
                         for (i in 0 until steps.length()) {
@@ -109,19 +106,11 @@ object DirectionService {
                 val requestQueue = Volley.newRequestQueue(activity)
                 requestQueue.add(directionsRequest)
 
-
-
-
-
             }
-
-
-
 
         //Move the camera and zoom into the destination
         activity.runOnUiThread {
             map.moveCamera(destinationLatLng, 18f)
-
         }
 
         }

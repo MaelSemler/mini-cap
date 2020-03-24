@@ -10,10 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 //import com.soen390.conumap.Directions.Directions.routeTest
 
 import com.soen390.conumap.R
-import com.soen390.conumap.path.path.findShortestDirections
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.soen390.conumap.path.path.findDirections
 
 //import com.soen390.conumap.map.Map.getMap
 
@@ -53,7 +50,7 @@ class SearchCompletedFragment : Fragment() {
             //TODO: send the result of the search (DirectionsFragment)
 //            GlobalScope.launch(Dispatchers.Main) {
 
-                findShortestDirections(activity!!)
+                findDirections(activity!!)
 
 //            }
 

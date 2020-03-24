@@ -51,7 +51,7 @@ object path {
     }
 
 
- fun findShortestDirections(activity: FragmentActivity){
+ fun findDirections(activity: FragmentActivity){
         //TODO: Default origin is the current location
         val originLatLng = map.getCurrentLocation()
         //TODO:Destination is hardcoded for now
@@ -85,16 +85,6 @@ object path {
             )//Calling the actual route function and passing all the needed parameters
 
         }
-//     _directionText.postValue(dirObj.textConverted)
-//     updatePathInfo(dirObj._infoPathText)
-////        updateSteps((dirObj.directionText).value.toString())
-//     updateTotalDistance(dirObj._totalDistanceText)
-//     updateTotalDuration(dirObj._totalTimeText)
-
-
-
-
-
 
     }
 
