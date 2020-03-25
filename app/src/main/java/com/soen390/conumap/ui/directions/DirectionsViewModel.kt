@@ -16,5 +16,4 @@ class DirectionsViewModel : ViewModel() {
     val infoPathText : LiveData<String>
         get() = path.infoPathText
 
-
 }

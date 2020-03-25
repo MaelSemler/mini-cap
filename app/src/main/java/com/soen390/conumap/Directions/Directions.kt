@@ -30,7 +30,7 @@ class Directions() {
 
 
     init {
-        _directionText ="Directions: "
+        _directionText ="Direction: "
         _totalDistanceText = "("
         _totalTimeText = ""
         _infoPathText="via "

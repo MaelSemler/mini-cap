@@ -104,6 +104,14 @@ object DirectionService {
                                 com.soen390.conumap.path.path.updateTotalDuration(listOfPath[n].getTotalTimeText())
                                 com.soen390.conumap.path.path.updateTotalDistance(listOfPath[n].getTotalDistanceText())
                                 com.soen390.conumap.path.path.updateSteps(listOfPath[n].getDirectionText())
+                                var j =1
+                                for (i in 0 until listOfPath.size){
+                                    Log.d("DirectionServices", "Building Alternate list $i " + listOfPath[i].getInfoPathText())
+                                    if (i != n){
+                                        com.soen390.conumap.path.path.updateAlternateText("$j - "+listOfPath[i].getInfoPathText()+"\n")
+                                        j++
+                                    }
+                                }
                             }
 
                             //This Draw on the Map the tracing of "Steps"
