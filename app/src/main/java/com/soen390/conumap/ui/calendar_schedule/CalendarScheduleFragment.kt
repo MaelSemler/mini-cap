@@ -112,36 +112,42 @@ class CalendarScheduleFragment : Fragment() {
     }
 
     private fun showSchedule(events: MutableList<String>){
-        //make all the Buttons
+        /*Todo:
+        *  there are 7 relative layouts, one for each day of the week
+        *  each layout needs to be filled with buttons
+        *  maybe pass the event objects directly instead of the string
+        *
+        * */
         /*
         when (Date){
-            Sunday -> layout =view!!.findViewById<LinearLayout>(R.id.sunday)
-            Monday -> layout =view!!.findViewById<LinearLayout>(R.id.monday)
-            Tuesday -> layout =view!!.findViewById<LinearLayout>(R.id.tuesday)
+            Sunday -> layout =view!!.findViewById<RelativeLayout>(R.id.sunday)
+            Monday -> layout =view!!.findViewById<RelativeLayout>(R.id.monday)
+            Tuesday -> layout =view!!.findViewById<RelativeLayout>(R.id.tuesday)
             ...
-            makeDay(layout)
+            showDay(layout)
 
         }*/
 
         val layout =view!!.findViewById<RelativeLayout>(R.id.sunday)
-        layout.removeAllViews()
+        showDay(layout,events)
+
+
+    }
+
+    fun showDay(layout: RelativeLayout, events: MutableList<String>){
+        layout.removeAllViews() //Clears that day in the schedule
 
         for(items in events){
             val progButton: Button = Button(this.context)
-
-
             val param = RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT
             )
-            param.topMargin = 100//Todo: get start time, get midnight - start time, get the diference in seconds, and 1 second is 1 margin
-
-            param.isMarginRelative
+            param.topMargin = 100//Todo: get start time, get midnight - start time, get the diference in seconds, and 1 minute is 1 margin
             progButton.layoutParams = param
-
-            progButton.setText(items)
+            progButton.setText(items)//Todo: have the proper text shown here, like in the mockups
             progButton.textSize = 10f
-            progButton.height = 100
+            progButton.height = 100//Todo: get the duration in minutes 1 minute
             layout.addView(progButton)
         }
     }
