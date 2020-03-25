@@ -104,12 +104,11 @@ object DirectionService {
                                 com.soen390.conumap.path.path.updateTotalDuration(listOfPath[n].getTotalTimeText())
                                 com.soen390.conumap.path.path.updateTotalDistance(listOfPath[n].getTotalDistanceText())
                                 com.soen390.conumap.path.path.updateSteps(listOfPath[n].getDirectionText())
-                                var j =1
+
                                 for (i in 0 until listOfPath.size){
                                     Log.d("DirectionServices", "Building Alternate list $i " + listOfPath[i].getInfoPathText())
                                     if (i != n){
-                                        com.soen390.conumap.path.path.updateAlternateText("$j - "+listOfPath[i].getInfoPathText()+"\n")
-                                        j++
+                                        com.soen390.conumap.path.path.updateAlternateText(listOfPath[n].getTotalTimeText(), listOfPath[n].getTotalDistanceText() ,listOfPath[i].getInfoPathText())
                                     }
                                 }
                             }
@@ -127,7 +126,7 @@ object DirectionService {
                         } else {
                             // status NOT OK (No route from Google API)
                             //TODO display error message on phone
-                            Toast.makeText(activity, "ERROR:  No answer from google API status $status", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(activity, "ERROR:  No answer from google API - status: $status", Toast.LENGTH_SHORT).show()
                         }
                     },
                     com.android.volley.Response.ErrorListener() {

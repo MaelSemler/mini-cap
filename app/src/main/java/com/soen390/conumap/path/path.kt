@@ -57,7 +57,8 @@ object path {
 
  fun findDirections(activity: FragmentActivity){
         //TODO: Default origin is the current location
-        val originLatLng = map.getCurrentLocation()
+     //   val originLatLng = map.getCurrentLocation()
+        val originLatLng = LatLng(45.525485, -73.5779957)//HardCoded Great Italian Restaurant
         //TODO:Destination is hardcoded for now
         val destinationLatLng = LatLng(45.497044, -73.578407)//HardCoded for now
 
@@ -97,6 +98,7 @@ object path {
     }
 
     fun getAlternatives(): Int{
+        //TODO Read user choice
        return 1
     }
 
@@ -122,8 +124,8 @@ object path {
     }
 
     //Update the alternative routes
-    fun updateAlternateText(alternateDescription:String){
-        _alternateText.value += alternateDescription
+    fun updateAlternateText(totalTimeText: String, totalDistanceText: String, infoPathText: String){
+        _alternateText.value += "  "+ totalTimeText + " " + totalDistanceText + "\n" + infoPathText +"\n\n"
     }
 
 }
