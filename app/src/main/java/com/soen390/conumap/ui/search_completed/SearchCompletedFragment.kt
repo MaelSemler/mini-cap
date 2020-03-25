@@ -48,9 +48,6 @@ class SearchCompletedFragment : Fragment() {
         //This changes fragment when the "45 degree" arrow is pressed
         travel_button.setOnClickListener{
             //TODO: send the result of the search (DirectionsFragment)
-<<<<<<< HEAD
-            //routeTest(activity!!)
-=======
 //            GlobalScope.launch(Dispatchers.Main) {
 
                 findDirections(activity!!)
@@ -58,7 +55,6 @@ class SearchCompletedFragment : Fragment() {
 //            }
 
 
->>>>>>> 4fbded3ae2805e2125ad949f138b953132b8107c
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }
         restart_button.setOnClickListener{

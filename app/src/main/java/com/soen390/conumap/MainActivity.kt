@@ -14,7 +14,6 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-<<<<<<< HEAD
 
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -23,8 +22,6 @@ import com.soen390.conumap.Directions.directions
 //import com.soen390.conumap.databinding.DirectionsFragmentBinding
 import com.soen390.conumap.ui.directions.DirectionsViewModel
 import com.soen390.conumap.building.BuildingCreator.setContext
-=======
->>>>>>> 4fbded3ae2805e2125ad949f138b953132b8107c
 
 class MainActivity : AppCompatActivity() {
 

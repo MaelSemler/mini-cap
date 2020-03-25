@@ -9,11 +9,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-<<<<<<< HEAD
 import android.widget.Toast
-=======
+
 import android.widget.RadioButton
->>>>>>> 4fbded3ae2805e2125ad949f138b953132b8107c
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.maps.model.LatLng
