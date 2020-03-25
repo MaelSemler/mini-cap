@@ -71,13 +71,18 @@ object Schedule {
         val items = events.items
 
         for (event in items) {
-            var start = event.start.dateTime
-            var end = event.end.dateTime
+            var start = event.start.dateTime.toString()
+            var end = event.end.dateTime.toString()
             var location = event.location
             if (start == null) {
-                start = event.start.date
+                start = event.start.date.toString()
             }
-
+            else {
+                var startStringArray = start.split("T").toTypedArray()
+                var endStringArray = end.split("T").toTypedArray()
+                start = startStringArray[0] + " at" + startStringArray[1].substring(0, 6)
+                end = endStringArray[1].substring(0, 6)
+            }
             eventStrings.add(String.format("%s|%s|%s|%s", event.summary, start, end, location))
         }
 

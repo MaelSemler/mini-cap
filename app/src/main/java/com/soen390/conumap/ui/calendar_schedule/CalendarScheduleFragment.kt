@@ -150,7 +150,6 @@ class CalendarScheduleFragment : Fragment() {
     private inner class ScheduleRequestTask() : AsyncTask<Void, Void, MutableList<String>>() {
         private var mLastError: Exception? = null
 
-
         override fun doInBackground(vararg params: Void): MutableList<String>? {
             Log.d("QUESTIONMARK", "doInBackground")
             try {
@@ -234,7 +233,6 @@ class CalendarScheduleFragment : Fragment() {
             } else {
                 //output.add(0, "Data retrieved using the Google Calendar API:")
                 //debugText.text = (TextUtils.join("\n", output))
-
                 //scheduleBuild(output)
                 showComingUp(output)
             }
