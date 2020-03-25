@@ -47,10 +47,10 @@ object path {
     lateinit var dirObj :Directions
 
     init {
-        _directionText.value = "Directions: "
-        _totalDistanceText.value = "("
+        _directionText.value = "Direction: "
+        _totalDistanceText.value = ""
         _totalTimeText.value = ""
-        _infoPathText.value ="via "
+        _infoPathText.value ="" //removed the "via" text because Google API already writes it
         _alternateText.value = ""
     }
 
@@ -97,7 +97,7 @@ object path {
     }
 
     fun getAlternatives(): Int{
-       return 2
+       return 1
     }
 
     //Update the directionText
@@ -108,7 +108,7 @@ object path {
 
     //Update TotalDistance
     fun updateTotalDistance(distance:String){
-        _totalDistanceText.value += distance + ")"
+        _totalDistanceText.value += distance
     }
 
     //Update TotalDuration
