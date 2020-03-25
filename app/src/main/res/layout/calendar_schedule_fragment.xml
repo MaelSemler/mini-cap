@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.calendar_schedule.CalendarScheduleFragment">
+    tools:context=".ui.calendar_schedule.CalendarScheduleFragment"
+    android:id="@+id/schedule_frame">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,6 +21,7 @@
             android:layout_marginTop="50dp"
             android:text="default text"/>
         <RelativeLayout
+            android:id="@+id/test_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="30dp"
@@ -442,23 +444,16 @@
                             android:orientation="horizontal"
                             android:weightSum="7">
 
-                            <LinearLayout
+                            <RelativeLayout
                                 android:id="@+id/sunday"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
-                                <Button
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_marginTop="100dp"
-                                    android:layout_weight="3"
-                                    android:backgroundTint="@color/colorAccent"
-                                    android:text="test" />
-                            </LinearLayout>
+                            </RelativeLayout>
 
-                            <LinearLayout
+                            <RelativeLayout
                                 android:id="@+id/monday"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
@@ -467,13 +462,11 @@
 
                                 <Button
                                     android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_marginTop="100dp"
-                                    android:layout_weight="3"
+                                    android:layout_height="100dp"
                                     android:text="test" />
-                            </LinearLayout>
+                            </RelativeLayout>
 
-                            <LinearLayout
+                            <RelativeLayout
                                 android:id="@+id/tuesday"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
@@ -482,13 +475,17 @@
 
                                 <Button
                                     android:layout_width="match_parent"
-                                    android:layout_height="0dp"
+                                    android:layout_height="100dp"
                                     android:layout_marginTop="100dp"
-                                    android:layout_weight="3"
                                     android:text="test" />
-                            </LinearLayout>
+                                <Button
+                                    android:layout_width="match_parent"
+                                    android:layout_height="100dp"
+                                    android:text="test" />
 
-                            <LinearLayout
+                            </RelativeLayout>
+
+                            <RelativeLayout
                                 android:id="@+id/wednesday"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
@@ -497,13 +494,12 @@
 
                                 <Button
                                     android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_marginTop="100dp"
-                                    android:layout_weight="3"
+                                    android:layout_height="100dp"
                                     android:text="test" />
-                            </LinearLayout>
 
-                            <LinearLayout
+                            </RelativeLayout>
+
+                            <RelativeLayout
                                 android:id="@+id/thursday"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
@@ -512,13 +508,11 @@
 
                                 <Button
                                     android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_marginTop="100dp"
-                                    android:layout_weight="3"
+                                    android:layout_height="100dp"
                                     android:text="test" />
-                            </LinearLayout>
+                            </RelativeLayout>
 
-                            <LinearLayout
+                            <RelativeLayout
                                 android:id="@+id/friday"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
@@ -527,13 +521,11 @@
 
                                 <Button
                                     android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_marginTop="100dp"
-                                    android:layout_weight="3"
+                                    android:layout_height="100dp"
                                     android:text="test" />
-                            </LinearLayout>
+                            </RelativeLayout>
 
-                            <LinearLayout
+                            <RelativeLayout
                                 android:id="@+id/saturday"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
@@ -542,13 +534,10 @@
 
                                 <Button
                                     android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_marginTop="100dp"
-                                    android:layout_weight="3"
+                                    android:layout_height="100dp"
                                     android:text="test" />
-                            </LinearLayout>
+                            </RelativeLayout>
                         </LinearLayout>
-
 
                     </RelativeLayout>
                 </RelativeLayout>

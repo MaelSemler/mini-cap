@@ -6,10 +6,14 @@ import com.google.api.client.extensions.android.http.AndroidHttp
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.client.util.DateTime
+//import com.google.api.client.util.DateTime
 import com.google.api.client.util.ExponentialBackOff
 import com.google.api.services.calendar.Calendar
 import com.google.api.services.calendar.CalendarScopes
-import java.util.ArrayList
+import java.time.DayOfWeek
+import java.util.*
+import java.util.Calendar.SUNDAY
+
 
 object Schedule {
     var mCredential: GoogleAccountCredential? = null
@@ -44,18 +48,23 @@ object Schedule {
             .build()
     }
 
-    /*
-    * Gets the events and reu
-    *
-    * */
-
+    //Gets the events for the selected week
     fun getWeekEvents(weekCount: Int): ArrayList<String> {
-        val minTime = findWeek(weekCount)
+
+        val cal = java.util.Calendar.getInstance()
+        cal.set(java.util.Calendar.DAY_OF_WEEK,java.util.Calendar.SUNDAY)//Sets the date to the Sunday of this week (previous)
+        cal.set(java.util.Calendar.HOUR_OF_DAY, 0)
+        cal.set(java.util.Calendar.MINUTE, 0)
+        cal.set(java.util.Calendar.SECOND, 0)
+        cal.add(java.util.Calendar.DATE,7 * weekCount)//Gets the Sunday of the selected week
+        val minTime = DateTime(cal.time)
+        cal.add(java.util.Calendar.DATE,6)//Gets the Saturday of the selected week
+        val maxTime = DateTime(cal.time)
         val eventStrings = ArrayList<String>()
 
         val events = calendar!!.events().list("primary")
-            .setMaxResults(10)
             .setTimeMin(minTime)
+            .setTimeMax(maxTime)
             .setOrderBy("startTime")
             .setSingleEvents(true)
             .execute()
@@ -103,9 +112,6 @@ object Schedule {
         return nextEvent
     }
 
-    fun findWeek(weekCount: Int):DateTime{
-        //get the
-        return DateTime(System.currentTimeMillis())
-    }
+
 
 }

@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -58,21 +61,22 @@ class CalendarScheduleFragment : Fragment() {
         mGoogleSignInClient = GoogleSignIn.getClient(activity!!, gso)
         val nameAccount = mGoogleSignInClient.signInIntent.getStringArrayExtra((AccountManager.KEY_ACCOUNT_NAME))
 
-
         signOutButton.setOnClickListener {
             signOut()
         }
         nextWeekButton.setOnClickListener {
             weekCount++
-            ScheduleRequestTask()
+            val nextWeekTask: ScheduleRequestTask = ScheduleRequestTask()
+            nextWeekTask.execute()
         }
         previousWeekButton.setOnClickListener {
             weekCount--
-            ScheduleRequestTask()
+            val previousWeekTask: ScheduleRequestTask = ScheduleRequestTask()
+            previousWeekTask.execute()
         }
-
         return root
     }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -81,9 +85,7 @@ class CalendarScheduleFragment : Fragment() {
     }
 
     private fun signOut(){
-
         mGoogleSignInClient.signOut()
-
         activity!!.supportFragmentManager.beginTransaction().replace(R.id.calendar_container,CalendarLoginFragment.newInstance()).commit()
     }
 /*
@@ -106,10 +108,42 @@ class CalendarScheduleFragment : Fragment() {
         classNumberValue.setText(classNumber)
         timeValue.setText(time)
         locationValue.setText(location)
+
     }
 
     private fun showSchedule(events: MutableList<String>){
         //make all the Buttons
+        /*
+        when (Date){
+            Sunday -> layout =view!!.findViewById<LinearLayout>(R.id.sunday)
+            Monday -> layout =view!!.findViewById<LinearLayout>(R.id.monday)
+            Tuesday -> layout =view!!.findViewById<LinearLayout>(R.id.tuesday)
+            ...
+            makeDay(layout)
+
+        }*/
+
+        val layout =view!!.findViewById<RelativeLayout>(R.id.sunday)
+        layout.removeAllViews()
+
+        for(items in events){
+            val progButton: Button = Button(this.context)
+
+
+            val param = RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+            )
+            param.topMargin = 100//Todo: get start time, get midnight - start time, get the diference in seconds, and 1 second is 1 margin
+
+            param.isMarginRelative
+            progButton.layoutParams = param
+
+            progButton.setText(items)
+            progButton.textSize = 10f
+            progButton.height = 100
+            layout.addView(progButton)
+        }
     }
 
 
@@ -137,17 +171,14 @@ class CalendarScheduleFragment : Fragment() {
         }
 
         override fun onPostExecute(output: MutableList<String>?) {
-            Log.d("QUESTIONMARK", "onPostExecute")
-            if (output == null || output.size == 0) {
-                debugText.text = "No results returned."
-            } else {
-                showSchedule(output)
+
+                showSchedule(output!!)
                 //output.add(0, "Data retrieved using the Google Calendar API:")
                 //debugText.text = (TextUtils.join("\n", output))
 
                 //scheduleBuild(output)
                 //onCalendarRequestTaskCompleted(output)
-            }
+
         }
 
         override fun onCancelled() {
