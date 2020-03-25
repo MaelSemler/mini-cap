@@ -155,11 +155,17 @@ class CalendarScheduleFragment : Fragment() {
 
                 Log.d("QUESTIONMARK", "sorting through events and adding to eventString")
                 for (event in items) {
-                    var start = event.start.dateTime
-                    var end = event.end.dateTime
+                    var start = event.start.dateTime.toString()
+                    var end = event.end.dateTime.toString()
                     var location = event.location
                     if (start == null) {
-                        start = event.start.date
+                        start = event.start.date.toString()
+                    }
+                    else{
+                        var startStringArray = start.split("T").toTypedArray()
+                        var endStringArray = end.split("T").toTypedArray()
+                        start = startStringArray[0] + " at" + startStringArray[1].substring(0,6)
+                        end = endStringArray[1].substring(0, 6)
                     }
                     /*if (event.endTimeUnspecified){
                         end = event.end.date
@@ -208,8 +214,8 @@ class CalendarScheduleFragment : Fragment() {
             if (output == null || output.size == 0) {
                 debugText.text = "No results returned."
             } else {
-                //output.add(0, "Data retrieved using the Google Calendar API:")
-                //debugText.text = (TextUtils.join("\n", output))
+                output.add(0, "Data retrieved using the Google Calendar API:")
+                debugText.text = (TextUtils.join("\n", output))
                 this@CalendarScheduleFragment.onCalendarRequestTaskCompleted(output)
             }
         }
