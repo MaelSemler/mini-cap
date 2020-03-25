@@ -19,10 +19,10 @@ import org.json.JSONObject
 class Directions() {
     val map = Map
 
-    val _directionText = MutableLiveData<String>()
-    val _totalDistanceText = MutableLiveData<String>()
-    val _totalTimeText = MutableLiveData<String>()
-    val _infoPathText = MutableLiveData<String>()
+    private var _directionText :String
+    private var _totalDistanceText: String
+    private var _totalTimeText  :String
+    private var _infoPathText :String
 
     val directionArray : MutableList<String> = ArrayList<String>()
     val distanceArray: MutableList<String> = ArrayList<String>()
@@ -30,27 +30,34 @@ class Directions() {
 
 
     init {
-        _directionText.value = "Directions: "
-        _totalDistanceText.value = "("
-        _totalTimeText.value = ""
-        _infoPathText.value ="via "
+        _directionText ="Directions: "
+        _totalDistanceText = "("
+        _totalTimeText = ""
+        _infoPathText="via "
     }
 
-    val directionText:LiveData<String>
-        get() = _directionText
-    val totalDistanceText: LiveData<String>
-        get() = _totalDistanceText
-    val totalTimeText: LiveData<String>
-        get() = _totalTimeText
-    val infoPathText : LiveData<String>
-        get() = _infoPathText
+    fun getDirectionText():String{
+        return _directionText
+    }
+
+    fun getTotalDistanceText():String{
+        return _totalDistanceText
+    }
+
+    fun getTotalTimeText():String{
+        return _totalTimeText
+    }
+
+    fun getInfoPathText():String{
+        return _infoPathText
+    }
 
     var textConverted = ""
 
 
     //From the JSON response, extract all needed informations such as direction(instruction), the distance and the duration
 
-    @Synchronized fun extractDirections(steps: JSONArray): String {
+    fun extractDirections(steps: JSONArray): String {
         var textConverted = "Direction:" + '\n'
 
 
@@ -85,28 +92,24 @@ class Directions() {
     }
 
 
-
-
-
-
     //Update the directionText
-    @Synchronized fun updateSteps(textSteps:String){
-        _directionText.postValue(textSteps)
+   fun updateSteps(textSteps:String){
+        _directionText = (textSteps)
     }
 
     //Update TotalDistance
-    @Synchronized fun updateTotalDistance(distance:String){
-        _totalDistanceText.value += distance + ")"
+    fun updateTotalDistance(distance:String){
+        _totalDistanceText += distance + ")"
     }
 
     //Update TotalDuration
-    @Synchronized fun updateTotalDuration(duration:String){
-        _totalTimeText.value = duration
+    fun updateTotalDuration(duration:String){
+        _totalTimeText = duration
     }
 
     //Update the information of the path
-    @Synchronized fun updatePathInfo(routeDescription: String){
-        _infoPathText.value += routeDescription
+    fun updatePathInfo(routeDescription: String){
+        _infoPathText += routeDescription
     }
 
 

@@ -12,7 +12,8 @@ import androidx.navigation.fragment.NavHostFragment
 //import com.soen390.conumap.Directions.Directions.routeTest
 
 import com.soen390.conumap.R
-import com.soen390.conumap.path.Path.findShortestDirections
+import com.soen390.conumap.path.Path
+import com.soen390.conumap.path.Path.findDirections
 import com.soen390.conumap.map.Map
 import com.soen390.conumap.ui.search_bar.SearchBarViewModel
 import kotlinx.android.synthetic.main.search_completed_fragment.*
@@ -42,8 +43,9 @@ class SearchCompletedFragment : Fragment() {
 
         //This changes fragment when the "45 degree" arrow is pressed
         travel_button.setOnClickListener{
-            //TODO: send the result of the search (DirectionsFragment)
-            findShortestDirections(activity!!)
+
+                findDirections(activity!!)
+
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }
         restart_button.setOnClickListener{
