@@ -9,7 +9,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+<<<<<<< HEAD
 import android.widget.Toast
+=======
+import android.widget.RadioButton
+>>>>>>> 4fbded3ae2805e2125ad949f138b953132b8107c
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.maps.model.LatLng
@@ -33,13 +37,18 @@ class DirectionsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        val root = inflater.inflate(R.layout.directions_fragment, container, false)
+        val root = inflater.inflate(R.layout.directions_fragment, container, false)
         //TODO: get the results from SearchCompletedFragment
         //TODO: get the currentlocation
         //TODO: add the name of the result and the curent location to the start and end buttons (get them from the actual objects)
 
         val directionViewModel = ViewModelProviders.of(this)
             .get(DirectionsViewModel::class.java)
+
+        val walkButton = root.findViewById<View>(R.id.transportation_walk) as RadioButton
+        val busButton = root.findViewById<View>(R.id.transportation_bus) as RadioButton
+        val carButton = root.findViewById<View>(R.id.transportation_car) as RadioButton
+        val bikeButton= root.findViewById<View>(R.id.transportation_bike) as RadioButton
 
         //This permit to inflate the fragment
         binding = DataBindingUtil.inflate<DirectionsFragmentBinding>(inflater, R.layout.directions_fragment, container, false).apply {
@@ -129,5 +138,6 @@ class DirectionsFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
 
     }
+
 
 }
