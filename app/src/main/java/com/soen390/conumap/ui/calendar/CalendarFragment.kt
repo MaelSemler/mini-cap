@@ -46,6 +46,7 @@ class CalendarFragment : Fragment() {
             containee = CalendarScheduleFragment()
         }
         else{
+            Schedule.initCredentials(activity!!)
             containee = CalendarLoginFragment()
         }
 

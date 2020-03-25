@@ -3,7 +3,6 @@ package com.soen390.conumap.ui.calendar_schedule
 import android.os.AsyncTask
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,21 +12,12 @@ import android.widget.TextView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.GoogleApiAvailability
-import com.google.api.client.extensions.android.http.AndroidHttp
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
-import com.google.api.client.json.jackson2.JacksonFactory
-import com.google.api.client.util.DateTime
-import com.google.api.services.calendar.Calendar
 
 import com.soen390.conumap.R
 import com.soen390.conumap.calendar.Schedule
 import com.soen390.conumap.ui.calendar_login.CalendarLoginFragment
-import org.w3c.dom.Text
-import java.io.IOException
-import java.util.ArrayList
 
 class CalendarScheduleFragment : Fragment() {
 
@@ -46,6 +36,8 @@ class CalendarScheduleFragment : Fragment() {
     lateinit var classNumberValue: TextView
     lateinit var timeValue: TextView
     lateinit var locationValue: TextView
+    var weekCount = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,9 +45,8 @@ class CalendarScheduleFragment : Fragment() {
         val root = inflater.inflate(R.layout.calendar_schedule_fragment, container, false)
         val signOutButton = root.findViewById<View>(R.id.debug_sign_out)
         debugText = root.findViewById<View>(R.id.debug_text) as TextView
-        if(Schedule.mCredential!= null){
-            CalendarRequestTask(Schedule.mCredential!!).execute()
-        }
+        NextEventRequestTask().execute()
+
         classNumberValue = root.findViewById<TextView>(R.id.class_number_value)
         timeValue = root.findViewById<TextView>(R.id.time_value)
         locationValue = root.findViewById<TextView>(R.id.location_value)
@@ -66,11 +57,6 @@ class CalendarScheduleFragment : Fragment() {
 
         signOutButton.setOnClickListener {
             signOut()
-        }
-        comingUpTestButton.setOnClickListener{
-            classNumberValue.setText(classNumber)
-            timeValue.setText(time)
-            locationValue.setText(location)
         }
         return root
     }
@@ -95,99 +81,27 @@ class CalendarScheduleFragment : Fragment() {
         dialog.show()
     }*/
 
-    private fun onCalendarRequestTaskCompleted(results: MutableList<String> ){
+    private fun onCalendarRequestTaskCompleted(results: String){
         Log.d("QUESTIONMARK", "Made it to onCalendarRequestTaskCompleted!")
-        var firstEventArray = results[0].split("|").toTypedArray()
+        var firstEventArray = results.split("|").toTypedArray()
         classNumber = firstEventArray[0]
         time = firstEventArray[1] +"-" + firstEventArray[2]
         location = firstEventArray[3]
 
-        showit()
-    }
-
-    private fun  showit(){
         classNumberValue.setText(classNumber)
         timeValue.setText(time)
         locationValue.setText(location)
     }
 
-    private inner class CalendarRequestTask(credential: GoogleAccountCredential) : AsyncTask<Void, Void, MutableList<String>>() {
-        private var mService: com.google.api.services.calendar.Calendar? = null
+
+    private inner class SheduleRequestTask() : AsyncTask<Void, Void, MutableList<String>>() {
         private var mLastError: Exception? = null
 
 
-        /**
-         * Fetch a list of the next 10 events from the primary calendar.
-         * @return List of Strings describing returned events.
-         * @throws IOException
-         */
-        private// List the next 10 events from the primary calendar.
-        // All-day events don't have start times, so just use
-        // the start date.
-        val dataFromApi: MutableList<String>
-            @Throws(IOException::class)
-            get() {
-                val now = DateTime(System.currentTimeMillis())
-                val eventStrings = ArrayList<String>()
-                Log.d("QUESTIONMARK", "Obtaining events from calendar")
-                /*
-                *
-                *
-                *
-                *
-                * This is where the event collecting is done
-                * you can choose which events you wanna take under here!!!
-                *
-                *
-                *
-                *
-                *
-                *
-                * */
-                val events = mService!!.events().list("primary")
-                    .setMaxResults(10)
-                    .setTimeMin(now)
-                    .setOrderBy("startTime")
-                    .setSingleEvents(true)
-                    .execute()
-                Log.d("QUESTIONMARK", "data is obtained, now getting items from events")
-                val items = events.items
-
-                Log.d("QUESTIONMARK", "sorting through events and adding to eventString")
-                for (event in items) {
-                    var start = event.start.dateTime
-                    var end = event.end.dateTime
-                    var location = event.location
-                    if (start == null) {
-                        start = event.start.date
-                    }
-                    /*if (event.endTimeUnspecified){
-                        end = event.end.date
-                    }*/
-                    eventStrings.add(String.format("%s|%s|%s|%s", event.summary, start, end, event.location))
-                }
-                Log.d("QUESTIONMARK", "DATAFROMAPI IS done WOWOWOOW")
-                return eventStrings
-            }
-
-        init {
-            Log.d("QUESTIONMARK", "init")
-            val transport = AndroidHttp.newCompatibleTransport()
-            val jsonFactory = JacksonFactory.getDefaultInstance()
-            mService = Calendar.Builder(
-                transport, jsonFactory, credential)
-                .setApplicationName("Google Calendar API Android Quickstart")
-                .build()
-        }
-
-        /**
-         * Background task to call Google Calendar API.
-         * @param params no parameters needed for this task.
-         */
         override fun doInBackground(vararg params: Void): MutableList<String>? {
             Log.d("QUESTIONMARK", "doInBackground")
             try {
-                return dataFromApi
+                return Schedule.getWeekEvents(weekCount)
             } catch (e: Exception) {
                 mLastError = e
                 cancel(true)
@@ -210,7 +124,68 @@ class CalendarScheduleFragment : Fragment() {
             } else {
                 //output.add(0, "Data retrieved using the Google Calendar API:")
                 //debugText.text = (TextUtils.join("\n", output))
-                this@CalendarScheduleFragment.onCalendarRequestTaskCompleted(output)
+
+                //scheduleBuild(output)
+                //onCalendarRequestTaskCompleted(output)
+            }
+        }
+
+        override fun onCancelled() {
+
+            if (mLastError != null) {
+                if (mLastError is GooglePlayServicesAvailabilityIOException) {
+                    /*showGooglePlayServicesAvailabilityErrorDialog(
+                        (mLastError as GooglePlayServicesAvailabilityIOException)
+                            .connectionStatusCode)*/
+                } else if (mLastError is UserRecoverableAuthIOException) {
+                    startActivityForResult(
+                        (mLastError as UserRecoverableAuthIOException).intent,
+                        REQUEST_AUTHORIZATION)
+                } else {
+                    debugText.text = "The following error occurred:\n" + mLastError!!.message
+                }
+            } else {
+                debugText.text = "Request cancelled."
+            }
+        }
+    }
+    private inner class NextEventRequestTask() : AsyncTask<Void, Void, String>() {
+        private var mLastError: Exception? = null
+
+
+        /**
+         * Background task to call Google Calendar API.
+         * @param params no parameters needed for this task.
+         */
+        override fun doInBackground(vararg params: Void): String? {
+            Log.d("QUESTIONMARK", "doInBackground")
+            try {
+                return Schedule.getNextEvent()
+            } catch (e: Exception) {
+                mLastError = e
+                cancel(true)
+                return null
+            }
+
+        }
+
+
+        override fun onPreExecute() {
+            Log.d("QUESTIONMARK", "onPreExecute")
+            debugText.text = "loading...tool long? sign out"
+
+        }
+
+        override fun onPostExecute(output: String?) {
+            Log.d("QUESTIONMARK", "onPostExecute")
+            if (output == null || output == null) {
+                debugText.text = "No results returned."
+            } else {
+                //output.add(0, "Data retrieved using the Google Calendar API:")
+                //debugText.text = (TextUtils.join("\n", output))
+
+                //scheduleBuild(output)
+                onCalendarRequestTaskCompleted(output)
             }
         }
 
