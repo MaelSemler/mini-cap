@@ -39,6 +39,8 @@ class CalendarLoginFragment : Fragment() {
     private lateinit var viewModel: CalendarLoginViewModel
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     val RC_SIGN_IN: Int = 1
+    val PREF_ACCOUNT_NAME = "accountName"//TODO: figure out if this is needed
+    var mCredential: GoogleAccountCredential? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -50,7 +52,9 @@ class CalendarLoginFragment : Fragment() {
         mGoogleSignInClient = GoogleSignIn.getClient(activity!!, gso)
 
         signInButton.setOnClickListener {
+            initCredentials()
             signIn()
+
         }
         return root
     }
@@ -65,7 +69,16 @@ class CalendarLoginFragment : Fragment() {
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
+    private fun initCredentials() {
+        mCredential = GoogleAccountCredential.usingOAuth2(
+            activity!!.applicationContext,
+            arrayListOf(CalendarScopes.CALENDAR))
+            .setBackOff(ExponentialBackOff())
 
+    }
+    fun change(){
+        activity!!.supportFragmentManager.beginTransaction().replace(R.id.calendar_container,CalendarScheduleFragment.newInstance()).commit()
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -73,21 +86,31 @@ class CalendarLoginFragment : Fragment() {
             val task =
                 GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
-            activity!!.supportFragmentManager.beginTransaction().replace(R.id.calendar_container,CalendarScheduleFragment.newInstance()).commit()
+            Schedule.initSchedule(mCredential!!)
+            change()
 
         }
     }
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
-            val account = completedTask.getResult(ApiException::class.java)
-            Schedule.setUpCredentials(activity!!,account!!.email!!)
-            Schedule.setUpCalendar()
+            val account =
+                completedTask.getResult(ApiException::class.java)
+            initCredentials(account!!.email!!)
         } catch (e: ApiException) {
             //Todo: handle it
         }
     }
 
-
+    private fun initCredentials(name: String){
+        val accountName = name
+        if (accountName != null) {
+            val settings = activity!!.getPreferences(Context.MODE_PRIVATE)
+            val editor = settings.edit()
+            editor.putString(PREF_ACCOUNT_NAME, accountName)
+            editor.apply()
+            mCredential!!.selectedAccountName = accountName
+        }
+    }
 
 
 
