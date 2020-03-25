@@ -17,6 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
             android:text="default text"/>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -24,12 +25,12 @@
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="20dp">
 
-            <Button
+            <TextView
                 android:id="@+id/coming_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="50dp"
+                android:layout_marginBottom="50dp"
                 android:text="Coming up"
                 android:textColor="@android:color/black"
                 android:textSize="30dp" />
@@ -137,6 +138,7 @@
                     android:textSize="18dp" />
 
                 <Button
+                    android:id="@+id/previous_week"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignBottom="@+id/week_randge"
@@ -146,6 +148,7 @@
                     android:background="@drawable/previous_week_arrow" />
 
                 <Button
+                    android:id="@+id/next_week"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignBottom="@+id/week_randge"
