@@ -5,14 +5,14 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.soen390.conumap.ui.directions.DirectionsViewModel" />
+            type="com.soen390.conumap.ui.directions.AlternateViewModel" />
 
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.directions.DirectionsFragment">
+        tools:context=".ui.directions.AlernateFragment">
 
         <RelativeLayout
             android:id="@+id/Directions"
@@ -206,7 +206,7 @@
                             android:id="@+id/DirectionsTextBox"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="@{viewmodel.directionText}"
+                            android:text="@{viewmodel.alternateText}"
                             android:layout_below="@+id/directions_button"
                             android:layout_marginTop="20dp"
                             android:layout_marginLeft="30sp"

@@ -27,6 +27,7 @@ object path {
     val _totalDistanceText = MutableLiveData<String>()
     val _totalTimeText = MutableLiveData<String>()
     val _infoPathText = MutableLiveData<String>()
+    val _alternateText = MutableLiveData<String>()
 
     var directionsArray : ArrayList<Directions> = arrayListOf()
 
@@ -38,6 +39,8 @@ object path {
         get() = _totalTimeText
     val infoPathText : LiveData<String>
         get() = _infoPathText
+    val alternateText:LiveData<String>
+        get() = _alternateText
 
     val map = Map
 
@@ -48,6 +51,7 @@ object path {
         _totalDistanceText.value = "("
         _totalTimeText.value = ""
         _infoPathText.value ="via "
+        _alternateText.value = ""
     }
 
 
@@ -92,9 +96,8 @@ object path {
         //TODO: To be implemented
     }
 
-    fun getAlternatives()
-    {
-        //TODO: To be implemented
+    fun getAlternatives(): Int{
+       return 2
     }
 
     //Update the directionText
@@ -118,5 +121,9 @@ object path {
         _infoPathText.value += routeDescription
     }
 
+    //Update the alternative routes
+    fun updateAlternateText(alternateDescription:String){
+        _alternateText.value += alternateDescription
+    }
 
 }

@@ -15,8 +15,10 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.PolyUtil
 import com.soen390.conumap.R
 import com.soen390.conumap.map.Map
+import com.soen390.conumap.path.path
 import kotlinx.coroutines.*
 import kotlinx.coroutines.internal.SynchronizedObject
+import org.json.JSONArray
 import org.json.JSONObject
 
 
@@ -51,8 +53,6 @@ object DirectionService {
 
             val urlDirections = getGoogleMapRequestURL(activity, originLatLng, destinationLatLng, transportationMode, alternativesOn)
 
-
-
             //Making the Request
             launch(Dispatchers.IO) {
                 val directionsRequest = object : StringRequest(
@@ -60,84 +60,83 @@ object DirectionService {
                     urlDirections,
                     com.android.volley.Response.Listener<String> { response ->
                         val jsonResponse = JSONObject(response)
-                        // This part to understand it look carefully at the JSON response sent by the API
-                        val routes = jsonResponse.getJSONArray("routes")
 
+                        val status = jsonResponse.getString("status")
 
+                        if (status == "OK")
+                        {
+                            // This part to understand it look carefully at the JSON response sent by the API
+                            val routes = jsonResponse.getJSONArray("routes")
 
-                        val legs = routes.getJSONObject(0).getJSONArray("legs")
-                        val steps = legs.getJSONObject(0).getJSONArray("steps")
-
-                        for(i in 0  until routes.length()){
-                            var dirObj : Directions = Directions()
-                            val legs = routes.getJSONObject(i).getJSONArray("legs")
+                            val legs = routes.getJSONObject(0).getJSONArray("legs")
                             val steps = legs.getJSONObject(0).getJSONArray("steps")
 
-                            //Retrieval total duration of the whole trip and total distance of the whole trip
-                            val totalDistance =legs.getJSONObject(0).getJSONObject("distance").getString("text")
-                            val totalDuration= legs.getJSONObject(0).getJSONObject("duration").getString("text")
-                            val pathInfo = routes.getJSONObject(0).getString("summary")
+                            for(i in 0  until routes.length()){
+                                var dirObj : Directions = Directions()
+                                val legs = routes.getJSONObject(i).getJSONArray("legs")
+                                val steps = legs.getJSONObject(0).getJSONArray("steps")
 
-                            //ExtractDirections and save it into the directionText blocks
-                            val extractedCleanedDirections = dirObj.extractDirections(steps)
+                                //Retrieval total duration of the whole trip and total distance of the whole trip
+                                val totalDistance =legs.getJSONObject(0).getJSONObject("distance").getString("text")
+                                val totalDuration= legs.getJSONObject(0).getJSONObject("duration").getString("text")
+                                val pathInfo = routes.getJSONObject(0).getString("summary")
 
-                            //Instantiate a directions Object (which represente a route)
-                            dirObj.updateSteps(extractedCleanedDirections)
-                            dirObj.updateTotalDistance(totalDistance)
-                            dirObj.updateTotalDuration(totalDuration)
-                            dirObj.updatePathInfo(pathInfo)
+                                //ExtractDirections and save it into the directionText blocks
+                                val extractedCleanedDirections = dirObj.extractDirections(steps)
 
-                            //List of Path is an ArrayList containing every alternative route
-                            listOfPath.add(dirObj)
-                            ///////////////////////////////////////////////////
+                                //Instantiate a directions Object (which represents a route)
+                                dirObj.updateSteps(extractedCleanedDirections)
+                                dirObj.updateTotalDistance(totalDistance)
+                                dirObj.updateTotalDuration(totalDuration)
+                                dirObj.updatePathInfo(pathInfo)
 
-                        }
+                                //List of Path is an ArrayList containing every alternative route
+                                listOfPath.add(dirObj)
+                                ///////////////////////////////////////////////////
 
+                            }
 
-                        //Update the display on the main thread
-                        //TODO: THIS IS WHERE YOU EITHER CALL A FUNCTION THAT WILL LOGICALLY CHOOSE WHICH PATH TO DISPLAY ON THE SCREEN
-                        activity.runOnUiThread {
-                            com.soen390.conumap.path.path.updatePathInfo(listOfPath[2].getInfoPathText())
-                            com.soen390.conumap.path.path.updateTotalDuration(listOfPath[2].getTotalTimeText())
-                            com.soen390.conumap.path.path.updateTotalDistance(listOfPath[2].getTotalDistanceText())
-                            com.soen390.conumap.path.path.updateSteps(listOfPath[2].getDirectionText())
-                        }
+                            //Update the display on the main thread
+                            val n = com.soen390.conumap.path.path.getAlternatives()
 
-                        //This Draw on the Map the tracing of "Steps"
-                        //TODO: This needs to be refactor into another function and process what "path" to display/draw on the map
-                        for (i in 0 until steps.length()) {
-                            val points =
-                                steps.getJSONObject(i).getJSONObject("polyline").getString("points")
-                            path.add(PolyUtil.decode(points))
-                        }
-                        for (i in 0 until path.size) {
-                            map.getMapInstance().addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
+                            activity.runOnUiThread {
+                                com.soen390.conumap.path.path.updatePathInfo(listOfPath[n].getInfoPathText())
+                                com.soen390.conumap.path.path.updateTotalDuration(listOfPath[n].getTotalTimeText())
+                                com.soen390.conumap.path.path.updateTotalDistance(listOfPath[n].getTotalDistanceText())
+                                com.soen390.conumap.path.path.updateSteps(listOfPath[n].getDirectionText())
+                            }
+
+                            //This Draw on the Map the tracing of "Steps"
+                            //TODO: This needs to be refactor into another function and process what "path" to display/draw on the map
+                            for (i in 0 until steps.length()) {
+                                val points =
+                                    steps.getJSONObject(i).getJSONObject("polyline").getString("points")
+                                path.add(PolyUtil.decode(points))
+                            }
+                            for (i in 0 until path.size) {
+                                map.getMapInstance().addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
+                            }
+                        } else {
+                            // status NOT OK (No route from Google API)
+                            //TODO display error message on phone
+                            Toast.makeText(activity, "ERROR:  No answer from google API status $status", Toast.LENGTH_SHORT).show()
                         }
                     },
                     com.android.volley.Response.ErrorListener() {
                         @Override
                         fun onErrorResponse(error:VolleyError) {
 
-                            Toast.makeText(activity,  (error.toString()), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity,  (error.toString()), Toast.LENGTH_SHORT).show()
                         }
                     }) {}
                 val requestQueue = Volley.newRequestQueue(activity)
                 requestQueue.add(directionsRequest)
-
             }
 
             //Move the camera and zoom into the destination
             activity.runOnUiThread {
                 map.moveCamera(destinationLatLng, 18f)
             }
-
         }
     }
-
-
-
-
-
-
-
 }

@@ -26,7 +26,7 @@ class DirectionsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.directions_fragment, container, false)
+        // val root = inflater.inflate(R.layout.directions_fragment, container, false)
         //TODO: get the results from SearchCompletedFragment
         //TODO: get the currentlocation
         //TODO: add the name of the result and the curent location to the start and end buttons (get them from the actual objects)
@@ -34,11 +34,12 @@ class DirectionsFragment : Fragment() {
         val directionViewModel = ViewModelProviders.of(this)
             .get(DirectionsViewModel::class.java)
 
+/*
         val walkButton = root.findViewById<View>(R.id.transportation_walk) as RadioButton
         val busButton = root.findViewById<View>(R.id.transportation_bus) as RadioButton
         val carButton = root.findViewById<View>(R.id.transportation_car) as RadioButton
         val bikeButton= root.findViewById<View>(R.id.transportation_bike) as RadioButton
-
+*/
         //This permit to inflate the fragment
         binding = DataBindingUtil.inflate<DirectionsFragmentBinding>(inflater, R.layout.directions_fragment, container, false).apply {
             this.setLifecycleOwner(activity)
