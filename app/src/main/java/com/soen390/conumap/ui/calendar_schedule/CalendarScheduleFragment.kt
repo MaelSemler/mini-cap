@@ -1,5 +1,6 @@
 package com.soen390.conumap.ui.calendar_schedule
 
+import android.accounts.AccountManager
 import android.os.AsyncTask
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -44,20 +45,32 @@ class CalendarScheduleFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.calendar_schedule_fragment, container, false)
         val signOutButton = root.findViewById<View>(R.id.debug_sign_out)
+        val nextWeekButton = root.findViewById<View>(R.id.next_week)
+        val previousWeekButton = root.findViewById<View>(R.id.previous_week)
         debugText = root.findViewById<View>(R.id.debug_text) as TextView
-        NextEventRequestTask().execute()
-
+        NextEventRequestTask().execute()//makes the Coming Up UI
+        ScheduleRequestTask().execute()//makes the Schedule UI
         classNumberValue = root.findViewById<TextView>(R.id.class_number_value)
         timeValue = root.findViewById<TextView>(R.id.time_value)
         locationValue = root.findViewById<TextView>(R.id.location_value)
-        val comingUpTestButton = root.findViewById<View>(R.id.coming_up)
         val gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
         mGoogleSignInClient = GoogleSignIn.getClient(activity!!, gso)
+        val nameAccount = mGoogleSignInClient.signInIntent.getStringArrayExtra((AccountManager.KEY_ACCOUNT_NAME))
+
 
         signOutButton.setOnClickListener {
             signOut()
         }
+        nextWeekButton.setOnClickListener {
+            weekCount++
+            ScheduleRequestTask()
+        }
+        previousWeekButton.setOnClickListener {
+            weekCount--
+            ScheduleRequestTask()
+        }
+
         return root
     }
 
@@ -68,7 +81,9 @@ class CalendarScheduleFragment : Fragment() {
     }
 
     private fun signOut(){
+
         mGoogleSignInClient.signOut()
+
         activity!!.supportFragmentManager.beginTransaction().replace(R.id.calendar_container,CalendarLoginFragment.newInstance()).commit()
     }
 /*
@@ -81,7 +96,7 @@ class CalendarScheduleFragment : Fragment() {
         dialog.show()
     }*/
 
-    private fun onCalendarRequestTaskCompleted(results: String){
+    private fun showComingUp(results: String){
         Log.d("QUESTIONMARK", "Made it to onCalendarRequestTaskCompleted!")
         var firstEventArray = results.split("|").toTypedArray()
         classNumber = firstEventArray[0]
@@ -93,8 +108,12 @@ class CalendarScheduleFragment : Fragment() {
         locationValue.setText(location)
     }
 
+    private fun showSchedule(events: MutableList<String>){
+        //make all the Buttons
+    }
 
-    private inner class SheduleRequestTask() : AsyncTask<Void, Void, MutableList<String>>() {
+
+    private inner class ScheduleRequestTask() : AsyncTask<Void, Void, MutableList<String>>() {
         private var mLastError: Exception? = null
 
 
@@ -122,6 +141,7 @@ class CalendarScheduleFragment : Fragment() {
             if (output == null || output.size == 0) {
                 debugText.text = "No results returned."
             } else {
+                showSchedule(output)
                 //output.add(0, "Data retrieved using the Google Calendar API:")
                 //debugText.text = (TextUtils.join("\n", output))
 
@@ -185,7 +205,7 @@ class CalendarScheduleFragment : Fragment() {
                 //debugText.text = (TextUtils.join("\n", output))
 
                 //scheduleBuild(output)
-                onCalendarRequestTaskCompleted(output)
+                showComingUp(output)
             }
         }
 

@@ -138,6 +138,7 @@
                     android:textSize="18dp" />
 
                 <Button
+                    android:id="@+id/previous_week"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignBottom="@+id/week_randge"
@@ -147,6 +148,7 @@
                     android:background="@drawable/previous_week_arrow" />
 
                 <Button
+                    android:id="@+id/next_week"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignBottom="@+id/week_randge"

@@ -40,13 +40,15 @@ class CalendarFragment : Fragment() {
     }
 
     fun init() {
-        //val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(activity)
-
-        if (Schedule.mCredential != null) {
+        val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(activity)
+        Schedule.initCredentials(activity!!)
+        if (account != null) {
+            val mail = account.email
+            Schedule.setUpCredentials(activity!!, account.email!!)
+            Schedule.setUpCalendar()
             containee = CalendarScheduleFragment()
         }
         else{
-            Schedule.initCredentials(activity!!)
             containee = CalendarLoginFragment()
         }
 
