@@ -138,6 +138,7 @@ class BuildingTests {
     }
 
 
+    //Verify if the BUildingCreator singleton works
     @Test
     fun buildingCreatorTests() {
         BuildingCreator.setContext(context)

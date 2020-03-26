@@ -11,13 +11,22 @@ import org.junit.Assert.*
 
 class PermissionsTests {
 
+
+    //var permissionsArray: Array<String> = mock()
+    //var grantResultArray: IntArray = mock()
+
     @Test
     fun checkPermission() {
-        assertEquals(Permission.checkPermission(FragmentActivity()), true)
+        assertEquals(Permission.checkLocationPermission(FragmentActivity()), true)
     }
 
     @Test
     fun requestPermission() {
-        Permission.requestPermission(FragmentActivity(), 1)
+        Permission.requestLocationPermission(FragmentActivity(), 1)
+    }
+
+    @Test
+    fun handleResultsTest() {
+        //Permission.handlePermissionResults(1, permissionsArray, grantResultArray, FragmentActivity())
     }
 }
