@@ -177,19 +177,22 @@
                             android:layout_marginLeft="30sp"
                             android:layout_below="@+id/info_text"
                             android:backgroundTint="@color/buttonColor"
+                            android:background="@drawable/button_bg_rounded_corners"
                             android:text="Direction" />
 
                         <Button
                             android:id="@+id/alt_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:layout_toRightOf="@id/directions_button"
                             android:layout_below="@+id/info_text"
                             android:layout_marginStart="20dp"
-                            android:textColor="@color/buttonColor"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="19dp"
+                            android:layout_toRightOf="@id/directions_button"
+                            android:background="@drawable/button_bg_rounded_corners"
                             android:backgroundTint="@color/colorAccent"
-                            android:text="ALT" />
+                            android:text="ALT"
+                            android:textColor="@color/buttonColor" />
 
                         <ImageButton
                             android:id="@+id/imageButton"

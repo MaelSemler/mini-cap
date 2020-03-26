@@ -177,6 +177,7 @@
                             android:layout_marginLeft="30sp"
                             android:layout_below="@+id/info_text"
                             android:textColor="@color/buttonColor"
+                            android:background="@drawable/button_bg_rounded_corners"
                             android:backgroundTint="@color/colorAccent"
                             android:text="Direction" />
 
@@ -187,6 +188,7 @@
                             android:layout_marginTop="20dp"
                             android:layout_toRightOf="@id/directions_button"
                             android:layout_below="@+id/info_text"
+                            android:background="@drawable/button_bg_rounded_corners"
                             android:layout_marginStart="20dp"
                             android:backgroundTint="@color/buttonColor"
                             android:text="ALT" />
