@@ -82,6 +82,7 @@
                 android:textSize="15dp"/>
 
             <Button
+                android:id="@+id/send_event_loocation"
                 android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/coming_up"

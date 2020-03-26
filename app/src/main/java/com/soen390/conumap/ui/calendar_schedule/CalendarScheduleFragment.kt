@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -50,6 +49,7 @@ class CalendarScheduleFragment : Fragment() {
         val signOutButton = root.findViewById<View>(R.id.debug_sign_out)
         val nextWeekButton = root.findViewById<View>(R.id.next_week)
         val previousWeekButton = root.findViewById<View>(R.id.previous_week)
+        val sendLocationButton = root.findViewById<View>(R.id.send_event_loocation)
         debugText = root.findViewById<View>(R.id.debug_text) as TextView
         NextEventRequestTask().execute()//makes the Coming Up UI
         ScheduleRequestTask().execute()//makes the Schedule UI
@@ -73,6 +73,9 @@ class CalendarScheduleFragment : Fragment() {
             weekCount--
             val previousWeekTask: ScheduleRequestTask = ScheduleRequestTask()
             previousWeekTask.execute()
+        }
+        sendLocationButton.setOnClickListener{
+            //TODO: Send location to the Directions Fragment
         }
         return root
     }
