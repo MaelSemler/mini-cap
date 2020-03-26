@@ -98,13 +98,19 @@ object DirectionService {
                             }
 
                             //Update the display on the main thread
-                            val n = com.soen390.conumap.path.path.getAlternatives()
+                            var n = com.soen390.conumap.path.path.getAlternatives()
+                            if ( n >= listOfPath.size){
+                                n = 0
+                                com.soen390.conumap.path.path.setAlternativeRoute(0)
+                                Log.e("DirectionService", "Alternate Route Id > List of recorded routes")
+                            }
 
                             activity.runOnUiThread {
                                 com.soen390.conumap.path.path.updatePathInfo(listOfPath[n].getInfoPathText())
                                 com.soen390.conumap.path.path.updateTotalDuration(listOfPath[n].getTotalTimeText())
                                 com.soen390.conumap.path.path.updateTotalDistance(listOfPath[n].getTotalDistanceText())
                                 com.soen390.conumap.path.path.updateSteps(listOfPath[n].getDirectionText())
+                                com.soen390.conumap.path.path.setAlternativeRouteMaxId(listOfPath.size)
 
                                 for (i in 0 until listOfPath.size){
                                     Log.d("DirectionServices", "Building Alternate list $i " + listOfPath[i].getInfoPathText())
