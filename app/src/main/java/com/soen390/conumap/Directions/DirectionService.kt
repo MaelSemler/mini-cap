@@ -48,11 +48,12 @@ object DirectionService {
 
             //Path is an arrayList that store every "steps"/path =>Will be used to draw the path
             val path: MutableList<List<LatLng>> = ArrayList()
+            listOfPath.clear()     // reset to make sure we start we a clean status
 
             //Retrieve the correct URL to call the API
 
             val urlDirections = getGoogleMapRequestURL(activity, originLatLng, destinationLatLng, transportationMode, alternativesOn)
-
+            Log.d("DirectionService","MAP API URL: $urlDirections" )
             //Making the Request
             launch(Dispatchers.IO) {
                 val directionsRequest = object : StringRequest(
