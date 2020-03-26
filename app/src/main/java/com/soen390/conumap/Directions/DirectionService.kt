@@ -48,7 +48,7 @@ object DirectionService {
 
             //Path is an arrayList that store every "steps"/path =>Will be used to draw the path
             val path: MutableList<List<LatLng>> = ArrayList()
-            listOfPath.clear()     // reset to make sure we start we a clean status
+            listOfPath.clear()     // reset to make sure we start with a clean status
 
             //Retrieve the correct URL to call the API
 
