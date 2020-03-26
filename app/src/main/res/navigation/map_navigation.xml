@@ -47,11 +47,11 @@
             android:id="@+id/action_directionsFragment_to_directionsSearchFragment"
             app:destination="@id/directionsSearchFragment" />
         <action
-            android:id="@+id/action_directionsFragment_to_searchCompletedFragment"
-            app:destination="@id/searchCompletedFragment" />
-        <action
             android:id="@+id/action_directionsFragment_to_alternateFragment"
             app:destination="@id/alternateFragment" />
+        <action
+            android:id="@+id/action_directionsFragment_to_searchBarFragment"
+            app:destination="@id/searchBarFragment" />
     </fragment>
     <fragment
         android:id="@+id/directionsSearchFragment"
@@ -69,5 +69,8 @@
         <action
             android:id="@+id/action_alternateFragment_to_directionsFragment"
             app:destination="@id/directionsFragment" />
+        <action
+            android:id="@+id/action_alternateFragment_to_searchBarFragment"
+            app:destination="@id/searchBarFragment" />
     </fragment>
 </navigation>

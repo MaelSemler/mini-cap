@@ -19,7 +19,7 @@ object path {
     //origin
 //    val destination= Location()
     private var distance=0.0
-    private var transportationMethod="Car"
+    //private var transportationMethod="Car"
     //time
     //accessibilityFriendly
 
@@ -28,6 +28,7 @@ object path {
     val _totalTimeText = MutableLiveData<String>()
     val _infoPathText = MutableLiveData<String>()
     val _alternateText = MutableLiveData<String>()
+    val _transportationMode = MutableLiveData<String>()
 
     var directionsArray : ArrayList<Directions> = arrayListOf()
 
@@ -41,6 +42,8 @@ object path {
         get() = _infoPathText
     val alternateText:LiveData<String>
         get() = _alternateText
+    val transportationMode:LiveData<String>
+        get() = _transportationMode
 
     val map = Map
 
@@ -52,6 +55,7 @@ object path {
         _totalTimeText.value = ""
         _infoPathText.value ="" //removed the "via" text because Google API already writes it
         _alternateText.value = ""
+        _transportationMode.value = "driving"
     }
 
 
@@ -64,8 +68,7 @@ object path {
 
         //TODO: Set Transportation mode
         //This can be walking, driving, bicycling, transit
-        //val transportationMode = getTransportationMode()
-        val transportationMode = "driving"//TODO: Hardcoded for now look at the line just before we should be able to retrieve it this way
+        val transportationMode = getTransportationMode()
 
         //TODO: Set Alternative On/Off
         //val alternativesOn = getAlternatives()
@@ -90,6 +93,19 @@ object path {
 
         }
 
+    }
+
+fun resetDirections(){
+    _directionText.value = "Direction: "
+    _totalDistanceText.value = ""
+    _totalTimeText.value = ""
+    _infoPathText.value =""
+    _alternateText.value = ""
+    _transportationMode.value = ""
+}
+
+    fun getTransportationMode(): String {
+       return _transportationMode.value.toString()
     }
 
     fun switchOriginAndDestination()
@@ -127,5 +143,26 @@ object path {
     fun updateAlternateText(totalTimeText: String, totalDistanceText: String, infoPathText: String){
         _alternateText.value += "  "+ totalTimeText + " " + totalDistanceText + "\n" + infoPathText +"\n\n"
     }
+
+    fun setTransportationMode(mode:String){
+        _transportationMode.value = mode
+    }
+
+    fun setTransportationDriving(){
+        setTransportationMode("driving")
+    }
+
+    fun setTransportationCycling(){
+        setTransportationMode("bicycling")
+    }
+
+    fun setTransportationWalking(){
+        setTransportationMode("walking")
+    }
+
+    fun setTransportationTransit(){
+        setTransportationMode("transit")
+    }
+
 
 }
