@@ -6,13 +6,13 @@ import com.google.api.client.extensions.android.http.AndroidHttp
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.client.util.DateTime
-
 import com.google.api.client.util.ExponentialBackOff
 import com.google.api.services.calendar.Calendar
 import com.google.api.services.calendar.CalendarScopes
 import com.google.api.services.calendar.model.Event
 import com.google.api.services.calendar.model.Events
 import java.time.DayOfWeek
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.SUNDAY
 
@@ -107,15 +107,21 @@ object Schedule {
         val items = events.items
         val event =items.first()
 
-            var start = event.start.dateTime
-            var end = event.end.dateTime
+            var start = event.start.dateTime.toString()
+            var end = event.end.dateTime.toString()
             var location = event.location
             if (start == null) {
-                start = event.start.date
+                start = event.start.toString()
             }
-            /*if (event.endTimeUnspecified){
-                end = event.end.date
-            }*/
+            else {
+                // Converts dates to local time then formats them so that only the HH:mm is left.
+                val eventDateTimeFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US);
+                val eventTimeFormat = SimpleDateFormat("HH:mm", Locale.US)
+                val tempStart = eventDateTimeFormatter.parse(start)
+                val tempEnd = eventDateTimeFormatter.parse(end)
+                start = eventTimeFormat.format(tempStart)
+                end = eventTimeFormat.format(tempEnd)
+            }
         nextEvent = String.format("%s|%s|%s|%s", event.summary, start, end, location)
         
         return nextEvent

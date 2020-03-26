@@ -208,7 +208,14 @@ class CalendarScheduleFragment : Fragment() {
         Log.d("QUESTIONMARK", "Made it to onCalendarRequestTaskCompleted!")
         var firstEventArray = results.split("|").toTypedArray()
         classNumber = firstEventArray[0]
-        time = firstEventArray[1] +"-" + firstEventArray[2]
+        if (firstEventArray[2] != null){
+            // Format for time for events with a start and end time.
+            time = firstEventArray[1] +"-" + firstEventArray[2]
+        }
+        else{
+            // Format for time for all day events.
+            time = firstEventArray[1]
+        }
         location = firstEventArray[3]
 
         classNumberValue.setText(classNumber)
