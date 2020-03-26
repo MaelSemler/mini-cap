@@ -61,15 +61,14 @@ class CalendarScheduleFragment : Fragment() {
     private lateinit var fridayEventLayout: RelativeLayout
     private lateinit var saturdayEventLayout: RelativeLayout
 
-    val REQUEST_GOOGLE_PLAY_SERVICES = 1002
-    val REQUEST_AUTHORIZATION = 1001
-    var classNumber:String = ""
-    var time: String = ""
-    var location: String = ""
-    lateinit var classNumberValue: TextView
-    lateinit var timeValue: TextView
-    lateinit var locationValue: TextView
-    var weekCount = 0
+    private val REQUEST_AUTHORIZATION = 1001
+    private var classNumber:String = ""
+    private var time: String = ""
+    private var location: String = ""
+    private lateinit var classNumberValue: TextView
+    private lateinit var timeValue: TextView
+    private lateinit var locationValue: TextView
+    private var weekCount = 0//Keeps track of which week to show on the schedule (0: this week, 1: next week, -1: last week)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -100,11 +99,13 @@ class CalendarScheduleFragment : Fragment() {
         fridayEventLayout = root.findViewById<RelativeLayout>(R.id.friday)
         saturdayEventLayout = root.findViewById<RelativeLayout>(R.id.saturday)
 
-        NextEventRequestTask().execute()//makes the Coming Up UI
-        ScheduleRequestTask().execute()//makes the Schedule UI
         classNumberValue = root.findViewById<TextView>(R.id.class_number_value)
         timeValue = root.findViewById<TextView>(R.id.time_value)
         locationValue = root.findViewById<TextView>(R.id.location_value)
+
+        NextEventRequestTask().execute()//makes the Coming Up UI
+        ScheduleRequestTask().execute()//makes the Schedule UI
+
         val gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
         mGoogleSignInClient = GoogleSignIn.getClient(activity!!, gso)
@@ -125,6 +126,8 @@ class CalendarScheduleFragment : Fragment() {
             previousWeekTask.execute()
 
         }
+
+        //Do in sprint 4
         //maybe set it after the data is collected
         goNowButton.setOnClickListener{
             //Close the Calendar
@@ -145,10 +148,10 @@ class CalendarScheduleFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(CalendarScheduleViewModel::class.java)
-        // TODO: Use the ViewModel
+
     }
 
-    private fun upDateCalendarUI(){
+    private fun upDateCalendarUI(){//TODO: maybe look into LocalDate Class to see if it makes stuff simple
         //Change to LocalDate tomorrow = LocalDate.now().plusDays(1);
         val cal = java.util.Calendar.getInstance()
         cal.set(java.util.Calendar.DAY_OF_WEEK,java.util.Calendar.SUNDAY)//Sets the date to the Sunday of this week (previous)
@@ -159,6 +162,7 @@ class CalendarScheduleFragment : Fragment() {
         startDate = DateTime(cal.time)//the week starts on Sunday at midnight
         val startMonth =  cal.getDisplayName(java.util.Calendar.MONTH,java.util.Calendar.LONG, Locale.getDefault())
         val startYear = cal.get(java.util.Calendar.YEAR)
+
         sundayDate.text = cal.get(java.util.Calendar.DAY_OF_MONTH).toString()
         cal.add(java.util.Calendar.DATE,1)
         mondayDate.text = cal.get(java.util.Calendar.DAY_OF_MONTH).toString()
@@ -175,6 +179,7 @@ class CalendarScheduleFragment : Fragment() {
         cal.add(java.util.Calendar.DATE,1)//Gets the Sunday of the selected week
 
         endDate = DateTime(cal.time)//the week ends on the next Sunday at midnight
+        cal.add(java.util.Calendar.SECOND,-1)//makes the end dates Saturday at 23:59:59, useful for the endMonth and year
         val endMonth = cal.getDisplayName(java.util.Calendar.MONTH,java.util.Calendar.LONG, Locale.getDefault())
         val endYear = cal.get(java.util.Calendar.YEAR)
 
@@ -204,7 +209,7 @@ class CalendarScheduleFragment : Fragment() {
         dialog.show()
     }*/
 
-    private fun showComingUp(results: String){
+    private fun showComingUp(results: String){//Todo: make it take in an event
         Log.d("QUESTIONMARK", "Made it to onCalendarRequestTaskCompleted!")
         var firstEventArray = results.split("|").toTypedArray()
         classNumber = firstEventArray[0]
@@ -239,19 +244,17 @@ class CalendarScheduleFragment : Fragment() {
                 Calendar.THURSDAY -> thursdayEventLayout
                 Calendar.FRIDAY -> fridayEventLayout
                 Calendar.SATURDAY -> saturdayEventLayout
-                else -> RelativeLayout(null)//Todo: CHANGE THIS
+                else -> RelativeLayout(null)//Todo: figure ut if this else if necessary since we already go through all the possible weekday options
             }
 
             val eventButton: Button = Button(context!!)
-            val dp = context!!.resources.displayMetrics.density;
+            val dp = context!!.resources.displayMetrics.density;//in the schedule 1dp = to one minute
             val param = RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
-                durationToHeight(date, event).toInt()
+                durationToHeight(date, event).toInt()//Todo: better way?
             )
 
-            param.topMargin = timeToMargin(date).toInt()
-
-            eventButton.minHeight = (30*dp).toInt()
+            param.topMargin = timeToMargin(date).toInt()//Todo: better way?
             eventButton.text = event.summary//Todo: have the proper text shown here, like in the mockups
             eventButton.textSize = 10f
             eventButton.layoutParams = param
@@ -325,7 +328,7 @@ class CalendarScheduleFragment : Fragment() {
 
         }
 
-        override fun onCancelled() {
+        override fun onCancelled() {//Todo: proprely handle this or delete it
 
             if (mLastError != null) {
                 if (mLastError is GooglePlayServicesAvailabilityIOException) {
@@ -344,7 +347,7 @@ class CalendarScheduleFragment : Fragment() {
             }
         }
     }
-    private inner class NextEventRequestTask() : AsyncTask<Void, Void, String>() {
+    private inner class NextEventRequestTask() : AsyncTask<Void, Void, String>() {//Todo: make it return an event
         private var mLastError: Exception? = null
 
 
@@ -383,7 +386,7 @@ class CalendarScheduleFragment : Fragment() {
             }
         }
 
-        override fun onCancelled() {
+        override fun onCancelled() {//Todo: proprely handle this or delete it
 
             if (mLastError != null) {
                 if (mLastError is GooglePlayServicesAvailabilityIOException) {
