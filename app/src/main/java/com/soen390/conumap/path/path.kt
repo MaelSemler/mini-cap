@@ -29,6 +29,8 @@ object path {
     val _infoPathText = MutableLiveData<String>()
     val _alternateText = MutableLiveData<String>()
     val _transportationMode = MutableLiveData<String>()
+    val _alternateRouteId = MutableLiveData<Int>()
+    val _alternateRouteIdMax = MutableLiveData<Int>()
 
     var directionsArray : ArrayList<Directions> = arrayListOf()
 
@@ -44,6 +46,10 @@ object path {
         get() = _alternateText
     val transportationMode:LiveData<String>
         get() = _transportationMode
+    val alternateRouteId:LiveData<Int>
+        get() = _alternateRouteId
+    val alternateRouteIdMax:LiveData<Int>
+        get() = _alternateRouteIdMax
 
     val map = Map
 
@@ -53,9 +59,11 @@ object path {
         _directionText.value = "Direction: "
         _totalDistanceText.value = ""
         _totalTimeText.value = ""
-        _infoPathText.value ="" //removed the "via" text because Google API already writes it
+        _infoPathText.value =""
         _alternateText.value = ""
         _transportationMode.value = "driving"
+        _alternateRouteId.value = 0
+        _alternateRouteIdMax.value = 99
     }
 
 
@@ -69,6 +77,7 @@ object path {
         //TODO: Set Transportation mode
         //This can be walking, driving, bicycling, transit
         val transportationMode = getTransportationMode()
+        //val transportationMode = "driving"//TODO: Hardcoded for now look at the line just before we should be able to retrieve it this way
 
         //TODO: Set Alternative On/Off
         //val alternativesOn = getAlternatives()
@@ -102,6 +111,8 @@ fun resetDirections(){
     _infoPathText.value =""
     _alternateText.value = ""
     _transportationMode.value = ""
+    _alternateRouteId.value = 0
+    _alternateRouteIdMax.value = 99
 }
 
     fun getTransportationMode(): String {
@@ -114,8 +125,7 @@ fun resetDirections(){
     }
 
     fun getAlternatives(): Int{
-        //TODO Read user choice
-       return 1
+       return _alternateRouteId.value!!.toInt()
     }
 
     //Update the directionText
@@ -164,5 +174,13 @@ fun resetDirections(){
         setTransportationMode("transit")
     }
 
+    fun setAlternativeRouteMaxId(n:Int){
+        _alternateRouteIdMax.value = n
+    }
+    fun setAlternativeRoute(n:Int){
+        if (n <= _alternateRouteIdMax.value!!.toInt()){
+            _alternateRouteId.value = n
+        }
+    }
 
 }

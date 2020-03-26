@@ -1,17 +1,21 @@
 package com.soen390.conumap.ui.directions
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
-
 import com.soen390.conumap.R
 import com.soen390.conumap.databinding.AlternateFragmentBinding
 import com.soen390.conumap.path.path
+import kotlinx.android.synthetic.main.nav_header_main.*
+
 
 class AlternateFragment : Fragment() {
 
@@ -54,6 +58,39 @@ class AlternateFragment : Fragment() {
             NavHostFragment.findNavController(this).navigate(R.id.action_alternateFragment_to_searchBarFragment)
         }
 
+        binding.DirectionsTextBox.setOnTouchListener(OnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                // Toast.makeText(getActivity(), "AlternateFragment: Touch coordinates : " +  event.x.toString() + " x " + event.y.toString(), Toast.LENGTH_SHORT).show()
+                // Change route
+                if ( event.y < 300 ){
+                    //First line selected
+                    if (path.getAlternatives() == 0){
+                        path.setAlternativeRoute(1)
+                    } else {
+                        path.setAlternativeRoute(0)
+                    }
+                } else {
+                    //Second Line selected
+                    if (path.getAlternatives() == 2){
+                        path.setAlternativeRoute(1)
+                    } else {
+                        path.setAlternativeRoute(2)
+                    }
+                }
+                // Save Context
+                val route_id = path.getAlternatives()
+                val transportation_mode = path.getTransportationMode()
+                // Reset data in view model
+                path.resetDirections()
+                // Restore direction selections
+                path.setAlternativeRoute(route_id)
+                path.setTransportationMode(transportation_mode)
+                path.findDirections(activity!!)
+                Toast.makeText(getActivity(), "AlternateFragment: Route changed to " + path.getAlternatives(), Toast.LENGTH_SHORT).show()
+            }
+
+            true
+        })
         // Get radio group selected status and text using button click event
         binding.transportationBike.setOnClickListener{
             path.resetDirections()
