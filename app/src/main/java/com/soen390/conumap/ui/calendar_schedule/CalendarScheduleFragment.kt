@@ -1,7 +1,9 @@
 package com.soen390.conumap.ui.calendar_schedule
 
 import android.accounts.AccountManager
+import android.icu.text.DateFormatSymbols
 import android.os.AsyncTask
+import android.os.Build
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
@@ -10,21 +12,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
 import com.google.api.client.util.DateTime
-import com.soen390.conumap.Directions.directions
+import com.google.api.services.calendar.model.Event
 
 import com.soen390.conumap.R
 import com.soen390.conumap.calendar.Schedule
 import com.soen390.conumap.ui.calendar_login.CalendarLoginFragment
+import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
+
 
 class CalendarScheduleFragment : Fragment() {
 
@@ -47,6 +52,14 @@ class CalendarScheduleFragment : Fragment() {
     private lateinit var thursdayDate: TextView
     private lateinit var fridayDate: TextView
     private lateinit var saturdayDate: TextView
+
+    private lateinit var sundayEventLayout: RelativeLayout
+    private lateinit var mondayEventLayout: RelativeLayout
+    private lateinit var tuesdayEventLayout: RelativeLayout
+    private lateinit var wednesdayEventLayout: RelativeLayout
+    private lateinit var thursdayEventLayout: RelativeLayout
+    private lateinit var fridayEventLayout: RelativeLayout
+    private lateinit var saturdayEventLayout: RelativeLayout
 
     val REQUEST_GOOGLE_PLAY_SERVICES = 1002
     val REQUEST_AUTHORIZATION = 1001
@@ -77,6 +90,15 @@ class CalendarScheduleFragment : Fragment() {
         thursdayDate = root.findViewById<View>(R.id.thursday_date) as TextView
         fridayDate = root.findViewById<View>(R.id.friday_date) as TextView
         saturdayDate = root.findViewById<View>(R.id.saturday_date) as TextView
+
+        sundayEventLayout = root.findViewById<RelativeLayout>(R.id.sunday)
+        mondayEventLayout = root.findViewById<RelativeLayout>(R.id.monday)
+        tuesdayEventLayout = root.findViewById<RelativeLayout>(R.id.tuesday)
+        wednesdayEventLayout = root.findViewById<RelativeLayout>(R.id.wednesday)
+        thursdayEventLayout = root.findViewById<RelativeLayout>(R.id.thursday)
+        fridayEventLayout = root.findViewById<RelativeLayout>(R.id.friday)
+        saturdayEventLayout = root.findViewById<RelativeLayout>(R.id.saturday)
+
         NextEventRequestTask().execute()//makes the Coming Up UI
         ScheduleRequestTask().execute()//makes the Schedule UI
         classNumberValue = root.findViewById<TextView>(R.id.class_number_value)
@@ -125,6 +147,7 @@ class CalendarScheduleFragment : Fragment() {
     }
 
     private fun upDateCalendarUI(){
+        //Change to LocalDate tomorrow = LocalDate.now().plusDays(1);
         val cal = java.util.Calendar.getInstance()
         cal.set(java.util.Calendar.DAY_OF_WEEK,java.util.Calendar.SUNDAY)//Sets the date to the Sunday of this week (previous)
         cal.set(java.util.Calendar.HOUR_OF_DAY, 0)
@@ -134,7 +157,6 @@ class CalendarScheduleFragment : Fragment() {
         startDate = DateTime(cal.time)//the week starts on Sunday at midnight
         val startMonth =  cal.getDisplayName(java.util.Calendar.MONTH,java.util.Calendar.LONG, Locale.getDefault())
         val startYear = cal.get(java.util.Calendar.YEAR)
-
         sundayDate.text = cal.get(java.util.Calendar.DAY_OF_MONTH).toString()
         cal.add(java.util.Calendar.DATE,1)
         mondayDate.text = cal.get(java.util.Calendar.DAY_OF_MONTH).toString()
@@ -193,52 +215,64 @@ class CalendarScheduleFragment : Fragment() {
 
     }
 
-    private fun showSchedule(events: MutableList<String>){
-        /*Todo:
-        *  there are 7 relative layouts, one for each day of the week
-        *  each layout needs to be filled with buttons
-        *  maybe pass the event objects directly instead of the string
-        *
-        * */
-        /*
-        when (Date){
-            Sunday -> layout =view!!.findViewById<RelativeLayout>(R.id.sunday)
-            Monday -> layout =view!!.findViewById<RelativeLayout>(R.id.monday)
-            Tuesday -> layout =view!!.findViewById<RelativeLayout>(R.id.tuesday)
-            ...
-            showDay(layout)
-
-        }*/
-
-        val layout =view!!.findViewById<RelativeLayout>(R.id.sunday)
-        showDay(layout,events)
+    private fun showSchedule(eventList: MutableList<Event>){
 
 
-    }
+        for(event in eventList){
+            val date = java.util.Calendar.getInstance()
+            date.timeInMillis = event.start.dateTime.value
 
-    fun showDay(layout: RelativeLayout, events: MutableList<String>){
-        layout.removeAllViews() //Clears that day in the schedule
-
-        for(items in events){
-            val progButton: Button = Button(this.context)
-            val param = RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-            )
-            param.topMargin = 100//Todo: get start time, get midnight - start time, get the diference in seconds, and 1 minute is 1 margin
-            progButton.layoutParams = param
-            progButton.setText(items)//Todo: have the proper text shown here, like in the mockups
-            progButton.textSize = 10f
-            progButton.height = 100//Todo: get the duration in minutes 1 minute
-            layout.addView(progButton)
+            var layout = when(date.get(java.util.Calendar.DAY_OF_WEEK)){
+                Calendar.SUNDAY -> view!!.findViewById<RelativeLayout>(R.id.sunday)
+                Calendar.MONDAY -> view!!.findViewById<RelativeLayout>(R.id.monday)
+                Calendar.TUESDAY -> view!!.findViewById<RelativeLayout>(R.id.tuesday)
+                Calendar.WEDNESDAY -> view!!.findViewById<RelativeLayout>(R.id.wednesday)
+                Calendar.THURSDAY -> view!!.findViewById<RelativeLayout>(R.id.thursday)
+                Calendar.FRIDAY -> view!!.findViewById<RelativeLayout>(R.id.friday)
+                Calendar.SATURDAY -> view!!.findViewById<RelativeLayout>(R.id.saturday)
+                else -> RelativeLayout(null)//Todo: CHANGE THIS
+            }
+            makeEventUI(layout,event,date)
         }
     }
 
+    private fun clearAllEventsUI(){
+        sundayEventLayout.removeAllViews()
+        mondayEventLayout.removeAllViews()
+        tuesdayEventLayout.removeAllViews()
+        wednesdayEventLayout.removeAllViews()
+        thursdayEventLayout.removeAllViews()
+        fridayEventLayout.removeAllViews()
+        saturdayEventLayout.removeAllViews()
+    }
 
-    private inner class ScheduleRequestTask() : AsyncTask<Void, Void, MutableList<String>>() {
+    private fun makeEventUI(layout: RelativeLayout, event: Event, date: Calendar){
+        val eventButton: Button = Button(context!!)
+        val param = RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.WRAP_CONTENT,
+            RelativeLayout.LayoutParams.WRAP_CONTENT
+        )
+
+        param.topMargin = timeToMargin(date).toInt()//Todo: get start time, get midnight - start time, get the diference in seconds, and 1 minute is 1 margin
+        eventButton.layoutParams = param
+        eventButton.setText(event.summary)//Todo: have the proper text shown here, like in the mockups
+        eventButton.textSize = 10f
+        eventButton.height = 100//Todo: get the duration in minutes 1 minute
+        layout.addView(eventButton)
+
+    }
+
+    private fun timeToMargin(date: Calendar) : Float{
+        val hour = date.get(java.util.Calendar.HOUR_OF_DAY)
+        val minute = date.get(java.util.Calendar.MINUTE)
+        val dp = context!!.resources.displayMetrics.density;
+        return (hour * 60 + minute) * dp
+    }
+
+    private inner class ScheduleRequestTask() : AsyncTask<Void, Void, MutableList<Event>>() {
         private var mLastError: Exception? = null
 
-        override fun doInBackground(vararg params: Void): MutableList<String>? {
+        override fun doInBackground(vararg params: Void): MutableList<Event>? {
             Log.d("QUESTIONMARK", "doInBackground")
             try {
                 return Schedule.getWeekEvents(startDate,endDate)
@@ -254,10 +288,11 @@ class CalendarScheduleFragment : Fragment() {
         override fun onPreExecute() {
             Log.d("QUESTIONMARK", "onPreExecute")
             debugText.text = "loading...tool long? sign out"
+            clearAllEventsUI()
             upDateCalendarUI()
         }
 
-        override fun onPostExecute(output: MutableList<String>?) {
+        override fun onPostExecute(output: MutableList<Event>?) {
 
                 showSchedule(output!!)
                 //output.add(0, "Data retrieved using the Google Calendar API:")

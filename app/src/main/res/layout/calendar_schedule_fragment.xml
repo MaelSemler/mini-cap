@@ -117,7 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/schedule_divider"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/month_year"
@@ -129,22 +129,11 @@
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/week_randge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/month_year"
-
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:text="week"
-                    android:textSize="18dp" />
-
                 <Button
                     android:id="@+id/previous_week"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_alignBottom="@+id/week_randge"
+                    android:layout_alignBottom="@+id/month_year"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="20dp"
                     android:layout_marginBottom="0dp"
@@ -154,7 +143,7 @@
                     android:id="@+id/next_week"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_alignBottom="@+id/week_randge"
+                    android:layout_alignBottom="@+id/month_year"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="0dp"
@@ -164,7 +153,7 @@
                     android:id="@+id/week"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/week_randge"
+                    android:layout_below="@+id/month_year"
                     android:layout_marginLeft="50dp"
                     android:layout_marginTop="10dp"
                     android:weightSum="7">
@@ -468,10 +457,6 @@
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
-                                <Button
-                                    android:layout_width="match_parent"
-                                    android:layout_height="100dp"
-                                    android:text="test" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -480,16 +465,6 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:orientation="vertical">
-
-                                <Button
-                                    android:layout_width="match_parent"
-                                    android:layout_height="100dp"
-                                    android:layout_marginTop="100dp"
-                                    android:text="test" />
-                                <Button
-                                    android:layout_width="match_parent"
-                                    android:layout_height="100dp"
-                                    android:text="test" />
 
                             </RelativeLayout>
 
@@ -500,11 +475,6 @@
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
-                                <Button
-                                    android:layout_width="match_parent"
-                                    android:layout_height="100dp"
-                                    android:text="test" />
-
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -514,10 +484,6 @@
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
-                                <Button
-                                    android:layout_width="match_parent"
-                                    android:layout_height="100dp"
-                                    android:text="test" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -527,10 +493,6 @@
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
-                                <Button
-                                    android:layout_width="match_parent"
-                                    android:layout_height="100dp"
-                                    android:text="test" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -543,6 +505,7 @@
                                 <Button
                                     android:layout_width="match_parent"
                                     android:layout_height="100dp"
+                                    android:layout_marginTop="@dimen/min_60"
                                     android:text="test" />
                             </RelativeLayout>
                         </LinearLayout>

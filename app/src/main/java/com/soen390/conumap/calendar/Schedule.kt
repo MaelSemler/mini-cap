@@ -6,10 +6,12 @@ import com.google.api.client.extensions.android.http.AndroidHttp
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.client.util.DateTime
-//import com.google.api.client.util.DateTime
+
 import com.google.api.client.util.ExponentialBackOff
 import com.google.api.services.calendar.Calendar
 import com.google.api.services.calendar.CalendarScopes
+import com.google.api.services.calendar.model.Event
+import com.google.api.services.calendar.model.Events
 import java.time.DayOfWeek
 import java.util.*
 import java.util.Calendar.SUNDAY
@@ -49,8 +51,8 @@ object Schedule {
     }
 
     //Gets the events for the selected week
-    fun getWeekEvents(minTime: DateTime, maxTime: DateTime): ArrayList<String> {
-
+    fun getWeekEvents(minTime: DateTime, maxTime: DateTime): MutableList<Event>? {
+/*
         val eventStrings = ArrayList<String>()
 
         val events = calendar!!.events().list("primary")
@@ -59,6 +61,7 @@ object Schedule {
             .setOrderBy("startTime")
             .setSingleEvents(true)
             .execute()
+
         val items = events.items
 
         for (event in items) {
@@ -75,9 +78,20 @@ object Schedule {
                 end = endStringArray[1].substring(0, 6)
             }
             eventStrings.add(String.format("%s|%s|%s|%s", event.summary, start, end, location))
+            val sd = event.start.date.
         }
 
-        return eventStrings
+        return eventStrings*/
+        val events = calendar!!.events().list("primary")
+            .setTimeMin(minTime)//start range to look for events
+            .setTimeMax(maxTime)//end range to look for events
+            .setOrderBy("startTime")
+            .setSingleEvents(true)
+            .execute()
+
+
+
+        return events.items
 
     }
 
