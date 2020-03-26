@@ -7,7 +7,7 @@ class Node (row: Int, col: Int) {
     var row: Int = row
     var col: Int = col
     var isBlock: Boolean = false
-    lateinit var parent: Node
+    var parent: Node? = null
 
     fun calculateH(finalNode: Node) {
         h = (finalNode.row - row) + (finalNode.col - col)
@@ -34,7 +34,7 @@ class Node (row: Int, col: Int) {
     }
 
     override fun toString(): String {
-        return "Node ("+row+","+col+")"
+        return "Node("+row+","+col+")"
     }
 
     fun equals (otherNode: Node): Boolean {

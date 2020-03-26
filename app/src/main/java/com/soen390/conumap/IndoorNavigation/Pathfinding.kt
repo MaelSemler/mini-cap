@@ -13,11 +13,12 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
     var origin: Node = origin
     var destination: Node = destination
     var mapArray: Array<Array<Node>> = Array(rows) {Array(cols) {Node(0,0)}}
-    var openSet = mutableListOf<Node>()
+    var openSet = mutableListOf<Node>() //TODO: this should be changed to priority queue
     var closedSet = mutableListOf<Node>()
 
     fun findPath(): MutableList<Node> {
         openSet.add(origin)
+        var i = 0
         while (openSet.size > 0) {
             var currentNode: Node = openSet.removeAt(0)
             closedSet.add(currentNode)
@@ -26,47 +27,62 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
             } else {
                 addNeighbours(currentNode)
             }
+            println(i)
+            println(currentNode)
+            i++
         }
         var noPath:MutableList<Node> = mutableListOf()
+        println("There is no path")
         return  noPath
     }
 
     fun getPath(currentNode: Node): MutableList<Node> {
         var path: MutableList<Node> = arrayListOf()
         var currentNode = currentNode
-        var parentNode: Node = currentNode
+        var parentNode: Node? = currentNode.parent
         path.add(currentNode)
-        while ((parentNode.equals(currentNode.parent)) != null) {
+        while (parentNode != null) {
             path.add(0, parentNode)
             currentNode = parentNode
+            parentNode = currentNode.parent
         }
         return path
     }
 
     //Sets every tile in the map as nodes
-    fun loadMap(rows:Int, cols: Int) {
+    fun loadMap() {
         var currentNode: Node
-        for (i in 0..rows-1) {
+        for (i in 0..mapArray.size-1) {
             var tempArray = arrayOf<Node>()
-            for (j in 0..cols-1) {
+            for (j in 0..mapArray[0].size-1) {
                 currentNode = Node(i, j)
                 currentNode.calculateH(destination)
                 tempArray += currentNode
+                mapArray[i][j]=(currentNode)
             }
-            mapArray += tempArray
         }
     }
 
     //Sets the map with blocks i.e. tiles that cannot be walked on
     //Parameter is array of nodes that are blocks
     fun loadBlocks(blockArray: Array<Array<Int>>) {
-        for (i in 0..blockArray.size) {
-            var row: Int = blockArray [i][0]
-            var col: Int = blockArray [i][1]
-            mapArray[row][col].makeBlock(true)
+        var rowArray = arrayOf<Int>()
+        var colArray = arrayOf<Int>()
+        var counter = 0
+        for (tempArray in blockArray) {
+            if (counter == 0)
+                rowArray = tempArray
+            else {
+                colArray = tempArray
+            }
+            counter ++
+        }
+        for (i in 0..rowArray.size-1) {
+            mapArray[rowArray[i]][colArray[i]].makeBlock(true)
         }
     }
 
+    //Add neighbours of current node to the open set using checkNode() function
     fun addNeighbours(currentNode: Node) {
         var upperRow = currentNode.row + 1
         var middleRow = currentNode.row
@@ -78,14 +94,15 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
         if (col - 1 >= 0 ) {
             checkNode(currentNode, middleRow, col - 1, moveCost)
         }
-        if (col +1 <= 0) {
+        if (col + 1 < mapArray[0].size) {
             checkNode(currentNode, middleRow, col +1 , moveCost)
         }
-        if (lowerRow < mapArray.size) {
+        if (lowerRow < mapArray.size && lowerRow >=0) {
             checkNode(currentNode, lowerRow, col, moveCost)
         }
     }
 
+    //Checks to see if a given node is valid (i.e. not a block) and adds it to the open set
     fun checkNode(currentNode: Node, row: Int, col: Int, cost: Int) {
         var neighbourNode: Node = mapArray[row][col]
         if (!mapArray[row][col].isBlock && !closedSet.contains(neighbourNode)) {
@@ -96,11 +113,32 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
             else {
                 var isUpdated: Boolean = neighbourNode.checkAlternative(currentNode,cost)
                 if (isUpdated) {
-                    //TODO: check if this is working properly
                     openSet.remove(neighbourNode)
                     openSet.add(neighbourNode)
                 }
             }
+        }
+    }
+
+    fun printMapSizeToConsole() {
+        println("Map size: "+mapArray.size+" rows x "+mapArray[0].size+" columns")
+    }
+
+    fun printMapToConsole() {
+        for (array in mapArray) {
+            for (value in array) {
+                print(value)
+                if (value.equals(origin)) {
+                    print("O    ")
+                } else if (value.equals(destination)) {
+                    print("D    ")
+                } else if (value.isBlock) {
+                    print("X    ")
+                } else {
+                    print("-    ")
+                }
+            }
+            println()
         }
     }
 

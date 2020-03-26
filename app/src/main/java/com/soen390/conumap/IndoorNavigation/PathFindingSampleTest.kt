@@ -11,11 +11,14 @@ fun main (args: Array<String>) {
     var blockRow = arrayOf(1,2,3)
     var blockCol = arrayOf(3,3,3)
     var blockArray = arrayOf<Array<Int>>(blockRow, blockCol)
-    println(blockArray[0][0])
+    pathfindingTest.loadMap()
     pathfindingTest.loadBlocks(blockArray)
-//    var path: MutableList<Node> = pathfindingTest.findPath()
-//    for (node:Node in path) {
-//        println(node)
-//    }
+    pathfindingTest.printMapSizeToConsole()
+    pathfindingTest.printMapToConsole()
+
+    var path: MutableList<Node> = pathfindingTest.findPath()
+    for (node:Node in path) {
+        println(node)
+    }
 
 }
