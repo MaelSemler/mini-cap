@@ -10,21 +10,28 @@ class Building(var name: String, var info: String, var location: LatLng, var out
     var marker: Marker
     var outline: PolygonOptions
     var touchTarget: PolygonOptions
+    var defaultMarker: Marker = addBuildingMarker(map)
 
     init {
-        this.marker = addBuildingMarker(map)
         this.outline = addBuildingOutline(map)
         this.touchTarget = addBuildingTouchTarget(map)
+        this.marker = addBuildingMarker(map)
     }
 
     // Adds marker for this building to the map passed as an argument.
     private fun addBuildingMarker(map: GoogleMap): Marker {
-        return map.addMarker(MarkerOptions()
+        return if (map.addMarker(MarkerOptions()
+                .position(location)
+                .alpha(0.0F)
+                .title(name)
+                .snippet(info)
+            ) != null
+        ) map.addMarker(MarkerOptions()
             .position(location)
             .alpha(0.0F)
             .title(name)
             .snippet(info)
-        )
+        ) else return defaultMarker
     }
 
     // Add the precise visual outline of the building.
