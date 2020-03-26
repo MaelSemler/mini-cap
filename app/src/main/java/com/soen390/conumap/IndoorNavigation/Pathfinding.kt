@@ -1,5 +1,9 @@
 package com.soen390.conumap.IndoorNavigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.util.PriorityQueue
+
 /*
  * The indoor navigation algorithm for ConUMaps.
  * The algorithm is based on the A* path-finding algorithm in order to determine the quickest path
@@ -13,29 +17,28 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
     var origin: Node = origin
     var destination: Node = destination
     var mapArray: Array<Array<Node>> = Array(rows) {Array(cols) {Node(0,0)}}
-    var openSet = mutableListOf<Node>() //TODO: this should be changed to priority queue
+    @RequiresApi(Build.VERSION_CODES.N)
+    var openSet = PriorityQueue<Node>(NodeComparator)
     var closedSet = mutableListOf<Node>()
 
     fun findPath(): MutableList<Node> {
         openSet.add(origin)
-        var i = 0
         while (openSet.size > 0) {
-            var currentNode: Node = openSet.removeAt(0)
+            var currentNode: Node = openSet.poll()
             closedSet.add(currentNode)
             if (currentNode.equals(destination)) {
                 return getPath(currentNode)
             } else {
                 addNeighbours(currentNode)
             }
-            println(i)
-            println(currentNode)
-            i++
+            println(""+currentNode+" "+currentNode.f+"="+currentNode.g+"+"+currentNode.h)
         }
         var noPath:MutableList<Node> = mutableListOf()
         println("There is no path")
         return  noPath
     }
 
+    //Retreive the path from origin to destination
     fun getPath(currentNode: Node): MutableList<Node> {
         var path: MutableList<Node> = arrayListOf()
         var currentNode = currentNode
@@ -113,6 +116,7 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
             else {
                 var isUpdated: Boolean = neighbourNode.checkAlternative(currentNode,cost)
                 if (isUpdated) {
+                    //Refresh the priority queue
                     openSet.remove(neighbourNode)
                     openSet.add(neighbourNode)
                 }
