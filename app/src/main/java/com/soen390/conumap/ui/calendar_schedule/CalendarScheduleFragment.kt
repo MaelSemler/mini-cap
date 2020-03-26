@@ -1,9 +1,7 @@
 package com.soen390.conumap.ui.calendar_schedule
 
 import android.accounts.AccountManager
-import android.icu.text.DateFormatSymbols
 import android.os.AsyncTask
-import android.os.Build
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
@@ -14,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -26,8 +23,6 @@ import com.google.api.services.calendar.model.Event
 import com.soen390.conumap.R
 import com.soen390.conumap.calendar.Schedule
 import com.soen390.conumap.ui.calendar_login.CalendarLoginFragment
-import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 
 
@@ -209,8 +204,8 @@ class CalendarScheduleFragment : Fragment() {
         dialog.show()
     }*/
 
-    private fun showComingUp(results: String){//Todo: make it take in an event
-        Log.d("QUESTIONMARK", "Made it to onCalendarRequestTaskCompleted!")
+    private fun showComingUp(results: com.soen390.conumap.event.Event?){//Todo: make it take in an event DONE MAYBE
+        /*Log.d("QUESTIONMARK", "Made it to onCalendarRequestTaskCompleted!")
         var firstEventArray = results.split("|").toTypedArray()
         classNumber = firstEventArray[0]
         if (firstEventArray[2] != null){
@@ -222,10 +217,12 @@ class CalendarScheduleFragment : Fragment() {
             time = firstEventArray[1]
         }
         location = firstEventArray[3]
-
+        */
+        var classNumber = results!!.eventName +" - " + results.roomNumber
+        var time = results.startTime + " - " + results.endTime
         classNumberValue.setText(classNumber)
         timeValue.setText(time)
-        locationValue.setText(location)
+        locationValue.setText(results.roomLocation)
 
     }
 
@@ -347,15 +344,14 @@ class CalendarScheduleFragment : Fragment() {
             }
         }
     }
-    private inner class NextEventRequestTask() : AsyncTask<Void, Void, String>() {//Todo: make it return an event
+    private inner class NextEventRequestTask() : AsyncTask<Void, Void, com.soen390.conumap.event.Event>() {//Todo: make it return an event
         private var mLastError: Exception? = null
-
 
         /**
          * Background task to call Google Calendar API.
          * @param params no parameters needed for this task.
          */
-        override fun doInBackground(vararg params: Void): String? {
+        override fun doInBackground(vararg params: Void): com.soen390.conumap.event.Event? {
             Log.d("QUESTIONMARK", "doInBackground")
             try {
                 return Schedule.getNextEvent()
@@ -374,15 +370,15 @@ class CalendarScheduleFragment : Fragment() {
 
         }
 
-        override fun onPostExecute(output: String?) {
+        override fun onPostExecute(result: com.soen390.conumap.event.Event?) {
             Log.d("QUESTIONMARK", "onPostExecute")
-            if (output == null || output == null) {
+            if (result == null || result == null) {
                 debugText.text = "No results returned."
             } else {
                 //output.add(0, "Data retrieved using the Google Calendar API:")
                 //debugText.text = (TextUtils.join("\n", output))
                 //scheduleBuild(output)
-                showComingUp(output)
+                showComingUp(result)
             }
         }
 
