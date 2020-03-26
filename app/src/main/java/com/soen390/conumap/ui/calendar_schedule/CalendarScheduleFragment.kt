@@ -226,22 +226,36 @@ class CalendarScheduleFragment : Fragment() {
 
     private fun showSchedule(eventList: MutableList<Event>){
 
-
+        var layout: RelativeLayout
         for(event in eventList){
             val date = java.util.Calendar.getInstance()
             date.timeInMillis = event.start.dateTime.value
 
-            var layout = when(date.get(java.util.Calendar.DAY_OF_WEEK)){
-                Calendar.SUNDAY -> view!!.findViewById<RelativeLayout>(R.id.sunday)
-                Calendar.MONDAY -> view!!.findViewById<RelativeLayout>(R.id.monday)
-                Calendar.TUESDAY -> view!!.findViewById<RelativeLayout>(R.id.tuesday)
-                Calendar.WEDNESDAY -> view!!.findViewById<RelativeLayout>(R.id.wednesday)
-                Calendar.THURSDAY -> view!!.findViewById<RelativeLayout>(R.id.thursday)
-                Calendar.FRIDAY -> view!!.findViewById<RelativeLayout>(R.id.friday)
-                Calendar.SATURDAY -> view!!.findViewById<RelativeLayout>(R.id.saturday)
+             layout = when(date.get(java.util.Calendar.DAY_OF_WEEK)){
+                Calendar.SUNDAY -> sundayEventLayout
+                Calendar.MONDAY -> mondayEventLayout
+                Calendar.TUESDAY -> tuesdayEventLayout
+                Calendar.WEDNESDAY -> wednesdayEventLayout
+                Calendar.THURSDAY -> thursdayEventLayout
+                Calendar.FRIDAY -> fridayEventLayout
+                Calendar.SATURDAY -> saturdayEventLayout
                 else -> RelativeLayout(null)//Todo: CHANGE THIS
             }
-            makeEventUI(layout,event,date)
+
+            val eventButton: Button = Button(context!!)
+            val dp = context!!.resources.displayMetrics.density;
+            val param = RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                durationToHeight(date, event).toInt()
+            )
+
+            param.topMargin = timeToMargin(date).toInt()
+
+            eventButton.minHeight = (30*dp).toInt()
+            eventButton.text = event.summary//Todo: have the proper text shown here, like in the mockups
+            eventButton.textSize = 10f
+            eventButton.layoutParams = param
+            layout.addView(eventButton)
         }
     }
 
@@ -255,27 +269,26 @@ class CalendarScheduleFragment : Fragment() {
         saturdayEventLayout.removeAllViews()
     }
 
-    private fun makeEventUI(layout: RelativeLayout, event: Event, date: Calendar){
-        val eventButton: Button = Button(context!!)
-        val param = RelativeLayout.LayoutParams(
-            RelativeLayout.LayoutParams.WRAP_CONTENT,
-            RelativeLayout.LayoutParams.WRAP_CONTENT
-        )
-
-        param.topMargin = timeToMargin(date).toInt()//Todo: get start time, get midnight - start time, get the diference in seconds, and 1 minute is 1 margin
-        eventButton.layoutParams = param
-        eventButton.setText(event.summary)//Todo: have the proper text shown here, like in the mockups
-        eventButton.textSize = 10f
-        eventButton.height = 100//Todo: get the duration in minutes 1 minute
-        layout.addView(eventButton)
-
-    }
-
     private fun timeToMargin(date: Calendar) : Float{
         val hour = date.get(java.util.Calendar.HOUR_OF_DAY)
         val minute = date.get(java.util.Calendar.MINUTE)
         val dp = context!!.resources.displayMetrics.density;
         return (hour * 60 + minute) * dp
+    }
+
+    private fun durationToHeight(date: Calendar, event: Event): Float{
+        val endDate = java.util.Calendar.getInstance()
+        endDate.timeInMillis = event.end.dateTime.value
+
+        val startHour = date.get(java.util.Calendar.HOUR_OF_DAY)
+        val startMinute = date.get(java.util.Calendar.MINUTE)
+
+        val endHour = endDate.get(java.util.Calendar.HOUR_OF_DAY)
+        val endMinute = endDate.get(java.util.Calendar.MINUTE)
+
+        val dp = context!!.resources.displayMetrics.density;
+        return ((endHour * 60 + endMinute) - (startHour * 60 + startMinute)) * dp
+
     }
 
     private inner class ScheduleRequestTask() : AsyncTask<Void, Void, MutableList<Event>>() {

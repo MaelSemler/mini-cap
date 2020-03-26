@@ -502,11 +502,6 @@
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
-                                <Button
-                                    android:layout_width="match_parent"
-                                    android:layout_height="100dp"
-                                    android:layout_marginTop="@dimen/min_60"
-                                    android:text="test" />
                             </RelativeLayout>
                         </LinearLayout>
 
