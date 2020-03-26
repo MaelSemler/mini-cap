@@ -49,18 +49,8 @@ object Schedule {
     }
 
     //Gets the events for the selected week
-    fun getWeekEvents(weekCount: Int): ArrayList<String> {
+    fun getWeekEvents(minTime: DateTime, maxTime: DateTime): ArrayList<String> {
 
-        //This section finds the start and end time on the week
-        val cal = java.util.Calendar.getInstance()
-        cal.set(java.util.Calendar.DAY_OF_WEEK,java.util.Calendar.SUNDAY)//Sets the date to the Sunday of this week (previous)
-        cal.set(java.util.Calendar.HOUR_OF_DAY, 0)
-        cal.set(java.util.Calendar.MINUTE, 0)
-        cal.set(java.util.Calendar.SECOND, 0)
-        cal.add(java.util.Calendar.DATE,7 * weekCount)//Gets the Sunday of the selected week
-        val minTime = DateTime(cal.time)//the week starts on Sunday at midnight
-        cal.add(java.util.Calendar.DATE,7)//Gets the Sunday of the selected week
-        val maxTime = DateTime(cal.time)//the week ends on the next Sunday at midnight
         val eventStrings = ArrayList<String>()
 
         val events = calendar!!.events().list("primary")

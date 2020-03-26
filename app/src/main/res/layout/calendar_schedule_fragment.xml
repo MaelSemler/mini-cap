@@ -82,6 +82,7 @@
                 android:textSize="15dp"/>
 
             <Button
+                android:id="@+id/go_now_button"
                 android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/coming_up"
@@ -228,6 +229,7 @@
                     android:weightSum="7">
 
                     <TextView
+                        android:id="@+id/sunday_date"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -235,6 +237,7 @@
                         android:text="1" />
 
                     <TextView
+                        android:id="@+id/monday_date"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -242,6 +245,7 @@
                         android:text="2" />
 
                     <TextView
+                        android:id="@+id/tuesday_date"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -249,6 +253,7 @@
                         android:text="3" />
 
                     <TextView
+                        android:id="@+id/wednesday_date"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -256,6 +261,7 @@
                         android:text="4" />
 
                     <TextView
+                        android:id="@+id/thursday_date"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -263,6 +269,7 @@
                         android:text="5" />
 
                     <TextView
+                        android:id="@+id/friday_date"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -270,6 +277,7 @@
                         android:text="6" />
 
                     <TextView
+                        android:id="@+id/saturday_date"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

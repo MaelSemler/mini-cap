@@ -18,10 +18,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
+import com.google.api.client.util.DateTime
+import com.soen390.conumap.Directions.directions
 
 import com.soen390.conumap.R
 import com.soen390.conumap.calendar.Schedule
 import com.soen390.conumap.ui.calendar_login.CalendarLoginFragment
+import java.util.*
 
 class CalendarScheduleFragment : Fragment() {
 
@@ -32,6 +35,19 @@ class CalendarScheduleFragment : Fragment() {
     private lateinit var viewModel: CalendarScheduleViewModel
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var debugText: TextView
+
+    private lateinit var startDate: DateTime
+    private lateinit var endDate: DateTime
+
+    private lateinit var monthTitle: TextView
+    private lateinit var sundayDate: TextView
+    private lateinit var mondayDate: TextView
+    private lateinit var tuesdayDate: TextView
+    private lateinit var wednesdayDate: TextView
+    private lateinit var thursdayDate: TextView
+    private lateinit var fridayDate: TextView
+    private lateinit var saturdayDate: TextView
+
     val REQUEST_GOOGLE_PLAY_SERVICES = 1002
     val REQUEST_AUTHORIZATION = 1001
     var classNumber:String = ""
@@ -50,7 +66,17 @@ class CalendarScheduleFragment : Fragment() {
         val signOutButton = root.findViewById<View>(R.id.debug_sign_out)
         val nextWeekButton = root.findViewById<View>(R.id.next_week)
         val previousWeekButton = root.findViewById<View>(R.id.previous_week)
+        val goNowButton = root.findViewById<View>(R.id.go_now_button)
         debugText = root.findViewById<View>(R.id.debug_text) as TextView
+
+        monthTitle= root.findViewById<View>(R.id.month_year) as TextView
+        sundayDate = root.findViewById<View>(R.id.sunday_date) as TextView
+        mondayDate = root.findViewById<View>(R.id.monday_date) as TextView
+        tuesdayDate = root.findViewById<View>(R.id.tuesday_date) as TextView
+        wednesdayDate = root.findViewById<View>(R.id.wednesday_date) as TextView
+        thursdayDate = root.findViewById<View>(R.id.thursday_date) as TextView
+        fridayDate = root.findViewById<View>(R.id.friday_date) as TextView
+        saturdayDate = root.findViewById<View>(R.id.saturday_date) as TextView
         NextEventRequestTask().execute()//makes the Coming Up UI
         ScheduleRequestTask().execute()//makes the Schedule UI
         classNumberValue = root.findViewById<TextView>(R.id.class_number_value)
@@ -68,11 +94,25 @@ class CalendarScheduleFragment : Fragment() {
             weekCount++
             val nextWeekTask: ScheduleRequestTask = ScheduleRequestTask()
             nextWeekTask.execute()
+
         }
         previousWeekButton.setOnClickListener {
             weekCount--
             val previousWeekTask: ScheduleRequestTask = ScheduleRequestTask()
             previousWeekTask.execute()
+
+        }
+        //maybe set it after the data is collected
+        goNowButton.setOnClickListener{
+            //Close the Calendar
+            //get the directions
+
+            /*if(goNowEvent != null){
+            *   directions(goNowEvent.location)
+            *   closeCalendar()
+            * }
+            *
+            * */
         }
         return root
     }
@@ -84,6 +124,48 @@ class CalendarScheduleFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
+    private fun upDateCalendarUI(){
+        val cal = java.util.Calendar.getInstance()
+        cal.set(java.util.Calendar.DAY_OF_WEEK,java.util.Calendar.SUNDAY)//Sets the date to the Sunday of this week (previous)
+        cal.set(java.util.Calendar.HOUR_OF_DAY, 0)
+        cal.set(java.util.Calendar.MINUTE, 0)
+        cal.set(java.util.Calendar.SECOND, 0)
+        cal.add(java.util.Calendar.DATE,7 * weekCount)//Gets the Sunday of the selected week
+        startDate = DateTime(cal.time)//the week starts on Sunday at midnight
+        val startMonth =  cal.getDisplayName(java.util.Calendar.MONTH,java.util.Calendar.LONG, Locale.getDefault())
+        val startYear = cal.get(java.util.Calendar.YEAR)
+
+        sundayDate.text = cal.get(java.util.Calendar.DAY_OF_MONTH).toString()
+        cal.add(java.util.Calendar.DATE,1)
+        mondayDate.text = cal.get(java.util.Calendar.DAY_OF_MONTH).toString()
+        cal.add(java.util.Calendar.DATE,1)
+        tuesdayDate.text = cal.get(java.util.Calendar.DAY_OF_MONTH).toString()
+        cal.add(java.util.Calendar.DATE,1)
+        wednesdayDate.text = cal.get(java.util.Calendar.DAY_OF_MONTH).toString()
+        cal.add(java.util.Calendar.DATE,1)
+        thursdayDate.text = cal.get(java.util.Calendar.DAY_OF_MONTH).toString()
+        cal.add(java.util.Calendar.DATE,1)
+        fridayDate.text = cal.get(java.util.Calendar.DAY_OF_MONTH).toString()
+        cal.add(java.util.Calendar.DATE,1)
+        saturdayDate.text = cal.get(java.util.Calendar.DAY_OF_MONTH).toString()
+        cal.add(java.util.Calendar.DATE,1)//Gets the Sunday of the selected week
+
+        endDate = DateTime(cal.time)//the week ends on the next Sunday at midnight
+        val endMonth = cal.getDisplayName(java.util.Calendar.MONTH,java.util.Calendar.LONG, Locale.getDefault())
+        val endYear = cal.get(java.util.Calendar.YEAR)
+
+        if(startYear != endYear){
+            monthTitle.text = String.format("%s %s - %s %s", startMonth, startYear, endMonth, endYear)
+        }
+        else if(startMonth != endMonth){
+            monthTitle.text = String.format("%s - %s %s", startMonth, endMonth, startYear)
+        }
+        else{
+            monthTitle.text = String.format("%s %s", startMonth, startYear)
+        }
+
+
+    }
     private fun signOut(){
         mGoogleSignInClient.signOut()
         activity!!.supportFragmentManager.beginTransaction().replace(R.id.calendar_container,CalendarLoginFragment.newInstance()).commit()
@@ -159,7 +241,7 @@ class CalendarScheduleFragment : Fragment() {
         override fun doInBackground(vararg params: Void): MutableList<String>? {
             Log.d("QUESTIONMARK", "doInBackground")
             try {
-                return Schedule.getWeekEvents(weekCount)
+                return Schedule.getWeekEvents(startDate,endDate)
             } catch (e: Exception) {
                 mLastError = e
                 cancel(true)
@@ -172,7 +254,7 @@ class CalendarScheduleFragment : Fragment() {
         override fun onPreExecute() {
             Log.d("QUESTIONMARK", "onPreExecute")
             debugText.text = "loading...tool long? sign out"
-
+            upDateCalendarUI()
         }
 
         override fun onPostExecute(output: MutableList<String>?) {
