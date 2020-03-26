@@ -6,6 +6,7 @@ import android.app.Activity.RESULT_OK
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -152,6 +153,7 @@ class SearchResultsFragment : Fragment() {
 
         override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         // TODO: Use the ViewModel
 
     }
@@ -173,9 +175,16 @@ class SearchResultsFragment : Fragment() {
 
             val model: SearchBarViewModel by activityViewModels()
             model.setDestination(place.name)
-            NavHostFragment.findNavController(this).navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
+            model.setDestinationAddress(place.address)
+            val sharedPreferences: SharedPreferences =requireContext().getSharedPreferences("SearchDest",0)
 
 //                Toast.makeText(getActivity(), "Search Results Fragment: " + place.name, Toast.LENGTH_SHORT).show()
+            //Needed to use SharedPref to store the address
+            val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+            editor.putString("destinationLocation",place.name)
+            editor.putString("destinationLocationAddress",place.address)
+            editor.apply()
+            editor.commit()
         }
         else if (resultCode==AutocompleteActivity.RESULT_ERROR)
         {
@@ -183,6 +192,7 @@ class SearchResultsFragment : Fragment() {
             Log.i(TAG, status.statusMessage)
             searchBar.setText("Error")
         }
+        NavHostFragment.findNavController(this).navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
     }
 
 

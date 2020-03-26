@@ -47,7 +47,7 @@ object directions {
     }
     
     //Route method to be called once we are given the origin and destination 
-    private fun route(activity: Activity, originLatLng: LatLng, destinationLatLng: LatLng) {
+    public fun route(activity: Activity, originLatLng: LatLng, destinationLatLng: LatLng) {
         val path: MutableList<List<LatLng>> = ArrayList()
         val urlDirections = activity.getString(R.string.DirectionAPI)+ originLatLng.latitude + "," + originLatLng.longitude + "&destination=" + destinationLatLng.latitude + "," + destinationLatLng.longitude + "&key=" + activity.getString(R.string.apiKey)
 
@@ -62,8 +62,8 @@ object directions {
                 val legs = routes.getJSONObject(0).getJSONArray("legs")
                 val steps = legs.getJSONObject(0).getJSONArray("steps")
 
-                val totalDistance =legs.getJSONObject(0).getJSONObject("distance").getString("text")
-                val totalDuration= legs.getJSONObject(0).getJSONObject("duration").getString("text")
+               //val totalDistance =legs.getJSONObject(0).getJSONObject("distance").getString("text")
+               //val totalDuration= legs.getJSONObject(0).getJSONObject("duration").getString("text")
 
                 //Clean up the directions
                 updateSteps(extractDirections(steps))
