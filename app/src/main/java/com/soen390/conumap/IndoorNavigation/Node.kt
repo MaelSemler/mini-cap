@@ -1,5 +1,7 @@
 package com.soen390.conumap.IndoorNavigation
 
+import kotlin.math.abs
+
 class Node (row: Int, col: Int) {
     var f: Int = 0
     var g: Int = 0
@@ -10,7 +12,7 @@ class Node (row: Int, col: Int) {
     var parent: Node? = null
 
     fun calculateH(finalNode: Node) {
-        h = (finalNode.row - row) + (finalNode.col - col)
+        h = abs(finalNode.row - row) + abs(finalNode.col - col)
     }
 
     fun calculateF() {

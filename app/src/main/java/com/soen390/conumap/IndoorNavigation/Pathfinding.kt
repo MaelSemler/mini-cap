@@ -10,6 +10,7 @@ import java.util.PriorityQueue
  * from one room to another, or from one room to an indoor point of interest.
  *
  * NOTE: It currently only works with vertical/horizontal movements
+ * NOTE2: Coordinates start from top left corner (0,0) and increase rightwards and downwards.
  */
 
 class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
@@ -31,10 +32,8 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
             } else {
                 addNeighbours(currentNode)
             }
-            println(""+currentNode+" "+currentNode.f+"="+currentNode.g+"+"+currentNode.h)
         }
         var noPath:MutableList<Node> = mutableListOf()
-        println("There is no path")
         return  noPath
     }
 
@@ -87,11 +86,11 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
 
     //Add neighbours of current node to the open set using checkNode() function
     fun addNeighbours(currentNode: Node) {
-        var upperRow = currentNode.row + 1
+        var upperRow = currentNode.row - 1
         var middleRow = currentNode.row
-        var lowerRow = currentNode.row - 1
+        var lowerRow = currentNode.row + 1
         var col = currentNode.col
-        if (upperRow > mapArray.size) {
+        if (upperRow >= 0) {
             checkNode(currentNode, upperRow, col, moveCost)
         }
         if (col - 1 >= 0 ) {
@@ -100,7 +99,7 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
         if (col + 1 < mapArray[0].size) {
             checkNode(currentNode, middleRow, col +1 , moveCost)
         }
-        if (lowerRow < mapArray.size && lowerRow >=0) {
+        if (lowerRow < mapArray.size) {
             checkNode(currentNode, lowerRow, col, moveCost)
         }
     }
@@ -131,7 +130,6 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
     fun printMapToConsole() {
         for (array in mapArray) {
             for (value in array) {
-                print(value)
                 if (value.equals(origin)) {
                     print("O    ")
                 } else if (value.equals(destination)) {
