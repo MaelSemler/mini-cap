@@ -46,7 +46,7 @@ object Schedule {
         val jsonFactory = JacksonFactory.getDefaultInstance()
         calendar = Calendar.Builder(
             transport, jsonFactory, mCredential)
-            .setApplicationName("Google Calendar API Android Quickstart")
+            .setApplicationName("ConUMap")
             .build()
     }
 

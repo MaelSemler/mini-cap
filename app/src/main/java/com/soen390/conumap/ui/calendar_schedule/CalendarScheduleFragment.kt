@@ -217,12 +217,12 @@ class CalendarScheduleFragment : Fragment() {
 
     private fun showSchedule(eventList: MutableList<Event>){
 
-
+        var layout: RelativeLayout
         for(event in eventList){
             val date = java.util.Calendar.getInstance()
             date.timeInMillis = event.start.dateTime.value
 
-            var layout = when(date.get(java.util.Calendar.DAY_OF_WEEK)){
+             layout = when(date.get(java.util.Calendar.DAY_OF_WEEK)){
                 Calendar.SUNDAY -> sundayEventLayout
                 Calendar.MONDAY -> mondayEventLayout
                 Calendar.TUESDAY -> tuesdayEventLayout
@@ -232,7 +232,21 @@ class CalendarScheduleFragment : Fragment() {
                 Calendar.SATURDAY -> saturdayEventLayout
                 else -> RelativeLayout(null)//Todo: CHANGE THIS
             }
-            makeEventUI(layout,event,date)
+
+            val eventButton: Button = Button(context!!)
+            val dp = context!!.resources.displayMetrics.density;
+            val param = RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                durationToHeight(date, event).toInt()
+            )
+
+            param.topMargin = timeToMargin(date).toInt()
+
+            eventButton.minHeight = (30*dp).toInt()
+            eventButton.text = event.summary//Todo: have the proper text shown here, like in the mockups
+            eventButton.textSize = 10f
+            eventButton.layoutParams = param
+            layout.addView(eventButton)
         }
     }
 
@@ -244,24 +258,6 @@ class CalendarScheduleFragment : Fragment() {
         thursdayEventLayout.removeAllViews()
         fridayEventLayout.removeAllViews()
         saturdayEventLayout.removeAllViews()
-    }
-
-    private fun makeEventUI(layout: RelativeLayout, event: Event, date: Calendar){
-        val eventButton: Button = Button(context!!)
-        val dp = context!!.resources.displayMetrics.density;
-        val param = RelativeLayout.LayoutParams(
-            RelativeLayout.LayoutParams.WRAP_CONTENT,
-            durationToHeight(date, event).toInt()
-        )
-
-        param.topMargin = timeToMargin(date).toInt()
-
-        eventButton.minHeight = (30*dp).toInt()
-        eventButton.text = event.summary//Todo: have the proper text shown here, like in the mockups
-        eventButton.textSize = 10f
-        eventButton.layoutParams = param
-        layout.addView(eventButton)
-
     }
 
     private fun timeToMargin(date: Calendar) : Float{
