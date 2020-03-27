@@ -66,22 +66,26 @@ class DirectionsFragment : Fragment() {
             NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_searchCompletedFragment)
         }
         binding.transportationWalk.setOnClickListener {   //This binds the radio button to an onclick listener event that sets the transportation mode
-            pathviewModel.setTransportationMode("walking")
+            pathviewModel.setTransportationMode("walking")//TODO: This does not work right now will need to be fixed
+            Path.setTransportMode("walking")
             Path.findDirections(activity!!)
             //TODO: redisplay new directions
         }
         binding.transportationBike.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
-            pathviewModel.setTransportationMode("bicycling")
+//            pathviewModel.setTransportationMode("bicycling")
+            Path.setTransportMode("bicycling")
             Path.findDirections(activity!!)
             //TODO: redisplay new directions
         }
         binding.transportationCar.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
-            pathviewModel.setTransportationMode("driving")
+//            pathviewModel.setTransportationMode("driving")
+            Path.setTransportMode("driving")
             Path.findDirections(activity!!)
             //TODO: redisplay new directions
         }
         binding.transportationBus.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
-            pathviewModel.setTransportationMode("transit")
+//            pathviewModel.setTransportationMode("transit")
+            Path.setTransportMode("transit")
             Path.findDirections(activity!!)
         }
         //TODO: enable switchOriginAndDestination button

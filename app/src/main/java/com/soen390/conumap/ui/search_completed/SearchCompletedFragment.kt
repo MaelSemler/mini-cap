@@ -16,7 +16,7 @@ import com.soen390.conumap.path.Path.findDirections
 import com.soen390.conumap.path.PathViewModel
 import com.soen390.conumap.ui.search_bar.SearchBarViewModel
 import kotlinx.android.synthetic.main.search_completed_fragment.*
-
+import com.soen390.conumap.path.Path
 //import com.soen390.conumap.map.Map.getMap
 
 class SearchCompletedFragment : Fragment() {
@@ -42,7 +42,12 @@ class SearchCompletedFragment : Fragment() {
 
         //This changes fragment when the "45 degree" arrow is pressed
         travel_button.setOnClickListener{
-            pathviewModel.transportationMode.value = "walking"
+//            pathviewModel.transportationMode.value = "walking"
+            //******************************************* THIS IS WHERE YOU NEED TO SET THE TRANSPORT MODE*********************** Otherwise it is gonna be null
+
+            Path.setTransportMode(pathviewModel.getTransportationMode())//This doesnt look like its working =/
+            Path.setTransportMode("walking")//TODO: This will work
+            Path.setTransportMode("bicycling")//TODO: This will work
             findDirections(activity!!)
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }

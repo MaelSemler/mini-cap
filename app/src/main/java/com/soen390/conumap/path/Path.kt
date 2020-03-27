@@ -18,7 +18,7 @@ object Path {
     private val pathviewModel= PathViewModel()
     private var distance=0.0
     private val alternativesOn= false
-    private val transportationMode= pathviewModel.transportationMode.value
+    private var transportationMode= pathviewModel.transportationMode.value
     val _PathDirectionText = MutableLiveData<String>()
     val _PathTotalDistanceText = MutableLiveData<String>()
     val _PathTotalTimeText = MutableLiveData<String>()
@@ -40,6 +40,9 @@ object Path {
         _infoPathText.value ="via"
     }
 
+    fun setTransportMode(value:String){
+        transportationMode = value
+    }
 
  fun findDirections(activity: FragmentActivity){
         //TODO: Default origin is the current location
@@ -57,7 +60,7 @@ object Path {
                     activity,
                     originLatLng,
                     destinationLatLng,
-                    transportationMode,
+                    transportationMode!!,
                     alternativesOn
                 )
             }//Calling the actual route function and passing all the needed parameters
