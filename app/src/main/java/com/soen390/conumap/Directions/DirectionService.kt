@@ -51,8 +51,6 @@ object DirectionService {
 
             val urlDirections = getGoogleMapRequestURL(activity, originLatLng, destinationLatLng, transportationMode, alternativesOn)
 
-
-
             //Making the Request
             launch(Dispatchers.IO) {
                 val directionsRequest = object : StringRequest(

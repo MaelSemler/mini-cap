@@ -1,27 +1,20 @@
 package com.soen390.conumap.ui.search_completed
-
 import android.content.SharedPreferences
 import android.location.Address
 import android.location.Geocoder
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.maps.model.LatLng
-//import com.soen390.conumap.Directions.Directions.routeTest
 import com.soen390.conumap.R
-import com.soen390.conumap.path.path.findDirections
-import com.soen390.conumap.map.Map
 import com.soen390.conumap.ui.search_bar.SearchBarViewModel
 import kotlinx.android.synthetic.main.search_completed_fragment.*
 import java.util.*
-
-//import com.soen390.conumap.map.Map.getMap
 
 class SearchCompletedFragment : Fragment() {
     var prefs: SharedPreferences? = null
@@ -51,15 +44,11 @@ class SearchCompletedFragment : Fragment() {
 
         //This changes fragment when the "45 degree" arrow is pressed
         travel_button.setOnClickListener{
-            //TODO: send the result of the search (DirectionsFragment)
+            //TODO: send the result of the search (DirectionsFragment) The findDirections() function is being called directly inside of directionsFragment, but ideally we would like to keep it here
 //            findDirections(activity!!)
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }
         restart_button.setOnClickListener{
-            // Cancel destination in modelView
-            //val model: SearchBarViewModel by activityViewModels()
-            //model.setDestination("")
-
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_searchBarFragment)
         }
         location_button.setOnClickListener{

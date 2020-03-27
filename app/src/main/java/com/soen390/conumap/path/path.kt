@@ -113,7 +113,7 @@ object path {
 
     //Update TotalDistance
     fun updateTotalDistance(distance:String){
-        _totalDistanceText.value += distance + ")"
+        _totalDistanceText.value = "(" + distance + ")"
     }
 
     //Update TotalDuration
@@ -123,7 +123,7 @@ object path {
 
     //Update the information of the path
     fun updatePathInfo(routeDescription:String){
-        _infoPathText.value += routeDescription
+        _infoPathText.value = routeDescription
     }
 
 

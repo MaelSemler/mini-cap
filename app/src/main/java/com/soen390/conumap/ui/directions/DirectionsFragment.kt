@@ -90,7 +90,6 @@ class DirectionsFragment : Fragment() {
             binding.startLocationButton.setText(address)
             startLocationAddress=address
 
-
         }
 
         val sharedPreferences: SharedPreferences =requireContext().getSharedPreferences("SearchCount",0)
@@ -102,17 +101,13 @@ class DirectionsFragment : Fragment() {
         val originLatLng = getOrigin(startLocationAddress)
         path.setOrigin(originLatLng)
         //TODO:Destination is hardcoded for now
-        val destinationLatLng = getDestination(endLocationAddress)//HardCoded for now
+        val destinationLatLng = getDestination(endLocationAddress)
         path.setDestination(destinationLatLng)
-        //TODO: Origin and Destination should have a title
-        map.addMarker(originLatLng,startLocation.toString())
-        map.addMarker(destinationLatLng, endLocation.toString())
-        map.moveCamera(originLatLng, 14.5f)
 
-        //To test directions.route on submaster
-//        directions.route(requireActivity(), originLatLng, destinationLatLng)
+
+        //TODO: Will need to be refactor, we should be calling this function from the onclick in SearchCompletedFragment
         path.findDirections(activity!!)
-        //TODO: comment route test out
+
 
         binding.startLocationButton.setOnClickListener{
             //TODO: send info to the search bar (DirectionSearchFragment)
@@ -161,12 +156,8 @@ class DirectionsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        //DELETE viewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
         viewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
-       // val model: SearchBarViewModel by activityViewModels()
-        //val destination = model.getDestination()
 
-        //end_location_button.setText(destination)
 
     }
 
