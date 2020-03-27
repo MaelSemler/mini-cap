@@ -20,8 +20,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.ButtonBarLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
@@ -35,12 +37,12 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.soen390.conumap.R
+import com.soen390.conumap.ui.search_bar.SearchBarViewModel
 import kotlinx.android.synthetic.main.search_results_fragment.*
 
 
 class SearchResultsFragment : Fragment() {
 
-    private lateinit var viewModel: SearchResultsViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -135,6 +137,11 @@ class SearchResultsFragment : Fragment() {
         }
 
         cancelButton.setOnClickListener {
+            // Toast.makeText(getActivity(), "Search Results Fragment: cancelButton", Toast.LENGTH_SHORT).show()
+
+            // Cancel destination in modelView
+            val model: SearchBarViewModel by activityViewModels()
+            model.setDestination("")
             //TODO: look in if this is the best way to implement a "back" function
             NavHostFragment.findNavController(this).navigateUp()
             //TODO:if keyboard is shown, hide the keyboard
@@ -146,7 +153,7 @@ class SearchResultsFragment : Fragment() {
 
         override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(SearchResultsViewModel::class.java)
+
         // TODO: Use the ViewModel
 
     }
@@ -165,16 +172,19 @@ class SearchResultsFragment : Fragment() {
             val place= data?.let { Autocomplete.getPlaceFromIntent(it) }
             Log.i(TAG,"Place: "+ place!!.name+ ","+place.id)
             searchBar.setText(place.name)
-            NavHostFragment.findNavController(this)
-                .navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
+
+            val model: SearchBarViewModel by activityViewModels()
+            model.setDestination(place.name)
+            model.setDestinationAddress(place.address)
             val sharedPreferences: SharedPreferences =requireContext().getSharedPreferences("SearchDest",0)
 
+//                Toast.makeText(getActivity(), "Search Results Fragment: " + place.name, Toast.LENGTH_SHORT).show()
+            //Needed to use SharedPref to store the address
             val editor: SharedPreferences.Editor =  sharedPreferences.edit()
-            editor.putString("destinationLocation",place.address)
-
+            editor.putString("destinationLocation",place.name)
+            editor.putString("destinationLocationAddress",place.address)
             editor.apply()
             editor.commit()
-
         }
         else if (resultCode==AutocompleteActivity.RESULT_ERROR)
         {
@@ -182,6 +192,7 @@ class SearchResultsFragment : Fragment() {
             Log.i(TAG, status.statusMessage)
             searchBar.setText("Error")
         }
+        NavHostFragment.findNavController(this).navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
     }
 
 

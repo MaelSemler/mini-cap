@@ -16,8 +16,8 @@ import kotlinx.coroutines.launch
 
 //TODO: Implement Live Data Binding as in directions.kt
 object path {
-    //origin
-//    val destination= Location()
+    private lateinit var originFromSearch:LatLng
+    private lateinit var destinationFromSearch: LatLng
     private var distance=0.0
     private var transportationMethod="Car"
     //time
@@ -50,12 +50,20 @@ object path {
         _infoPathText.value ="via "
     }
 
+    fun setOrigin(value:LatLng){
+        originFromSearch = value
+    }
+
+    fun setDestination(value:LatLng){
+        destinationFromSearch = value
+    }
+
 
  fun findDirections(activity: FragmentActivity){
         //TODO: Default origin is the current location
-        val originLatLng = map.getCurrentLocation()
+        val originLatLng = originFromSearch
         //TODO:Destination is hardcoded for now
-        val destinationLatLng = LatLng(45.497044, -73.578407)//HardCoded for now
+        val destinationLatLng = destinationFromSearch
 
         //TODO: Set Transportation mode
         //This can be walking, driving, bicycling, transit

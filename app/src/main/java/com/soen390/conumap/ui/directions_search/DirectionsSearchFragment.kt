@@ -52,6 +52,8 @@ class DirectionsSearchFragment : Fragment() {
         search_bar = root.findViewById<View>(R.id.DirectionSearchResults) as Button
 
         //Selects the search bar input
+        //search_bar.requestFocus()
+
         this.context?.let {
             Places.initialize(it, context?.getString(R.string.apiKey)!!)
         };  //initialize context
@@ -61,7 +63,16 @@ class DirectionsSearchFragment : Fragment() {
             LatLng(45.425579, -73.687204),
             LatLng(45.706574, -73.475121)
         )
-        /*search_bar.requestFocus()
+
+        search_bar.setOnClickListener {
+            val fields = arrayListOf (Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS)
+            val intent = Autocomplete.IntentBuilder(
+                    AutocompleteActivityMode.OVERLAY, fields).setCountry("CA").setLocationBias(bounds)
+                .build(this.requireContext());
+            startActivityForResult(intent, autoCompleteRequestCode);
+        }
+
+        /*
         //This is the search bar edit text
         //this method waits for the "ENTER" key to be pressed
         //It changes fragment when it is pressed
@@ -73,14 +84,6 @@ class DirectionsSearchFragment : Fragment() {
             }
             false
         })*/
-
-        search_bar.setOnClickListener {
-            val fields = arrayListOf (Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS)
-            val intent = Autocomplete.IntentBuilder(
-                    AutocompleteActivityMode.OVERLAY, fields).setCountry("CA").setLocationBias(bounds)
-                .build(this.requireContext());
-            startActivityForResult(intent, autoCompleteRequestCode);
-        }
 
         //This button clears the edit text input when it is pressed
         clear_button.setOnClickListener {
@@ -127,7 +130,8 @@ class DirectionsSearchFragment : Fragment() {
                 val editor:SharedPreferences.Editor =  sharedPreferences.edit()
 
 
-                editor.putString("currentLocation",place.address)
+                editor.putString("currentLocation",place.name)
+                editor.putString("currentLocationAddress",place.address)
 
                 editor.apply()
                 editor.commit()}
@@ -135,8 +139,8 @@ class DirectionsSearchFragment : Fragment() {
                 val sharedPreferences: SharedPreferences =requireContext().getSharedPreferences("SearchDest",0)
 
                 val editor:SharedPreferences.Editor =  sharedPreferences.edit()
-                editor.putString("destinationLocation",place.address)
-
+                editor.putString("destinationLocation",place.name)
+                editor.putString("destinationLocationAddress",place.address)
                 editor.apply()
                 editor.commit()
             }

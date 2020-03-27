@@ -13,17 +13,24 @@ import android.widget.Toast
 
 import android.widget.RadioButton
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.maps.model.LatLng
-import com.soen390.conumap.Directions.directions
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.NavHostFragment
+import com.soen390.conumap.Directions.Directions
+
 
 import com.soen390.conumap.R
 import com.soen390.conumap.databinding.DirectionsFragmentBinding
+import com.soen390.conumap.path.path
+import com.soen390.conumap.ui.search_bar.SearchBarViewModel
+import kotlinx.android.synthetic.main.directions_fragment.*
 import java.util.*
 
 class DirectionsFragment : Fragment() {
     var prefs: SharedPreferences? = null
     val map = com.soen390.conumap.map.Map
+    var startLocationAddress:String?=null
+
     companion object {
         fun newInstance() = DirectionsFragment()
     }
@@ -55,13 +62,15 @@ class DirectionsFragment : Fragment() {
         }
 
         //To change starting and ending location, just click on the buttons to be sent to a search fragment
-        prefs = requireContext().getSharedPreferences("SearchCount", 0)
-        val count=  prefs!!.getString("result","" )
+
         prefs = requireContext().getSharedPreferences("SearchCurrent", 0)
         val startLocation=  prefs!!.getString("currentLocation","" )
+        startLocationAddress=prefs!!.getString("currentLocationAddress","" )
         binding.startLocationButton.setText(startLocation)
         prefs = requireContext().getSharedPreferences("SearchDest", 0)
-        val endLocation = prefs!!.getString("destinationLocation","" )
+        val endLocation=  prefs!!.getString("destinationLocation","" )
+        val endLocationAddress=  prefs!!.getString("destinationLocationAddress","" )
+
         binding.endLocationButton.setText(endLocation)
         if(startLocation.equals("")){
             val originLatLng = map.getCurrentLocation()
@@ -72,41 +81,37 @@ class DirectionsFragment : Fragment() {
             addresses = geocoder.getFromLocation(
                 originLatLng.latitude,
                 originLatLng.longitude,
-                1
-            )
+                1)
+            
 
-            val address =
-                addresses[0].getAddressLine(0)
+            val address = addresses[0].getAddressLine(0)
             val city = addresses[0].getLocality()
 
             binding.startLocationButton.setText(address)
+            startLocationAddress=address
+
 
         }
-        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("SearchCount",0)
+
+        val sharedPreferences: SharedPreferences =requireContext().getSharedPreferences("SearchCount",0)
 
         val editor: SharedPreferences.Editor =  sharedPreferences.edit()
-        val geocoderLocation :Geocoder= Geocoder(requireContext(), Locale.getDefault())
-        val addressesStart: List<Address>?= geocoderLocation.getFromLocationName( binding.startLocationButton.text.toString(), 5)
-        val straddress = addressesStart!![0]
+
+
         map?.getMapInstance().clear()
-        val latitudeStart = straddress .latitude
-        val longitudeStart = straddress .longitude
-        val addressesEnd: List<Address>?= geocoderLocation.getFromLocationName( binding.endLocationButton.text.toString(), 5)
-        val addressEnd = addressesEnd!![0]
-
-        val latitudeEnd = addressEnd .latitude
-        val longitudeEnd = addressEnd .longitude
-        val originLatLng = LatLng(latitudeStart, longitudeStart)
-
-        val destinationLatLng = LatLng(latitudeEnd, longitudeEnd)
-
-        map.addMarker(originLatLng,("This is the origin"))
-        map.addMarker(destinationLatLng, "Destination")
+        val originLatLng = getOrigin(startLocationAddress)
+        path.setOrigin(originLatLng)
+        //TODO:Destination is hardcoded for now
+        val destinationLatLng = getDestination(endLocationAddress)//HardCoded for now
+        path.setDestination(destinationLatLng)
+        //TODO: Origin and Destination should have a title
+        map.addMarker(originLatLng,startLocation.toString())
+        map.addMarker(destinationLatLng, endLocation.toString())
         map.moveCamera(originLatLng, 14.5f)
 
-
-        directions.route(requireActivity(), originLatLng, destinationLatLng)
-
+        //To test directions.route on submaster
+//        directions.route(requireActivity(), originLatLng, destinationLatLng)
+        //TODO: comment route test out
 
         binding.startLocationButton.setOnClickListener{
             //TODO: send info to the search bar (DirectionSearchFragment)
@@ -114,7 +119,6 @@ class DirectionsFragment : Fragment() {
             editor.putString("result","1")
             editor.apply()
             editor.commit()
-
         }
         binding.endLocationButton.setOnClickListener{
             //TODO: send info to the search bar (DirectionSearchFragment)
@@ -122,8 +126,8 @@ class DirectionsFragment : Fragment() {
             editor.putString("result","2")
             editor.apply()
             editor.commit()
-
         }
+
         //TODO: look in if this is the best way to implement a "back" function
         binding.returnButton.setOnClickListener{
             NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_searchCompletedFragment)
@@ -131,9 +135,37 @@ class DirectionsFragment : Fragment() {
         return binding.root
     }
 
+    fun  getOrigin(startLocation: String ?):LatLng{
+        val geocoderLocation : Geocoder = Geocoder(requireContext(), Locale.getDefault())
+        val addressesStart: List<Address>?= geocoderLocation.getFromLocationName( startLocation, 5)
+        val straddress = addressesStart!![0]
+
+        val latitudeStart = straddress .latitude
+        val longitudeStart = straddress .longitude
+        val originLatLng = LatLng(latitudeStart,longitudeStart)
+        return originLatLng
+    }
+    fun getDestination(endLocation:String?):LatLng{
+        val geocoderLocation : Geocoder = Geocoder(requireContext(), Locale.getDefault())
+
+        val addressesEnd: List<Address>?= geocoderLocation.getFromLocationName(endLocation, 5)
+        val addressEnd = addressesEnd!![0]
+
+        val latitudeEnd = addressEnd .latitude
+        val longitudeEnd = addressEnd .longitude
+
+        val destinationLatLng = LatLng(latitudeEnd, longitudeEnd)
+        return destinationLatLng
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        //DELETE viewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
         viewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
+       // val model: SearchBarViewModel by activityViewModels()
+        //val destination = model.getDestination()
+
+        //end_location_button.setText(destination)
 
     }
 
