@@ -96,11 +96,12 @@ object DirectionService {
 
                         //Update the display on the main thread
                         //TODO: THIS IS WHERE YOU EITHER CALL A FUNCTION THAT WILL LOGICALLY CHOOSE WHICH PATH TO DISPLAY ON THE SCREEN
+                        //TODO: Currently hardcoded to return and display the first route only, but the rest are stored inside of listOfPath
                         activity.runOnUiThread {
-                            com.soen390.conumap.path.path.updatePathInfo(listOfPath[2].getInfoPathText())
-                            com.soen390.conumap.path.path.updateTotalDuration(listOfPath[2].getTotalTimeText())
-                            com.soen390.conumap.path.path.updateTotalDistance(listOfPath[2].getTotalDistanceText())
-                            com.soen390.conumap.path.path.updateSteps(listOfPath[2].getDirectionText())
+                            com.soen390.conumap.path.path.updatePathInfo(listOfPath[0].getInfoPathText())
+                            com.soen390.conumap.path.path.updateTotalDuration(listOfPath[0].getTotalTimeText())
+                            com.soen390.conumap.path.path.updateTotalDistance(listOfPath[0].getTotalDistanceText())
+                            com.soen390.conumap.path.path.updateSteps(listOfPath[0].getDirectionText())
                         }
 
                         //This Draw on the Map the tracing of "Steps"
