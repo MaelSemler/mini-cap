@@ -61,7 +61,7 @@ object path {
 
  fun findDirections(activity: FragmentActivity){
         //TODO: Default origin is the current location
-        val originLatLng = originFromSearch
+        val originLatLng = map.getCurrentLocation()
         //TODO:Destination is hardcoded for now
         val destinationLatLng = destinationFromSearch
 

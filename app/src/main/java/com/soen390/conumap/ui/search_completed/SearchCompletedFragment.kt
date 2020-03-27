@@ -1,6 +1,8 @@
 package com.soen390.conumap.ui.search_completed
 
 import android.content.SharedPreferences
+import android.location.Address
+import android.location.Geocoder
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,12 +12,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.gms.maps.model.LatLng
 //import com.soen390.conumap.Directions.Directions.routeTest
 import com.soen390.conumap.R
 import com.soen390.conumap.path.path.findDirections
 import com.soen390.conumap.map.Map
 import com.soen390.conumap.ui.search_bar.SearchBarViewModel
 import kotlinx.android.synthetic.main.search_completed_fragment.*
+import java.util.*
 
 //import com.soen390.conumap.map.Map.getMap
 
@@ -77,6 +81,32 @@ class SearchCompletedFragment : Fragment() {
         //TODO: get the map to focus on the search result location
 
     }
+
+
+
+    fun  getOrigin(startLocation: String ?): LatLng {
+        val geocoderLocation : Geocoder = Geocoder(requireContext(), Locale.getDefault())
+        val addressesStart: List<Address>?= geocoderLocation.getFromLocationName( startLocation, 5)
+        val straddress = addressesStart!![0]
+
+        val latitudeStart = straddress .latitude
+        val longitudeStart = straddress .longitude
+        val originLatLng = LatLng(latitudeStart,longitudeStart)
+        return originLatLng
+    }
+    fun getDestination(endLocation:String?): LatLng {
+        val geocoderLocation : Geocoder = Geocoder(requireContext(), Locale.getDefault())
+
+        val addressesEnd: List<Address>?= geocoderLocation.getFromLocationName(endLocation, 5)
+        val addressEnd = addressesEnd!![0]
+
+        val latitudeEnd = addressEnd .latitude
+        val longitudeEnd = addressEnd .longitude
+
+        val destinationLatLng = LatLng(latitudeEnd, longitudeEnd)
+        return destinationLatLng
+    }
+
 
 }
 
