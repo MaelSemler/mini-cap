@@ -11,7 +11,7 @@ import com.soen390.conumap.R
 import com.soen390.conumap.path.Path.findDirections
 import com.soen390.conumap.ui.search_bar.SearchBarViewModel
 import kotlinx.android.synthetic.main.search_completed_fragment.*
-
+import com.soen390.conumap.path.Path
 //import com.soen390.conumap.map.Map.getMap
 
 class SearchCompletedFragment : Fragment() {

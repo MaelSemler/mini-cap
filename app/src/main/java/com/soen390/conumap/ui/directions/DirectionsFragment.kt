@@ -63,22 +63,42 @@ class DirectionsFragment : Fragment() {
             NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_searchCompletedFragment)
         }
         binding.transportationWalk.setOnClickListener {   //This binds the radio button to an onclick listener event that sets the transportation mode
+<<<<<<< HEAD
             viewModel.setTransportation("walking")
+=======
+            pathviewModel.setTransportationMode("walking")//TODO: This does not work right now will need to be fixed
+            Path.setTransportMode("walking")
+>>>>>>> bdee6e33dcd0640dd2131c9b4b464a5ff18974da
             Path.findDirections(activity!!)
             //TODO: redisplay new directions
         }
         binding.transportationBike.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
+<<<<<<< HEAD
             viewModel.setTransportation("bicycling")
+=======
+//            pathviewModel.setTransportationMode("bicycling")
+            Path.setTransportMode("bicycling")
+>>>>>>> bdee6e33dcd0640dd2131c9b4b464a5ff18974da
             Path.findDirections(activity!!)
             //TODO: redisplay new directions
         }
         binding.transportationCar.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
+<<<<<<< HEAD
             viewModel.setTransportation("driving")
+=======
+//            pathviewModel.setTransportationMode("driving")
+            Path.setTransportMode("driving")
+>>>>>>> bdee6e33dcd0640dd2131c9b4b464a5ff18974da
             Path.findDirections(activity!!)
             //TODO: redisplay new directions
         }
         binding.transportationBus.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
+<<<<<<< HEAD
             viewModel.setTransportation("transit")
+=======
+//            pathviewModel.setTransportationMode("transit")
+            Path.setTransportMode("transit")
+>>>>>>> bdee6e33dcd0640dd2131c9b4b464a5ff18974da
             Path.findDirections(activity!!)
             //TODO: redisplay new directions
 

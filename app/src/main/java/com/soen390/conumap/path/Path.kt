@@ -19,6 +19,7 @@ object Path {
     var alternativesOn= false
     var transportationMode: String = "driving"
     var changedTransportationMode= false
+
     val _PathDirectionText = MutableLiveData<String>()
     val _PathTotalDistanceText = MutableLiveData<String>()
     val _PathTotalTimeText = MutableLiveData<String>()
@@ -39,6 +40,9 @@ object Path {
 //        _infoPathText.value ="via"
 //    }
 
+    fun setTransportMode(value:String){
+        transportationMode = value
+    }
 
  fun findDirections(activity: FragmentActivity){
         //TODO: Default origin is the current location

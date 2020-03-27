@@ -8,7 +8,12 @@ class PathViewModel: ViewModel()  {
     var alternativeOn= MutableLiveData<Boolean>()
 
     fun setTransportationMode(mode:String){
+        //Yomna's
         transportationMode.value=mode
+//        Path.setTransportMode(mode)//TODO: I THINK THIS DOESNT CHANGE ANYTHING BUT TO REVIEW
+    }
+    fun getTransportationMode():String{
+        return transportationMode.value.toString()
     }
 
 }
