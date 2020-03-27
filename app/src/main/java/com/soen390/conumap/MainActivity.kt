@@ -2,6 +2,8 @@ package com.soen390.conumap
 
 import android.os.Bundle
 import android.view.Menu
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import android.widget.Toast
 
 import com.google.android.material.navigation.NavigationView
