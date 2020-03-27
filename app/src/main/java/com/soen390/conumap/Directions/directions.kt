@@ -12,7 +12,6 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.PolyUtil
 import com.soen390.conumap.R
 import com.soen390.conumap.map.Map
-import com.soen390.conumap.path.Path
 import org.json.JSONArray
 import org.json.JSONObject
 
