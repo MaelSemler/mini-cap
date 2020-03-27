@@ -47,7 +47,7 @@ object DirectionService {
         coroutineScope{
 
             //Path is an arrayList that store every "steps"/path =>Will be used to draw the path
-            val path: MutableList<List<LatLng>> = ArrayList()
+            //val path: MutableList<List<LatLng>> = ArrayList()
             listOfPath.clear()     // reset to make sure we start with a clean status
 
             //Retrieve the correct URL to call the API
@@ -90,11 +90,11 @@ object DirectionService {
                                 dirObj.updateTotalDistance(totalDistance)
                                 dirObj.updateTotalDuration(totalDuration)
                                 dirObj.updatePathInfo(pathInfo)
+                                dirObj.updateMapSteps(steps)
 
                                 //List of Path is an ArrayList containing every alternative route
                                 listOfPath.add(dirObj)
                                 ///////////////////////////////////////////////////
-
                             }
 
                             //Update the display on the main thread
@@ -115,21 +115,21 @@ object DirectionService {
                                 for (i in 0 until listOfPath.size){
                                     Log.d("DirectionServices", "Building Alternate list $i " + listOfPath[i].getInfoPathText())
                                     if (i != n){
-                                        com.soen390.conumap.path.path.updateAlternateText(listOfPath[n].getTotalTimeText(), listOfPath[n].getTotalDistanceText() ,listOfPath[i].getInfoPathText())
+                                        com.soen390.conumap.path.path.updateAlternateText(listOfPath[i].getTotalTimeText(), listOfPath[i].getTotalDistanceText() ,listOfPath[i].getInfoPathText())
                                     }
                                 }
                             }
 
                             //This Draw on the Map the tracing of "Steps"
-                            //TODO: This needs to be refactor into another function and process what "path" to display/draw on the map
-                            for (i in 0 until steps.length()) {
-                                val points =
-                                    steps.getJSONObject(i).getJSONObject("polyline").getString("points")
-                                path.add(PolyUtil.decode(points))
+                            drawPath(steps, Color.RED)     // Draw main path
+
+                            // Draws alternate routes
+                            for (i in 0 until listOfPath.size) {
+                                if (i != n) {
+                                    drawPath(listOfPath[i].getMapSteps(), Color.GRAY)
+                                }
                             }
-                            for (i in 0 until path.size) {
-                                map.getMapInstance().addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
-                            }
+
                         } else {
                             // status NOT OK (No route from Google API)
                             //TODO display error message on phone
@@ -151,6 +151,21 @@ object DirectionService {
             activity.runOnUiThread {
                 map.moveCamera(destinationLatLng, 18f)
             }
+        }
+    }
+
+    private fun drawPath(steps: JSONArray, color: Int) {
+        //Path is an arrayList that store every "steps"/path =>Will be used to draw the path
+        val path: MutableList<List<LatLng>> = ArrayList()
+
+        for (i in 0 until steps.length()) {
+            val points =
+                steps.getJSONObject(i).getJSONObject("polyline").getString("points")
+            path.add(PolyUtil.decode(points))
+        }
+
+        for (i in 0 until path.size) {
+            map.getMapInstance().addPolyline(PolylineOptions().addAll(path[i]).color(color))
         }
     }
 }
