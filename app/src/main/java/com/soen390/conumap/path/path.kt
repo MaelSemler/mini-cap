@@ -48,6 +48,7 @@ object path {
         _totalDistanceText.value = "("
         _totalTimeText.value = ""
         _infoPathText.value ="via "
+        originFromSearch = map.getCurrentLocation()
     }
 
     fun setOrigin(value:LatLng){
@@ -61,7 +62,7 @@ object path {
 
  fun findDirections(activity: FragmentActivity){
         //TODO: Default origin is the current location
-        val originLatLng = map.getCurrentLocation()
+        val originLatLng = originFromSearch
         //TODO:Destination is hardcoded for now
         val destinationLatLng = destinationFromSearch
 
