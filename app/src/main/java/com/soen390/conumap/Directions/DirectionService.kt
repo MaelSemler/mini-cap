@@ -15,6 +15,7 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.PolyUtil
 import com.soen390.conumap.R
 import com.soen390.conumap.map.Map
+import com.soen390.conumap.path.Path
 import kotlinx.coroutines.*
 import kotlinx.coroutines.internal.SynchronizedObject
 import org.json.JSONObject
@@ -58,7 +59,7 @@ object DirectionService {
                     Request.Method.GET,
                     urlDirections,
                     com.android.volley.Response.Listener<String> { response ->
-                        val jsonResponse = JSONObject(response)
+                       val jsonResponse = JSONObject(response)
                         // This part to understand it look carefully at the JSON response sent by the API
                         val routes = jsonResponse.getJSONArray("routes")
 
@@ -83,12 +84,12 @@ object DirectionService {
                             dirObj.updateTotalDistance(totalDistance)
                             dirObj.updateTotalDuration(totalDuration)
                             dirObj.updatePathInfo(pathInfo)
-
                             //List of Path is an ArrayList containing every alternative route
+                            if (Path.changedTransportationMode)
+                                listOfPath.clear()
                             listOfPath.add(dirObj)
                             ///////////////////////////////////////////////////
                         }
-
                         //Update the display on the main thread
                         //TODO: THIS IS WHERE YOU EITHER CALL A FUNCTION THAT WILL LOGICALLY CHOOSE WHICH PATH TO DISPLAY ON THE SCREEN
                         activity.runOnUiThread {

@@ -15,10 +15,10 @@ object Path {
     //origin
     // val destination= Location()
     //accessibilityFriendly
-    private val pathviewModel= PathViewModel()
     private var distance=0.0
-    private val alternativesOn= false
-    private val transportationMode= pathviewModel.transportationMode.value
+    var alternativesOn= false
+    var transportationMode: String = "driving"
+    var changedTransportationMode= false
     val _PathDirectionText = MutableLiveData<String>()
     val _PathTotalDistanceText = MutableLiveData<String>()
     val _PathTotalTimeText = MutableLiveData<String>()
@@ -26,19 +26,18 @@ object Path {
 
     var directionsArray : ArrayList<Directions> = arrayListOf()
 
-    val directionText = _PathDirectionText  //Left-hand variables are what are passed onto the DirectionsViewModel
-    val totalDistanceText = _PathTotalDistanceText
-    val totalTimeText = _PathTotalTimeText
-    val infoPathText = _infoPathText
-
+//    val directionText = _PathDirectionText  //Left-hand variables are what are passed onto the DirectionsViewModel
+//    val totalDistanceText = _PathTotalDistanceText
+//    val totalTimeText = _PathTotalTimeText
+//    val infoPathText = _infoPathText
 
     val map = Map
-    init {
-        _PathDirectionText.value = "Directions: "
-        _PathTotalDistanceText.value = " "
-        _PathTotalTimeText.value = ""
-        _infoPathText.value ="via"
-    }
+//    init {
+//        _PathDirectionText.value = "Directions: "
+//        _PathTotalDistanceText.value = " "
+//        _PathTotalTimeText.value = ""
+//        _infoPathText.value ="via"
+//    }
 
 
  fun findDirections(activity: FragmentActivity){
@@ -52,7 +51,6 @@ object Path {
         map.addMarker(destinationLatLng, "Destination")
         map.moveCamera(originLatLng, 14.5f)
         GlobalScope.launch {
-            if (transportationMode != null) {
                 route(
                     activity,
                     originLatLng,
@@ -60,7 +58,7 @@ object Path {
                     transportationMode,
                     alternativesOn
                 )
-            }//Calling the actual route function and passing all the needed parameters
+            //Calling the actual route function and passing all the needed parameters
         }
  }
 

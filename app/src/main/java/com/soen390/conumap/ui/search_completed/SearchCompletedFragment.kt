@@ -1,19 +1,14 @@
 package com.soen390.conumap.ui.search_completed
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
-//import com.soen390.conumap.Directions.Directions.routeTest
-
 import com.soen390.conumap.R
 import com.soen390.conumap.path.Path.findDirections
-import com.soen390.conumap.path.PathViewModel
 import com.soen390.conumap.ui.search_bar.SearchBarViewModel
 import kotlinx.android.synthetic.main.search_completed_fragment.*
 
@@ -26,7 +21,6 @@ class SearchCompletedFragment : Fragment() {
             SearchCompletedFragment()
 //        val dir = directions(Map)
     }
-    val pathviewModel: PathViewModel by activityViewModels()
     override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,7 +36,6 @@ class SearchCompletedFragment : Fragment() {
 
         //This changes fragment when the "45 degree" arrow is pressed
         travel_button.setOnClickListener{
-            pathviewModel.transportationMode.value = "walking"
             findDirections(activity!!)
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }
