@@ -111,6 +111,7 @@ class DirectionsFragment : Fragment() {
 
         //To test directions.route on submaster
 //        directions.route(requireActivity(), originLatLng, destinationLatLng)
+        path.findDirections(activity!!)
         //TODO: comment route test out
 
         binding.startLocationButton.setOnClickListener{
