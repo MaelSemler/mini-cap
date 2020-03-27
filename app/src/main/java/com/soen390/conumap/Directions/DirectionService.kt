@@ -48,7 +48,6 @@ object DirectionService {
             val path: MutableList<List<LatLng>> = ArrayList()
 
             //Retrieve the correct URL to call the API
-
             val urlDirections = getGoogleMapRequestURL(activity, originLatLng, destinationLatLng, transportationMode, alternativesOn)
 
 
@@ -62,8 +61,6 @@ object DirectionService {
                         val jsonResponse = JSONObject(response)
                         // This part to understand it look carefully at the JSON response sent by the API
                         val routes = jsonResponse.getJSONArray("routes")
-
-
 
                         val legs = routes.getJSONObject(0).getJSONArray("legs")
                         val steps = legs.getJSONObject(0).getJSONArray("steps")
@@ -81,7 +78,7 @@ object DirectionService {
                             //ExtractDirections and save it into the directionText blocks
                             val extractedCleanedDirections = dirObj.extractDirections(steps)
 
-                            //Instantiate a directions Object (which represente a route)
+                            //Instantiate a directions Object (which represent a route)
                             dirObj.updateSteps(extractedCleanedDirections)
                             dirObj.updateTotalDistance(totalDistance)
                             dirObj.updateTotalDuration(totalDuration)
@@ -90,17 +87,15 @@ object DirectionService {
                             //List of Path is an ArrayList containing every alternative route
                             listOfPath.add(dirObj)
                             ///////////////////////////////////////////////////
-
                         }
-
 
                         //Update the display on the main thread
                         //TODO: THIS IS WHERE YOU EITHER CALL A FUNCTION THAT WILL LOGICALLY CHOOSE WHICH PATH TO DISPLAY ON THE SCREEN
                         activity.runOnUiThread {
-                            com.soen390.conumap.path.Path.updatePathInfo(listOfPath[2].getInfoPathText())
-                            com.soen390.conumap.path.Path.updateTotalDuration(listOfPath[2].getTotalTimeText())
-                            com.soen390.conumap.path.Path.updateTotalDistance(listOfPath[2].getTotalDistanceText())
-                            com.soen390.conumap.path.Path.updateSteps(listOfPath[2].getDirectionText())
+                            com.soen390.conumap.path.Path.updatePathInfo(listOfPath[0].getInfoPathText()) //Changed listofPath from index 2 to 0 as it was giving me an error
+                            com.soen390.conumap.path.Path.updateTotalDuration(listOfPath[0].getTotalTimeText())
+                            com.soen390.conumap.path.Path.updateTotalDistance(listOfPath[0].getTotalDistanceText())
+                            com.soen390.conumap.path.Path.updateSteps(listOfPath[0].getDirectionText())
                         }
 
                         //This Draw on the Map the tracing of "Steps"

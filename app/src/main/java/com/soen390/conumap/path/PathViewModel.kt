@@ -1,25 +1,14 @@
 package com.soen390.conumap.path
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class PathViewModel: ViewModel()  {
-    private  var transportationMode="driving"
-    private var alternativeOn=false
-
-    fun getTransportationMode(): String {
-        return transportationMode
-    }
+    var transportationMode= MutableLiveData<String>()
+    var alternativeOn= MutableLiveData<Boolean>()
 
     fun setTransportationMode(mode:String){
-        transportationMode=mode
-    }
-
-    fun getAlternative(): Boolean {
-        return alternativeOn
-    }
-
-    fun setAlternative(option:Boolean){
-        alternativeOn=option
+        transportationMode.value=mode
     }
 
 }

@@ -55,10 +55,6 @@ class SearchResultsFragment : Fragment() {
         val cancelButton = root.findViewById<View>(R.id.cancel_search) as Button
         val clearButton = root.findViewById<View>(R.id.clear_input) as Button
         val searchBar = root.findViewById<View>(R.id.searchBar) as Button
-        //val searchResults = root.findViewById<View>(R.id.search_results) as TextView
-        //val result = StringBuilder("")
-
-
 
         //Autocomplete using Intent
         this.context?.let {
@@ -69,15 +65,11 @@ class SearchResultsFragment : Fragment() {
         val bounds = RectangularBounds.newInstance(
             LatLng(45.425579, -73.687204),
             LatLng(45.706574, -73.475121))
-       searchBar.setOnClickListener {
            val fields = arrayListOf (Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS)
            val intent = Autocomplete.IntentBuilder(
                  AutocompleteActivityMode.OVERLAY, fields).setCountry("CA").setLocationBias(bounds)
                 .build(this.requireContext());
          startActivityForResult(intent, autoCompleteRequestCode);
-       }
-
-
         //    TODO:Programmatically Enforce Autocomplete
 
 //        val token = AutocompleteSessionToken.newInstance() //initialize session token
@@ -121,23 +113,12 @@ class SearchResultsFragment : Fragment() {
 
         /* This is the search bar edit text. This method waits for the "ENTER" key to be pressed
         It changes fragment when it is pressed*/
-        searchBar.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                //TODO: send the result (SearchCompletedFragment)
-                NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
-            }
-            false
-        })
-
         // This button clears the edit text input when it is pressed
         clearButton.setOnClickListener {
             searchBar.setText("")
         }
 
         cancelButton.setOnClickListener {
-            // Toast.makeText(getActivity(), "Search Results Fragment: cancelButton", Toast.LENGTH_SHORT).show()
-
             // Cancel destination in modelView
             val model: SearchBarViewModel by activityViewModels()
             model.setDestination("")
@@ -145,7 +126,6 @@ class SearchResultsFragment : Fragment() {
             NavHostFragment.findNavController(this).navigateUp()
             //TODO:if keyboard is shown, hide the keyboard
             //hideKeyboard()
-
         }
         return root
     }
@@ -170,12 +150,9 @@ class SearchResultsFragment : Fragment() {
             val place= data?.let { Autocomplete.getPlaceFromIntent(it) }
             Log.i(TAG,"Place: "+ place!!.name+ ","+place.id)
             searchBar.setText(place.name)
-
             val model: SearchBarViewModel by activityViewModels()
             model.setDestination(place.name)
             NavHostFragment.findNavController(this).navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
-
-//                Toast.makeText(getActivity(), "Search Results Fragment: " + place.name, Toast.LENGTH_SHORT).show()
         }
         else if (resultCode==AutocompleteActivity.RESULT_ERROR)
         {

@@ -6,13 +6,9 @@ import com.soen390.conumap.path.Path
 
 class DirectionsViewModel : ViewModel() {
 
-    val directionText : LiveData<String>
-        get() = Path.directionText
-    val totalDistanceText: LiveData<String>
-        get() = Path.totalDistanceText
-    val totalTimeText: LiveData<String>
-        get() = Path.totalTimeText
-    val infoPathText : LiveData<String>
-        get() = Path.infoPathText
+    val directionText = Path.directionText  //This information is what is used to display on the Directions Fragment UI
+    val totalDistanceText = Path.totalDistanceText
+    val totalTimeText = Path.totalTimeText
+    val infoPathText= Path.infoPathText
 
 }

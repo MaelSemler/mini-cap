@@ -31,7 +31,7 @@ class Directions() {
 
     init {
         _directionText ="Directions: "
-        _totalDistanceText = "("
+        _totalDistanceText = ""
         _totalTimeText = ""
         _infoPathText="via "
     }
@@ -93,13 +93,13 @@ class Directions() {
 
 
     //Update the directionText
-   fun updateSteps(textSteps:String){
+    fun updateSteps(textSteps:String){
         _directionText = (textSteps)
     }
 
     //Update TotalDistance
     fun updateTotalDistance(distance:String){
-        _totalDistanceText += distance + ")"
+        _totalDistanceText = distance
     }
 
     //Update TotalDuration
@@ -109,8 +109,6 @@ class Directions() {
 
     //Update the information of the path
     fun updatePathInfo(routeDescription: String){
-        _infoPathText += routeDescription
+        _infoPathText = routeDescription
     }
-
-
 }
