@@ -1,7 +1,22 @@
 package com.soen390.conumap.event
 
-class Event (var eventName: String, var startTime: String, var endTime: String, var roomNumber: String, var roomLocation: String ) {
+import com.google.api.client.util.DateTime
+import java.text.SimpleDateFormat
+import java.util.*
 
-    //var currentEvent = Event("COMP 351 - Lab", "2:45 p.m", "6:00 p.m", "FG B030", "1250 Guy St., Montreal")
+class Event (private val googleEvent: com.google.api.services.calendar.model.Event) {
+
+    companion object{
+        private val eventDateTimeFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US);
+        private val eventTimeFormat = SimpleDateFormat("HH:mm", Locale.US)
+    }
+    var eventName: String? = googleEvent.summary
+    var start: Long? = googleEvent.start.dateTime.value
+    var end: Long? = googleEvent.end.dateTime.value
+    var duration: Long? = end!! - start!!
+    var startTime: String? = eventTimeFormat.format(eventDateTimeFormatter.parse(googleEvent.start.dateTime.toString()))
+    var endTime: String? = eventTimeFormat.format(eventDateTimeFormatter.parse(googleEvent.end.dateTime.toString()))
+    var roomNumber: String? = googleEvent.description
+    var buildingLocation: String? = googleEvent.location
 
 }

@@ -39,7 +39,7 @@ class CalendarFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
-    fun init() {
+    private fun init() {
         val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(activity)
         Schedule.initCredentials(activity!!)
         if (account != null) {

@@ -9,21 +9,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
 import com.google.api.client.util.DateTime
-import com.google.api.services.calendar.model.Event
+import com.soen390.conumap.event.Event
 
 import com.soen390.conumap.R
 import com.soen390.conumap.calendar.Schedule
 import com.soen390.conumap.ui.calendar_login.CalendarLoginFragment
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 class CalendarScheduleFragment : Fragment() {
@@ -56,14 +55,19 @@ class CalendarScheduleFragment : Fragment() {
     private lateinit var fridayEventLayout: RelativeLayout
     private lateinit var saturdayEventLayout: RelativeLayout
 
-    private val REQUEST_AUTHORIZATION = 1001
-    private var classNumber:String = ""
-    private var time: String = ""
-    private var location: String = ""
     private lateinit var classNumberValue: TextView
     private lateinit var timeValue: TextView
+    private lateinit var roomValue: TextView
     private lateinit var locationValue: TextView
+
+    private lateinit var calendarDropDown: Spinner
+
+    private val REQUEST_AUTHORIZATION = 1001
+
     private var weekCount = 0//Keeps track of which week to show on the schedule (0: this week, 1: next week, -1: last week)
+    private  var dp: Float = 0F
+    private var calendarIDList = mutableListOf<String>()
+    private var calendarID = "primary"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -94,14 +98,32 @@ class CalendarScheduleFragment : Fragment() {
         fridayEventLayout = root.findViewById<RelativeLayout>(R.id.friday)
         saturdayEventLayout = root.findViewById<RelativeLayout>(R.id.saturday)
 
+        calendarDropDown = root.findViewById<Spinner>(R.id.dropdown_calendar)
+
+        calendarDropDown.onItemSelectedListener =  object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                calendarID = Schedule.calendarEntryList[position].id
+                NextEventRequestTask().execute()//makes the Coming Up UI
+                ScheduleRequestTask().execute()//makes the Schedule UI
+            }
+
+        }
         classNumberValue = root.findViewById<TextView>(R.id.class_number_value)
         timeValue = root.findViewById<TextView>(R.id.time_value)
+        roomValue = root.findViewById<TextView>(R.id.room_location_value)
         locationValue = root.findViewById<TextView>(R.id.location_value)
 
-        NextEventRequestTask().execute()//makes the Coming Up UI
-        ScheduleRequestTask().execute()//makes the Schedule UI
+        dp = context!!.resources.displayMetrics.density;
+
+        ClassIDRequestTask().execute()
+
 
         val gso =
+            //GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.server_client_id)).requestEmail().build()
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
         mGoogleSignInClient = GoogleSignIn.getClient(activity!!, gso)
         val nameAccount = mGoogleSignInClient.signInIntent.getStringArrayExtra((AccountManager.KEY_ACCOUNT_NAME))
@@ -127,6 +149,7 @@ class CalendarScheduleFragment : Fragment() {
         goNowButton.setOnClickListener{
             //Close the Calendar
             //get the directions
+            //route(currentLocation, Destination)
 
             /*if(goNowEvent != null){
             *   directions(goNowEvent.location)
@@ -147,9 +170,8 @@ class CalendarScheduleFragment : Fragment() {
     }
 
     private fun upDateCalendarUI(){//TODO: maybe look into LocalDate Class to see if it makes stuff simple
-        //Change to LocalDate tomorrow = LocalDate.now().plusDays(1);
         val cal = java.util.Calendar.getInstance()
-        cal.set(java.util.Calendar.DAY_OF_WEEK,java.util.Calendar.SUNDAY)//Sets the date to the Sunday of this week (previous)
+        cal.set(Calendar.DAY_OF_WEEK,java.util.Calendar.SUNDAY)//Sets the date to the Sunday of this week (previous)
         cal.set(java.util.Calendar.HOUR_OF_DAY, 0)
         cal.set(java.util.Calendar.MINUTE, 0)
         cal.set(java.util.Calendar.SECOND, 0)
@@ -187,6 +209,7 @@ class CalendarScheduleFragment : Fragment() {
         else{
             monthTitle.text = String.format("%s %s", startMonth, startYear)
         }
+        //Schedule.calendarIDList
 
 
     }
@@ -194,35 +217,17 @@ class CalendarScheduleFragment : Fragment() {
         mGoogleSignInClient.signOut()
         activity!!.supportFragmentManager.beginTransaction().replace(R.id.calendar_container,CalendarLoginFragment.newInstance()).commit()
     }
-/*
-    fun showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode: Int) {
-        val apiAvailability = GoogleApiAvailability.getInstance()
-        val dialog = apiAvailability.getErrorDialog(
-            activity!!,
-            connectionStatusCode,
-            REQUEST_GOOGLE_PLAY_SERVICES)
-        dialog.show()
-    }*/
 
-    private fun showComingUp(results: com.soen390.conumap.event.Event?){//Todo: make it take in an event DONE MAYBE
-        /*Log.d("QUESTIONMARK", "Made it to onCalendarRequestTaskCompleted!")
-        var firstEventArray = results.split("|").toTypedArray()
-        classNumber = firstEventArray[0]
-        if (firstEventArray[2] != null){
-            // Format for time for events with a start and end time.
-            time = firstEventArray[1] +"-" + firstEventArray[2]
-        }
-        else{
-            // Format for time for all day events.
-            time = firstEventArray[1]
-        }
-        location = firstEventArray[3]
-        */
-        var classNumber = results!!.eventName +" - " + results.roomNumber
-        var time = results.startTime + " - " + results.endTime
-        classNumberValue.setText(classNumber)
-        timeValue.setText(time)
-        locationValue.setText(results.roomLocation)
+    fun setDropDown() {
+        val adapter = ArrayAdapter(context!!,android.R.layout.simple_spinner_item,calendarIDList)
+        calendarDropDown.setAdapter(adapter)
+    }
+
+    private fun showComingUp(results: Event?){//Todo: make it take in an event DONE MAYBE
+        classNumberValue.text = results!!.eventName
+        timeValue.text = results.startTime + " - " + results.endTime
+        roomValue.text = results.roomNumber
+        locationValue.text = results.buildingLocation
 
     }
 
@@ -230,10 +235,10 @@ class CalendarScheduleFragment : Fragment() {
 
         var layout: RelativeLayout
         for(event in eventList){
-            val date = java.util.Calendar.getInstance()
-            date.timeInMillis = event.start.dateTime.value
+            val date = Calendar.getInstance()
+            date.timeInMillis = event.start!!
 
-             layout = when(date.get(java.util.Calendar.DAY_OF_WEEK)){
+             layout = when(date.get(Calendar.DAY_OF_WEEK)){
                 Calendar.SUNDAY -> sundayEventLayout
                 Calendar.MONDAY -> mondayEventLayout
                 Calendar.TUESDAY -> tuesdayEventLayout
@@ -245,21 +250,21 @@ class CalendarScheduleFragment : Fragment() {
             }
 
             val eventButton: Button = Button(context!!)
-            val dp = context!!.resources.displayMetrics.density;//in the schedule 1dp = to one minute
+
             val param = RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
-                durationToHeight(date, event).toInt()//Todo: better way?
+                durationToHeight(event.duration!!).toInt()//Todo: better way?
             )
 
             param.topMargin = timeToMargin(date).toInt()//Todo: better way?
-            eventButton.text = event.summary//Todo: have the proper text shown here, like in the mockups
+            eventButton.text = event.eventName//Todo: have the proper text shown here, like in the mockups
             eventButton.textSize = 10f
             eventButton.layoutParams = param
             layout.addView(eventButton)
         }
     }
 
-    private fun clearAllEventsUI(){
+    private fun clearEventUI(){
         sundayEventLayout.removeAllViews()
         mondayEventLayout.removeAllViews()
         tuesdayEventLayout.removeAllViews()
@@ -269,25 +274,21 @@ class CalendarScheduleFragment : Fragment() {
         saturdayEventLayout.removeAllViews()
     }
 
+    private fun clearNextUI(){
+        classNumberValue.text = ""
+        timeValue.text = ""
+        roomValue.text = ""
+        locationValue.text = ""
+    }
+
     private fun timeToMargin(date: Calendar) : Float{
         val hour = date.get(java.util.Calendar.HOUR_OF_DAY)
         val minute = date.get(java.util.Calendar.MINUTE)
-        val dp = context!!.resources.displayMetrics.density;
         return (hour * 60 + minute) * dp
     }
 
-    private fun durationToHeight(date: Calendar, event: Event): Float{
-        val endDate = java.util.Calendar.getInstance()
-        endDate.timeInMillis = event.end.dateTime.value
-
-        val startHour = date.get(java.util.Calendar.HOUR_OF_DAY)
-        val startMinute = date.get(java.util.Calendar.MINUTE)
-
-        val endHour = endDate.get(java.util.Calendar.HOUR_OF_DAY)
-        val endMinute = endDate.get(java.util.Calendar.MINUTE)
-
-        val dp = context!!.resources.displayMetrics.density;
-        return ((endHour * 60 + endMinute) - (startHour * 60 + startMinute)) * dp
+    private fun durationToHeight(duration: Long): Float{
+        return TimeUnit.MILLISECONDS.toMinutes(duration) * dp
 
     }
 
@@ -297,7 +298,7 @@ class CalendarScheduleFragment : Fragment() {
         override fun doInBackground(vararg params: Void): MutableList<Event>? {
             Log.d("QUESTIONMARK", "doInBackground")
             try {
-                return Schedule.getWeekEvents(startDate,endDate)
+                return Schedule.getWeekEvents(startDate,endDate,calendarID)
             } catch (e: Exception) {
                 mLastError = e
                 cancel(true)
@@ -310,18 +311,13 @@ class CalendarScheduleFragment : Fragment() {
         override fun onPreExecute() {
             Log.d("QUESTIONMARK", "onPreExecute")
             debugText.text = "loading...tool long? sign out"
-            clearAllEventsUI()
+            clearEventUI()
             upDateCalendarUI()
         }
 
         override fun onPostExecute(output: MutableList<Event>?) {
 
                 showSchedule(output!!)
-                //output.add(0, "Data retrieved using the Google Calendar API:")
-                //debugText.text = (TextUtils.join("\n", output))
-
-                //scheduleBuild(output)
-                //onCalendarRequestTaskCompleted(output)
 
         }
 
@@ -337,40 +333,35 @@ class CalendarScheduleFragment : Fragment() {
                         (mLastError as UserRecoverableAuthIOException).intent,
                         REQUEST_AUTHORIZATION)
                 } else {
-                    debugText.text = "The following error occurred:\n" + mLastError!!.message
+                    debugText.text = "SCHEDULE The following error occurred:\n" + mLastError!!.message
                 }
             } else {
                 debugText.text = "Request cancelled."
             }
         }
     }
-    private inner class NextEventRequestTask() : AsyncTask<Void, Void, com.soen390.conumap.event.Event>() {//Todo: make it return an event
+    private inner class NextEventRequestTask() : AsyncTask<Void, Void, Event>() {//Todo: make it return an event
         private var mLastError: Exception? = null
 
         /**
          * Background task to call Google Calendar API.
          * @param params no parameters needed for this task.
          */
-        override fun doInBackground(vararg params: Void): com.soen390.conumap.event.Event? {
+        override fun doInBackground(vararg params: Void): Event? {
             Log.d("QUESTIONMARK", "doInBackground")
             try {
-                return Schedule.getNextEvent()
+                return Schedule.getNextEvent(calendarID)
             } catch (e: Exception) {
                 mLastError = e
                 cancel(true)
                 return null
             }
-
         }
-
-
         override fun onPreExecute() {
-            Log.d("QUESTIONMARK", "onPreExecute")
-            debugText.text = "loading...tool long? sign out"
-
+            clearNextUI()
         }
 
-        override fun onPostExecute(result: com.soen390.conumap.event.Event?) {
+        override fun onPostExecute(result: Event?) {
             Log.d("QUESTIONMARK", "onPostExecute")
             if (result == null || result == null) {
                 debugText.text = "No results returned."
@@ -383,7 +374,6 @@ class CalendarScheduleFragment : Fragment() {
         }
 
         override fun onCancelled() {//Todo: proprely handle this or delete it
-
             if (mLastError != null) {
                 if (mLastError is GooglePlayServicesAvailabilityIOException) {
                     /*showGooglePlayServicesAvailabilityErrorDialog(
@@ -394,7 +384,63 @@ class CalendarScheduleFragment : Fragment() {
                         (mLastError as UserRecoverableAuthIOException).intent,
                         REQUEST_AUTHORIZATION)
                 } else {
-                    debugText.text = "The following error occurred:\n" + mLastError!!.message
+                    debugText.text = "NEXT EVENT The following error occurred:\n" + mLastError!!.message
+                }
+            } else {
+                debugText.text = "Request cancelled."
+            }
+        }
+    }
+    private inner class ClassIDRequestTask() : AsyncTask<Void, Void, MutableList<String>>() {//Todo: make it return an event
+    private var mLastError: Exception? = null
+
+        /**
+         * Background task to call Google Calendar API.
+         * @param params no parameters needed for this task.
+         */
+        override fun doInBackground(vararg params: Void): MutableList<String>? {
+            Log.d("QUESTIONMARK", "doInBackground")
+            try {
+                return Schedule.getCalendarIDs()
+            } catch (e: Exception) {
+                mLastError = e
+                cancel(true)
+                return null
+            }
+        }
+        override fun onPreExecute() {
+            Log.d("QUESTIONMARK", "onPreExecute")
+            debugText.text = "loading...tool long? sign out"
+
+        }
+
+        override fun onPostExecute(result: MutableList<String>?) {
+            Log.d("QUESTIONMARK", "onPostExecute")
+            if (result == null || result == null) {
+                debugText.text = "No results returned."
+            } else {
+                //output.add(0, "Data retrieved using the Google Calendar API:")
+                //debugText.text = (TextUtils.join("\n", output))
+                //scheduleBuild(output)
+                calendarIDList = result
+                setDropDown()
+                //NextEventRequestTask().execute()//makes the Coming Up UI
+                //ScheduleRequestTask().execute()//makes the Schedule UI
+            }
+        }
+
+        override fun onCancelled() {//Todo: proprely handle this or delete it
+            if (mLastError != null) {
+                if (mLastError is GooglePlayServicesAvailabilityIOException) {
+                    /*showGooglePlayServicesAvailabilityErrorDialog(
+                        (mLastError as GooglePlayServicesAvailabilityIOException)
+                            .connectionStatusCode)*/
+                } else if (mLastError is UserRecoverableAuthIOException) {
+                    startActivityForResult(
+                        (mLastError as UserRecoverableAuthIOException).intent,
+                        REQUEST_AUTHORIZATION)
+                } else {
+                    debugText.text = "IDs The following error occurred:\n" + mLastError!!.message
                 }
             } else {
                 debugText.text = "Request cancelled."

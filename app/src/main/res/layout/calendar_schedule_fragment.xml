@@ -73,10 +73,18 @@
                 android:textStyle="bold"
                 android:textSize="15dp"/>
             <TextView
-                android:id="@+id/location_value"
+                android:id="@+id/room_location_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/location_title"
+                android:layout_marginTop="0dp"
+                android:text="Room Location value"
+                android:textSize="15dp"/>
+            <TextView
+                android:id="@+id/location_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/room_location_value"
                 android:layout_marginTop="0dp"
                 android:text="Location value"
                 android:textSize="15dp"/>
@@ -129,6 +137,13 @@
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
+                <Spinner
+                    android:id="@+id/dropdown_calendar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/month_year"
+                    android:layout_centerHorizontal="true"/>
+
                 <Button
                     android:id="@+id/previous_week"
                     android:layout_width="20dp"
@@ -155,7 +170,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/month_year"
                     android:layout_marginLeft="50dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:weightSum="7">
 
                     <TextView

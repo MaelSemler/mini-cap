@@ -1,5 +1,8 @@
 package com.soen390.conumap.calendar
 
+
+import com.google.api.services.calendar.model.CalendarListEntry
+
 import android.app.Activity
 import android.content.Context
 import com.google.api.client.extensions.android.http.AndroidHttp
@@ -9,7 +12,7 @@ import com.google.api.client.util.DateTime
 import com.google.api.client.util.ExponentialBackOff
 import com.google.api.services.calendar.Calendar
 import com.google.api.services.calendar.CalendarScopes
-import com.google.api.services.calendar.model.Event
+import com.soen390.conumap.event.Event
 
 import java.text.SimpleDateFormat
 import java.util.*
@@ -18,9 +21,9 @@ import java.util.*
 object Schedule {
     var mCredential: GoogleAccountCredential? = null
     var calendar: Calendar? = null
+    val calendarEntryList = mutableListOf<CalendarListEntry>()
 
-    const val PREF_ACCOUNT_NAME = "accountName"//TODO: figure out if this is needed
-    // I've seen it on most projects that use Google APIS so I think it's necessary
+    const val PREF_ACCOUNT_NAME = "accountName"
 
     fun initCredentials(activity: Activity) {
         mCredential = GoogleAccountCredential.usingOAuth2(
@@ -46,52 +49,46 @@ object Schedule {
             transport, jsonFactory, mCredential)
             .setApplicationName("ConUMap")
             .build()
+
     }
 
     //Gets the events for the selected week
-    fun getWeekEvents(minTime: DateTime, maxTime: DateTime): MutableList<Event>? {
-        // I believe that when you set the calenderid to "primary", it only pulls from the primary calendar of whatever account you selected on sign in.
-        // If we want users to be able to choose which calendar to pull from, then we'd need a way to pull the list of calendarids and display them to the user.
-        val events = calendar!!.events().list("primary")//Todo: figure out what happens with multiple calendars to one account, does it only choose one? why? does it mix both?
+    fun getWeekEvents(minTime: DateTime, maxTime: DateTime, calendarId: String): MutableList<Event>? {
+        val eventList = mutableListOf<Event>()
+        val events = calendar!!.events().list(calendarId)
             .setTimeMin(minTime)//start range to look for events
             .setTimeMax(maxTime)//end range to look for events
             .setOrderBy("startTime")
             .setSingleEvents(true)
             .execute()
-        return events.items
+        for(event in events.items){
+            eventList.add(Event(event))
+        }
+        return eventList
     }
 
-    fun getNextEvent():  com.soen390.conumap.event.Event { //Todo: change this to only return the next event DONE MAYBE
+    fun getNextEvent(calendarId: String):  Event {
         val now = DateTime(System.currentTimeMillis())
-        // Can't import Event class from ConUMaps since we've already imported the Google Event class. Also I think this is the only way since you need to get a list.
-        val events = calendar!!.events().list("primary") //Todo: figure out here if there is an clean way to only get one event
+        val events = calendar!!.events().list(calendarId)
             .setMaxResults(1)
             .setTimeMin(now)
             .setOrderBy("startTime")
             .setSingleEvents(true)
             .execute()
-        val items = events.items
-        val event = items.first()
+        val event = events.items.first()
+        return Event(event)
+    }
 
-        var start = event.start.dateTime.toString()
-        var end = event.end.dateTime.toString()
-        if (start == null) {
-            start = event.start.toString()
+    fun getCalendarIDs():MutableList<String>? {
+
+        val calendarIDList = mutableListOf<String>()
+        val calendarList = calendar!!.calendarList().list().setPageToken(null).execute()
+        val items = calendarList.items
+        for (entry in items) {
+            calendarEntryList.add(entry)
+            calendarIDList.add(entry.summary)
         }
-        else {
-            // Converts dates to local time then formats them so that only the HH:mm is left.
-            val eventDateTimeFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US);
-            val eventTimeFormat = SimpleDateFormat("HH:mm", Locale.US)
-            // Creates Date objects using local time.
-            val tempStart = eventDateTimeFormatter.parse(start)
-            val tempEnd = eventDateTimeFormatter.parse(end)
-            start = eventTimeFormat.format(tempStart)
-            end = eventTimeFormat.format(tempEnd)
-        }
-
-        var nextEvent = com.soen390.conumap.event.Event(event.summary, start, end, event.description, event.location)
-
-        return nextEvent
+        return calendarIDList
     }
 
 
