@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 
 //TODO: Implement Live Data Binding as in directions.kt
-object path {
+object Path {
     //accessibilityFriendly
     //val alternativesOn = getAlternatives()
     private var distance=0.0
@@ -25,43 +25,9 @@ object path {
 
     val map = Map
 
-    val _directionText = MutableLiveData<String>()
-    val _totalDistanceText = MutableLiveData<String>()
-    val _totalTimeText = MutableLiveData<String>()
-    val _infoPathText = MutableLiveData<String>()
     val _alternateText = MutableLiveData<String>()
-    val _alternateRouteId = MutableLiveData<Int>()
-    val _alternateRouteIdMax = MutableLiveData<Int>()
-
-    var directionsArray : ArrayList<Directions> = arrayListOf()
-
-    val directionText:LiveData<String>
-        get() = _directionText
-    val totalDistanceText: LiveData<String>
-        get() = _totalDistanceText
-    val totalTimeText: LiveData<String>
-        get() = _totalTimeText
-    val infoPathText : LiveData<String>
-        get() = _infoPathText
-    val alternateText:LiveData<String>
-        get() = _alternateText
-    val alternateRouteId:LiveData<Int>
-        get() = _alternateRouteId
-    val alternateRouteIdMax:LiveData<Int>
-        get() = _alternateRouteIdMax
-
-    val map = Map
-
-    lateinit var dirObj :Directions
-
-    init {
-        _directionText.value = "Direction: "
-        _totalDistanceText.value = ""
-        _totalTimeText.value = ""
-        _infoPathText.value =""
-        _alternateText.value = ""
-        _alternateRouteId.value = 0
-        _alternateRouteIdMax.value = 99
+    val _alternateRouteId = MutableLiveData<Int>(0)
+    val _alternateRouteIdMax = MutableLiveData<Int>(99)
 
     fun setOrigin(value:LatLng){
         originFromSearch = value
@@ -93,9 +59,9 @@ object path {
  }
 
 fun resetDirections(){
-    _directionText.value = "Direction: "
-    _totalDistanceText.value = ""
-    _totalTimeText.value = ""
+    _PathDirectionText.value = "Direction: "
+    _PathTotalDistanceText.value = ""
+    _PathTotalTimeText.value = ""
     _infoPathText.value =""
     _alternateText.value = ""
     _alternateRouteId.value = 0

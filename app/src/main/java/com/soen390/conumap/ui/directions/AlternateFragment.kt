@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import com.soen390.conumap.R
 import com.soen390.conumap.databinding.AlternateFragmentBinding
-import com.soen390.conumap.path.path
+import com.soen390.conumap.path.Path
 import kotlinx.android.synthetic.main.nav_header_main.*
 
 
@@ -56,29 +56,29 @@ class AlternateFragment : Fragment() {
                 // Change route
                 if ( event.y < 300 ){
                     //First line selected
-                    if (path.getAlternatives() == 0){
-                        path.setAlternativeRoute(1)
+                    if (Path.getAlternatives() == 0){
+                        Path.setAlternativeRoute(1)
                     } else {
-                        path.setAlternativeRoute(0)
+                        Path.setAlternativeRoute(0)
                     }
                 } else {
                     //Second Line selected
-                    if (path.getAlternatives() == 2){
-                        path.setAlternativeRoute(1)
+                    if (Path.getAlternatives() == 2){
+                        Path.setAlternativeRoute(1)
                     } else {
-                        path.setAlternativeRoute(2)
+                        Path.setAlternativeRoute(2)
                     }
                 }
                 // Save Context
-                val route_id = path.getAlternatives()
+                val route_id = Path.getAlternatives()
                 // val transportation_mode = path.getTransportationMode() // waiting for transportation mode available
                 // Reset data in view model
-                path.resetDirections()
+                Path.resetDirections()
                 // Restore direction selections
-                path.setAlternativeRoute(route_id)
-                // path.setTransportationMode(transportation_mode) // waiting for transportation mode available
-                path.findDirections(activity!!)
-                Toast.makeText(getActivity(), "AlternateFragment: Route changed to " + path.getAlternatives(), Toast.LENGTH_SHORT).show()
+                Path.setAlternativeRoute(route_id)
+                // Path.setTransportationMode(transportation_mode) // waiting for transportation mode available
+                Path.findDirections(activity!!)
+                Toast.makeText(getActivity(), "AlternateFragment: Route changed to " + Path.getAlternatives(), Toast.LENGTH_SHORT).show()
             }
 
             true

@@ -122,10 +122,6 @@
                         />
 
                 </RadioGroup>
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
                 <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -143,7 +139,7 @@
                             android:layout_marginLeft="30sp"
                             android:layout_marginTop="20dp"
                             android:layout_alignParentTop="true"
-                            android:text="@{viewmodel.totalTimeText}"
+                            android:text="@{viewmodel.returnTotalTimeText}"
                             android:textColor="@android:color/black"
                             android:textSize="20sp" />
 
@@ -155,7 +151,7 @@
                             android:layout_marginStart="20dp"
                             android:layout_alignParentTop="true"
                             android:layout_marginTop="20dp"
-                            android:text="@{viewmodel.totalDistanceText}"
+                            android:text="@{viewmodel.returnTotalDistanceText}"
                             android:textSize="20sp" />
 
                         <TextView
@@ -166,7 +162,7 @@
                             android:layout_marginLeft="30sp"
                             android:layout_marginTop="50dp"
                             android:layout_alignParentTop="true"
-                            android:text="@{viewmodel.infoPathText}"
+                            android:text="@{viewmodel.returnInfoPathText}"
                             android:textSize="15sp" />
 
                         <Button
@@ -203,13 +199,13 @@
                             android:layout_below="@+id/info_text"
                             android:layout_marginTop="20dp"
                             android:backgroundTint="@android:color/transparent"
-                            android:src="@drawable/like_off" />t
+                            android:src="@drawable/like_off" />
 
                         <TextView
                             android:id="@+id/DirectionsTextBox"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="@{viewmodel.alternateText}"
+                            android:text="@{viewmodel.returnAlternateText}"
                             android:layout_below="@+id/directions_button"
                             android:layout_marginTop="20dp"
                             android:layout_marginLeft="30sp"
