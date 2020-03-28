@@ -1,9 +1,7 @@
 package com.soen390.conumap.Directions
 
 import android.app.Activity
-import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.android.volley.Request
@@ -16,7 +14,6 @@ import com.google.maps.android.PolyUtil
 import com.soen390.conumap.R
 import com.soen390.conumap.map.Map
 import kotlinx.coroutines.*
-import kotlinx.coroutines.internal.SynchronizedObject
 import org.json.JSONObject
 
 
@@ -98,10 +95,10 @@ object DirectionService {
                         //TODO: THIS IS WHERE YOU EITHER CALL A FUNCTION THAT WILL LOGICALLY CHOOSE WHICH PATH TO DISPLAY ON THE SCREEN
                         //TODO: Currently hardcoded to return and display the first route only, but the rest are stored inside of listOfPath
                         activity.runOnUiThread {
-                            com.soen390.conumap.path.path.updatePathInfo(listOfPath[0].getInfoPathText())
-                            com.soen390.conumap.path.path.updateTotalDuration(listOfPath[0].getTotalTimeText())
-                            com.soen390.conumap.path.path.updateTotalDistance(listOfPath[0].getTotalDistanceText())
-                            com.soen390.conumap.path.path.updateSteps(listOfPath[0].getDirectionText())
+                            com.soen390.conumap.path.Path.updatePathInfo(listOfPath[0].getInfoPathText())
+                            com.soen390.conumap.path.Path.updateTotalDuration(listOfPath[0].getTotalTimeText())
+                            com.soen390.conumap.path.Path.updateTotalDistance(listOfPath[0].getTotalDistanceText())
+                            com.soen390.conumap.path.Path.updateSteps(listOfPath[0].getDirectionText())
                         }
 
                         //This Draw on the Map the tracing of "Steps"

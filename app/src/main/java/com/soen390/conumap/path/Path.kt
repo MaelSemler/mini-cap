@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 
 //TODO: Implement Live Data Binding as in directions.kt
-object path {
+object Path {
     private lateinit var originFromSearch:LatLng
     private lateinit var destinationFromSearch: LatLng
     private var distance=0.0

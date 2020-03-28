@@ -9,21 +9,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 
 import android.widget.RadioButton
 import androidx.databinding.DataBindingUtil
 import com.google.android.gms.maps.model.LatLng
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
-import com.soen390.conumap.Directions.Directions
 
 
 import com.soen390.conumap.R
 import com.soen390.conumap.databinding.DirectionsFragmentBinding
-import com.soen390.conumap.path.path
-import com.soen390.conumap.ui.search_bar.SearchBarViewModel
-import kotlinx.android.synthetic.main.directions_fragment.*
+import com.soen390.conumap.path.Path
 import java.util.*
 
 class DirectionsFragment : Fragment() {
@@ -99,14 +94,14 @@ class DirectionsFragment : Fragment() {
 
         map?.getMapInstance().clear()
         val originLatLng = getOrigin(startLocationAddress)
-        path.setOrigin(originLatLng)
+        Path.setOrigin(originLatLng)
         //TODO:Destination is hardcoded for now
         val destinationLatLng = getDestination(endLocationAddress)
-        path.setDestination(destinationLatLng)
+        Path.setDestination(destinationLatLng)
 
 
         //TODO: Will need to be refactor, we should be calling this function from the onclick in SearchCompletedFragment
-        path.findDirections(activity!!)
+        Path.findDirections(activity!!)
 
 
         binding.startLocationButton.setOnClickListener{
