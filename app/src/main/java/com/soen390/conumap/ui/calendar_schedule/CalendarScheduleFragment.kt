@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -34,6 +35,7 @@ class CalendarScheduleFragment : Fragment() {
     private lateinit var viewModel: CalendarScheduleViewModel
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var debugText: TextView
+    //private var nextLocation: Location
 
     private lateinit var startDate: DateTime
     private lateinit var endDate: DateTime
@@ -66,6 +68,7 @@ class CalendarScheduleFragment : Fragment() {
 
     private var weekCount = 0//Keeps track of which week to show on the schedule (0: this week, 1: next week, -1: last week)
     private  var dp: Float = 0F
+
     private var calendarIDList = mutableListOf<String>()
     private var calendarID = "primary"
 
@@ -147,16 +150,10 @@ class CalendarScheduleFragment : Fragment() {
         //Do in sprint 4
         //maybe set it after the data is collected
         goNowButton.setOnClickListener{
-            //Close the Calendar
-            //get the directions
+            NavHostFragment.findNavController(this).navigateUp()
+
             //route(currentLocation, Destination)
 
-            /*if(goNowEvent != null){
-            *   directions(goNowEvent.location)
-            *   closeCalendar()
-            * }
-            *
-            * */
         }
 
         return root
@@ -228,6 +225,7 @@ class CalendarScheduleFragment : Fragment() {
         timeValue.text = results.startTime + " - " + results.endTime
         roomValue.text = results.roomNumber
         locationValue.text = results.buildingLocation
+        //nextLocation = results.buildingLocation
 
     }
 
