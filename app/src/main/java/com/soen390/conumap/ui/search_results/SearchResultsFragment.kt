@@ -1,37 +1,25 @@
 package com.soen390.conumap.ui.search_results
 
 import android.app.Activity
-import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.widget.ButtonBarLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProviders
-import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.RectangularBounds
-import com.google.android.libraries.places.api.model.TypeFilter
-import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
-import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
@@ -132,6 +120,7 @@ class SearchResultsFragment : Fragment() {
 
         override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         // TODO: Use the ViewModel
 
     }
@@ -152,7 +141,14 @@ class SearchResultsFragment : Fragment() {
             searchBar.setText(place.name)
             val model: SearchBarViewModel by activityViewModels()
             model.setDestination(place.name)
-            NavHostFragment.findNavController(this).navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
+            model.setDestinationAddress(place.address)
+            val sharedPreferences: SharedPreferences =requireContext().getSharedPreferences("SearchDest",0)
+
+            val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+            editor.putString("destinationLocation",place.name)
+            editor.putString("destinationLocationAddress",place.address)
+            editor.apply()
+            editor.commit()
         }
         else if (resultCode==AutocompleteActivity.RESULT_ERROR)
         {
@@ -160,6 +156,7 @@ class SearchResultsFragment : Fragment() {
             Log.i(TAG, status.statusMessage)
             searchBar.setText("Error")
         }
+        NavHostFragment.findNavController(this).navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
     }
 
 
@@ -167,31 +164,31 @@ class SearchResultsFragment : Fragment() {
     //TODO: issue when the app closes the keyboard doesn't
     // TODO: Understand what this does.
 
-//    //This function is to make the keyboard close
-//    fun Fragment.hideKeyboard() {
-//        view?.let { activity?.hideKeyboard(it) }
-//    }
-//    fun Context.hideKeyboard(view: View) {
-//        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-//        inputMethodManager.hideSoftInputFromWindow(view.windowToken,0)
-//    }
-//    fun Activity.hideKeyboard() {
-//      hideKeyboard(currentFocus ?: View(this))
-//    }
-//
+    //This function is to make the keyboard close
+    fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
+    fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken,0)
+    }
+    fun Activity.hideKeyboard() {
+      hideKeyboard(currentFocus ?: View(this))
+    }
 
 
-//    //This function is to make the keyboard open
-//    fun Fragment.showKeyboard() {
-//        view?.let { activity?.showKeyboard(it) }
-//    }
-//    fun Activity.showKeyboard() {
-//        showKeyboard(currentFocus ?: View(this))
-//    }
-//    fun Context.showKeyboard(view: View) {
-//        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-//        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED,0)
-//    }
+
+    //This function is to make the keyboard open
+    fun Fragment.showKeyboard() {
+        view?.let { activity?.showKeyboard(it) }
+    }
+    fun Activity.showKeyboard() {
+        showKeyboard(currentFocus ?: View(this))
+    }
+    fun Context.showKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED,0)
+    }
 
 }
 

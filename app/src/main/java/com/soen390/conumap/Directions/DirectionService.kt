@@ -1,9 +1,7 @@
 package com.soen390.conumap.Directions
 
 import android.app.Activity
-import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.android.volley.Request
@@ -15,9 +13,7 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.PolyUtil
 import com.soen390.conumap.R
 import com.soen390.conumap.map.Map
-import com.soen390.conumap.path.Path
 import kotlinx.coroutines.*
-import kotlinx.coroutines.internal.SynchronizedObject
 import org.json.JSONObject
 
 
@@ -48,10 +44,10 @@ object DirectionService {
             //Path is an arrayList that store every "steps"/path =>Will be used to draw the path
             val path: MutableList<List<LatLng>> = ArrayList()
 
+            listOfPath.clear()// Need to make sure it is clear, because if user is changing origin or destination and make a new search
+
             //Retrieve the correct URL to call the API
             val urlDirections = getGoogleMapRequestURL(activity, originLatLng, destinationLatLng, transportationMode, alternativesOn)
-
-
 
             //Making the Request
             launch(Dispatchers.IO) {
@@ -59,7 +55,7 @@ object DirectionService {
                     Request.Method.GET,
                     urlDirections,
                     com.android.volley.Response.Listener<String> { response ->
-                       val jsonResponse = JSONObject(response)
+                        val jsonResponse = JSONObject(response)
                         // This part to understand it look carefully at the JSON response sent by the API
                         val routes = jsonResponse.getJSONArray("routes")
 
@@ -85,15 +81,14 @@ object DirectionService {
                             dirObj.updateTotalDuration(totalDuration)
                             dirObj.updatePathInfo(pathInfo)
                             //List of Path is an ArrayList containing every alternative route
-                            if (Path.changedTransportationMode)
-                                listOfPath.clear()
                             listOfPath.add(dirObj)
                             ///////////////////////////////////////////////////
                         }
                         //Update the display on the main thread
                         //TODO: THIS IS WHERE YOU EITHER CALL A FUNCTION THAT WILL LOGICALLY CHOOSE WHICH PATH TO DISPLAY ON THE SCREEN
+                        //TODO: Currently hardcoded to return and display the first route only, but the rest are stored inside of listOfPath
                         activity.runOnUiThread {
-                            com.soen390.conumap.path.Path.updatePathInfo(listOfPath[0].getInfoPathText()) //Changed listofPath from index 2 to 0 as it was giving me an error
+                            com.soen390.conumap.path.Path.updatePathInfo(listOfPath[0].getInfoPathText())
                             com.soen390.conumap.path.Path.updateTotalDuration(listOfPath[0].getTotalTimeText())
                             com.soen390.conumap.path.Path.updateTotalDistance(listOfPath[0].getTotalDistanceText())
                             com.soen390.conumap.path.Path.updateSteps(listOfPath[0].getDirectionText())

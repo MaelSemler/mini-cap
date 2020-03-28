@@ -13,5 +13,11 @@ class SearchBarViewModel : ViewModel() {
     fun setDestination(d: String?) {
         destination = d
     }
+
+    private var destinationAddress: String? = null
+
+    fun setDestinationAddress(d: String?) {
+        destinationAddress = d
+    }
 }
 

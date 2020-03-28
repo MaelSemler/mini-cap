@@ -14,7 +14,6 @@ class DirectionsViewModel : ViewModel() {
 
     fun setTransportation(mode: String){
         Path.transportationMode=mode
-        Path.changedTransportationMode=true
     }
 
 
