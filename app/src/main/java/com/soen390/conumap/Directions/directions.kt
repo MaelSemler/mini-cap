@@ -105,7 +105,7 @@ class Directions() {
 
     //Update TotalDistance
     fun updateTotalDistance(distance:String){
-        _totalDistanceText += distance + ")"
+        _totalDistanceText = distance
     }
 
     //Update TotalDuration
@@ -115,7 +115,7 @@ class Directions() {
 
     //Update the information of the path
     fun updatePathInfo(routeDescription: String){
-        _infoPathText += routeDescription
+        _infoPathText = routeDescription
     }
 
     fun updateMapSteps(steps: JSONArray){

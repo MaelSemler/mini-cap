@@ -2,7 +2,6 @@ package com.soen390.conumap.Directions
 
 import android.app.Activity
 import android.graphics.Color
-import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.android.volley.Request
@@ -17,6 +16,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import org.json.JSONArray
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.Polyline
+import com.google.maps.android.PolyUtil
+import com.soen390.conumap.R
+import com.soen390.conumap.map.Map
+import kotlinx.coroutines.*
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
@@ -25,6 +31,7 @@ import kotlin.collections.ArrayList
 object DirectionService {
     val map = Map
     val listOfPath = ArrayList<Directions>()
+    var polyline= ArrayList<Polyline>()
 //    private val context: Context
 
     init {
@@ -45,15 +52,14 @@ object DirectionService {
     //This is route functions it ALREADY retrieves alternatives and store them as directions objects
     suspend fun route(activity: FragmentActivity, originLatLng: LatLng, destinationLatLng: LatLng, transportationMode: String, alternativesOn: Boolean) {
         coroutineScope{
-
             //Path is an arrayList that store every "steps"/path =>Will be used to draw the path
             //val path: MutableList<List<LatLng>> = ArrayList()
             listOfPath.clear()     // reset to make sure we start with a clean status
 
-            //Retrieve the correct URL to call the API
+            listOfPath.clear()// Need to make sure it is clear, because if user is changing origin or destination and make a new search
 
+            //Retrieve the correct URL to call the API
             val urlDirections = getGoogleMapRequestURL(activity, originLatLng, destinationLatLng, transportationMode, alternativesOn)
-            Log.d("DirectionService","MAP API URL: $urlDirections" )
             //Making the Request
             launch(Dispatchers.IO) {
                 val directionsRequest = object : StringRequest(
@@ -142,11 +148,11 @@ object DirectionService {
 
                             Toast.makeText(activity,  (error.toString()), Toast.LENGTH_SHORT).show()
                         }
-                    }) {}
+                    })
+                {}
                 val requestQueue = Volley.newRequestQueue(activity)
                 requestQueue.add(directionsRequest)
             }
-
             //Move the camera and zoom into the destination
             activity.runOnUiThread {
                 map.moveCamera(destinationLatLng, 18f)
@@ -170,15 +176,19 @@ object DirectionService {
             polyOptions.pattern(PATTERN_POLYGON_ALPHA)
         }
 
+        var points = ""
         for (i in 0 until steps.length()) {
-            val points =
+            points =
                 steps.getJSONObject(i).getJSONObject("polyline").getString("points")
             path.add(PolyUtil.decode(points))
         }
-
+        if (polyline.isNotEmpty()){
+            for (i in 0 until polyline.size)
+                {polyline[i].remove()}   //removes each polyline in array list to redraw new polyline
+            }
         for (i in 0 until path.size) {
-//            map.getMapInstance().addPolyline(PolylineOptions().addAll(path[i]).color(color))
-            map.getMapInstance().addPolyline(polyOptions.addAll(path[i]).color(color))
+            polyline.add(map.getMapInstance().addPolyline(polyOptions.addAll(path[i]).color(color))) //add polyline to arraylist
+            polyline[i]   //draw polyline
         }
     }
 }
