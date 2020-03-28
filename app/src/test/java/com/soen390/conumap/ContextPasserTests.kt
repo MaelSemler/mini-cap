@@ -6,6 +6,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.soen390.conumap.helper.ContextPasser
+import com.soen390.conumap.helper.DeviceLocationChecker
 import org.junit.Test
 import org.mockito.internal.matchers.Any
 
@@ -17,10 +18,13 @@ class ContextPasserTests {
         on {getSystemService(Context.LOCATION_SERVICE)}.doReturn(locationManagerMock)
     }
 
-    //Check if the ContextPasser passes the context correctly
+    //Check if the ContextPasser passes the context correctly and then tests DeviceLocationChecker
     @Test
     fun setContextTest() {
         ContextPasser.setContexts(context)
         assert(context.getSystemService(Context.LOCATION_SERVICE) == locationManagerMock)
+
+        //Check deviceLocationChecker
+        DeviceLocationChecker.isDeviceLocationEnabled()
     }
 }
