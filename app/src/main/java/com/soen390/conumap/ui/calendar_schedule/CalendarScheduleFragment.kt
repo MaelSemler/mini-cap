@@ -126,8 +126,8 @@ class CalendarScheduleFragment : Fragment() {
 
 
         val gso =
-            //GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.server_client_id)).requestEmail().build()
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.server_client_id)).requestEmail().build()
+            //GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
         mGoogleSignInClient = GoogleSignIn.getClient(activity!!, gso)
         val nameAccount = mGoogleSignInClient.signInIntent.getStringArrayExtra((AccountManager.KEY_ACCOUNT_NAME))
 
@@ -221,10 +221,17 @@ class CalendarScheduleFragment : Fragment() {
     }
 
     private fun showComingUp(results: Event?){//Todo: make it take in an event DONE MAYBE
-        classNumberValue.text = results!!.eventName
-        timeValue.text = results.startTime + " - " + results.endTime
-        roomValue.text = results.roomNumber
-        locationValue.text = results.buildingLocation
+        if (results != null){
+            classNumberValue.text = results!!.eventName
+            timeValue.text = results.startTime + " - " + results.endTime
+            roomValue.text = results.roomNumber
+            locationValue.text = results.buildingLocation
+        }
+        else{
+            classNumberValue.text = getString(R.string.noUpcomingEvent)
+            timeValue.text = getString(R.string.notAvailable)
+            roomValue.text = getString(R.string.notAvailable)
+        }
         //nextLocation = results.buildingLocation
 
     }
@@ -314,9 +321,7 @@ class CalendarScheduleFragment : Fragment() {
         }
 
         override fun onPostExecute(output: MutableList<Event>?) {
-
                 showSchedule(output!!)
-
         }
 
         override fun onCancelled() {//Todo: proprely handle this or delete it
@@ -383,6 +388,8 @@ class CalendarScheduleFragment : Fragment() {
                         REQUEST_AUTHORIZATION)
                 } else {
                     debugText.text = "NEXT EVENT The following error occurred:\n" + mLastError!!.message
+                    // The following makes it so that it shows No Upcoming Events occuring.
+                    showComingUp(null)
                 }
             } else {
                 debugText.text = "Request cancelled."

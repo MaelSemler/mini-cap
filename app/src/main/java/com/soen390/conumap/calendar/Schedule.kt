@@ -91,6 +91,4 @@ object Schedule {
         return calendarIDList
     }
 
-
-
 }

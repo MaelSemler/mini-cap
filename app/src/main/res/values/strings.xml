@@ -23,5 +23,7 @@
     <string name="vanier">Vanier Library, Con.</string>
     <string name="directionsStep">DIrections:</string>
 
-    <string name="server_client_id">CLIENT_ID_HERE</string>
+    <string name="server_client_id">@string/clientID</string>
+    <string name="noUpcomingEvent">No Upcoming Event</string>
+    <string name="notAvailable">N/A</string>
 </resources>
