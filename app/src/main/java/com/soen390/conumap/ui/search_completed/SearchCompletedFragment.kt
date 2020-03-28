@@ -24,9 +24,8 @@ class SearchCompletedFragment : Fragment() {
             SearchCompletedFragment()
 //        val dir = directions(Map)
     }
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+    inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
@@ -49,6 +48,9 @@ class SearchCompletedFragment : Fragment() {
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }
         restart_button.setOnClickListener{
+            // Cancel destination in modelView
+            val model: SearchBarViewModel by activityViewModels()
+            model.setDestination("")
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_searchBarFragment)
         }
         location_button.setOnClickListener{

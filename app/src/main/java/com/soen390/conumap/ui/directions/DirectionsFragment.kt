@@ -5,26 +5,22 @@ import android.location.Address
 import android.location.Geocoder
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-
-import android.widget.RadioButton
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.model.LatLng
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
-import com.soen390.conumap.Directions.Directions
-
-
 import com.soen390.conumap.R
 import com.soen390.conumap.databinding.DirectionsFragmentBinding
-import com.soen390.conumap.path.path
+import com.soen390.conumap.path.Path
 import com.soen390.conumap.ui.search_bar.SearchBarViewModel
 import kotlinx.android.synthetic.main.directions_fragment.*
 import java.util.*
+
 
 class DirectionsFragment : Fragment() {
     var prefs: SharedPreferences? = null
@@ -37,23 +33,21 @@ class DirectionsFragment : Fragment() {
 
     private lateinit var viewModel: DirectionsViewModel
     lateinit var binding : DirectionsFragmentBinding
+    lateinit var distanceBar: TextView
+    lateinit var timeBar: TextView
+    lateinit var infoBar: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.directions_fragment, container, false)
         //TODO: get the results from SearchCompletedFragment
         //TODO: get the currentlocation
-        //TODO: add the name of the result and the curent location to the start and end buttons (get them from the actual objects)
-
+        //TODO: add the name of the result and the current location to the start and end buttons (get them from the actual objects)
+        var root = inflater.inflate(R.layout.directions_fragment, container, false)
         val directionViewModel = ViewModelProviders.of(this)
             .get(DirectionsViewModel::class.java)
 
-        val walkButton = root.findViewById<View>(R.id.transportation_walk) as RadioButton
-        val busButton = root.findViewById<View>(R.id.transportation_bus) as RadioButton
-        val carButton = root.findViewById<View>(R.id.transportation_car) as RadioButton
-        val bikeButton= root.findViewById<View>(R.id.transportation_bike) as RadioButton
 
         //This permit to inflate the fragment
         binding = DataBindingUtil.inflate<DirectionsFragmentBinding>(inflater, R.layout.directions_fragment, container, false).apply {
@@ -82,7 +76,7 @@ class DirectionsFragment : Fragment() {
                 originLatLng.latitude,
                 originLatLng.longitude,
                 1)
-            
+
 
             val address = addresses[0].getAddressLine(0)
             val city = addresses[0].getLocality()
@@ -99,19 +93,19 @@ class DirectionsFragment : Fragment() {
 
         map?.getMapInstance().clear()
         val originLatLng = getOrigin(startLocationAddress)
-        path.setOrigin(originLatLng)
+        Path.setOrigin(originLatLng)
         //TODO:Destination is hardcoded for now
         val destinationLatLng = getDestination(endLocationAddress)
-        path.setDestination(destinationLatLng)
+        Path.setDestination(destinationLatLng)
 
 
         //TODO: Will need to be refactor, we should be calling this function from the onclick in SearchCompletedFragment
-        path.findDirections(activity!!)
+        Path.findDirections(requireActivity())
 
 
         binding.startLocationButton.setOnClickListener{
             //TODO: send info to the search bar (DirectionSearchFragment)
-            NavHostFragment.findNavController(this).navigate(com.soen390.conumap.R.id.action_directionsFragment_to_directionsSearchFragment)
+            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_directionsSearchFragment)
             editor.putString("result","1")
             editor.apply()
             editor.commit()
@@ -128,6 +122,30 @@ class DirectionsFragment : Fragment() {
         binding.returnButton.setOnClickListener{
             NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_searchCompletedFragment)
         }
+        binding.transportationWalk.setOnClickListener {   //This binds the radio button to an onclick listener event that sets the transportation mode
+
+            viewModel.setTransportation("walking")
+            Path.findDirections(requireActivity())//Calls function for finding directions
+            //TODO: redisplay new directions
+        }
+        binding.transportationBike.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
+            viewModel.setTransportation("bicycling")
+            Path.findDirections(requireActivity()) //Calls function for finding directions
+            //TODO: redisplay new directions
+        }
+        binding.transportationCar.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
+           viewModel.setTransportation("driving")
+            Path.findDirections(requireActivity())//Calls function for finding directions
+            //TODO: redisplay new directions
+        }
+        binding.transportationBus.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
+            viewModel.setTransportation("transit")
+            Path.findDirections(requireActivity())//Calls function for finding directions
+            //TODO: redisplay new directions
+
+        }
+        //TODO: enable switchOriginAndDestination button
+        //TODO: implement alternative button and set the alternative here. Display the changed directions.
         return binding.root
     }
 
@@ -158,8 +176,15 @@ class DirectionsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
 
+        viewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
+        val model: SearchBarViewModel by activityViewModels()
+        val destination = model.getDestination()
+        end_location_button.setText(destination)
 
     }
+
+
+
 
 
 }

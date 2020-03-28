@@ -17,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 
+
 import com.soen390.conumap.helper.ContextPasser
 import com.soen390.conumap.map.Map
 import com.soen390.conumap.permission.Permission

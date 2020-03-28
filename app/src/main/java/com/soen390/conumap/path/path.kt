@@ -1,55 +1,27 @@
 package com.soen390.conumap.path
 
-import android.app.Activity
-import android.provider.Settings
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.soen390.conumap.Directions.DirectionService.route
-import com.soen390.conumap.Directions.Directions
 import com.soen390.conumap.map.Map
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
-
-//TODO: Implement Live Data Binding as in directions.kt
-object path {
+object Path {
+    //accessibilityFriendly
+    //val alternativesOn = getAlternatives()
+    private var distance=0.0
+    var alternativesOn= false //TODO: Hardcoded that alternatives are turned off for now look at line right before: to be implemented
+    var transportationMode: String = "driving"
     private lateinit var originFromSearch:LatLng
     private lateinit var destinationFromSearch: LatLng
-    private var distance=0.0
-    private var transportationMethod="Car"
-    //time
-    //accessibilityFriendly
-
-    val _directionText = MutableLiveData<String>()
-    val _totalDistanceText = MutableLiveData<String>()
-    val _totalTimeText = MutableLiveData<String>()
-    val _infoPathText = MutableLiveData<String>()
-
-    var directionsArray : ArrayList<Directions> = arrayListOf()
-
-    val directionText:LiveData<String>
-        get() = _directionText
-    val totalDistanceText: LiveData<String>
-        get() = _totalDistanceText
-    val totalTimeText: LiveData<String>
-        get() = _totalTimeText
-    val infoPathText : LiveData<String>
-        get() = _infoPathText
+    val _PathDirectionText = MutableLiveData<String>()
+    val _PathTotalDistanceText = MutableLiveData<String>()
+    val _PathTotalTimeText = MutableLiveData<String>()
+    var _infoPathText = MutableLiveData<String>()
 
     val map = Map
-
-    lateinit var dirObj :Directions
-
-    init {
-        _directionText.value = "Directions: "
-        _totalDistanceText.value = "("
-        _totalTimeText.value = ""
-        _infoPathText.value ="via "
-        originFromSearch = map.getCurrentLocation()
-    }
 
     fun setOrigin(value:LatLng){
         originFromSearch = value
@@ -59,42 +31,26 @@ object path {
         destinationFromSearch = value
     }
 
-
  fun findDirections(activity: FragmentActivity){
-        //TODO: Default origin is the current location
-        val originLatLng = originFromSearch
-        //TODO:Destination is hardcoded for now
-        val destinationLatLng = destinationFromSearch
 
-        //TODO: Set Transportation mode
-        //This can be walking, driving, bicycling, transit
-        //val transportationMode = getTransportationMode()
-        val transportationMode = "driving"//TODO: Hardcoded for now look at the line just before we should be able to retrieve it this way
-
-        //TODO: Set Alternative On/Off
-        //val alternativesOn = getAlternatives()
-        val alternativesOn = true//TODO: Hardcoded that alternatives are turned off for now look at line right before: to be implemented
+     val originLatLng = originFromSearch
+     val destinationLatLng = destinationFromSearch
 
         //TODO: Origin and Destination should have a title
         map.addMarker(originLatLng,("This is the origin"))
         map.addMarker(destinationLatLng, "Destination")
         map.moveCamera(originLatLng, 14.5f)
-
-
-     dirObj = Directions()
-
         GlobalScope.launch {
-            route(
-                activity,
-                originLatLng,
-                destinationLatLng,
-                transportationMode,
-                alternativesOn
-            )//Calling the actual route function and passing all the needed parameters
-
+                route(
+                    activity,
+                    originLatLng,
+                    destinationLatLng,
+                    transportationMode,
+                    alternativesOn
+                )
+            //Calling the actual route function and passing all the needed parameters
         }
-
-    }
+ }
 
     fun switchOriginAndDestination()
     {
@@ -109,17 +65,17 @@ object path {
     //Update the directionText
     fun updateSteps(textSteps: String){
 
-        _directionText.value = textSteps
+        _PathDirectionText.value = textSteps
     }
 
     //Update TotalDistance
     fun updateTotalDistance(distance:String){
-        _totalDistanceText.value = "(" + distance + ")"
+        _PathTotalDistanceText.value = distance
     }
 
     //Update TotalDuration
     fun updateTotalDuration(duration:String){
-        _totalTimeText.value = duration
+        _PathTotalTimeText.value = duration
     }
 
     //Update the information of the path
