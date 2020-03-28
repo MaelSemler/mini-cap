@@ -58,49 +58,9 @@ class SearchResultsFragment : Fragment() {
                  AutocompleteActivityMode.OVERLAY, fields).setCountry("CA").setLocationBias(bounds)
                 .build(this.requireContext());
          startActivityForResult(intent, autoCompleteRequestCode);
-        //    TODO:Programmatically Enforce Autocomplete
+        /* TODO Enforce Autocomplete Programmatically */
 
-//        val token = AutocompleteSessionToken.newInstance() //initialize session token
-//        while (searchBar.setOnKeyListener() //Create a while loop here to constantly take user input and display accordingly to what's typed
-//        {
-//            val searchInput = searchBar.getText().toString()
-//            val request = //Requesting predictions with these specific parameters
-//                FindAutocompletePredictionsRequest.builder()
-//                    .setLocationBias(bounds)
-//                    .setTypeFilter(TypeFilter.ADDRESS)
-//                    .setCountries("CA")
-//                    .setSessionToken(token)
-//                    .setQuery(searchInput)
-//                    .build()
-//            Toast.makeText(this.context, searchBar.getText().toString(), Toast.LENGTH_SHORT).show();
-//            placesClient?.findAutocompletePredictions(request)
-//                ?.addOnSuccessListener { response: FindAutocompletePredictionsResponse ->
-//                    for (prediction in response.autocompletePredictions) {
-//                        result.append(prediction.getFullText(null)).append("\n")
-//                        Log.i(SearchResultsFragment().getTag(), prediction.placeId)
-//                        Log.i(
-//                            SearchResultsFragment().getTag(),
-//                            prediction.getPrimaryText(null).toString()
-//                        )
-//                        Toast.makeText(
-//                            this.context,
-//                            prediction.getPrimaryText(null),
-//                            Toast.LENGTH_SHORT
-//                        ).show();
-//                    }
-//                    searchResults.text = result
-//                }?.addOnFailureListener { exception: Exception? ->
-//                    if (exception is ApiException) {
-//                        Log.e(
-//                            SearchResultsFragment().getTag(),
-//                            "Place not found: " + exception.statusCode
-//                        )
-//                    }
- //         }
-        // }
 
-        /* This is the search bar edit text. This method waits for the "ENTER" key to be pressed
-        It changes fragment when it is pressed*/
         // This button clears the edit text input when it is pressed
         clearButton.setOnClickListener {
             searchBar.setText("")
