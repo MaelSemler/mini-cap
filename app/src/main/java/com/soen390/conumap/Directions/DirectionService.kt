@@ -1,7 +1,6 @@
 package com.soen390.conumap.Directions
 
 import android.app.Activity
-import android.content.Context
 import android.graphics.Color
 import android.util.Log
 import android.widget.Toast
@@ -10,16 +9,17 @@ import com.android.volley.Request
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.*
 import com.google.maps.android.PolyUtil
 import com.soen390.conumap.R
 import com.soen390.conumap.map.Map
-import com.soen390.conumap.path.path
-import kotlinx.coroutines.*
-import kotlinx.coroutines.internal.SynchronizedObject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 object DirectionService {
@@ -121,12 +121,12 @@ object DirectionService {
                             }
 
                             //This Draw on the Map the tracing of "Steps"
-                            drawPath(steps, Color.RED)     // Draw main path
+                            drawPath(steps, Color.RED, false)     // Draw main path
 
                             // Draws alternate routes
                             for (i in 0 until listOfPath.size) {
                                 if (i != n) {
-                                    drawPath(listOfPath[i].getMapSteps(), Color.GRAY)
+                                    drawPath(listOfPath[i].getMapSteps(), Color.GRAY, true)
                                 }
                             }
 
@@ -154,7 +154,7 @@ object DirectionService {
         }
     }
 
-    private fun drawPath(steps: JSONArray, color: Int) {
+    private fun drawPath(steps: JSONArray, color: Int, dotted: Boolean) {
         //Path is an arrayList that store every "steps"/path =>Will be used to draw the path
         val path: MutableList<List<LatLng>> = ArrayList()
 
@@ -165,7 +165,8 @@ object DirectionService {
         }
 
         for (i in 0 until path.size) {
-            map.getMapInstance().addPolyline(PolylineOptions().addAll(path[i]).color(color))
+//            map.getMapInstance().addPolyline(PolylineOptions().addAll(path[i]).color(color))
+            map.getMapInstance().addPolyline(polyOptions.addAll(path[i]).color(color))
         }
     }
 }
