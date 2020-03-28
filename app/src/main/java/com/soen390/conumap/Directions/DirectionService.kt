@@ -19,10 +19,6 @@ import org.json.JSONArray
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.gms.maps.model.Polyline
-import com.google.maps.android.PolyUtil
-import com.soen390.conumap.R
-import com.soen390.conumap.map.Map
-import kotlinx.coroutines.*
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
