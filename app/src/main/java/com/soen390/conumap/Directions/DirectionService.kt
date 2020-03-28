@@ -158,6 +158,18 @@ object DirectionService {
         //Path is an arrayList that store every "steps"/path =>Will be used to draw the path
         val path: MutableList<List<LatLng>> = ArrayList()
 
+        val PATTERN_DASH_LENGTH_PX: Float = 20f
+        val PATTERN_GAP_LENGTH_PX: Float = 20f
+        val DASH: PatternItem = Dash(PATTERN_DASH_LENGTH_PX)
+        val GAP: PatternItem = Gap(PATTERN_GAP_LENGTH_PX)
+        // Create a stroke pattern of a gap followed by a dash.
+        val PATTERN_POLYGON_ALPHA: List<PatternItem> = Arrays.asList(GAP, DASH)
+
+        val polyOptions = PolylineOptions()
+        if (dotted){
+            polyOptions.pattern(PATTERN_POLYGON_ALPHA)
+        }
+
         for (i in 0 until steps.length()) {
             val points =
                 steps.getJSONObject(i).getJSONObject("polyline").getString("points")
