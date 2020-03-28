@@ -16,16 +16,16 @@ object BuildingCreator {
     // Creates the Building objects and adds them to the buildings ArrayList.
     fun createBuildings(map: GoogleMap):ArrayList<Building> {
         // SGW Buildings.
-        val sgwH = Building(
-            context.getString(R.string.sgwHName),
-            context.getString(R.string.sgwHInfo),
-            LatLng(45.497304, -73.578923),
-            context.resources.getStringArray(R.array.buildingHPoints),
-            context.resources.getStringArray(R.array.sgwHTarget),
-            map,
-            0.0f
-        )
-        buildings.add(sgwH)
+//        val sgwH = Building(
+//            context.getString(R.string.sgwHName),
+//            context.getString(R.string.sgwHInfo),
+//            LatLng(45.497304, -73.578923),
+//            context.resources.getStringArray(R.array.buildingHPoints),
+//            context.resources.getStringArray(R.array.sgwHTarget),
+//            map,
+//            0.0f
+//        )
+//        buildings.add(sgwH)
         val sgwGM = Building(
             context.getString(R.string.sgwGMName),
             context.getString(R.string.sgwGMInfo),
@@ -270,5 +270,23 @@ object BuildingCreator {
         buildings.add(loyHC)
 
         return buildings
+    }
+
+    fun showIndoorMap(map: GoogleMap, buildingCode: String, floorNumber: Int) {
+        when(buildingCode) {
+            "H" -> { when(floorNumber) {
+                    8 -> { }
+                    9 -> {
+                        val sgwHIndoor = GroundOverlayOptions()
+                            .zIndex(10f)
+                            .image(BitmapDescriptorFactory.fromResource(R.drawable.h9floorplan))
+                            .position(
+                                LatLng(45.497275, -73.578935), 90f
+                            )
+                        map.addGroundOverlay(sgwHIndoor)
+                    }
+                }
+            }
+        }
     }
 }
