@@ -17,6 +17,11 @@ import androidx.navigation.fragment.NavHostFragment
 
 import com.soen390.conumap.R
 import com.soen390.conumap.Directions.directions
+import com.soen390.conumap.map.Map
+import com.soen390.conumap.campus.Campus
+import com.soen390.conumap.building.Building
+import com.soen390.conumap.building.BuildingCreator
+import com.soen390.conumap.building.BuildingInfoWindowAdapter
 import com.soen390.conumap.databinding.DirectionsFragmentBinding
 import com.soen390.conumap.ui.search_bar.SearchBarViewModel
 import kotlinx.android.synthetic.main.directions_fragment.*
@@ -26,6 +31,11 @@ class DirectionsFragment : Fragment() {
     var prefs: SharedPreferences? = null
     val map = com.soen390.conumap.map.Map
     var startLocationAddress:String?=null
+    var originLatLng:LatLng?=null
+    var destinationLatLng:LatLng?=null
+    var  endLocationAddress:String?=null
+    private var buildings: ArrayList<Building> = arrayListOf()
+
 
     companion object {
         fun newInstance() = DirectionsFragment()
@@ -90,7 +100,11 @@ class DirectionsFragment : Fragment() {
         val editor: SharedPreferences.Editor =  sharedPreferences.edit()
 
 
-        map?.getMapInstance().clear()
+        map.gMap.clear()
+
+        //Create the two campuses
+        map.createCampuses()
+        buildings = BuildingCreator.createBuildings(map.gMap)
         val originLatLng = getOrigin(startLocationAddress)
         //TODO:Destination is hardcoded for now
         val destinationLatLng = getDestination(endLocationAddress)//HardCoded for now
@@ -102,6 +116,7 @@ class DirectionsFragment : Fragment() {
         //To test directions.route on submaster
         directions.route(requireActivity(), originLatLng, destinationLatLng)
         //TODO: comment route test out
+
 
         binding.startLocationButton.setOnClickListener{
             //TODO: send info to the search bar (DirectionSearchFragment)

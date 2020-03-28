@@ -23,7 +23,7 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
     private var lastLocation: LatLng = LatLng(45.497304, -73.578923) //This is the last location of the user
     private var buildings: ArrayList<Building> = arrayListOf()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var gMap: GoogleMap
+    public lateinit var gMap: GoogleMap
     private lateinit var loyolaCampus: Campus
     private lateinit var sgwCampus: Campus
     private lateinit var context: Context
@@ -128,7 +128,7 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
     }
 
     //Create the two campuses object with their markers
-    private fun createCampuses() {
+    public fun createCampuses() {
         loyolaCampus = Campus(
             "Loyola Campus",
             "Notre-Dame-de-Grâce, QC",
