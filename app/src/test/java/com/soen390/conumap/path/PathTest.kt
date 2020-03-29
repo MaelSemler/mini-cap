@@ -1,6 +1,7 @@
 package com.soen390.conumap.path
 
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.UiSettings
 import com.google.android.gms.maps.model.LatLng
@@ -54,24 +55,33 @@ class PathTest {
     fun setDestination() {
         val path = Path
         val mockDestination = LatLng(0.3,0.4)
-        whenever(mockPath.setOrigin(mockDestination)).thenCallRealMethod()
+        whenever(mockPath.setDestination(mockDestination)).thenCallRealMethod()
 
-        assertEquals(path.setOrigin(mockDestination),mockPath.setOrigin(mockDestination))
+        assertEquals(path.setDestination(mockDestination),mockPath.setDestination(mockDestination))
 
     }
 
     @Test
     fun testFindDirections() {
-    }
 
+
+    }
 
 
     @Test
     fun testGetAlternatives() {
+        val path = Path
+        val _alternateRouteId = MutableLiveData<Int>(0)
+
+        assertEquals(path.getAlternatives(), _alternateRouteId.value!!.toInt())
     }
 
     @Test
     fun testUpdateSteps() {
+        val path = Path
+
+        path.updateSteps("Mocked Steps")
+
     }
 
     @Test
