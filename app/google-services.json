@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "43915764242-9i92j4icj3iggckrnfaj87g662ej0ser.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.soen390.conumap",
+            "certificate_hash": "3d423e610fc6280ca1202b9a6e079a840e2a59cb"
+          }
+        },
+        {
           "client_id": "43915764242-rq9a2t3b06r621uvc5d829aj8nccd984.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
