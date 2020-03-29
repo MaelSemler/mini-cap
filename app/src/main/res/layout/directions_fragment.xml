@@ -6,7 +6,6 @@
         <variable
             name="viewmodel"
             type="com.soen390.conumap.ui.directions.DirectionsViewModel" />
-
     </data>
 
     <FrameLayout
@@ -31,6 +30,7 @@
                     android:id="@+id/start_location_button"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
+                    android:textSize="10sp"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/return_button"
                     android:layout_toStartOf="@+id/switch_button"
@@ -40,6 +40,7 @@
                     android:id="@+id/end_location_button"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
+                    android:textSize="10sp"
                     android:layout_below="@+id/start_location_button"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
@@ -83,37 +84,41 @@
                     android:orientation="horizontal">
 
                     <RadioButton
+                        android:id="@+id/transportation_car"
+                        android:checked="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/transportation_car"
                         android:button="@android:color/transparent"
-                        android:layout_margin="10dp" />
-
+                        android:layout_margin="10dp"
+                        />
                     <RadioButton
+                        android:id="@+id/transportation_walk"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/transportation_walk"
                         android:button="@android:color/transparent"
-                        android:layout_margin="10dp" />
-
+                        android:layout_margin="10dp"
+                        />
                     <RadioButton
+                        android:id="@+id/transportation_bus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/transportation_bus"
                         android:button="@android:color/transparent"
-                        android:layout_margin="10dp" />
+                        android:layout_margin="10dp"
 
+                        />
                     <RadioButton
+                        android:id="@+id/transportation_bike"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/transportation_bike"
                         android:button="@android:color/transparent"
-                        android:layout_margin="10dp" />
+                        android:layout_margin="10dp"
+                        />
 
                 </RadioGroup>
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
 
                 <ScrollView
                     android:layout_width="match_parent"
@@ -121,15 +126,89 @@
                     android:layout_marginTop="150dp"
                     android:background="@android:color/white">
 
-                    <TextView
-                        android:id="@+id/DirectionsTextBox"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="@{viewmodel.directionText}"
-                        android:layout_marginLeft="30sp"
-                        android:layout_marginRight="30sp"
-                        android:textSize="20sp" />
+                        android:layout_height="match_parent">
 
+                        <TextView
+                            android:id="@+id/totalTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30sp"
+                            android:layout_marginTop="20dp"
+                            android:layout_alignParentTop="true"
+                            android:text="@{viewmodel.returnTotalTimeText}"
+                            android:textColor="@android:color/black"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/totalDistance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/totalTime"
+                            android:layout_marginStart="20dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginTop="20dp"
+                            android:text="@{viewmodel.returnTotalDistanceText}"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/info_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/totalDistance"
+                            android:layout_marginLeft="30sp"
+                            android:text="@{viewmodel.returnInfoPathText}"
+                            android:layout_marginTop="50dp"
+                            android:layout_alignParentTop="true"
+                            android:textSize="15sp" />
+
+                        <Button
+                            android:id="@+id/directions_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginLeft="30sp"
+                            android:layout_below="@+id/info_text"
+                            android:textColor="@color/buttonColor"
+                            android:background="@drawable/button_bg_rounded_corners"
+                            android:backgroundTint="@color/colorAccent"
+                            android:text="Direction" />
+
+                        <Button
+                            android:id="@+id/alt_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_toRightOf="@id/directions_button"
+                            android:layout_below="@+id/info_text"
+                            android:background="@drawable/button_bg_rounded_corners"
+                            android:layout_marginStart="20dp"
+                            android:backgroundTint="@color/buttonColor"
+                            android:text="ALT" />
+
+                        <ImageButton
+                            android:id="@+id/imageButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/alt_button"
+                            android:layout_marginStart="20dp"
+                            android:layout_below="@+id/info_text"
+                            android:layout_marginTop="20dp"
+                            android:backgroundTint="@android:color/transparent"
+                            android:src="@drawable/like_off" />
+                        <TextView
+                            android:id="@+id/DirectionsTextBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@{viewmodel.returnDirectionText}"
+                            android:layout_below="@+id/directions_button"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginLeft="30sp"
+                            android:layout_marginRight="30sp"
+                            android:textSize="20sp" />
+
+                    </RelativeLayout>
 
                 </ScrollView>
 
