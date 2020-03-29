@@ -1,7 +1,9 @@
 package com.soen390.conumap
 
+import com.nhaarman.mockitokotlin2.whenever
 import com.soen390.conumap.IndoorNavigation.Node
 import com.soen390.conumap.IndoorNavigation.NodeComparator
+import com.soen390.conumap.IndoorNavigation.Pathfinding
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Test
@@ -64,11 +66,54 @@ class IndoorNavigationTests {
     @Test
     fun nodeComparatorTest() {
         NodeComparator()
-        
+
         testNode2.g = 5
         testNode2.calculateF()
         assertEquals(0, NodeComparator.compare(testNode1, testNode1))
         assertEquals(-5, NodeComparator.compare(testNode1, testNode2))
         assertEquals(5, NodeComparator.compare(testNode2, testNode1))
+    }
+
+    // Pathfinding tests.
+    var origin: Node = Node(2, 1)
+    var destination: Node = Node(7, 7)
+    var row = 8
+    var col = 8
+    var pfTest: Pathfinding = Pathfinding(row, col, origin, destination)
+    var blockRow = arrayOf(1,2,3,4,5,6,7,7,6,5,3,3,3)
+    var blockCol = arrayOf(3,3,3,3,3,3,3,6,6,6,5,6,7)
+    var blockArray = arrayOf<Array<Int>>(blockRow, blockCol)
+
+    @Test
+    fun findPathTest() {
+        pfTest.loadMap()
+        pfTest.loadBlocks(blockArray)
+
+        var path = pfTest.findPath()
+        var expected: MutableList<Node> = mutableListOf()
+
+        expected.add(Node(2,1))
+        expected.add(Node(2, 2))
+        expected.add(Node(1, 2))
+        expected.add(Node(0, 2))
+        expected.add(Node(0, 3))
+        expected.add(Node(0, 4))
+        expected.add(Node(1, 4))
+        expected.add(Node (2, 4))
+        expected.add(Node(3, 4))
+        expected.add(Node(4,4))
+        expected.add(Node(4,5))
+        expected.add(Node(4,6))
+        expected.add(Node(4,7))
+        expected.add(Node(5, 7))
+        expected.add(Node(6, 7))
+        expected.add(Node(7, 7))
+
+        for(i in 0 until path.size) {
+            assert(expected[i].equals(path[i]))
+        }
+
+        pfTest.printMapSizeToConsole()
+        pfTest.printMapToConsole()
     }
 }
