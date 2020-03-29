@@ -63,6 +63,16 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
         createCampuses()
     }
 
+    // Remove and re-add all map elements.
+    fun resetMap() {
+        if(mapLateinitsAreInitialized()) {
+            gMap.clear()
+            buildings.clear()
+            buildings = BuildingCreator.createBuildings(gMap)
+            createCampuses()
+        }
+    }
+
     fun getMapInstance(): GoogleMap{
         return gMap
     }
@@ -119,7 +129,8 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
     }
 
     //This animate the camera to the given LatLng with the given zoom on the map
-    fun moveCamera(position: LatLng, zoom: Float){
+    fun moveCamera(position: LatLng, zoom: Float) {
+        resetMap()
         gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, zoom))
     }
 
