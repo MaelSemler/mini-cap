@@ -29,8 +29,8 @@ class DirectionsTest {
         sleep(2000)
 
         device.click(
-            width / 2,
-            height / 2
+            width / 4,
+            height / 4
         )
 
         // Give time for app to load.
@@ -57,7 +57,8 @@ class DirectionsTest {
         travelButton.click()
         sleep(1000)
 
-
+        val directions:  UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/DirectionsTextBox"))
+        directions.click()
     }
 
 

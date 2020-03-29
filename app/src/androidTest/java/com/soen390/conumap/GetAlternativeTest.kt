@@ -14,14 +14,14 @@ import java.lang.Thread.sleep
 
 @RunWith(AndroidJUnit4::class)
 
-class TransportationTest {
+class GetAlternativeTest {
     var device = UiDevice.getInstance(getInstrumentation())
     var height = device.displayHeight
     var width = device.displayWidth
 
-    //Change Transportation System Test FT2-8
+    //Get Alternative System Test FT2-9
     @Test
-    fun changeTransportation()
+    fun getAlternative()
     {
         // Open app.
         device.pressRecentApps()
@@ -60,8 +60,15 @@ class TransportationTest {
         val directions:  UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/DirectionsTextBox"))
         directions.click()
 
+        //tests alternative
+        val alternative:  UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/alt_button"))
+        alternative.click()
+        directions.click()
+
+        //tests alternative after changing mode of transportation
         val transportation:  UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/transportation_walk"))
         transportation.click()
+        alternative.click()
         directions.click()
     }
 
