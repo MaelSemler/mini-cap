@@ -113,4 +113,12 @@ object Path {
         _alternateRouteId.value = 0
         _alternateRouteIdMax.value = 99
     }
+
+    fun setTransportation(mode: String){
+        Path.transportationMode=mode
+    }
+
+    fun getTransportation():String{
+        return Path.transportationMode
+    }
 }
