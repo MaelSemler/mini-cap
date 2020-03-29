@@ -45,6 +45,7 @@ class DirectionsTest {
         val autocompleteText: UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/places_autocomplete_search_bar"))
         autocompleteText.waitForExists(2000)
         autocompleteText.setText("Hall"); //write keyword for a location
+        device.pressBack() // To close keyboard
         sleep(1000) //wait for app to load
 
         //pick a prediction from those listed
@@ -59,7 +60,7 @@ class DirectionsTest {
 
         val directions:  UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/DirectionsTextBox"))
         directions.click()
+
+        device.pressBack() // Ensure keyboard is closed for the following test.
     }
-
-
 }

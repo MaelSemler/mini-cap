@@ -21,8 +21,7 @@ class TransportationTest {
 
     //Change Transportation System Test FT2-8
     @Test
-    fun changeTransportation()
-    {
+    fun changeTransportationTest() {
         // Open app.
         device.pressRecentApps()
 
@@ -45,6 +44,7 @@ class TransportationTest {
         val autocompleteText: UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/places_autocomplete_search_bar"))
         autocompleteText.waitForExists(2000)
         autocompleteText.setText("Hall"); //write keyword for a location
+        device.pressBack() // To close keyboard
         sleep(1000) //wait for app to load
 
         //pick a prediction from those listed
@@ -63,7 +63,7 @@ class TransportationTest {
         val transportation:  UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/transportation_walk"))
         transportation.click()
         directions.click()
+
+        device.pressBack() // Ensure keyboard is closed for the following test.
     }
-
-
 }

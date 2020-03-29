@@ -46,6 +46,7 @@ class ChangeStartingLocationTest {
             device.findObject(UiSelector().resourceId("com.soen390.conumap:id/places_autocomplete_search_bar"))
         autocompleteText.waitForExists(2000)
         autocompleteText.setText("Hall"); //write keyword for a location
+        device.pressBack() // To close keyboard
         sleep(1000) //wait for app to load
 
         //pick a prediction from those listed
@@ -72,6 +73,7 @@ class ChangeStartingLocationTest {
             device.findObject(UiSelector().resourceId("com.soen390.conumap:id/places_autocomplete_search_bar"))
         secondAutocompleteText.waitForExists(2000)
         secondAutocompleteText.setText("Atwater"); //write keyword for a location
+        device.pressBack() // To close keyboard
         sleep(1000) //wait for app to load
 
         //pick a prediction from those listed
@@ -81,5 +83,7 @@ class ChangeStartingLocationTest {
         sleep(1000) //wait for app to load
 
         val directions:  UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/DirectionsTextBox"))
+
+        device.pressBack() // Ensure keyboard is closed for the following test.
     }
 }
