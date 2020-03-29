@@ -72,5 +72,8 @@
         <action
             android:id="@+id/action_alternateFragment_to_searchBarFragment"
             app:destination="@id/searchBarFragment" />
+        <action
+            android:id="@+id/action_alternateFragment_to_searchCompletedFragment"
+            app:destination="@id/searchCompletedFragment" />
     </fragment>
 </navigation>

@@ -125,7 +125,7 @@ class DirectionsFragment : Fragment() {
 
         //TODO: look in if this is the best way to implement a "back" function
         binding.returnButton.setOnClickListener{
-            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_searchCompletedFragment)
+            NavHostFragment.findNavController(this).navigate(R.id.searchCompletedFragment)
         }
         binding.transportationWalk.setOnClickListener {   //This binds the radio button to an onclick listener event that sets the transportation mode
 
