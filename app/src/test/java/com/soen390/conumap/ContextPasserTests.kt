@@ -22,9 +22,10 @@ class ContextPasserTests {
     @Test
     fun setContextTest() {
         ContextPasser.setContexts(context)
-        assert(context.getSystemService(Context.LOCATION_SERVICE) == locationManagerMock)
 
         //Check deviceLocationChecker
         DeviceLocationChecker.isDeviceLocationEnabled()
+
+        assert(context.getSystemService(Context.LOCATION_SERVICE) == locationManagerMock)
     }
 }
