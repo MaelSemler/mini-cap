@@ -21,7 +21,7 @@ object Path {
     val _PathTotalDistanceText = MutableLiveData<String>()
     val _PathTotalTimeText = MutableLiveData<String>()
     var _infoPathText = MutableLiveData<String>()
-    val _PathAlternateText = MutableLiveData<String>()
+    val _PathAlternateText = MutableLiveData<String>("")
     val _alternateRouteId = MutableLiveData<Int>(0)
     val _alternateRouteIdMax = MutableLiveData<Int>(99)
 
@@ -62,6 +62,10 @@ object Path {
 
     fun getAlternatives(): Int {
         return _alternateRouteId.value!!.toInt()
+    }
+
+    fun resetAlternateText(){
+        _PathAlternateText.value = ""
     }
 
     //Update the directionText
