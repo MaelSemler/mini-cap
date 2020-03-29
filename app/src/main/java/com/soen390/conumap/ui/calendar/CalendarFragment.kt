@@ -27,7 +27,7 @@ class CalendarFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        init()
+        initSubFragment()
         activity!!.supportFragmentManager.beginTransaction().add(R.id.calendar_container,containee).commit()
         return inflater.inflate(R.layout.calendar_fragment, container, false)
 
@@ -39,7 +39,8 @@ class CalendarFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
-    private fun init() {
+    //Check which fragment should be added depending on connected accounts
+    private fun initSubFragment() {
         val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(activity)
         Schedule.initCredentials(activity!!)
         if (account != null) {

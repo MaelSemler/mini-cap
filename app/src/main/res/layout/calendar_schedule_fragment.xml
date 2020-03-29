@@ -23,7 +23,7 @@
         <RelativeLayout
             android:id="@+id/test_id"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="20dp">
 
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="50dp"
+                android:layout_marginBottom="40dp"
                 android:text="Coming up"
                 android:textColor="@android:color/black"
                 android:textSize="30dp" />
@@ -43,15 +43,23 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/coming_up"
                 android:layout_marginTop="0dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/go_now_button"
                 android:text="Class Number"
-                android:textStyle="bold"
-                android:textSize="18dp"/>
+                android:textSize="18dp"
+                android:textStyle="bold" />
             <TextView
                 android:id="@+id/time_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/class_number_value"
                 android:layout_marginTop="0dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/go_now_button"
                 android:text="Time"
                 android:textStyle="bold"
                 android:textSize="15dp"/>
@@ -61,6 +69,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/time_title"
                 android:layout_marginTop="0dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/go_now_button"
                 android:text="Time value"
                 android:textSize="15dp"/>
             <TextView
@@ -69,6 +81,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/time_value"
                 android:layout_marginTop="0dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/go_now_button"
                 android:text="Location"
                 android:textStyle="bold"
                 android:textSize="15dp"/>
@@ -78,6 +94,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/location_title"
                 android:layout_marginTop="0dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/go_now_button"
                 android:text="Room Location value"
                 android:textSize="15dp"/>
             <TextView
@@ -86,6 +106,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/room_location_value"
                 android:layout_marginTop="0dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/go_now_button"
                 android:text="Location value"
                 android:textSize="15dp"/>
 
@@ -112,6 +136,8 @@
             android:layout_width="match_parent"
             android:layout_height="320dp"
             android:layout_alignParentBottom="true"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/test_id"
             android:layout_marginBottom="0dp">
             <View
                 android:id="@+id/schedule_divider"
@@ -142,6 +168,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/month_year"
+                    android:layout_marginTop="0dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginEnd="100dp"
                     android:layout_centerHorizontal="true"/>
 
                 <Button
@@ -168,9 +199,9 @@
                     android:id="@+id/week"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/month_year"
+                    android:layout_below="@+id/dropdown_calendar"
                     android:layout_marginLeft="50dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:weightSum="7">
 
                     <TextView

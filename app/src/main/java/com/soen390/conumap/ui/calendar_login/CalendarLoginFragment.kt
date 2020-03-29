@@ -38,7 +38,7 @@ class CalendarLoginFragment : Fragment() {
     }
     private lateinit var viewModel: CalendarLoginViewModel
     private lateinit var mGoogleSignInClient: GoogleSignInClient
-    val RC_SIGN_IN: Int = 1
+    private val RC_SIGN_IN: Int = 1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -47,7 +47,6 @@ class CalendarLoginFragment : Fragment() {
 
         val gso =
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
-        //GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
         mGoogleSignInClient = GoogleSignIn.getClient(activity!!, gso)
 
         signInButton.setOnClickListener {
@@ -62,12 +61,13 @@ class CalendarLoginFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
+    //
     private fun signIn() {
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
-
+    //
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode === RC_SIGN_IN && data != null && data.extras != null){
@@ -78,6 +78,7 @@ class CalendarLoginFragment : Fragment() {
 
         }
     }
+    //
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
