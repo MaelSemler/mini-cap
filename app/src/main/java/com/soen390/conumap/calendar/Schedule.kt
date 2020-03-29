@@ -28,8 +28,13 @@ object Schedule {
     fun initCredentials(activity: Activity) {
         mCredential = GoogleAccountCredential.usingOAuth2(
             activity.applicationContext,
-            arrayListOf(CalendarScopes.CALENDAR))
+            arrayListOf(CalendarScopes.CALENDAR_READONLY))
             .setBackOff(ExponentialBackOff())
+        /*
+        mCredential = GoogleAccountCredential.usingOAuth2(
+            activity.applicationContext,
+            Collections.singleton(
+                "https://www.googleapis.com/auth/calendar.readonly"))*/
     }
 
     fun setUpCredentials(activity: Activity, name: String){
@@ -39,6 +44,7 @@ object Schedule {
             editor.putString(PREF_ACCOUNT_NAME, name)
             editor.apply()
             mCredential!!.selectedAccountName = name
+
         }
     }
 
