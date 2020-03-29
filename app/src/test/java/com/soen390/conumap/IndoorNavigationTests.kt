@@ -63,6 +63,8 @@ class IndoorNavigationTests {
     // NodeComparator tests.
     @Test
     fun nodeComparatorTest() {
+        NodeComparator()
+        
         testNode2.g = 5
         testNode2.calculateF()
         assertEquals(0, NodeComparator.compare(testNode1, testNode1))
