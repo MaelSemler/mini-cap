@@ -1,6 +1,7 @@
 package com.soen390.conumap
 
 import com.soen390.conumap.IndoorNavigation.Node
+import com.soen390.conumap.IndoorNavigation.NodeComparator
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Test
@@ -60,5 +61,12 @@ class IndoorNavigationTests {
     }
 
     // NodeComparator tests.
-
+    @Test
+    fun nodeComparatorTest() {
+        testNode2.g = 5
+        testNode2.calculateF()
+        assertEquals(0, NodeComparator.compare(testNode1, testNode1))
+        assertEquals(-5, NodeComparator.compare(testNode1, testNode2))
+        assertEquals(5, NodeComparator.compare(testNode2, testNode1))
+    }
 }
