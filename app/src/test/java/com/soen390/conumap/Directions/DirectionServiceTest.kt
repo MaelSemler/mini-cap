@@ -1,12 +1,29 @@
 package com.soen390.conumap.Directions
 
+import android.app.Activity
+import android.content.res.Resources
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.google.android.gms.maps.model.LatLng
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.stub
+import com.nhaarman.mockitokotlin2.whenever
 import com.soen390.conumap.Directions.DataClass.directionsResponse
+import com.soen390.conumap.R
+import com.soen390.conumap.map.Map
 import org.junit.Test
 
 import org.junit.Assert.*
+import org.mockito.Mockito.mock
 
 class DirectionServiceTest {
+    val mockMap  = mock<Map>()
+    val mockActivity = mock<Activity>()
+
+
+
+
+
 
     var fakeJsonString= "{\n" +
             "  \"geocoded_waypoints\": [\n" +
@@ -481,16 +498,51 @@ class DirectionServiceTest {
 
     val entireResponse: directionsResponse = jack.readValue(fakeJsonString, directionsResponse::class.java)
 
+
+
     @Test
-    fun getListOfPath() {
+    fun testGetGoogleMapRequestURL() {
+//        var fakeDirectionService = DirectionService
+        val mockDirectionService = mock<DirectionService>()
+        val mockR = mock<Resources>()
+        val mockOrigin:LatLng = mock<LatLng>()
+        val originLat =  45.5030704
+        val originLng = -73.56395619999999
+        val mockDestination = mock<LatLng>()
+        val destinationLat = 45.4952882
+        val destinationLng = -73.5784328
+        val transportationMode = "driving"
+
+        val fakeAPIKey = "APIkey"
+        val fakeDirectionAPI = "url"
+
+
+
+//        val mockReturnedURL = fakeDirectionAPI + originLat + "," + originLng + "&destination=" + destinationLat + "," + destinationLng + "&mode=" + transportationMode + "&key=" + mockActivity.getString(
+//            R.string.apiKey)
+//
+//        whenever(mockR.getString(any())).thenReturn(fakeAPIKey)
+//        whenever(mockOrigin.latitude).thenReturn(originLat)
+//        whenever(mockOrigin.longitude).thenReturn(originLng)
+//
+//        whenever(mockDestination.latitude).thenReturn(destinationLat)
+//        whenever(mockDestination.longitude).thenReturn(destinationLng)
+
+//        whenever(mockDirectionService.getGoogleMapRequestURL(mockActivity,mockOrigin, mockDestination, "driving", false)).thenReturn(mockReturnedURL)
+//
+//        val expectedURL =
+//        assertEquals(mockDirectionService.getGoogleMapRequestURL(mockActivity, mockOrigin, mockDestination, transportationMode, false),
+//        )
+
+
+
+
+
+
     }
 
     @Test
-    fun getGoogleMapRequestURL() {
-    }
-
-    @Test
-    fun route() {
+    fun testRoute() {
     }
 
 
