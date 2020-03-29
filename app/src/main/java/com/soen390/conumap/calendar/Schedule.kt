@@ -28,7 +28,7 @@ object Schedule {
     fun initCredentials(activity: Activity) {
         mCredential = GoogleAccountCredential.usingOAuth2(
             activity.applicationContext,
-            arrayListOf(CalendarScopes.CALENDAR_READONLY))
+            arrayListOf(CalendarScopes.CALENDAR))
             .setBackOff(ExponentialBackOff())
         /*
         mCredential = GoogleAccountCredential.usingOAuth2(
