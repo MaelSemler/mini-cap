@@ -1,10 +1,7 @@
 package com.soen390.conumap.ui.calendar_login
 
-import android.accounts.AccountManager
-import android.app.Activity
-import android.content.Context
+
 import android.content.Intent
-import android.os.AsyncTask
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -17,19 +14,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.api.client.extensions.android.http.AndroidHttp
-import com.google.api.services.calendar.Calendar
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
-import com.google.api.client.json.jackson2.JacksonFactory
-import com.google.api.client.util.DateTime
-import com.google.api.client.util.ExponentialBackOff
-import com.google.api.services.calendar.CalendarScopes
+
 
 import com.soen390.conumap.R
 import com.soen390.conumap.calendar.Schedule
 import com.soen390.conumap.ui.calendar_schedule.CalendarScheduleFragment
-import java.io.IOException
-import java.util.ArrayList
 
 class CalendarLoginFragment : Fragment() {
 
@@ -61,13 +50,13 @@ class CalendarLoginFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
-    //
+    //Initiation of the signing in process
     private fun signIn() {
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
-    //
+    //Gets the requested account and changes fragment
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode === RC_SIGN_IN && data != null && data.extras != null){
@@ -78,7 +67,8 @@ class CalendarLoginFragment : Fragment() {
 
         }
     }
-    //
+
+    //Checks if the account if found and sets up the calendar
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
