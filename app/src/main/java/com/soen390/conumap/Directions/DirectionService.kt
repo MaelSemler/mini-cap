@@ -13,13 +13,8 @@ import com.google.android.gms.maps.model.*
 import com.google.maps.android.PolyUtil
 import com.soen390.conumap.R
 import com.soen390.conumap.map.Map
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.json.JSONArray
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.PolylineOptions
-import com.google.android.gms.maps.model.Polyline
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
@@ -50,13 +45,14 @@ object DirectionService {
     suspend fun route(activity: FragmentActivity, originLatLng: LatLng, destinationLatLng: LatLng, transportationMode: String, alternativesOn: Boolean) {
         coroutineScope{
             //Path is an arrayList that store every "steps"/path =>Will be used to draw the path
-            //val path: MutableList<List<LatLng>> = ArrayList()
-            listOfPath.clear()     // reset to make sure we start with a clean status
+            val path: MutableList<List<LatLng>> = ArrayList()
 
             listOfPath.clear()// Need to make sure it is clear, because if user is changing origin or destination and make a new search
 
             //Retrieve the correct URL to call the API
             val urlDirections = getGoogleMapRequestURL(activity, originLatLng, destinationLatLng, transportationMode, alternativesOn)
+            Log.d("DirectionServices", "GoogleMAp URL $urlDirections ")
+
             //Making the Request
             launch(Dispatchers.IO) {
                 val directionsRequest = object : StringRequest(
@@ -64,11 +60,9 @@ object DirectionService {
                     urlDirections,
                     com.android.volley.Response.Listener<String> { response ->
                         val jsonResponse = JSONObject(response)
-
                         val status = jsonResponse.getString("status")
 
-                        if (status == "OK")
-                        {
+                        if (status == "OK") {
                             // This part to understand it look carefully at the JSON response sent by the API
                             val routes = jsonResponse.getJSONArray("routes")
 
@@ -88,7 +82,7 @@ object DirectionService {
                                 //ExtractDirections and save it into the directionText blocks
                                 val extractedCleanedDirections = dirObj.extractDirections(steps)
 
-                                //Instantiate a directions Object (which represents a route)
+                                //Instantiate a directions Object (which represent a route)
                                 dirObj.updateSteps(extractedCleanedDirections)
                                 dirObj.updateTotalDistance(totalDistance)
                                 dirObj.updateTotalDuration(totalDuration)
@@ -99,8 +93,8 @@ object DirectionService {
                                 listOfPath.add(dirObj)
                                 ///////////////////////////////////////////////////
                             }
-
                             //Update the display on the main thread
+                            //TODO: THIS IS WHERE YOU EITHER CALL A FUNCTION THAT WILL LOGICALLY CHOOSE WHICH PATH TO DISPLAY ON THE SCREEN
                             var n = com.soen390.conumap.path.Path.getAlternatives()
                             if ( n >= listOfPath.size){
                                 n = 0
@@ -108,13 +102,13 @@ object DirectionService {
                                 Log.e("DirectionService", "Alternate Route Id > List of recorded routes")
                             }
 
+                            //TODO: Currently hardcoded to return and display the first route only, but the rest are stored inside of listOfPath
                             activity.runOnUiThread {
                                 com.soen390.conumap.path.Path.updatePathInfo(listOfPath[n].getInfoPathText())
                                 com.soen390.conumap.path.Path.updateTotalDuration(listOfPath[n].getTotalTimeText())
                                 com.soen390.conumap.path.Path.updateTotalDistance(listOfPath[n].getTotalDistanceText())
                                 com.soen390.conumap.path.Path.updateSteps(listOfPath[n].getDirectionText())
                                 com.soen390.conumap.path.Path.setAlternativeRouteMaxId(listOfPath.size)
-
                                 for (i in 0 until listOfPath.size){
                                     Log.d("DirectionServices", "Building Alternate list $i " + listOfPath[i].getInfoPathText())
                                     if (i != n){
@@ -123,16 +117,15 @@ object DirectionService {
                                 }
                             }
 
+                            ResetPathDrawing()
                             //This Draw on the Map the tracing of "Steps"
                             drawPath(steps, Color.RED, false)     // Draw main path
-
                             // Draws alternate routes
                             for (i in 0 until listOfPath.size) {
                                 if (i != n) {
                                     drawPath(listOfPath[i].getMapSteps(), Color.GRAY, true)
                                 }
                             }
-
                         } else {
                             // status NOT OK (No route from Google API)
                             //TODO display error message on phone
@@ -142,8 +135,7 @@ object DirectionService {
                     com.android.volley.Response.ErrorListener() {
                         @Override
                         fun onErrorResponse(error:VolleyError) {
-
-                            Toast.makeText(activity,  (error.toString()), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(activity,  (error.toString()), Toast.LENGTH_SHORT).show();
                         }
                     })
                 {}
@@ -154,6 +146,7 @@ object DirectionService {
             activity.runOnUiThread {
                 map.moveCamera(destinationLatLng, 18f)
             }
+
         }
     }
 
@@ -173,19 +166,24 @@ object DirectionService {
             polyOptions.pattern(PATTERN_POLYGON_ALPHA)
         }
 
-        var points = ""
+        var points=""
         for (i in 0 until steps.length()) {
             points =
                 steps.getJSONObject(i).getJSONObject("polyline").getString("points")
             path.add(PolyUtil.decode(points))
         }
-        if (polyline.isNotEmpty()){
-            for (i in 0 until polyline.size)
-                {polyline[i].remove()}   //removes each polyline in array list to redraw new polyline
-            }
         for (i in 0 until path.size) {
             polyline.add(map.getMapInstance().addPolyline(polyOptions.addAll(path[i]).color(color))) //add polyline to arraylist
             polyline[i]   //draw polyline
         }
     }
+
+    private fun ResetPathDrawing(){
+        if (polyline.isNotEmpty())
+        {
+            for (i in 0 until polyline.size)
+            {polyline[i].remove()}   //removes each polyline in array list to redraw new polyline
+        }
+    }
+
 }

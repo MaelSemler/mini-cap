@@ -1,6 +1,7 @@
 package com.soen390.conumap.ui.directions
 
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import androidx.lifecycle.ViewModelProviders
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.model.LatLng
@@ -44,9 +46,10 @@ class DirectionsFragment : Fragment() {
         //TODO: get the results from SearchCompletedFragment
         //TODO: get the currentlocation
         //TODO: add the name of the result and the current location to the start and end buttons (get them from the actual objects)
-        // var root = inflater.inflate(R.layout.directions_fragment, container, false)
+        var root = inflater.inflate(R.layout.directions_fragment, container, false)
         val directionViewModel = ViewModelProviders.of(this)
             .get(DirectionsViewModel::class.java)
+
 
         //This permit to inflate the fragment
         binding = DataBindingUtil.inflate<DirectionsFragmentBinding>(inflater, R.layout.directions_fragment, container, false).apply {
@@ -101,7 +104,10 @@ class DirectionsFragment : Fragment() {
         //TODO: Will need to be refactor, we should be calling this function from the onclick in SearchCompletedFragment
         Path.findDirections(requireActivity())
 
-
+        // Alternate Routes
+        binding.altButton.setOnClickListener{
+            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_alternateFragment)
+        }
         binding.startLocationButton.setOnClickListener{
             //TODO: send info to the search bar (DirectionSearchFragment)
             NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_directionsSearchFragment)
@@ -119,11 +125,7 @@ class DirectionsFragment : Fragment() {
 
         //TODO: look in if this is the best way to implement a "back" function
         binding.returnButton.setOnClickListener{
-            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_searchBarFragment)
-        }
-        // Alternate Routes
-        binding.altButton.setOnClickListener{
-            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_alternateFragment)
+            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_searchCompletedFragment)
         }
         binding.transportationWalk.setOnClickListener {   //This binds the radio button to an onclick listener event that sets the transportation mode
 

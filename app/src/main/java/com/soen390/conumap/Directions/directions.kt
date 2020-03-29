@@ -31,7 +31,7 @@ class Directions() {
     val mapSteps: MutableList<JSONArray> = ArrayList<JSONArray>()
 
     init {
-        _directionText ="Direction: "
+        _directionText ="Directions: "
         _totalDistanceText = "("
         _totalTimeText = ""
         _infoPathText="via "
@@ -57,7 +57,6 @@ class Directions() {
     fun getMapSteps():JSONArray{
         return _mapSteps
     }
-
     var textConverted = ""
 
 
@@ -117,7 +116,6 @@ class Directions() {
     fun updatePathInfo(routeDescription: String){
         _infoPathText = routeDescription
     }
-
     fun updateMapSteps(steps: JSONArray){
         _mapSteps = steps
     }
