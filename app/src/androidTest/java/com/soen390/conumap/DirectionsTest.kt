@@ -26,7 +26,7 @@ class DirectionsTest {
         // Open app.
         device.pressRecentApps()
 
-        sleep(1000)
+        sleep(2000)
 
         device.click(
             width / 2,
@@ -34,21 +34,27 @@ class DirectionsTest {
         )
 
         // Give time for app to load.
-        sleep(5000)
+        sleep(7000)
 
         //Click on Directions Button
-
         val directionsButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/search_button"))
         directionsButton.click()
-        sleep(1000)
+        sleep(1000) //Wait for application to load
+
+        //Click on autocomplete search bar
         val autocompleteText: UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/places_autocomplete_search_bar"))
         autocompleteText.waitForExists(2000)
-        autocompleteText.setText("Hall");
+        autocompleteText.setText("Hall"); //write keyword for a location
+        sleep(1000) //wait for app to load
+
+        //pick a prediction from those listed
         val prediction: UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/places_autocomplete_prediction_primary_text"))
-        prediction.waitForExists(2000)
+        prediction.click()
+        sleep(1000) //wait for app to load
+
+        //click on travel button
         val travelButton: UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/travel_button"))
         travelButton.click()
-
         sleep(1000)
 
 
