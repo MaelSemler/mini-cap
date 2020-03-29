@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.model.LatLng
@@ -131,22 +130,18 @@ class DirectionsFragment : Fragment() {
 
             viewModel.setTransportation("walking")
             Path.findDirections(requireActivity())//Calls function for finding directions
-            //TODO: redisplay new directions
-        }
+       }
         binding.transportationBike.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
             viewModel.setTransportation("bicycling")
             Path.findDirections(requireActivity()) //Calls function for finding directions
-            //TODO: redisplay new directions
         }
         binding.transportationCar.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
            viewModel.setTransportation("driving")
             Path.findDirections(requireActivity())//Calls function for finding directions
-            //TODO: redisplay new directions
         }
         binding.transportationBus.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
             viewModel.setTransportation("transit")
             Path.findDirections(requireActivity())//Calls function for finding directions
-            //TODO: redisplay new directions
 
         }
         //TODO: enable switchOriginAndDestination button
