@@ -1,88 +1,49 @@
 package com.soen390.conumap.path
 
-import android.app.Activity
-import android.provider.Settings
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.soen390.conumap.Directions.DirectionService.route
-import com.soen390.conumap.Directions.Directions
 import com.soen390.conumap.map.Map
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import org.json.JSONArray
 
-
-//TODO: Implement Live Data Binding as in directions.kt
 object Path {
-    private lateinit var originFromSearch:LatLng
-    private lateinit var destinationFromSearch: LatLng
-    private var distance=0.0
-    private var transportationMethod="Car"
-    //time
     //accessibilityFriendly
-
-    val _directionText = MutableLiveData<String>()
-    val _totalDistanceText = MutableLiveData<String>()
-    val _totalTimeText = MutableLiveData<String>()
-    val _infoPathText = MutableLiveData<String>()
-
-    var directionsArray : ArrayList<Directions> = arrayListOf()
-
-    val directionText:LiveData<String>
-        get() = _directionText
-    val totalDistanceText: LiveData<String>
-        get() = _totalDistanceText
-    val totalTimeText: LiveData<String>
-        get() = _totalTimeText
-    val infoPathText : LiveData<String>
-        get() = _infoPathText
+    //val alternativesOn = getAlternatives()
+    private var distance = 0.0
+    var alternativesOn = true
+    var transportationMode: String = "driving"
+    private lateinit var originFromSearch: LatLng
+    private lateinit var destinationFromSearch: LatLng
+    val _PathDirectionText = MutableLiveData<String>()
+    val _PathTotalDistanceText = MutableLiveData<String>()
+    val _PathTotalTimeText = MutableLiveData<String>()
+    var _infoPathText = MutableLiveData<String>()
+    val _PathAlternateText = MutableLiveData<String>()
+    val _alternateRouteId = MutableLiveData<Int>(0)
+    val _alternateRouteIdMax = MutableLiveData<Int>(99)
 
     val map = Map
 
-    lateinit var dirObj :Directions
-
-    init {
-        _directionText.value = "Directions: "
-        _totalDistanceText.value = "("
-        _totalTimeText.value = ""
-        _infoPathText.value ="via "
-        originFromSearch = map.getCurrentLocation()
-    }
-
-    fun setOrigin(value:LatLng){
+    fun setOrigin(value: LatLng) {
         originFromSearch = value
     }
 
-    fun setDestination(value:LatLng){
+    fun setDestination(value: LatLng) {
         destinationFromSearch = value
     }
 
+    fun findDirections(activity: FragmentActivity) {
 
- fun findDirections(activity: FragmentActivity){
-        //TODO: Default origin is the current location
         val originLatLng = originFromSearch
-        //TODO:Destination is hardcoded for now
         val destinationLatLng = destinationFromSearch
 
-        //TODO: Set Transportation mode
-        //This can be walking, driving, bicycling, transit
-        //val transportationMode = getTransportationMode()
-        val transportationMode = "driving"//TODO: Hardcoded for now look at the line just before we should be able to retrieve it this way
-
-        //TODO: Set Alternative On/Off
-        //val alternativesOn = getAlternatives()
-        val alternativesOn = true//TODO: Hardcoded that alternatives are turned off for now look at line right before: to be implemented
-
         //TODO: Origin and Destination should have a title
-        map.addMarker(originLatLng,("This is the origin"))
+        map.addMarker(originLatLng, ("This is the origin"))
         map.addMarker(destinationLatLng, "Destination")
         map.moveCamera(originLatLng, 14.5f)
-
-
-     dirObj = Directions()
-
         GlobalScope.launch {
             route(
                 activity,
@@ -90,42 +51,66 @@ object Path {
                 destinationLatLng,
                 transportationMode,
                 alternativesOn
-            )//Calling the actual route function and passing all the needed parameters
-
+            )
+            //Calling the actual route function and passing all the needed parameters
         }
-
     }
 
-    fun switchOriginAndDestination()
-    {
+    fun switchOriginAndDestination() {
         //TODO: To be implemented
     }
 
-    fun getAlternatives()
-    {
-        //TODO: To be implemented
+    fun getAlternatives(): Int {
+        return _alternateRouteId.value!!.toInt()
     }
 
     //Update the directionText
-    fun updateSteps(textSteps: String){
+    fun updateSteps(textSteps: String) {
 
-        _directionText.value = textSteps
+        _PathDirectionText.value = textSteps
     }
 
     //Update TotalDistance
-    fun updateTotalDistance(distance:String){
-        _totalDistanceText.value = "(" + distance + ")"
+    fun updateTotalDistance(distance: String) {
+        _PathTotalDistanceText.value = distance
     }
 
     //Update TotalDuration
-    fun updateTotalDuration(duration:String){
-        _totalTimeText.value = duration
+    fun updateTotalDuration(duration: String) {
+        _PathTotalTimeText.value = duration
     }
 
     //Update the information of the path
-    fun updatePathInfo(routeDescription:String){
+    fun updatePathInfo(routeDescription: String) {
         _infoPathText.value = routeDescription
     }
 
+    //Update the alternative routes
+    fun updateAlternateText(
+        totalTimeText: String,
+        totalDistanceText: String,
+        infoPathText: String
+    ) {
+        _PathAlternateText.value += "  " + totalTimeText + " " + totalDistanceText + "\n" + infoPathText + "\n\n"
+    }
 
+    fun setAlternativeRouteMaxId(n: Int) {
+        _alternateRouteIdMax.value = n
+    }
+
+    fun setAlternativeRoute(n: Int) {
+        if (n <= _alternateRouteIdMax.value!!.toInt()) {
+            _alternateRouteId.value = n
+        }
+    }
+
+    fun resetDirections() {
+        _PathDirectionText.value = "Direction: "
+        _PathTotalDistanceText.value = ""
+        _PathTotalTimeText.value = ""
+        _infoPathText.value = ""
+        _PathAlternateText.value = ""
+        _alternateRouteId.value = 0
+        _alternateRouteIdMax.value = 99
+    }
 }

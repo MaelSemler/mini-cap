@@ -15,7 +15,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
-import android.widget.EditText
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
@@ -51,8 +50,7 @@ class DirectionsSearchFragment : Fragment() {
         val clear_button = root.findViewById<View>(R.id.clear_search) as Button
         search_bar = root.findViewById<View>(R.id.DirectionSearchResults) as Button
 
-        //Selects the search bar input
-        //search_bar.requestFocus()
+        //Todo request focus on search bar
 
         this.context?.let {
             Places.initialize(it, context?.getString(R.string.apiKey)!!)
@@ -71,19 +69,6 @@ class DirectionsSearchFragment : Fragment() {
                 .build(this.requireContext());
             startActivityForResult(intent, autoCompleteRequestCode);
         }
-
-        /*
-        //This is the search bar edit text
-        //this method waits for the "ENTER" key to be pressed
-        //It changes fragment when it is pressed
-        search_bar.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                //TODO: send the results back ti DirectionsFragment
-                NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_directionsSearchFragment_to_directionsFragment)
-            }
-            false
-        })*/
 
         //This button clears the edit text input when it is pressed
         clear_button.setOnClickListener {

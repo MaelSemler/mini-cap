@@ -43,7 +43,6 @@ class DirectionsTest {
     fun testGetTotalDistanceText() {
         //Assert Equals
         testDirectionObj.updateTotalDistance("Fake Distance")
-        assertEquals(testDirectionObj.getTotalDistanceText(), testDirectionObj._totalDistanceText)
         assertEquals(testDirectionObj.getTotalDistanceText(), "Fake Distance")
 
         //Assert Not Equals
@@ -59,7 +58,6 @@ class DirectionsTest {
     fun testGetTotalTimeText() {
         //Assert Equals
         testDirectionObj.updateTotalDuration("Fake Duration")
-        assertEquals(testDirectionObj.getTotalTimeText(), testDirectionObj._totalTimeText)
         assertEquals(testDirectionObj.getTotalTimeText(), "Fake Duration")
 
         //Assert Not Equals
@@ -74,7 +72,6 @@ class DirectionsTest {
     fun testGetInfoPathText() {
         //Assert Equals
         testDirectionObj.updatePathInfo("Fake Path Info")
-        assertEquals(testDirectionObj.getInfoPathText(), testDirectionObj._infoPathText)
         assertEquals(testDirectionObj.getInfoPathText(), "Fake Path Info")
 
         //Assert Not Equals

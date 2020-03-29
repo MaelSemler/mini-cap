@@ -8,9 +8,9 @@ import android.provider.Settings
 // An object used to check if the location service on the device is enabled.
 object DeviceLocationChecker {
     private lateinit var context: Context
-    // For API level > 23 (newer than Marshmallow)
+    // For API level >= 28 (Pie or newer)
     private lateinit var locationManager: LocationManager
-    // For API level <= 23 (Marshmallow or older)
+    // For API level < 28 (Older than Pie)
     private var locationMode = -1 // 0 means off, != 0  means on
 
     fun setUp(ctx: Context) {
@@ -27,7 +27,7 @@ object DeviceLocationChecker {
 
     // Returns true if device location is enabled, false otherwise.
     fun isDeviceLocationEnabled(): Boolean {
-        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
             // Use locationMode since old version of Android.
             updateLocationMode()
             return locationMode != 0
