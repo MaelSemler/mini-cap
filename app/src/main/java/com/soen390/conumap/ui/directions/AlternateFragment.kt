@@ -1,43 +1,40 @@
 package com.soen390.conumap.ui.directions
 
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import com.google.android.gms.maps.model.LatLng
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.gms.maps.model.LatLng
+import com.soen390.conumap.databinding.AlternateFragmentBinding
+
 import com.soen390.conumap.R
-import com.soen390.conumap.databinding.DirectionsFragmentBinding
 import com.soen390.conumap.path.Path
 import com.soen390.conumap.ui.search_bar.SearchBarViewModel
-import kotlinx.android.synthetic.main.directions_fragment.*
+import kotlinx.android.synthetic.main.alternate_fragment.*
 import java.util.*
 
-
-class DirectionsFragment : Fragment() {
+class AlternateFragment : Fragment() {
     var prefs: SharedPreferences? = null
     val map = com.soen390.conumap.map.Map
     var startLocationAddress:String?=null
 
     companion object {
-        fun newInstance() = DirectionsFragment()
+        fun newInstance() = AlternateFragment()
     }
 
-    private lateinit var viewModel: DirectionsViewModel
-    lateinit var binding : DirectionsFragmentBinding
-    lateinit var distanceBar: TextView
-    lateinit var timeBar: TextView
-    lateinit var infoBar: TextView
+    private lateinit var viewModel: AlternateViewModel
+    lateinit var binding : AlternateFragmentBinding
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,15 +43,15 @@ class DirectionsFragment : Fragment() {
         //TODO: get the results from SearchCompletedFragment
         //TODO: get the currentlocation
         //TODO: add the name of the result and the current location to the start and end buttons (get them from the actual objects)
-        var root = inflater.inflate(R.layout.directions_fragment, container, false)
-        val directionViewModel = ViewModelProviders.of(this)
-            .get(DirectionsViewModel::class.java)
+
+        val AlternateViewModel = ViewModelProviders.of(this)
+            .get(AlternateViewModel::class.java)
 
 
         //This permit to inflate the fragment
-        binding = DataBindingUtil.inflate<DirectionsFragmentBinding>(inflater, R.layout.directions_fragment, container, false).apply {
+        binding = DataBindingUtil.inflate<AlternateFragmentBinding>(inflater, R.layout.alternate_fragment, container, false).apply {
             this.setLifecycleOwner(activity)
-            this.viewmodel = directionViewModel
+            this.viewmodel = AlternateViewModel
         }
 
         //To change starting and ending location, just click on the buttons to be sent to a search fragment
@@ -105,19 +102,19 @@ class DirectionsFragment : Fragment() {
         Path.findDirections(requireActivity())
 
         // Alternate Routes
-        binding.altButton.setOnClickListener{
-            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_alternateFragment)
+        binding.directionsButton.setOnClickListener{
+            NavHostFragment.findNavController(this).navigate(R.id.action_alternateFragment_to_directionsFragment)
         }
         binding.startLocationButton.setOnClickListener{
             //TODO: send info to the search bar (DirectionSearchFragment)
-            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_directionsSearchFragment)
+            NavHostFragment.findNavController(this).navigate(R.id.action_alternateFragment_to_directionsSearchFragment)
             editor.putString("result","1")
             editor.apply()
             editor.commit()
         }
         binding.endLocationButton.setOnClickListener{
             //TODO: send info to the search bar (DirectionSearchFragment)
-            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_directionsSearchFragment)
+            NavHostFragment.findNavController(this).navigate(R.id.action_alternateFragment_to_directionsSearchFragment)
             editor.putString("result","2")
             editor.apply()
             editor.commit()
@@ -125,7 +122,7 @@ class DirectionsFragment : Fragment() {
 
         //TODO: look in if this is the best way to implement a "back" function
         binding.returnButton.setOnClickListener{
-            NavHostFragment.findNavController(this).navigate(R.id.searchCompletedFragment)
+            NavHostFragment.findNavController(this).navigate(R.id.action_alternateFragment_to_searchCompletedFragment)
         }
         binding.transportationWalk.setOnClickListener {   //This binds the radio button to an onclick listener event that sets the transportation mode
 
@@ -139,7 +136,7 @@ class DirectionsFragment : Fragment() {
             //TODO: redisplay new directions
         }
         binding.transportationCar.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
-           viewModel.setTransportation("driving")
+            viewModel.setTransportation("driving")
             Path.findDirections(requireActivity())//Calls function for finding directions
             //TODO: redisplay new directions
         }
@@ -149,12 +146,48 @@ class DirectionsFragment : Fragment() {
             //TODO: redisplay new directions
 
         }
+
+
         //TODO: enable switchOriginAndDestination button
         //TODO: implement alternative button and set the alternative here. Display the changed directions.
+
+        binding.DirectionsTextBox.setOnTouchListener(View.OnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                // Toast.makeText(getActivity(), "AlternateFragment: Touch coordinates : " +  event.x.toString() + " x " + event.y.toString(), Toast.LENGTH_SHORT).show()
+                // Change route
+                if (event.y < 300) {
+                    //First line selected
+                    if (Path.getAlternatives() == 0) {
+                        Path.setAlternativeRoute(1)
+                    } else {
+                        Path.setAlternativeRoute(0)
+                    }
+                } else {
+                    //Second Line selected
+                    if (Path.getAlternatives() == 2) {
+                        Path.setAlternativeRoute(1)
+                    } else {
+                        Path.setAlternativeRoute(2)
+                    }
+                }
+                // Save Context
+                val route_id = Path.getAlternatives()
+                // val transportation_mode = Path.getTransportationMode() // waiting for transportation mode available
+                // Reset data in view model
+                Path.resetDirections()
+                // Restore direction selections
+                Path.setAlternativeRoute(route_id)
+                // Path.setTransportationMode(transportation_mode) // waiting for transportation mode available
+                Path.findDirections(activity!!)
+    //DEBUG                Toast.makeText(getActivity(),"AlternateFragment: Route changed to " + Path.getAlternatives(),Toast.LENGTH_SHORT).show()
+            }
+
+            true
+        })
         return binding.root
     }
 
-    fun  getOrigin(startLocation: String ?):LatLng{
+    fun  getOrigin(startLocation: String ?): LatLng {
         val geocoderLocation : Geocoder = Geocoder(requireContext(), Locale.getDefault())
         val addressesStart: List<Address>?= geocoderLocation.getFromLocationName( startLocation, 5)
         val straddress = addressesStart!![0]
@@ -164,7 +197,7 @@ class DirectionsFragment : Fragment() {
         val originLatLng = LatLng(latitudeStart,longitudeStart)
         return originLatLng
     }
-    fun getDestination(endLocation:String?):LatLng{
+    fun getDestination(endLocation:String?): LatLng {
         val geocoderLocation : Geocoder = Geocoder(requireContext(), Locale.getDefault())
 
         val addressesEnd: List<Address>?= geocoderLocation.getFromLocationName(endLocation, 5)
@@ -179,17 +212,8 @@ class DirectionsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
-
-        viewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
-        val model: SearchBarViewModel by activityViewModels()
-        val destination = model.getDestination()
-        end_location_button.setText(destination)
-
+        viewModel = ViewModelProviders.of(this).get(AlternateViewModel::class.java)
+        // TODO: Use the ViewModel
     }
-
-
-
-
 
 }
