@@ -124,6 +124,6 @@ class BuildingInformationTest {
                 "7141 Sherbrooke W.."))
         loyGEMarker.click()
 
-
+        device.pressBack() // Ensure keyboard is closed for the following test.
     }
 }
