@@ -37,7 +37,7 @@
     <fragment
         android:id="@id/mapFragment"
         android:name="com.soen390.conumap.map.MapFragment"
-        android:label="Map"
+        android:label="@string/menu_map"
         tools:layout="@layout/map_fragment" />
     <fragment
         android:id="@+id/directionsFragment3"
