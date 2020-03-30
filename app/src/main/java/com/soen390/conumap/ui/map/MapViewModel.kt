@@ -1,4 +1,4 @@
-package com.soen390.conumap.map
+package com.soen390.conumap.ui.map
 
 import androidx.lifecycle.ViewModel
 
