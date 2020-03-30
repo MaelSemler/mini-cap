@@ -113,6 +113,7 @@ object DirectionService {
                                 com.soen390.conumap.path.Path.updateTotalDistance(listOfPath[n].getTotalDistanceText())
                                 com.soen390.conumap.path.Path.updateSteps(listOfPath[n].getDirectionText())
                                 com.soen390.conumap.path.Path.setAlternativeRouteMaxId(listOfPath.size)
+                                com.soen390.conumap.path.Path.resetAlternateText()
                                 for (i in 0 until listOfPath.size){
                                     Log.d("DirectionServices", "Building Alternate list $i " + listOfPath[i].getInfoPathText())
                                     if (i != n){

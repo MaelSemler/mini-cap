@@ -10,10 +10,5 @@ class DirectionsViewModel : ViewModel() {
     val returnTotalDistanceText = Path._PathTotalDistanceText
     val returnTotalTimeText = Path._PathTotalTimeText
     val returnInfoPathText= Path._infoPathText
-    //Get Path's Variables
-
-    fun setTransportation(mode: String){
-        Path.transportationMode=mode
-    }
 
 }

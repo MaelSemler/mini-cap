@@ -24,6 +24,7 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.soen390.conumap.R
+import com.soen390.conumap.path.Path
 import com.soen390.conumap.ui.search_bar.SearchBarViewModel
 import kotlinx.android.synthetic.main.search_results_fragment.*
 
@@ -59,7 +60,7 @@ class SearchResultsFragment : Fragment() {
                 .build(this.requireContext());
          startActivityForResult(intent, autoCompleteRequestCode);
         /* TODO Enforce Autocomplete Programmatically */
-
+        Path.setTransportation((getString(R.string.driving)))
 
         // This button clears the edit text input when it is pressed
         clearButton.setOnClickListener {
