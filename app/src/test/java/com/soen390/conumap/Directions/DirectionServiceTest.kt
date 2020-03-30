@@ -496,8 +496,6 @@ class DirectionServiceTest {
 
     val entireResponse: directionsResponse = jack.readValue(fakeJsonString, directionsResponse::class.java)
 
-
-
     @Test
     fun testGetGoogleMapRequestURL() {
 //        var fakeDirectionService = DirectionService
@@ -514,8 +512,6 @@ class DirectionServiceTest {
         val fakeAPIKey = "APIkey"
         val fakeDirectionAPI = "url"
 
-
-
 //        val mockReturnedURL = fakeDirectionAPI + originLat + "," + originLng + "&destination=" + destinationLat + "," + destinationLng + "&mode=" + transportationMode + "&key=" + mockActivity.getString(
 //            R.string.apiKey)
 //
@@ -531,11 +527,6 @@ class DirectionServiceTest {
 //        val expectedURL =
 //        assertEquals(mockDirectionService.getGoogleMapRequestURL(mockActivity, mockOrigin, mockDestination, transportationMode, false),
 //        )
-
-
-
-
-
 
     }
 
@@ -560,6 +551,33 @@ class DirectionServiceTest {
         dirService.ResetPathDrawing()
 
         assert(mockPolyline.size==0)
+
+    }
+
+    @Test
+    fun testDisplayOnScreenPath(){
+        val dirService = DirectionService
+        val path = Path
+        val mockPath = mock<Path>()
+        val mockListOfPath = mock<ArrayList<Directions>>()
+        var mockN = 1
+
+        val mockDirection1 = mock<Directions>
+
+        mockListOfPath.add(mockDirection1)
+        dirService.listOfPath = mockListOfPath
+
+        whenever(mockDirection1.getTotalTimeText()).thenReturn("Mocked Time")
+        whenever(mockDirection1.getDirectionText()).thenReturn("Direction Text")
+        whenever(mockDirection1.getInfoPathText()).thenReturn("Info Path")
+        whenever(mockDirection1.getTotalDistanceText()).thenReturn("Durantion Text")
+
+        dirService.displayOnScreenPath(mockListOfPath, mockN)
+
+        assertEquals(path._PathTotalDistanceText,mockListOfPath[0].getTotalDistanceText() )
+        assertEquals(path._PathTotalTimeText, mockListOfPath[0].getTotalTimeText())
+        assertEquals(path._infoPathText, mockListOfPath[0].getInfoPathText())
+        
 
     }
 
