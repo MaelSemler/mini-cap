@@ -49,12 +49,6 @@ class MainActivity : AppCompatActivity() {
         ContextPasser.setContexts(this)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-
     override fun onResume() {
         super.onResume()
 
