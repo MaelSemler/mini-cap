@@ -13,6 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
 
 
@@ -35,7 +36,7 @@ class CalendarLoginFragment : Fragment() {
         val signInButton = root.findViewById<View>(R.id.sign_in_button)
 
         val gso =
-        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
+        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestScopes(Scope("https://www.googleapis.com/auth/calendar.readonly")).requestIdToken(getString(R.string.clientID)).requestEmail().build()
         mGoogleSignInClient = GoogleSignIn.getClient(activity!!, gso)
 
         signInButton.setOnClickListener {
@@ -72,8 +73,9 @@ class CalendarLoginFragment : Fragment() {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-            Schedule.setUpCredentials(activity!!,account!!.email!!)
-            Schedule.setUpCalendar()
+            Schedule.getName(account!!.email!!)
+            //Schedule.setUpCredentials(activity!!,account!!.email!!)
+            //Schedule.setUpCalendar()
         } catch (e: ApiException) {
             //Todo: handle it
         }

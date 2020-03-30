@@ -3,8 +3,12 @@ package com.soen390.conumap.calendar
 import com.google.api.services.calendar.model.CalendarListEntry
 import android.app.Activity
 import android.content.Context
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
+import com.google.android.gms.auth.GoogleAuthUtil
 import com.google.api.client.extensions.android.http.AndroidHttp
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import com.google.api.client.http.javanet.NetHttpTransport
 import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.client.util.DateTime
 import com.google.api.client.util.ExponentialBackOff
@@ -17,6 +21,8 @@ object Schedule {
     private var calendar: Calendar? = null
     private val calendarEntryList = mutableListOf<CalendarListEntry>()
     private const val PREF_ACCOUNT_NAME = "accountName"
+    private var name = ""
+   // private var googelCred: GoogleCredential? = null
 
     //initiates the credentials with the scope of the calendars
     fun initCredentials(activity: Activity) {
@@ -27,14 +33,23 @@ object Schedule {
     }
 
     //Sets up the credentials with an account
-    fun setUpCredentials(activity: Activity, name: String){
-        if (name != null) {
-            val settings = activity!!.getPreferences(Context.MODE_PRIVATE)
-            val editor = settings.edit()
-            editor.putString(PREF_ACCOUNT_NAME, name)
-            editor.apply()
-            credential!!.selectedAccountName = name
-        }
+    fun getName (email: String){
+        name = email
+    }
+    fun setUpCredentials(con: Context){
+
+        val transport = AndroidHttp.newCompatibleTransport()
+        val jsonFactory = JacksonFactory.getDefaultInstance()
+        val token = GoogleAuthUtil.getToken(con, name, "oauth2:https://www.googleapis.com/auth/calendar.readonly")
+        var googleCred =  GoogleCredential.Builder().setTransport(NetHttpTransport()).setJsonFactory(jsonFactory)
+            .build()
+
+        googleCred.accessToken = token
+        calendar = Calendar.Builder(
+            transport, jsonFactory, googleCred)
+            .setApplicationName("ConUMap")
+            .build()
+
     }
 
     //Sets up the google calendar
@@ -87,4 +102,8 @@ object Schedule {
         }
         return calendarNameList
     }
+
+
+
 }
+
