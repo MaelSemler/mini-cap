@@ -10,8 +10,6 @@ import kotlinx.coroutines.launch
 import org.json.JSONArray
 
 object Path {
-    //accessibilityFriendly
-    //val alternativesOn = getAlternatives()
     private var distance = 0.0
     var alternativesOn = true
     var transportationMode: String = "driving"
@@ -40,7 +38,6 @@ object Path {
         val originLatLng = originFromSearch
         val destinationLatLng = destinationFromSearch
 
-        //TODO: Origin and Destination should have a title
         map.addMarker(originLatLng, ("This is the origin"))
         map.addMarker(destinationLatLng, "Destination")
         map.moveCamera(originLatLng, 14.5f)
@@ -57,7 +54,6 @@ object Path {
     }
 
     fun switchOriginAndDestination() {
-        //TODO: To be implemented
     }
 
     fun getAlternatives(): Int {

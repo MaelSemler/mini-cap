@@ -8,7 +8,6 @@ import android.content.SharedPreferences
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,9 +22,7 @@ import com.google.android.libraries.places.api.model.RectangularBounds
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
-
 import com.soen390.conumap.R
-import kotlinx.android.synthetic.main.search_results_fragment.*
 
 class DirectionsSearchFragment : Fragment() {
     var prefs: SharedPreferences? = null
@@ -42,15 +39,12 @@ class DirectionsSearchFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.directions_search_fragment, container, false)
 
-        //TODO: check if this class is necessary or if we could just use SearchResultsFragment
         //TODO: the search suggestions, recently visited
-        //TODO: DO RESEARCH ON SEARCHVIEWS and if we have to change this entire thing!!!!!!!!!!!
 
         val return_button = root.findViewById<View>(R.id.return_direction) as Button
         val clear_button = root.findViewById<View>(R.id.clear_search) as Button
         search_bar = root.findViewById<View>(R.id.DirectionSearchResults) as Button
 
-        //Todo request focus on search bar
 
         this.context?.let {
             Places.initialize(it, context?.getString(R.string.apiKey)!!)
@@ -76,7 +70,6 @@ class DirectionsSearchFragment : Fragment() {
         }
 
         //This button goes to the previous fragment
-        //TODO: look in if this is the best way to implement a "back" function
         return_button.setOnClickListener {
             NavHostFragment.findNavController(this).navigateUp()
             //TODO:if keyboard is shown hide the keyboard
@@ -88,7 +81,6 @@ class DirectionsSearchFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(DirectionsSearchViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -140,8 +132,7 @@ class DirectionsSearchFragment : Fragment() {
         }
     }
 
-    //TODO:simply the logic!!!
-    //This function is to make the keyboard close
+    //TODO:simply the logic
     fun Fragment.hideKeyboard() {
         view?.let { activity?.hideKeyboard(it) }
     }
@@ -155,7 +146,6 @@ class DirectionsSearchFragment : Fragment() {
         inputMethodManager.hideSoftInputFromWindow(view.windowToken,0)
     }
 
-    //TODO:simply the logic!!!
     //This function is to make the keyboard open
     fun Fragment.showKeyboard() {
         view?.let { activity?.showKeyboard(it) }
