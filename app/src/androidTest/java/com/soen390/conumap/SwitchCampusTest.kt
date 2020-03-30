@@ -45,5 +45,6 @@ class SwitchCampusTest {
         val loyButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/loy_button"))
         loyButton.click()
 
+        device.pressBack() // Ensure keyboard is closed for the following test.
     }
 }

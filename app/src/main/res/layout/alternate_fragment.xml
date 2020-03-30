@@ -84,7 +84,6 @@
 
                 <RadioButton
                     android:id="@+id/transportation_car"
-                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/transportation_car"
