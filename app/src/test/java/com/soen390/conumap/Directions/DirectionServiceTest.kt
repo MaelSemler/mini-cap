@@ -12,6 +12,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.soen390.conumap.Directions.DataClass.directionsResponse
 import com.soen390.conumap.R
 import com.soen390.conumap.map.Map
+import com.soen390.conumap.path.Path
 import org.json.JSONArray
 import org.junit.Test
 
@@ -562,21 +563,31 @@ class DirectionServiceTest {
         val mockListOfPath = mock<ArrayList<Directions>>()
         var mockN = 1
 
-        val mockDirection1 = mock<Directions>
+        val mockTotalTime = "Mocked Time"
+        val mockTotalDistance = "Mocked Distance"
+        val mockInfoPath = "Mocked info Path"
+        val mockDirections = "Mocked Directions"
+
+        val mockDirection1 = mock<Directions>()
 
         mockListOfPath.add(mockDirection1)
         dirService.listOfPath = mockListOfPath
 
-        whenever(mockDirection1.getTotalTimeText()).thenReturn("Mocked Time")
+        whenever(mockDirection1.getTotalTimeText()).thenReturn(mockTotalTime)
         whenever(mockDirection1.getDirectionText()).thenReturn("Direction Text")
         whenever(mockDirection1.getInfoPathText()).thenReturn("Info Path")
         whenever(mockDirection1.getTotalDistanceText()).thenReturn("Durantion Text")
 
+        whenever(mockPath.updatePathInfo(mockInfoPath)).thenReturn(mockInfoPath)
+        whenever(mockPath.updateTotalDuration(mockTotalTime)).thenReturn(mockTotalTime)
+        whenever(mockPath.updateTotalDistance(mockTotalDistance)).thenReturn(mockTotalDistance)
+    
+
         dirService.displayOnScreenPath(mockListOfPath, mockN)
 
-        assertEquals(path._PathTotalDistanceText,mockListOfPath[0].getTotalDistanceText() )
-        assertEquals(path._PathTotalTimeText, mockListOfPath[0].getTotalTimeText())
-        assertEquals(path._infoPathText, mockListOfPath[0].getInfoPathText())
+        assertEquals(mockPath.updateTotalDistance(mockTotalDistance),mockListOfPath[0].getTotalDistanceText() )
+        assertEquals(mockPath.updateTotalDuration(mockTotalTime), mockListOfPath[0].getTotalTimeText())
+        assertEquals(mockPath.updatePathInfo(mockInfoPath), mockListOfPath[0].getInfoPathText())
         
 
     }
