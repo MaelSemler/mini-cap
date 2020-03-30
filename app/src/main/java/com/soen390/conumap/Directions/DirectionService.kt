@@ -183,7 +183,7 @@ object DirectionService {
         }
     }
 
-    private fun ResetPathDrawing(){
+    fun ResetPathDrawing(){
         if (polyline.isNotEmpty())
         {
             for (i in 0 until polyline.size)

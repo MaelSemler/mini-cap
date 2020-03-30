@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.res.Resources
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Polyline
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.stub
@@ -11,19 +12,16 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.soen390.conumap.Directions.DataClass.directionsResponse
 import com.soen390.conumap.R
 import com.soen390.conumap.map.Map
+import org.json.JSONArray
 import org.junit.Test
 
 import org.junit.Assert.*
+import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 
 class DirectionServiceTest {
     val mockMap  = mock<Map>()
     val mockActivity = mock<Activity>()
-
-
-
-
-
 
     var fakeJsonString= "{\n" +
             "  \"geocoded_waypoints\": [\n" +
@@ -541,9 +539,31 @@ class DirectionServiceTest {
 
     }
 
+
     @Test
     fun testRoute() {
     }
+
+
+    @Test
+    fun testResetPathDrawing(){
+        val dirService = mock<DirectionService>()
+
+        val mockPolyline = mock<ArrayList<Polyline>> ()
+        val mockPoly1 = mock<Polyline>
+        val mockPoly2 = mock<Polyline>
+
+        mockPolyline.addAll(listOf(mockPoly1,mockPoly2))
+
+        whenever(dirService.polyline).thenReturn(mockPolyline)
+
+        dirService.ResetPathDrawing()
+
+        assert(mockPolyline.size==0)
+
+    }
+
+
 
 
 }
