@@ -1,4 +1,4 @@
-package com.soen390.conumap.map
+package com.soen390.conumap.ui.map
 
 import androidx.fragment.app.Fragment
 
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.soen390.conumap.R
+import com.soen390.conumap.map.Map
 
 class MapFragment : Fragment() {
 

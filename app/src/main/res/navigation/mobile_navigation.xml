@@ -42,7 +42,7 @@
         tools:layout="@layout/fragment_slideshow" />
     <fragment
         android:id="@id/mapFragment"
-        android:name="com.soen390.conumap.map.MapFragment"
+        android:name="com.soen390.conumap.ui.map.MapFragment"
         android:label="Map"
         tools:layout="@layout/map_fragment" />
     <fragment
