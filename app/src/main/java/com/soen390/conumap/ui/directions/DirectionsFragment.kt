@@ -13,8 +13,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.google.android.gms.maps.model.LatLng
 import androidx.fragment.app.activityViewModels
+import com.google.android.gms.maps.model.LatLng
 import androidx.navigation.fragment.NavHostFragment
 import com.soen390.conumap.R
 import com.soen390.conumap.databinding.DirectionsFragmentBinding
