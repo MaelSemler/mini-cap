@@ -2,6 +2,7 @@ package com.soen390.conumap.ui.calendar_login
 
 
 import android.content.Intent
+import android.os.AsyncTask
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -65,7 +66,6 @@ class CalendarLoginFragment : Fragment() {
                 GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
             activity!!.supportFragmentManager.beginTransaction().replace(R.id.calendar_container,CalendarScheduleFragment.newInstance()).commit()
-
         }
     }
 
@@ -73,9 +73,6 @@ class CalendarLoginFragment : Fragment() {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-            Schedule.getName(account!!.email!!)
-            //Schedule.setUpCredentials(activity!!,account!!.email!!)
-            //Schedule.setUpCalendar()
         } catch (e: ApiException) {
             //Todo: handle it
         }

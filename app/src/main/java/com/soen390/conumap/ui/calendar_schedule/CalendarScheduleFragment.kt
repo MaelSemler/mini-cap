@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.Scope
@@ -101,7 +102,9 @@ class CalendarScheduleFragment : Fragment() {
         locationValue = root.findViewById<TextView>(R.id.location_value)
         calendarDropDown = root.findViewById<Spinner>(R.id.dropdown_calendar)
 
-        CalendarListRequestTask().execute()
+        val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(activity)
+        CalendarSetUpTask().execute(account!!.email!!)
+
 
         val gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestScopes(Scope("https://www.googleapis.com/auth/calendar.readonly")).requestIdToken(getString(R.string.clientID)).requestEmail().build()
@@ -360,7 +363,6 @@ class CalendarScheduleFragment : Fragment() {
         //Sets up and gets the list of calendars
         override fun doInBackground(vararg params: Void): MutableList<String>? {
             return try {
-                Schedule.setUpCredentials(context!!)
                 Schedule.getCalendarIDs()
             } catch (e: Exception) {
                 mLastError = e
@@ -383,4 +385,32 @@ class CalendarScheduleFragment : Fragment() {
         }
     }
 
+    private inner class CalendarSetUpTask() : AsyncTask<String, Void, Boolean>() {
+        //Todo: make it return an event
+        private var mLastError: Exception? = null
+        //
+        override fun doInBackground(vararg params: String?): Boolean? {
+            try {
+                Schedule.setUpCredentials(context!!, params[0]!!)
+                return true
+            } catch (e: Exception) {
+                mLastError = e
+                cancel(true)
+                return false
+            }
+        }
+        //
+        override fun onPostExecute(result: Boolean?) {
+            CalendarListRequestTask().execute()
+        }
+
+        override fun onCancelled() {//Todo: proprely handle this or delete it
+            if (mLastError != null) {
+
+            } else {
+
+            }
+
+        }
+    }
 }

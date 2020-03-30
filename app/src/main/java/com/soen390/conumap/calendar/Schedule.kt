@@ -17,32 +17,15 @@ import com.google.api.services.calendar.CalendarScopes
 import com.soen390.conumap.event.Event
 
 object Schedule {
-    private var credential: GoogleAccountCredential? = null
     private var calendar: Calendar? = null
     private val calendarEntryList = mutableListOf<CalendarListEntry>()
-    private const val PREF_ACCOUNT_NAME = "accountName"
-    private var name = ""
-   // private var googelCred: GoogleCredential? = null
 
-    //initiates the credentials with the scope of the calendars
-    fun initCredentials(activity: Activity) {
-        credential = GoogleAccountCredential.usingOAuth2(
-            activity.applicationContext,
-            arrayListOf(CalendarScopes.CALENDAR))
-            .setBackOff(ExponentialBackOff())
-    }
-
-    //Sets up the credentials with an account
-    fun getName (email: String){
-        name = email
-    }
-    fun setUpCredentials(con: Context){
-
+    //Sets up the google calendar
+    fun setUpCredentials(con: Context,name: String){
         val transport = AndroidHttp.newCompatibleTransport()
         val jsonFactory = JacksonFactory.getDefaultInstance()
         val token = GoogleAuthUtil.getToken(con, name, "oauth2:https://www.googleapis.com/auth/calendar.readonly")
-        var googleCred =  GoogleCredential.Builder().setTransport(NetHttpTransport()).setJsonFactory(jsonFactory)
-            .build()
+        var googleCred =  GoogleCredential.Builder().setTransport(transport).setJsonFactory(jsonFactory).build()
 
         googleCred.accessToken = token
         calendar = Calendar.Builder(
@@ -52,15 +35,7 @@ object Schedule {
 
     }
 
-    //Sets up the google calendar
-    fun setUpCalendar(){
-        val transport = AndroidHttp.newCompatibleTransport()
-        val jsonFactory = JacksonFactory.getDefaultInstance()
-        calendar = Calendar.Builder(
-            transport, jsonFactory, credential)
-            .setApplicationName("ConUMap")
-            .build()
-    }
+
 
     //Gets the events for the selected week
     fun getWeekEvents(minTime: DateTime, maxTime: DateTime, index: Int): MutableList<Event>? {

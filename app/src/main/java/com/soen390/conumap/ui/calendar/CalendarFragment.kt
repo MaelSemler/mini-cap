@@ -42,10 +42,8 @@ class CalendarFragment : Fragment() {
     //Check which fragment should be added depending on connected accounts
     private fun initSubFragment() {
         val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(activity)
-            //Schedule.initCredentials(activity!!)
         if (account != null) {
-            //Schedule.setUpCredentials(activity!!, account.email!!)
-            //Schedule.setUpCalendar()
+
             containee = CalendarScheduleFragment()
         }
         else{
