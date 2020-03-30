@@ -33,7 +33,6 @@ class CalendarScheduleFragment : Fragment() {
 
     private lateinit var viewModel: CalendarScheduleViewModel
     private lateinit var mGoogleSignInClient: GoogleSignInClient
-    private lateinit var debugText: TextView
 
     private lateinit var startDate: DateTime
     private lateinit var endDate: DateTime
@@ -77,7 +76,6 @@ class CalendarScheduleFragment : Fragment() {
         val previousWeekButton = root.findViewById<View>(R.id.previous_week)
         val goNowButton = root.findViewById<View>(R.id.go_now_button)
 
-        debugText = root.findViewById<View>(R.id.debug_text) as TextView
 
         monthTitle= root.findViewById<View>(R.id.month_year) as TextView
         sundayDate = root.findViewById<View>(R.id.sunday_date) as TextView
@@ -296,7 +294,6 @@ class CalendarScheduleFragment : Fragment() {
         private var mLastError: Exception? = null
         //Resets the schedule for the new Schedule week view
         override fun onPreExecute() {
-            debugText.text = "loading...tool long? sign out"
             clearEventUI()
             setUpCalendarDates()
         }
@@ -313,14 +310,6 @@ class CalendarScheduleFragment : Fragment() {
         //Updates the new schedule
         override fun onPostExecute(output: MutableList<Event>?) {
                 showSchedule(output!!)
-        }
-
-        override fun onCancelled() {
-            if (mLastError != null) {
-                    debugText.text = "SCHEDULE The following error occurred:\n" + mLastError!!.message
-            } else {
-                debugText.text = "Request cancelled."
-            }
         }
     }
 
@@ -345,15 +334,6 @@ class CalendarScheduleFragment : Fragment() {
         override fun onPostExecute(result: Event?) {
             showComingUp(result)
         }
-
-        override fun onCancelled() {
-            if (mLastError != null) {
-                debugText.text = "SCHEDULE The following error occurred:\n" + mLastError!!.message
-                showComingUp(null)
-            } else {
-                debugText.text = "Request cancelled."
-            }
-        }
     }
 
     //A list of all the calendars is requested
@@ -375,14 +355,6 @@ class CalendarScheduleFragment : Fragment() {
             setDropDown(result!!)
         }
 
-        override fun onCancelled() {//Todo: proprely handle this or delete it
-            if (mLastError != null) {
-                debugText.text = "IDs The following error occurred:\n" + mLastError!!.message
-            } else {
-                debugText.text = "Request cancelled."
-            }
-
-        }
     }
 
     private inner class CalendarSetUpTask() : AsyncTask<String, Void, Boolean>() {
@@ -391,7 +363,7 @@ class CalendarScheduleFragment : Fragment() {
         //
         override fun doInBackground(vararg params: String?): Boolean? {
             try {
-                Schedule.setUpCredentials(context!!, params[0]!!)
+                Schedule.setUpCalendar(context!!, params[0]!!)
                 return true
             } catch (e: Exception) {
                 mLastError = e
@@ -402,15 +374,6 @@ class CalendarScheduleFragment : Fragment() {
         //
         override fun onPostExecute(result: Boolean?) {
             CalendarListRequestTask().execute()
-        }
-
-        override fun onCancelled() {//Todo: proprely handle this or delete it
-            if (mLastError != null) {
-
-            } else {
-
-            }
-
         }
     }
 }

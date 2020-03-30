@@ -1,25 +1,19 @@
 package com.soen390.conumap
 
-import android.os.Bundle
+
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentFactory
-import androidx.fragment.app.testing.FragmentScenario
-import androidx.fragment.app.testing.launchFragment
-import androidx.fragment.app.testing.launchFragmentInContainer
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.UiSettings
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.Polygon
 import com.nhaarman.mockitokotlin2.*
 import com.soen390.conumap.building.BuildingInfoWindowAdapter
+import com.soen390.conumap.helper.ContextPasser
+import com.soen390.conumap.helper.DeviceLocationChecker
 import com.soen390.conumap.map.Map
-import com.soen390.conumap.map.MapFragment
-import com.soen390.conumap.permission.Permission
-import com.soen390.conumap.ui.home.HomeFragment
-import org.junit.Assert
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.stubbing.Answer
-import org.robolectric.RobolectricTestRunner
 
 class MapTests {
 
@@ -33,6 +27,10 @@ class MapTests {
         on {setMapStyle(mapStyleOptionsMock)}.doAnswer(Answer { true })
         on {setInfoWindowAdapter(buildingInforAdapt)}.doAnswer( Answer {  })
     }
+
+    var markerMock: Marker = mock()
+    var polygonMock: Polygon = mock()
+
 
     var map: Map = mock()
 
@@ -48,7 +46,28 @@ class MapTests {
     }
 
     @Test
-    fun getCurrentLocation() {
+    fun getCurrentLocationTest() {
         Map.getCurrentLocation()
     }
+
+    @Test
+    fun resetMapTest() {
+        Map.resetMap()
+    }
+
+    @Test
+    fun onMarkerClickTest() {
+        Map.onMarkerClick(markerMock)
+    }
+
+    @Test
+    fun onInfoWindowClickTest() {
+        Map.onInfoWindowClick(markerMock)
+    }
+
+    @Test
+    fun onPolygonClickTest() {
+        Map.onPolygonClick(polygonMock)
+    }
+
 }

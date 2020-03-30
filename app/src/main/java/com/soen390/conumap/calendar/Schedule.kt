@@ -21,7 +21,7 @@ object Schedule {
     private val calendarEntryList = mutableListOf<CalendarListEntry>()
 
     //Sets up the google calendar
-    fun setUpCredentials(con: Context,name: String){
+    fun setUpCalendar(con: Context, name: String){
         val transport = AndroidHttp.newCompatibleTransport()
         val jsonFactory = JacksonFactory.getDefaultInstance()
         val token = GoogleAuthUtil.getToken(con, name, "oauth2:https://www.googleapis.com/auth/calendar.readonly")

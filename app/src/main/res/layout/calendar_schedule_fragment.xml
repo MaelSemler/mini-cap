@@ -12,14 +12,7 @@
             android:id="@+id/debug_sign_out"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="debug sign out"/>
-        <TextView
-            android:id="@+id/debug_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
-            android:text="default text"/>
+            android:text="sign out"/>
         <RelativeLayout
             android:id="@+id/test_id"
             android:layout_width="match_parent"

@@ -97,6 +97,13 @@ class AlternateFragment : Fragment() {
         val destinationLatLng = getDestination(endLocationAddress)
         Path.setDestination(destinationLatLng)
 
+        // Select radio button corresponding to transportation mode active
+        when(Path.getTransportation()){
+            getString(R.string.driving) -> binding.transportationCar.setChecked(true)
+            getString(R.string.bicycling) -> binding.transportationBike.setChecked(true)
+            getString(R.string.walking) -> binding.transportationWalk.setChecked(true)
+            getString(R.string.transit) -> binding.transportationBus.setChecked(true)
+        }
 
         //TODO: Will need to be refactor, we should be calling this function from the onclick in SearchCompletedFragment
         Path.findDirections(requireActivity())
@@ -122,29 +129,28 @@ class AlternateFragment : Fragment() {
 
         //TODO: look in if this is the best way to implement a "back" function
         binding.returnButton.setOnClickListener{
-            NavHostFragment.findNavController(this).navigate(R.id.action_alternateFragment_to_searchCompletedFragment)
+            NavHostFragment.findNavController(this).navigate(R.id.searchCompletedFragment)
         }
         binding.transportationWalk.setOnClickListener {   //This binds the radio button to an onclick listener event that sets the transportation mode
 
-            viewModel.setTransportation("walking")
+            Path.setTransportation(getString(R.string.walking))
             Path.findDirections(requireActivity())//Calls function for finding directions
             //TODO: redisplay new directions
         }
         binding.transportationBike.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
-            viewModel.setTransportation("bicycling")
+            Path.setTransportation(getString(R.string.bicycling))
             Path.findDirections(requireActivity()) //Calls function for finding directions
             //TODO: redisplay new directions
         }
         binding.transportationCar.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
-            viewModel.setTransportation("driving")
+            Path.setTransportation(getString(R.string.driving))
             Path.findDirections(requireActivity())//Calls function for finding directions
             //TODO: redisplay new directions
         }
         binding.transportationBus.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
-            viewModel.setTransportation("transit")
+            Path.setTransportation(getString(R.string.transit))
             Path.findDirections(requireActivity())//Calls function for finding directions
             //TODO: redisplay new directions
-
         }
 
 
@@ -184,6 +190,7 @@ class AlternateFragment : Fragment() {
 
             true
         })
+
         return binding.root
     }
 
