@@ -1,13 +1,22 @@
-package com.soen390.conumap.IndoorNavigation
+package com.soen390.conumap.pathDemo
 
-import java.nio.file.Path
+import com.soen390.conumap.IndoorNavigation.Node
+import com.soen390.conumap.IndoorNavigation.Pathfinding
 
 fun main (args: Array<String>) {
-    var origin: Node = Node(2, 1)
-    var destination: Node = Node(7, 7)
+    var origin: Node =
+        Node(2, 1)
+    var destination: Node =
+        Node(7, 7)
     var row = 8
     var col = 8
-    var pathfindingTest: Pathfinding = Pathfinding(row, col, origin, destination)
+    var pathfindingTest: Pathfinding =
+        Pathfinding(
+            row,
+            col,
+            origin,
+            destination
+        )
     var blockRow = arrayOf(1,2,3,4,5,6,7,7,6,5,3,3,3)
     var blockCol = arrayOf(3,3,3,3,3,3,3,6,6,6,5,6,7)
     var blockArray = arrayOf<Array<Int>>(blockRow, blockCol)
@@ -17,7 +26,7 @@ fun main (args: Array<String>) {
     pathfindingTest.printMapToConsole()
 
     var path: MutableList<Node> = pathfindingTest.findPath()
-    for (node:Node in path) {
+    for (node: Node in path) {
         println(node)
     }
 
