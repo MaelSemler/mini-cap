@@ -7,6 +7,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 class Campus (var name: String, var info: String, var location: LatLng, map: GoogleMap) {
     var marker: Marker
+    var defaultMarker: Marker = addCampusMarker(map)
 
     init {
         this.marker = addCampusMarker(map)
@@ -14,12 +15,17 @@ class Campus (var name: String, var info: String, var location: LatLng, map: Goo
 
     // Adds marker for this building to the map passed as an argument.
     fun addCampusMarker(map: GoogleMap): Marker {
-        return map.addMarker(
-            MarkerOptions()
+        return if(map.addMarker(MarkerOptions()
                 .position(location)
                 .alpha(0.0F)
                 .title(name)
                 .snippet(info)
-        )
+            ) != null
+        ) map.addMarker(MarkerOptions()
+            .position(location)
+            .alpha(0.0F)
+            .title(name)
+            .snippet(info)
+        ) else return defaultMarker
     }
 }
