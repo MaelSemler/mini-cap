@@ -108,18 +108,8 @@ object DirectionService {
 
                             //TODO: Currently hardcoded to return and display the first route only, but the rest are stored inside of listOfPath
                             activity.runOnUiThread {
-                                com.soen390.conumap.path.Path.updatePathInfo(listOfPath[n].getInfoPathText())
-                                com.soen390.conumap.path.Path.updateTotalDuration(listOfPath[n].getTotalTimeText())
-                                com.soen390.conumap.path.Path.updateTotalDistance(listOfPath[n].getTotalDistanceText())
-                                com.soen390.conumap.path.Path.updateSteps(listOfPath[n].getDirectionText())
-                                com.soen390.conumap.path.Path.setAlternativeRouteMaxId(listOfPath.size)
-                                com.soen390.conumap.path.Path.resetAlternateText()
-                                for (i in 0 until listOfPath.size){
-                                    Log.d("DirectionServices", "Building Alternate list $i " + listOfPath[i].getInfoPathText())
-                                    if (i != n){
-                                        com.soen390.conumap.path.Path.updateAlternateText(listOfPath[i].getTotalTimeText(), listOfPath[i].getTotalDistanceText() ,listOfPath[i].getInfoPathText())
-                                    }
-                                }
+                                displayOnScreenPath(listOfPath,n)
+
                             }
 
                             ResetPathDrawing()
@@ -188,6 +178,21 @@ object DirectionService {
         {
             for (i in 0 until polyline.size)
             {polyline[i].remove()}   //removes each polyline in array list to redraw new polyline
+        }
+    }
+
+    fun displayOnScreenPath(listOfPath:ArrayList<Directions>,n:Int){
+        com.soen390.conumap.path.Path.updatePathInfo(listOfPath[n].getInfoPathText())
+        com.soen390.conumap.path.Path.updateTotalDuration(listOfPath[n].getTotalTimeText())
+        com.soen390.conumap.path.Path.updateTotalDistance(listOfPath[n].getTotalDistanceText())
+        com.soen390.conumap.path.Path.updateSteps(listOfPath[n].getDirectionText())
+        com.soen390.conumap.path.Path.setAlternativeRouteMaxId(listOfPath.size)
+        com.soen390.conumap.path.Path.resetAlternateText()
+        for (i in 0 until listOfPath.size){
+            Log.d("DirectionServices", "Building Alternate list $i " + listOfPath[i].getInfoPathText())
+            if (i != n){
+                com.soen390.conumap.path.Path.updateAlternateText(listOfPath[i].getTotalTimeText(), listOfPath[i].getTotalDistanceText() ,listOfPath[i].getInfoPathText())
+            }
         }
     }
 
