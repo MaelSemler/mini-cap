@@ -45,6 +45,8 @@ class ScreenRotationTest {
         sleep(1000)
         pressButtons()
         device.setOrientationNatural()
+
+        device.pressBack() // Ensure keyboard is closed for the following test.
     }
 
     // Presses all present UI buttons to make sure they work in both orientations.

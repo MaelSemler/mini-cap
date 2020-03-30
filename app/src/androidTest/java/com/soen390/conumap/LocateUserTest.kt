@@ -50,5 +50,7 @@ class LocateUserTest {
 
         // Give time for app to load.
         sleep(1000)
+
+        device.pressBack() // To close keyboard
     }
 }
