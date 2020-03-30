@@ -550,8 +550,8 @@ class DirectionServiceTest {
         val dirService = mock<DirectionService>()
 
         val mockPolyline = mock<ArrayList<Polyline>> ()
-        val mockPoly1 = mock<Polyline>
-        val mockPoly2 = mock<Polyline>
+        val mockPoly1 = mock<Polyline>()
+        val mockPoly2 = mock<Polyline>()
 
         mockPolyline.addAll(listOf(mockPoly1,mockPoly2))
 
