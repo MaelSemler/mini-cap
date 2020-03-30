@@ -26,7 +26,7 @@ import kotlin.collections.ArrayList
 
 object DirectionService {
     val map = Map
-    val listOfPath = ArrayList<Directions>()
+    var listOfPath = ArrayList<Directions>()
     var polyline= ArrayList<Polyline>()
 //    private val context: Context
 
