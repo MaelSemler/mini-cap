@@ -36,7 +36,7 @@ class BuildingInformationTest {
         sleep(5000)
 
         // Open building info of each SGW building.
-        val sgwButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/button_SGW"))
+        val sgwButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/sgw_button"))
         sgwButton.click()
         val sgwHMarker: UiObject = device.findObject(UiSelector().description("Henry F. Hall Building. SGW Campus\n" +
                 "1455 De Maisonneuve Blvd. W.."))
@@ -45,25 +45,9 @@ class BuildingInformationTest {
                 "1400 De Maisonneuve Blvd. W.."))
         sgwLBMarker.click()
 
-        device.drag(
-            (width * 0.15).toInt(),
-            (height * 0.75).toInt(),
-            (width * 0.75).toInt(),
-            height / 2,
-            10
-        )
-
         val sgwLSMarker: UiObject = device.findObject(UiSelector().description("Learning Square. SGW Campus\n" +
                 "1535 De Maisonneuve Blvd. W.."))
         sgwLSMarker.click()
-
-        device.drag(
-            (width * 0.75).toInt(),
-            height / 2,
-            (width * 0.25).toInt(),
-            height / 2,
-            10
-        )
 
         val sgwGMMarker: UiObject = device.findObject(UiSelector().description("Guy-De Maisonneuve Building. SGW Campus\n" +
                 "1550 De Maisonneuve Blvd. W.."))
@@ -71,13 +55,7 @@ class BuildingInformationTest {
         val sgwMBMarker: UiObject = device.findObject(UiSelector().description("John Molson Building. SGW Campus\n" +
                 "1450 Guy."))
         sgwMBMarker.click()
-        device.drag(
-            (width * 0.75).toInt(),
-            height / 2,
-            (width * 0.25).toInt(),
-            height / 2,
-            10
-        )
+
         val sgwEVMarker: UiObject = device.findObject(UiSelector().description("Engineering, Computer Science and Visual Arts Integrated Complex. SGW Campus\n" +
                 "1515 St. Catherine W.."))
         sgwEVMarker.click()
@@ -87,37 +65,17 @@ class BuildingInformationTest {
         val sgwFGMarker: UiObject = device.findObject(UiSelector().description("Faubourg Ste-Catherine Building. SGW Campus\n" +
                 "1610 St. Catherine W.."))
         sgwFGMarker.click()
-        device.drag(
-            (width * 0.85).toInt(),
-            (height * 0.60).toInt(),
-            (width * 0.15).toInt(),
-            (height * 0.40).toInt(),
-            50
-        )
+
         val sgwGNMarker: UiObject = device.findObject(UiSelector().description("Grey Nuns Building. SGW Campus\n" +
                 "1190 Guy."))
         sgwGNMarker.click()
-        device.drag(
-            (width * 0.95).toInt(),
-            height / 2,
-            (width * 0.05).toInt(),
-            height / 2,
-            50
-        )
 
-        device.drag(
-            (width * 0.95).toInt(),
-            (height * 0.4).toInt(),
-            width /2 ,
-            (height * 0.95).toInt(),
-            50
-        )
         val sgwVAMarker: UiObject = device.findObject(UiSelector().description("Visual Arts Building. SGW Campus\n" +
                 "1395 René Lévesque W.."))
         sgwVAMarker.click()
 
         // Open building info of each LOY building.
-        val loyButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/button_LOY"))
+        val loyButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/loy_button"))
         loyButton.click()
         val loyCCMarker: UiObject = device.findObject(UiSelector().description("Central Building. Loyola Campus\n" +
                 "7141 Sherbrooke W.."))
@@ -152,24 +110,11 @@ class BuildingInformationTest {
         val loyHBMarker: UiObject = device.findObject(UiSelector().description("Hingston Hall, wing HB. Loyola Campus\n" +
                 "7141 Sherbrooke W.."))
         loyHBMarker.click()
-        device.drag(
-            (width * 0.55).toInt(),
-            (height * 0.75).toInt(),
-            (width * 0.45).toInt(),
-            (height * 0.3).toInt(),
-            50
-        )
+
         val loySPMarker: UiObject = device.findObject(UiSelector().description("Richard J. Renaud Science Complex. Loyola Campus\n" +
                 "7141 Sherbrooke W.."))
         loySPMarker.click()
         sleep(1000)
-        device.drag(
-            (width * 0.75).toInt(),
-            height / 2,
-            (width * 0.25).toInt(),
-            height / 2,
-            100
-        )
 
         val loyCJMarker: UiObject = device.findObject(UiSelector().description("Communication Studies and Journalism Building. Loyola Campus\n" +
                 "7141 Sherbrooke W.."))
@@ -179,6 +124,6 @@ class BuildingInformationTest {
                 "7141 Sherbrooke W.."))
         loyGEMarker.click()
 
-
+        device.pressBack() // Ensure keyboard is closed for the following test.
     }
 }

@@ -45,19 +45,21 @@ class ScreenRotationTest {
         sleep(1000)
         pressButtons()
         device.setOrientationNatural()
+
+        device.pressBack() // Ensure keyboard is closed for the following test.
     }
 
     // Presses all present UI buttons to make sure they work in both orientations.
     fun pressButtons() {
         // Press SGW button.
-        val sgwButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/button_SGW"))
+        val sgwButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/sgw_button"))
         sgwButton.click()
 
         // Press LOY button.
-        val loyButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/button_LOY"))
+        val loyButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/loy_button"))
         loyButton.click()
 
-        val locateUserButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/button_current_location"))
+        val locateUserButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/user_location_button"))
         locateUserButton.click()
     }
 }

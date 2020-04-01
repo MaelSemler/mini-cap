@@ -1,0 +1,121 @@
+[
+      {
+        "distance": {
+          "text": "38 m",
+          "value": 38
+        },
+        "duration": {
+          "text": "1 min",
+          "value": 12
+        },
+        "end_location": {
+          "lat": 45.5022247,
+          "lng": -73.5641778
+        },
+        "html_instructions": "Head <b>southwest</b> on <b>Rue De La Gauchetière O</b> toward <b>Côte du Beaver Hall</b>",
+        "polyline": {
+          "points": "yevtGv}~_M|@j@"
+        },
+        "start_location": {
+          "lat": 45.5025258,
+          "lng": -73.56395619999999
+        },
+        "travel_mode": "DRIVING"
+      },
+      {
+        "distance": {
+          "text": "0.2 km",
+          "value": 191
+        },
+        "duration": {
+          "text": "1 min",
+          "value": 64
+        },
+        "end_location": {
+          "lat": 45.5030277,
+          "lng": -73.5663158
+        },
+        "html_instructions": "Turn <b>right</b> at the 1st cross street onto <b>Côte du Beaver Hall</b>",
+        "maneuver": "turn-right",
+        "polyline": {
+          "points": "{cvtGb__`MCd@EV?@EPENUt@m@fB{@dCEPER"
+        },
+        "start_location": {
+          "lat": 45.5022247,
+          "lng": -73.5641778
+        },
+        "travel_mode": "DRIVING"
+      },
+      {
+        "distance": {
+          "text": "1.0 km",
+          "value": 1048
+        },
+        "duration": {
+          "text": "4 mins",
+          "value": 222
+        },
+        "end_location": {
+          "lat": 45.4952882,
+          "lng": -73.5737153
+        },
+        "html_instructions": "Turn <b>left</b> onto <b>Boulevard René-Lévesque O S</b>",
+        "maneuver": "turn-left",
+        "polyline": {
+          "points": "}hvtGnl_`MGd@`B~@RPt@p@f@d@TRb@^|BrBfA`Ad@b@pAlA~AxAj@f@v@t@bA`ANL~BxBjCfCvCjClCjCXVbB`B"
+        },
+        "start_location": {
+          "lat": 45.5030277,
+          "lng": -73.5663158
+        },
+        "travel_mode": "DRIVING"
+      },
+      {
+        "distance": {
+          "text": "0.4 km",
+          "value": 417
+        },
+        "duration": {
+          "text": "2 mins",
+          "value": 142
+        },
+        "end_location": {
+          "lat": 45.4974225,
+          "lng": -73.57810839999999
+        },
+        "html_instructions": "Turn <b>right</b> onto <b>Rue Bishop</b>",
+        "maneuver": "turn-right",
+        "polyline": {
+          "points": "qxttGvz``Ms@`BO`@oAhDs@nBw@nBaA~BgB~E"
+        },
+        "start_location": {
+          "lat": 45.4952882,
+          "lng": -73.5737153
+        },
+        "travel_mode": "DRIVING"
+      },
+      {
+        "distance": {
+          "text": "48 m",
+          "value": 48
+        },
+        "duration": {
+          "text": "1 min",
+          "value": 26
+        },
+        "end_location": {
+          "lat": 45.4970552,
+          "lng": -73.5784328
+        },
+        "html_instructions": "Turn <b>left</b> onto <b>Boulevard de Maisonneuve O</b><div style=\"font-size:0.9em\">Destination will be on the left</div>",
+        "maneuver": "turn-left",
+        "polyline": {
+          "points": "{eutGdva`MfA~@"
+        },
+        "start_location": {
+          "lat": 45.4974225,
+          "lng": -73.57810839999999
+        },
+        "travel_mode": "DRIVING"
+      }
+    ]
