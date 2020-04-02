@@ -101,8 +101,9 @@ class CalendarScheduleFragment : Fragment() {
         calendarDropDown = root.findViewById<Spinner>(R.id.dropdown_calendar)
 
         val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(activity)
-        CalendarSetUpTask().execute(account!!.email!!)
-
+        if (account != null){
+            CalendarSetUpTask().execute(account.email!!)
+        }
 
         val gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestScopes(Scope("https://www.googleapis.com/auth/calendar.readonly")).requestIdToken(getString(R.string.clientID)).requestEmail().build()
