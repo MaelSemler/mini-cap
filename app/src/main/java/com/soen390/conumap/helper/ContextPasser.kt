@@ -1,6 +1,7 @@
 package com.soen390.conumap.helper
 
 import android.content.Context
+import com.soen390.conumap.SVGConverter.SvgConverter
 import com.soen390.conumap.building.BuildingCreator
 import com.soen390.conumap.map.Map
 import com.soen390.conumap.permission.Permission
@@ -16,5 +17,6 @@ object ContextPasser {
         Permission.setContext(context)
         BuildingCreator.setContext(context)
         DeviceLocationChecker.setUp(context)
+        SvgConverter.setContext(context)
     }
 }
