@@ -1,5 +1,6 @@
 package com.soen390.conumap.SVGConverter
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -10,23 +11,29 @@ import com.soen390.conumap.R
 import com.soen390.conumap.building.Floor
 
 object SvgConverter {
+//    private val activity = Activity()
+//    val activity : Activity = Activity()
+
     private lateinit var context:Context
-
+//
     var floorNode :Array<Array<Floor.FloorNode>> = arrayOf<Array<Floor.FloorNode>>()
-
-
+//
+//
     fun setContext(ctx:Context){
         context = ctx
     }
+//
+//    fun getContext(): Context {
+//        return context
+//    }
+    init {
 
-    fun getContext(): Context {
-        return context
     }
 
 
-    fun svgToBitMap(svgFile: SVG): Bitmap {
+    fun svgToBitMap(): Bitmap {
 
-//        val svgFile = SVG.getFromResource(context.resources, R.drawable.hall8)
+        val svgFile = SVG.getFromResource(context.resources, R.raw.hall8)
         lateinit var bitmapFile: Bitmap
 
         if (svgFile.getDocumentWidth() !== -1F) {
