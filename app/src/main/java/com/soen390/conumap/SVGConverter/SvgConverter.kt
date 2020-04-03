@@ -1,6 +1,7 @@
 package com.soen390.conumap.SVGConverter
 
 import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -10,7 +11,7 @@ import com.caverock.androidsvg.SVG
 import com.soen390.conumap.R
 import com.soen390.conumap.building.Floor
 
-object SvgConverter {
+object SvgConverter:Application() {
 //    private val activity = Activity()
 //    val activity : Activity = Activity()
 
@@ -19,9 +20,9 @@ object SvgConverter {
     var floorNode :Array<Array<Floor.FloorNode>> = arrayOf<Array<Floor.FloorNode>>()
 //
 //
-    fun setContext(ctx:Context){
-        context = ctx
-    }
+//    fun setContext(ctx:Context){
+//        context = ctx
+//    }
 //
 //    fun getContext(): Context {
 //        return context
@@ -30,6 +31,11 @@ object SvgConverter {
 
     }
 
+    @Override
+    override fun onCreate() {
+        super.onCreate();
+        context = getApplicationContext();
+    }
 
     fun svgToBitMap(): Bitmap {
 
