@@ -121,13 +121,11 @@ class CalendarScheduleFragment : Fragment() {
             previousWeekTask.execute()
 
         }
-
         goNowButton.setOnClickListener{
             NavHostFragment.findNavController(this).navigateUp()
             //route(currentLocation, Destination)
 
         }
-
         calendarDropDown.onItemSelectedListener =  object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
