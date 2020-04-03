@@ -43,7 +43,7 @@ class CalendarFragment : Fragment() {
     private fun initSubFragment() {
         val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(activity)
         if (account != null) {
-
+            Schedule.setName(account.email)
             containee = CalendarScheduleFragment()
         }
         else{

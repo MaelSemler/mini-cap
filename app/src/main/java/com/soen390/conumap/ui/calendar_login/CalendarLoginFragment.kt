@@ -2,7 +2,6 @@ package com.soen390.conumap.ui.calendar_login
 
 
 import android.content.Intent
-import android.os.AsyncTask
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,7 +13,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
 
 
@@ -37,7 +35,7 @@ class CalendarLoginFragment : Fragment() {
         val signInButton = root.findViewById<View>(R.id.sign_in_button)
 
         val gso =
-        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestScopes(Scope("https://www.googleapis.com/auth/calendar.readonly")).requestIdToken(getString(R.string.clientID)).requestEmail().build()
+        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.clientID)).requestEmail().build()
         mGoogleSignInClient = GoogleSignIn.getClient(activity!!, gso)
 
         signInButton.setOnClickListener {
@@ -65,7 +63,6 @@ class CalendarLoginFragment : Fragment() {
             val task =
                 GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
-            activity!!.supportFragmentManager.beginTransaction().replace(R.id.calendar_container,CalendarScheduleFragment.newInstance()).commit()
         }
     }
 
@@ -73,6 +70,8 @@ class CalendarLoginFragment : Fragment() {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
+            Schedule.setName(account!!.email!!)
+            activity!!.supportFragmentManager.beginTransaction().replace(R.id.calendar_container,CalendarScheduleFragment.newInstance()).commit()
         } catch (e: ApiException) {
             //Todo: handle it
         }

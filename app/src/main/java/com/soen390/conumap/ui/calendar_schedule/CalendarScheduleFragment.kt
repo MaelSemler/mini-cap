@@ -11,10 +11,8 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.Scope
 import com.google.api.client.util.DateTime
 import com.soen390.conumap.event.Event
 
@@ -100,12 +98,10 @@ class CalendarScheduleFragment : Fragment() {
         locationValue = root.findViewById<TextView>(R.id.location_value)
         calendarDropDown = root.findViewById<Spinner>(R.id.dropdown_calendar)
 
-        val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(activity)
-        CalendarSetUpTask().execute(account!!.email!!)
-
+        CalendarSetUpTask().execute()
 
         val gso =
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestScopes(Scope("https://www.googleapis.com/auth/calendar.readonly")).requestIdToken(getString(R.string.clientID)).requestEmail().build()
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.clientID)).requestEmail().build()
         mGoogleSignInClient = GoogleSignIn.getClient(activity!!, gso)
 
         dp = context!!.resources.displayMetrics.density//The logical density of the display
@@ -337,43 +333,22 @@ class CalendarScheduleFragment : Fragment() {
     }
 
     //A list of all the calendars is requested
-    private inner class CalendarListRequestTask() : AsyncTask<Void, Void, MutableList<String>>() {
+    private inner class CalendarSetUpTask() : AsyncTask<Void, Void, MutableList<String>>() {
         //Todo: make it return an event
         private var mLastError: Exception? = null
-        //Sets up and gets the list of calendars
+        //
         override fun doInBackground(vararg params: Void): MutableList<String>? {
             return try {
-                Schedule.getCalendarIDs()
+                Schedule.setUpCalendar(context!!)
             } catch (e: Exception) {
                 mLastError = e
                 cancel(true)
                 null
             }
         }
-        //Sets up the drop down with the names of the calendars
+        //
         override fun onPostExecute(result: MutableList<String>?) {
             setDropDown(result!!)
-        }
-
-    }
-
-    private inner class CalendarSetUpTask() : AsyncTask<String, Void, Boolean>() {
-        //Todo: make it return an event
-        private var mLastError: Exception? = null
-        //
-        override fun doInBackground(vararg params: String?): Boolean? {
-            try {
-                Schedule.setUpCalendar(context!!, params[0]!!)
-                return true
-            } catch (e: Exception) {
-                mLastError = e
-                cancel(true)
-                return false
-            }
-        }
-        //
-        override fun onPostExecute(result: Boolean?) {
-            CalendarListRequestTask().execute()
         }
     }
 }

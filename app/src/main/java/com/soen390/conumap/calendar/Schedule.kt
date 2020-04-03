@@ -1,41 +1,48 @@
 package com.soen390.conumap.calendar
 
 import com.google.api.services.calendar.model.CalendarListEntry
-import android.app.Activity
 import android.content.Context
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import com.google.android.gms.auth.GoogleAuthUtil
 import com.google.api.client.extensions.android.http.AndroidHttp
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
-import com.google.api.client.http.javanet.NetHttpTransport
 import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.client.util.DateTime
-import com.google.api.client.util.ExponentialBackOff
 import com.google.api.services.calendar.Calendar
-import com.google.api.services.calendar.CalendarScopes
 import com.soen390.conumap.event.Event
 
 object Schedule {
     private var calendar: Calendar? = null
     private val calendarEntryList = mutableListOf<CalendarListEntry>()
+    private var name: String? = null
+    fun getName(): String? {
+        return name
+    }
+    fun setName(name: String?) {
+        this.name = name
+    }
 
-    //Sets up the google calendar
-    fun setUpCalendar(con: Context, name: String){
+    //Sets up the google calendars
+    fun setUpCalendar(con: Context): MutableList<String>? {
         val transport = AndroidHttp.newCompatibleTransport()
         val jsonFactory = JacksonFactory.getDefaultInstance()
+        val calendarNameList = mutableListOf<String>()
         val token = GoogleAuthUtil.getToken(con, name, "oauth2:https://www.googleapis.com/auth/calendar.readonly")
-        var googleCred =  GoogleCredential.Builder().setTransport(transport).setJsonFactory(jsonFactory).build()
-
+        var googleCred =  GoogleCredential()
         googleCred.accessToken = token
         calendar = Calendar.Builder(
             transport, jsonFactory, googleCred)
             .setApplicationName("ConUMap")
             .build()
 
+        calendarEntryList.clear()
+        val calendarList = calendar!!.calendarList().list().setPageToken(null).execute()
+        val items = calendarList.items
+        for (entry in items) {
+            calendarEntryList.add(entry)
+            calendarNameList.add(entry.summary)
+        }
+        return calendarNameList
     }
-
-
 
     //Gets the events for the selected week
     fun getWeekEvents(minTime: DateTime, maxTime: DateTime, index: Int): MutableList<Event>? {
@@ -64,21 +71,5 @@ object Schedule {
         val event = events.items.first()
         return Event(event)
     }
-
-    //Resets the calendarEntryList and Gets the different google calendars
-    fun getCalendarIDs():MutableList<String>? {
-        calendarEntryList.clear()
-        val calendarNameList = mutableListOf<String>()
-        val calendarList = calendar!!.calendarList().list().setPageToken(null).execute()
-        val items = calendarList.items
-        for (entry in items) {
-            calendarEntryList.add(entry)
-            calendarNameList.add(entry.summary)
-        }
-        return calendarNameList
-    }
-
-
-
 }
 
