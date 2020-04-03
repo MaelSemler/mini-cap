@@ -38,7 +38,6 @@ class SearchResultsFragment : Fragment() {
         val root = inflater.inflate(R.layout.search_results_fragment, container, false)
 
         //TODO: Recently visited
-        //TODO: DO RESEARCH ON SEARCHVIEWS and if we have to change this entire thing!!!!!!!!!!!
 
         //Getting the Views from the fragment
         val cancelButton = root.findViewById<View>(R.id.cancel_search) as Button
@@ -71,10 +70,8 @@ class SearchResultsFragment : Fragment() {
             // Cancel destination in modelView
             val model: SearchBarViewModel by activityViewModels()
             model.setDestination("")
-            //TODO: look in if this is the best way to implement a "back" function
             NavHostFragment.findNavController(this).navigateUp()
             //TODO:if keyboard is shown, hide the keyboard
-            //hideKeyboard()
         }
         return root
     }
@@ -82,16 +79,7 @@ class SearchResultsFragment : Fragment() {
         override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        // TODO: Use the ViewModel
-
     }
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        //Shows the keyboard
-//        //TODO:if keyboard is hidden, show the keyboard
-//        showKeyboard()
-//
-//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) { //Displays the appropriate thing according to what the user selected.
         super.onActivityResult(requestCode, resultCode, data)
@@ -122,8 +110,6 @@ class SearchResultsFragment : Fragment() {
 
 
     //TODO:simply the logic of hideKeyboard() and showKeyboard
-    //TODO: issue when the app closes the keyboard doesn't
-    // TODO: Understand what this does.
 
     //This function is to make the keyboard close
     fun Fragment.hideKeyboard() {
