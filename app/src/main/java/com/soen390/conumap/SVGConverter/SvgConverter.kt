@@ -7,12 +7,20 @@ import android.graphics.Color
 import androidx.core.graphics.toColor
 import com.caverock.androidsvg.SVG
 import com.soen390.conumap.R
+import com.soen390.conumap.building.Floor
 
 object SvgConverter {
     private lateinit var context:Context
 
+    var floorNode :Array<Array<Floor.FloorNode>> = arrayOf<Array<Floor.FloorNode>>()
+
+
     fun setContext(ctx:Context){
         context = ctx
+    }
+
+    fun getContext(): Context {
+        return context
     }
 
 
@@ -46,16 +54,24 @@ object SvgConverter {
 
     }
 
-    fun convertSVGtoFloorPlan(bitmapFile: Bitmap){
+    fun convertSVGtoFloorPlan(bitmapFile: Bitmap): Floor.FloorPlan {
 
         for (x in 0 until bitmapFile.width) {
             for (y in 0 until bitmapFile.height) {
-                if ( bitmapFile.getPixel(x,y).toColor() == Color.rgb(255,255,255).toColor())
 
+                //If it is a wall or a room then walkable set to false
+                if ( bitmapFile.getPixel(x,y).toColor() == Color.rgb(218,54,54).toColor())
+                    floorNode[x][y] = Floor.FloorNode(x,y,"#da3636", "id"+x+y, false, false)
+                else//It is a hallway set walkable to true
+                    floorNode[x][y] = Floor.FloorNode(x,y,"#da3636", "id"+x+y, true, false)
 
-                    bitmapFile.setPixel(x, y, Color.rgb(255, 255, 255))
+//                bitmapFile.setPixel(x, y, Color.rgb(255, 255, 255))
             }
         }
+        var convertedfloorPlan = Floor.FloorPlan(floorNode)
+
+        return convertedfloorPlan
+
 
     }
 }
