@@ -1,9 +1,13 @@
 package com.soen390.conumap.building
 
+import com.google.android.gms.maps.model.LatLng
+
 object BuildingsConstants {
     // Length and width of buildings determined by calculating distance between LatLngs.
-    val lengthHorH: Double = 0.000745
-    val lengthVerH: Double = 0.000776
-    val lengthHorMB: Double = 0.000368
-    val lengthVerMB: Double = 0.000761
+    val sgwHLength: Double = 0.000776
+    val sgwHWidth: Double = 0.000745
+    val sgwHCenter: LatLng = LatLng(45.497269, -73.578942)
+
+    val sgwMBLength: Double = 0.000761
+    val sgwMBWidth: Double = 0.000368
 }

@@ -281,7 +281,7 @@ object BuildingCreator {
                             .zIndex(10f)
                             .image(BitmapDescriptorFactory.fromResource(R.drawable.h9floorplan))
                             .position(
-                                LatLng(45.497275, -73.578935), 90f
+                                LatLng(45.497269, -73.578942), 94f
                             )
                         map.addGroundOverlay(sgwHIndoor)
                     }
