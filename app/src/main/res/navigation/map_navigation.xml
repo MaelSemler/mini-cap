@@ -47,8 +47,11 @@
             android:id="@+id/action_directionsFragment_to_directionsSearchFragment"
             app:destination="@id/directionsSearchFragment" />
         <action
-            android:id="@+id/action_directionsFragment_to_searchCompletedFragment"
-            app:destination="@id/searchCompletedFragment" />
+            android:id="@+id/action_directionsFragment_to_alternateFragment"
+            app:destination="@id/alternateFragment" />
+        <action
+            android:id="@+id/action_directionsFragment_to_searchBarFragment"
+            app:destination="@id/searchBarFragment" />
     </fragment>
     <fragment
         android:id="@+id/directionsSearchFragment"
@@ -58,5 +61,19 @@
         <action
             android:id="@+id/action_directionsSearchFragment_to_directionsFragment"
             app:destination="@id/directionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/alternateFragment"
+        android:name="com.soen390.conumap.ui.directions.AlternateFragment"
+        android:label="AlternateFragment" >
+        <action
+            android:id="@+id/action_alternateFragment_to_directionsFragment"
+            app:destination="@id/directionsFragment" />
+        <action
+            android:id="@+id/action_alternateFragment_to_searchBarFragment"
+            app:destination="@id/searchBarFragment" />
+        <action
+            android:id="@+id/action_alternateFragment_to_searchCompletedFragment"
+            app:destination="@id/searchCompletedFragment" />
     </fragment>
 </navigation>

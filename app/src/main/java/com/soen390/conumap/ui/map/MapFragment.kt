@@ -1,4 +1,4 @@
-package com.soen390.conumap.map
+package com.soen390.conumap.ui.map
 
 import androidx.fragment.app.Fragment
 
@@ -6,19 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.NavHostFragment
-
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.soen390.conumap.R
-import com.soen390.conumap.permission.Permission
+import com.soen390.conumap.map.Map
 
 class MapFragment : Fragment() {
-
 
     private val callback = OnMapReadyCallback { googleMap ->
         /**
@@ -33,11 +26,6 @@ class MapFragment : Fragment() {
 
         //Call the Map setup method to set all the default stuff for the map
         Map.setUpMap(googleMap, activity!!)
-
-        //Added a marker to test the method
-        //Map.addMarker(LatLng(45.495418, -73.579169), "Bonjour")
-
-
     }
 
     override fun onCreateView(
