@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<string-array name="LOYschedule">
+    <item>7:30</item>
+    <item>7:40</item>
+    <item>7:55</item>
+    <item>8:20</item>
+    <item>8:35</item>
+    <item>8:55</item>
+    <item>9:10</item>
+    <item>9:30</item>
+    <item>9:45</item>
+    <item>10:20</item>
+    <item>10:35</item>
+    <item>10:55</item>
+    <item>11:10</item>
+    <item>11:30</item>
+    <item>19:30</item>
+    <item>20:00</item>
+    <item>20:30</item>
+    <item>20:50</item>
+    <item>21:05</item>
+    <item>21:30</item>
+    <item>22:00</item>
+    <item>22:30</item>
+    <item>23:00</item>
+</string-array>
+
+    <string-array name="SGWschedule">
+        <item>7:45</item>
+        <item>8:05</item>
+        <item>8:20</item>
+        <item>8:35</item>
+        <item>8:55</item>
+        <item>9:10</item>
+        <item>9:30</item>
+        <item>9:45</item>
+        <item>10:05</item>
+        <item>10:20</item>
+        <item>10:55</item>
+        <item>11:10</item>
+        <item>11:45</item>
+        <item>20:00</item>
+        <item>20:15</item>
+        <item>20:30</item>
+        <item>21:00</item>
+        <item>21:25</item>
+        <item>21:45</item>
+        <item>22:05</item>
+        <item>23:30</item>
+        <item>23:00</item>
+    </string-array>
+
+</resources>
