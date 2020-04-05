@@ -320,7 +320,6 @@ class CalendarScheduleFragment : Fragment() {
                 Schedule.getNextEvent(calendarID)
             } catch (e: Exception) {
                 mLastError = e
-                cancel(true)
                 null
             }
         }
@@ -344,7 +343,7 @@ class CalendarScheduleFragment : Fragment() {
                 null
             }
         }
-        //
+        //Adds the calendar list to the dropdown
         override fun onPostExecute(result: MutableList<String>?) {
             setDropDown(result!!)
         }
