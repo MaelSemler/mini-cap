@@ -28,6 +28,11 @@ class DirectionsFragment : Fragment() {
     var prefs: SharedPreferences? = null
     val map = com.soen390.conumap.map.Map
     var startLocationAddress:String?=null
+    var  startLocationText:String?=null
+    var endLocationText:String?=null
+    var startLocation:String?=null
+    var endLocation:String?=null
+    var endLocationAddress:String?=null
 
     companion object {
         fun newInstance() = DirectionsFragment()
@@ -57,48 +62,13 @@ class DirectionsFragment : Fragment() {
             this.viewmodel = directionViewModel
         }
 
+        getPath()
+
         //To change starting and ending location, just click on the buttons to be sent to a search fragment
-
-        prefs = requireContext().getSharedPreferences("SearchCurrent", 0)
-        val startLocation=  prefs!!.getString("currentLocation","" )
-        startLocationAddress=prefs!!.getString("currentLocationAddress","" )
-        binding.startLocationButton.setText(startLocation)
-        prefs = requireContext().getSharedPreferences("SearchDest", 0)
-        val endLocation=  prefs!!.getString("destinationLocation","" )
-        val endLocationAddress=  prefs!!.getString("destinationLocationAddress","" )
-
-        binding.endLocationButton.setText(endLocation)
-        if(startLocation.equals("")){
-            val originLatLng = map.getCurrentLocation()
-            val geocoder: Geocoder
-            val addresses: List<Address>
-            geocoder = Geocoder(requireContext(), Locale.getDefault())
-
-            addresses = geocoder.getFromLocation(
-                originLatLng.latitude,
-                originLatLng.longitude,
-                1)
-
-
-            val address = addresses[0].getAddressLine(0)
-            val city = addresses[0].getLocality()
-
-            binding.startLocationButton.setText(address)
-            startLocationAddress=address
-
-        }
 
         val sharedPreferences: SharedPreferences =requireContext().getSharedPreferences("SearchCount",0)
 
         val editor: SharedPreferences.Editor =  sharedPreferences.edit()
-
-
-        map?.getMapInstance().clear()
-        val originLatLng = getOrigin(startLocationAddress)
-        Path.setOrigin(originLatLng)
-        //TODO:Destination is hardcoded for now
-        val destinationLatLng = getDestination(endLocationAddress)
-        Path.setDestination(destinationLatLng)
 
         // Select radio button corresponding to transportation mode active
         when(Path.getTransportation()){
@@ -155,9 +125,70 @@ class DirectionsFragment : Fragment() {
             Path.findDirections(requireActivity())//Calls function for finding directions
             //TODO: redisplay new directions
         }
-        //TODO: enable switchOriginAndDestination button
+        //enable switchOriginAndDestination button
+        binding.switchButton.setOnClickListener{
+            val sharedPreferencesstartLocation: SharedPreferences =requireContext().getSharedPreferences("SearchCurrent",0)
+            val editorstart:SharedPreferences.Editor =  sharedPreferencesstartLocation.edit()
+            editorstart.putString("currentLocation",endLocation)
+            editorstart.putString("currentLocationAddress",endLocationAddress)
+            editorstart.apply()
+            editorstart.commit()
+
+            val sharedPreferences: SharedPreferences =requireContext().getSharedPreferences("SearchDest",0)
+
+            val editor:SharedPreferences.Editor =  sharedPreferences.edit()
+            editor.putString("destinationLocation",startLocation)
+            editor.putString("destinationLocationAddress",startLocationAddress)
+            // Log.e("nfe",place.name);
+            editor.apply()
+            editor.commit()
+            getPath()
+        }
+
         //TODO: implement alternative button and set the alternative here. Display the changed directions.
         return binding.root
+    }
+
+    fun getPath(){
+        prefs = requireContext().getSharedPreferences("SearchCurrent", 0)
+        startLocation=  prefs!!.getString("currentLocation","" )
+        startLocationAddress=prefs!!.getString("currentLocationAddress","" )
+        binding.startLocationButton.setText(startLocation)
+        prefs = requireContext().getSharedPreferences("SearchDest", 0)
+        endLocation=  prefs!!.getString("destinationLocation","" )
+        endLocationAddress=  prefs!!.getString("destinationLocationAddress","" )
+
+        binding.endLocationButton.setText(endLocation)
+        if(startLocation.equals("")){
+            val originLatLng = map.getCurrentLocation()
+            val geocoder: Geocoder
+            val addresses: List<Address>
+            geocoder = Geocoder(requireContext(), Locale.getDefault())
+
+            addresses = geocoder.getFromLocation(
+                originLatLng.latitude,
+                originLatLng.longitude,
+                1)
+
+
+            val address = addresses[0].getAddressLine(0)
+            val city = addresses[0].getLocality()
+
+            binding.startLocationButton.setText(address)
+            startLocationAddress=address
+
+
+        }
+
+        map?.getMapInstance().clear()
+        val originLatLng = getOrigin(startLocationAddress)
+        Path.setOrigin(originLatLng)
+        val destinationLatLng = getDestination(endLocationAddress)
+        Path.setDestination(destinationLatLng)
+        Path.setTransportation(getString(R.string.driving))
+
+        Path.findDirections(requireActivity())
+
     }
 
     fun  getOrigin(startLocation: String ?):LatLng{
