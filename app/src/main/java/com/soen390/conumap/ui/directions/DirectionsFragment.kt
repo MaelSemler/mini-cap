@@ -189,8 +189,8 @@ class DirectionsFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
         val model: SearchBarViewModel by activityViewModels()
-        val destination = model.getDestination()
-        end_location_button.setText(destination)
+        //val destination = model.getDestination()
+        //end_location_button.setText(destination)
 
     }
 
