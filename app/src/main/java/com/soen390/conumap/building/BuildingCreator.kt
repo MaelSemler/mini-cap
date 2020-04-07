@@ -303,24 +303,24 @@ object BuildingCreator {
         var singleNodeWidth: Double = buildingWidth / rows
 
         // Calculate the amount to be added vertically and horizontally to find the center of node.
+        // xDiff's are longitude changes. yDiff's are latitude changes.
         var xDiffL: Double = cos(Math.toRadians(angleDeg)) * singleNodeLength
         var xDiffR: Double = sin(Math.toRadians(angleDeg)) * singleNodeWidth
         var yDiffL: Double = sin(Math.toRadians(angleDeg)) * singleNodeLength
         var yDiffR: Double = cos(Math.toRadians(angleDeg)) * singleNodeWidth
 
-        var xDiffTot: Double = xDiffL - xDiffR
-        var yDiffTot: Double = yDiffL + yDiffR
+        var xDiffTot: Double = xDiffL - xDiffR // Opposite directions.
+        var yDiffTot: Double = yDiffL + yDiffR // Same direction.
 
         // Use above calculations to determine the LatLng for the center of the node, and add it to
         // the list mapNodes.
-        // Outer loop moves vertically. Inner loop moves horizontally.
         for(i in 0..cols) {
             updatedBaseCoord = LatLng(
-                baseCoord.latitude + (i * xDiffL),
-                baseCoord.longitude + (i * yDiffL)
+                baseCoord.latitude - (i * yDiffL),
+                baseCoord.longitude - (i * xDiffL)
             )
 
-            mapNodes.add(LatLng(updatedBaseCoord.latitude + xDiffTot, updatedBaseCoord.longitude + yDiffTot))
+            mapNodes.add(LatLng(updatedBaseCoord.latitude, updatedBaseCoord.longitude))
         }
 
         return mapNodes
