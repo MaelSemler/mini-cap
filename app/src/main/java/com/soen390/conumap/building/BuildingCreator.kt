@@ -4,6 +4,8 @@ import android.content.Context
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import com.soen390.conumap.R
+import kotlin.math.cos
+import kotlin.math.sin
 
 // Responsible for creating all buildings on both campuses.
 object BuildingCreator {
@@ -272,6 +274,7 @@ object BuildingCreator {
         return buildings
     }
 
+    // Displays indoor map for a building.
     fun showIndoorMap(map: GoogleMap, buildingCode: String, floorNumber: Int) {
         when(buildingCode) {
             "H" -> { when(floorNumber) {
@@ -288,5 +291,38 @@ object BuildingCreator {
                 }
             }
         }
+    }
+
+    fun calculateMapNodes(buildingLength: Double, buildingWidth: Double, cols: Int, rows: Int,
+                          baseCoord: LatLng, angleDeg: Double): MutableList<LatLng> {
+        var mapNodes: MutableList<LatLng> = mutableListOf()
+        var updatedBaseCoord = baseCoord
+
+        // Find the dimensions of each node.
+        var singleNodeLength: Double = buildingLength / cols
+        var singleNodeWidth: Double = buildingWidth / rows
+
+        // Calculate the amount to be added vertically and horizontally to find the center of node.
+        var xDiffL: Double = cos(Math.toRadians(angleDeg)) * singleNodeLength
+        var xDiffR: Double = sin(Math.toRadians(angleDeg)) * singleNodeWidth
+        var yDiffL: Double = sin(Math.toRadians(angleDeg)) * singleNodeLength
+        var yDiffR: Double = cos(Math.toRadians(angleDeg)) * singleNodeWidth
+
+        var xDiffTot: Double = xDiffL - xDiffR
+        var yDiffTot: Double = yDiffL + yDiffR
+
+        // Use above calculations to determine the LatLng for the center of the node, and add it to
+        // the list mapNodes.
+        // Outer loop moves vertically. Inner loop moves horizontally.
+        for(i in 0..cols) {
+            updatedBaseCoord = LatLng(
+                baseCoord.latitude + (i * xDiffL),
+                baseCoord.longitude + (i * yDiffL)
+            )
+
+            mapNodes.add(LatLng(updatedBaseCoord.latitude + xDiffTot, updatedBaseCoord.longitude + yDiffTot))
+        }
+
+        return mapNodes
     }
 }
