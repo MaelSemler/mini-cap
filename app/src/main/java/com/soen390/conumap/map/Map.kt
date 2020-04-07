@@ -165,6 +165,19 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
             moveCamera(sgwCampus.location, 16f)
             sgwCampus.marker.showInfoWindow()
             BuildingCreator.showIndoorMap(gMap, "H", 9)
+
+            var x = BuildingCreator.calculateMapNodes(
+                BuildingsConstants.sgwHLength,
+                BuildingsConstants.sgwHWidth,
+                5,
+                5,
+                LatLng(45.497701, -73.579038),
+                56.5
+            )
+
+            var polyLineTest = gMap.addPolyline(PolylineOptions()
+                .zIndex(20f)
+                .add(x[0], x[1], x[2], x[3], x[4]))
         }
     }
 
