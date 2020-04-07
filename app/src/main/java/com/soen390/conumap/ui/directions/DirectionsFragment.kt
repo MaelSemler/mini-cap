@@ -73,7 +73,7 @@ class DirectionsFragment : Fragment() {
         }
 
         //TODO: Will need to be refactor, we should be calling this function from the onclick in SearchCompletedFragment
-        Path.findDirections(requireActivity())
+        //Path.findDirections(requireActivity())
 
         // Alternate Routes
         binding.altButton.setOnClickListener{
