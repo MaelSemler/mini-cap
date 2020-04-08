@@ -21,7 +21,7 @@ class IndoorActivity : AppCompatActivity() {
         imageRecycler.adapter = ImageAdapter()
 
         val svgCon = SvgConverter
-        val floorP =  svgCon.convertSVGtoFloorPlan(svgCon.svgToBitMap())
+//        val floorP =  svgCon.convertSVGtoFloorPlan(svgCon.svgToBitMap())
 
 
 

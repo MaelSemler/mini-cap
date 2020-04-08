@@ -48,14 +48,6 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        //TODO: This is a temporary button to activate indoorActivity for testing purposes
-        val indoorButton = findViewById<Button>(R.id.indoorShow)
-        indoorButton.setOnClickListener{
-            val intent = Intent(this, IndoorActivity::class.java)
-
-            startActivity(intent)
-        }
-
         // Pass context to other files that require it.
         ContextPasser.setContexts(this)
     }

@@ -19,7 +19,7 @@ class ImageAdapter(): RecyclerView.Adapter<ImageHolder>() {
 
     override fun onBindViewHolder(holder: ImageHolder, position: Int) {
         var imageUrl = imageUrls[position]
-        holder?.updateWithUrl(imageUrl)
+        holder?.updateWithR()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
