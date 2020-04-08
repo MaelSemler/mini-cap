@@ -18,16 +18,16 @@ object BuildingCreator {
     // Creates the Building objects and adds them to the buildings ArrayList.
     fun createBuildings(map: GoogleMap):ArrayList<Building> {
         // SGW Buildings.
-//        val sgwH = Building(
-//            context.getString(R.string.sgwHName),
-//            context.getString(R.string.sgwHInfo),
-//            LatLng(45.497304, -73.578923),
-//            context.resources.getStringArray(R.array.buildingHPoints),
-//            context.resources.getStringArray(R.array.sgwHTarget),
-//            map,
-//            0.0f
-//        )
-//        buildings.add(sgwH)
+        val sgwH = Building(
+            context.getString(R.string.sgwHName),
+            context.getString(R.string.sgwHInfo),
+            LatLng(45.497304, -73.578923),
+            context.resources.getStringArray(R.array.buildingHPoints),
+            context.resources.getStringArray(R.array.sgwHTarget),
+            map,
+            0.0f
+        )
+        buildings.add(sgwH)
         val sgwGM = Building(
             context.getString(R.string.sgwGMName),
             context.getString(R.string.sgwGMInfo),
@@ -272,57 +272,5 @@ object BuildingCreator {
         buildings.add(loyHC)
 
         return buildings
-    }
-
-    // Displays indoor map for a building.
-    fun showIndoorMap(map: GoogleMap, buildingCode: String, floorNumber: Int) {
-        when(buildingCode) {
-            "H" -> { when(floorNumber) {
-                    8 -> { }
-                    9 -> {
-                        val sgwHIndoor = GroundOverlayOptions()
-                            .zIndex(10f)
-                            .image(BitmapDescriptorFactory.fromResource(R.drawable.h9floorplan))
-                            .position(
-                                LatLng(45.497269, -73.578942), 94f
-                            )
-                        map.addGroundOverlay(sgwHIndoor)
-                    }
-                }
-            }
-        }
-    }
-
-    fun calculateMapNodes(buildingLength: Double, buildingWidth: Double, cols: Int, rows: Int,
-                          baseCoord: LatLng, angleDeg: Double): MutableList<LatLng> {
-        var mapNodes: MutableList<LatLng> = mutableListOf()
-        var updatedBaseCoord = baseCoord
-
-        // Find the dimensions of each node.
-        var singleNodeLength: Double = buildingLength / cols
-        var singleNodeWidth: Double = buildingWidth / rows
-
-        // Calculate the amount to be added vertically and horizontally to find the center of node.
-        // xDiff's are longitude changes. yDiff's are latitude changes.
-        var xDiffL: Double = cos(Math.toRadians(angleDeg)) * singleNodeLength
-        var xDiffR: Double = sin(Math.toRadians(angleDeg)) * singleNodeWidth
-        var yDiffL: Double = sin(Math.toRadians(angleDeg)) * singleNodeLength
-        var yDiffR: Double = cos(Math.toRadians(angleDeg)) * singleNodeWidth
-
-        var xDiffTot: Double = xDiffL - xDiffR // Opposite directions.
-        var yDiffTot: Double = yDiffL + yDiffR // Same direction.
-
-        // Use above calculations to determine the LatLng for the center of the node, and add it to
-        // the list mapNodes.
-        for(i in 0..cols) {
-            updatedBaseCoord = LatLng(
-                baseCoord.latitude - (i * yDiffL),
-                baseCoord.longitude - (i * xDiffL)
-            )
-
-            mapNodes.add(LatLng(updatedBaseCoord.latitude, updatedBaseCoord.longitude))
-        }
-
-        return mapNodes
     }
 }
