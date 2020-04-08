@@ -4,6 +4,7 @@ import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject
 import androidx.test.uiautomator.UiSelector
+import com.soen390.conumap.path.Path
 
 import org.junit.Before
 import org.junit.Test
@@ -36,34 +37,45 @@ class ChangeStartingLocationTest {
         sleep(7000)
 
         //Click on Directions Button
-        val directionsButton: UiObject =
-            device.findObject(UiSelector().resourceId("com.soen390.conumap:id/search_button"))
+        val directionsButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/search_button"))
+        assert(directionsButton.exists()) //Assert is true if the button actually exists
+        assert(directionsButton.isClickable) //Assert is true if the directionsButton is clickable
         directionsButton.click()
+
         sleep(1000) //Wait for application to load
 
         //Click on autocomplete search bar
-        val autocompleteText: UiObject =
-            device.findObject(UiSelector().resourceId("com.soen390.conumap:id/places_autocomplete_search_bar"))
+        val autocompleteText: UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/places_autocomplete_search_bar"))
         autocompleteText.waitForExists(2000)
+        assert(autocompleteText.exists()) //assert the element specified exists
         autocompleteText.setText("Hall"); //write keyword for a location
-        device.pressBack() // To close keyboard
-        sleep(1000) //wait for app to load
+        assert(autocompleteText.setText("Hall")) //asserts that the text box has been changed to "Hall"
 
         //pick a prediction from those listed
-        val prediction: UiObject =
-            device.findObject(UiSelector().resourceId("com.soen390.conumap:id/places_autocomplete_prediction_primary_text"))
+        val prediction: UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/places_autocomplete_prediction_primary_text"))
+        assert(prediction.exists())
+        val predictionText= prediction.text //variable containing the text of the prediction. Will be used to assert later on
         prediction.click()
         sleep(1000) //wait for app to load
 
+        val result: UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/found_location_button"))
+        assert(result.exists())
+        assert(result.text==predictionText) //assert that the text displayed to user in text box is identical to the text of the prediction they clicked.
+
+        sleep(1000) //wait for app to load
+
+        assert(!prediction.exists()) //assert that the prediction element no longer exists
+
         //click on travel button
-        val travelButton: UiObject =
-            device.findObject(UiSelector().resourceId("com.soen390.conumap:id/travel_button"))
+        val travelButton: UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/travel_button"))
+        assert(travelButton.exists())
         travelButton.click()
         sleep(2000)
 
         val startingLocation: UiObject =
             device.findObject(UiSelector().resourceId("com.soen390.conumap:id/start_location_button"))
         startingLocation.click()
+
         val searchBar: UiObject =
             device.findObject(UiSelector().resourceId("com.soen390.conumap:id/DirectionSearchResults"))
         searchBar.click()
