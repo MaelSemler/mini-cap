@@ -11,7 +11,7 @@ import com.caverock.androidsvg.SVG
 import com.soen390.conumap.R
 import com.soen390.conumap.building.Floor
 
-object SvgConverter:Application() {
+object SvgConverter{
 //    private val activity = Activity()
 //    val activity : Activity = Activity()
 
@@ -31,11 +31,6 @@ object SvgConverter:Application() {
 
     }
 
-    @Override
-    override fun onCreate() {
-        super.onCreate();
-        context = getApplicationContext();
-    }
 
     fun svgToBitMap(): Bitmap {
 
