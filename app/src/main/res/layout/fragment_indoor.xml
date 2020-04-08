@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.gallery.GalleryFragment">
+    tools:context=".ui.gallery.IndoorFragment">
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.soen390.conumap.ui.gallery.IndoorViewModel" />
+    </data>
 
-    <RelativeLayout
-        android:id="@+id/Directions"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <!-- for debugging purposes-->
@@ -23,24 +27,33 @@
             android:text="return" />
 
         <Button
-            android:id="@+id/start_button"
+            android:id="@+id/indoorShow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="146dp"
             android:layout_marginTop="102dp"
-            android:text="start search" />
+            android:text="Show Indoor img" />
 
-        <Button
-            android:id="@+id/end_button"
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="149dp"
-            android:layout_marginTop="42dp"
-            android:text="end search" />
+            android:layout_centerInParent="true"
+            android:scaleType="center"
+            
+            android:src="@{viewmodel.imageRes , default=@drawable/indoorH8}"/>
 
-    </RelativeLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--        <Button-->
+<!--            android:id="@+id/end_button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentStart="true"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:layout_marginStart="149dp"-->
+<!--            android:layout_marginTop="42dp"-->
+<!--            android:text="end search" />-->
+
+    </FrameLayout>
+</layout>

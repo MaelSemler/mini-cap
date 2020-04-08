@@ -17,6 +17,6 @@ object ContextPasser {
         Permission.setContext(context)
         BuildingCreator.setContext(context)
         DeviceLocationChecker.setUp(context)
-        SvgConverter.setContext(context)
+//        SvgConverter.setContext(context)
     }
 }

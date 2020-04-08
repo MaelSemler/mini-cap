@@ -20,5 +20,9 @@
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/settings"
             android:title="@string/menu_settings" />
+        <item
+            android:id = "@+id/nav_indoortest"
+            android:icon = "@drawable/settings"
+            android:title = "Indoor Test" />
     </group>
 </menu>
