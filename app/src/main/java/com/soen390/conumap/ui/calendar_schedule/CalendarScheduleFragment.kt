@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.Scope
 import com.google.api.client.util.DateTime
 import com.soen390.conumap.event.Event
 
@@ -101,7 +102,7 @@ class CalendarScheduleFragment : Fragment() {
         CalendarSetUpTask().execute()
 
         val gso =
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.clientID)).requestEmail().build()
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestScopes(Scope("https://www.googleapis.com/auth/calendar.readonly")).requestIdToken(getString(R.string.clientID)).requestEmail().build()
         mGoogleSignInClient = GoogleSignIn.getClient(activity!!, gso)
 
         dp = context!!.resources.displayMetrics.density//The logical density of the display
