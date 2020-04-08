@@ -1,7 +1,9 @@
 package com.soen390.conumap.mainActivity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.widget.Button
 
 import com.google.android.material.navigation.NavigationView
 
@@ -13,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.soen390.conumap.IndoorNavigation.IndoorActivity
 import com.soen390.conumap.R
 
 
@@ -44,6 +47,14 @@ class MainActivity : AppCompatActivity() {
         ), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        //TODO: This is a temporary button to activate indoorActivity for testing purposes
+        val indoorButton = findViewById<Button>(R.id.indoorShow)
+        indoorButton.setOnClickListener{
+            val intent = Intent(this, IndoorActivity::class.java)
+
+            startActivity(intent)
+        }
 
         // Pass context to other files that require it.
         ContextPasser.setContexts(this)
