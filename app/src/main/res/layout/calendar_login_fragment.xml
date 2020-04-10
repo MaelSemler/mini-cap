@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.calendar_login.CalendarLoginFragment">
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+       <ImageView
+           android:id="@+id/imageView2"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_above="@+id/text_info"
+           android:layout_centerHorizontal="true"
+           android:layout_marginBottom="30dp"
+           android:src="@drawable/schedule_grey" />
+
+       <TextView
+           android:id="@+id/text_info"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerInParent="true"
+           android:text="See your events here"
+           android:textSize="16dp"
+           android:textStyle="bold"/>
+
+       <com.google.android.gms.common.SignInButton
+           android:id="@+id/sign_in_button"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentBottom="true"
+           android:layout_centerHorizontal="true"
+           android:layout_marginBottom="70dp" />
+
+
+   </RelativeLayout>
+
+
+</FrameLayout>
