@@ -10,7 +10,8 @@ fun main (args: Array<String>) {
     var origin = Node (0,0)
     var destination = Node (0, 1)
     var floorMap: Floor.FloorPlan
-    var blockArray: Array<Array<Int>>
+    var blockRow: ArrayList<Int> = arrayListOf()
+    var blockCol: ArrayList<Int> = arrayListOf()
 
     FloorCreator.createFloors()
 
@@ -25,15 +26,21 @@ fun main (args: Array<String>) {
                 print ("-   ")
             } else {
                 print("X   ")
+                blockRow.add(value.yInd)
+                blockCol.add(value.xInd)
             }
         }
         println()
     }
 
+    println(blockRow.size)
+    println(blockCol.size)
+    var blockArray = arrayOf(blockRow, blockCol)
+
     var pathfinding: Pathfinding = Pathfinding(floorMap.floorNodes.size,floorMap.floorNodes[0].size, origin, destination)
 
     pathfinding.loadMap()
-    pathfinding.printMapSizeToConsole()
-    //pathfinding.printMapToConsole()
+    pathfinding.loadBlocks(blockArray)
+    pathfinding.printMapToConsole()
 
 }

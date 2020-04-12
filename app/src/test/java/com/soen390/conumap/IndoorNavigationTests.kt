@@ -80,9 +80,9 @@ class IndoorNavigationTests {
     var row = 8
     var col = 8
     var pfTest: Pathfinding = Pathfinding(row, col, origin, destination)
-    var blockRow = arrayOf(1,2,3,4,5,6,7,7,6,5,3,3,3)
-    var blockCol = arrayOf(3,3,3,3,3,3,3,6,6,6,5,6,7)
-    var blockArray = arrayOf<Array<Int>>(blockRow, blockCol)
+    var blockRow = arrayListOf<Int>(1,2,3,4,5,6,7,7,6,5,3,3,3)
+    var blockCol = arrayListOf<Int>(3,3,3,3,3,3,3,6,6,6,5,6,7)
+    var blockArray = arrayOf<ArrayList<Int>>(blockRow, blockCol)
 
     @Test
     fun findPathTest() {
