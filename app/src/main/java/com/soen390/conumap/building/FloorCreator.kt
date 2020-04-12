@@ -2,7 +2,7 @@ package com.soen390.conumap.building
 
 object FloorCreator {
     // Contains all floors.
-    private var floors: ArrayList<Floor> = arrayListOf()
+    var floors: ArrayList<Floor> = arrayListOf()
 
     fun createFloors() {
         // Create 2D array for nodes.
