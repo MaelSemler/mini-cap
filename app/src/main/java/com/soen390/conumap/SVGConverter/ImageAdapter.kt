@@ -1,5 +1,6 @@
 package com.soen390.conumap.SVGConverter
 
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,10 +8,10 @@ import com.soen390.conumap.R
 import com.soen390.conumap.SVGConverter.ImageHolder
 
 class ImageAdapter(): RecyclerView.Adapter<ImageHolder>() {
-//    val imageUrls: Array<String>
+    val imageUrls: Array<Int>
 
     init {
-//        imageUrls = arrayOf()
+        imageUrls = arrayOf(R.drawable.hall8, R.drawable.h9floorplan)
     }
 
     override fun getItemCount(): Int {
@@ -18,8 +19,9 @@ class ImageAdapter(): RecyclerView.Adapter<ImageHolder>() {
 //        return imageUrls.size
     }
 
+
     override fun onBindViewHolder(holder: ImageHolder, position: Int) {
-//        var imageUrl = imageUrls[position]
+        var imageUrl = imageUrls[position]
         holder?.updateWithR()
     }
 

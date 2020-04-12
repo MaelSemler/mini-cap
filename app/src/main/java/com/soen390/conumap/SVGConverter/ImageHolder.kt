@@ -14,16 +14,13 @@ class ImageHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     private val myImageView: ImageView = itemView.findViewById(R.id.myImageView)
 
-    fun updateWithUrl(url: String) {
-        Picasso.get().load(url).into(myImageView)
-    }
-
     fun updateWithR(){
-        Picasso.get().load(R.drawable.h9floorplan).transform(FloorPlanTransformation()).into(myImageView)
+        //TODO: Hardcoded floorplan for now
+        //Note: load(DOES NOT TAKE IN AS ARGUMENT SVG)
+        Picasso.get()
+            .load(R.drawable.hall8)
+            .transform(FloorPlanTransformation())
+            .into(myImageView)
     }
 
-//    fun updateWithBitmap(fileBit: Bitmap?){
-//        Picasso.get().load(fileBit).into(myImageView)
-//
-//    }
 }
