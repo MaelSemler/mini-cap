@@ -7,8 +7,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.soen390.conumap.R
 import com.soen390.conumap.SVGConverter.ImageAdapter
 import com.soen390.conumap.SVGConverter.SvgConverter
+import com.soen390.conumap.helper.ContextPasser
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_indoor.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class IndoorActivity : AppCompatActivity() {
 
@@ -16,15 +19,18 @@ class IndoorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_indoor)
 
+        ContextPasser.setContextIndoor(this)
 
         imageRecycler.layoutManager = LinearLayoutManager(this)
         imageRecycler.adapter = ImageAdapter()
 
         val svgCon = SvgConverter
-//        val floorP =  svgCon.convertSVGtoFloorPlan(svgCon.svgToBitMap())
 
+//        GlobalScope.launch {
+//            var tempBitmap = svgCon.svgToBitMap()
 
-
+//            val floorP =  svgCon.convertSVGtoFloorPlan(svgCon.svgToBitMap())
+//        }
 
 //        Picasso
 //            .get() // give it the context

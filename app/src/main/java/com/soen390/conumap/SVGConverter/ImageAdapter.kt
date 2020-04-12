@@ -7,18 +7,19 @@ import com.soen390.conumap.R
 import com.soen390.conumap.SVGConverter.ImageHolder
 
 class ImageAdapter(): RecyclerView.Adapter<ImageHolder>() {
-    val imageUrls: Array<String>
+//    val imageUrls: Array<String>
 
     init {
-        imageUrls = arrayOf("https://i.imgur.com/kUCMPWX.jpg", "https://i.imgur.com/kUCMPWX.jpg", "https://i.imgur.com/kUCMPWX.jpg", "https://i.imgur.com/kUCMPWX.jpg", "https://i.imgur.com/kUCMPWX.jpg", "https://i.imgur.com/kUCMPWX.jpg", "https://i.imgur.com/kUCMPWX.jpg", "https://i.imgur.com/kUCMPWX.jpg", "https://i.imgur.com/kUCMPWX.jpg", "https://i.imgur.com/kUCMPWX.jpg", "https://i.imgur.com/kUCMPWX.jpg")
+//        imageUrls = arrayOf()
     }
 
     override fun getItemCount(): Int {
-        return imageUrls.size;
+        return 1
+//        return imageUrls.size
     }
 
     override fun onBindViewHolder(holder: ImageHolder, position: Int) {
-        var imageUrl = imageUrls[position]
+//        var imageUrl = imageUrls[position]
         holder?.updateWithR()
     }
 
