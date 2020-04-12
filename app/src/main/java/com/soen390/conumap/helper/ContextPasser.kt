@@ -2,7 +2,7 @@ package com.soen390.conumap.helper
 
 import android.content.Context
 //import com.soen390.conumap.SVGConverter.FloorPlanTransformation
-import com.soen390.conumap.SVGConverter.SvgConverter
+import com.soen390.conumap.SVGConverter.ConverterToFloorPlan
 import com.soen390.conumap.building.BuildingCreator
 import com.soen390.conumap.map.Map
 import com.soen390.conumap.permission.Permission
@@ -25,7 +25,7 @@ object ContextPasser {
 
     fun setContextIndoor(ctx:Context){
         context = ctx
-        SvgConverter.setContext(context)
+        ConverterToFloorPlan.setContext(context)
 //
 //        FloorPlanTransformation.setContext(context)
 //
