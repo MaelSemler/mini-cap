@@ -7,8 +7,8 @@ import com.soen390.conumap.building.Floor
 
 
 fun main (args: Array<String>) {
-    var origin = Node (0,0)
-    var destination = Node (0, 1)
+    var origin = Node (1,1)
+    var destination = Node (9, 17)
     var floorMap: Floor.FloorPlan
     var blockRow: ArrayList<Int> = arrayListOf()
     var blockCol: ArrayList<Int> = arrayListOf()
@@ -23,9 +23,9 @@ fun main (args: Array<String>) {
     for (array in floorNodes.reversedArray()) {
         for (value in array) {
             if (value.walkable == true) {
-                print ("-   ")
+                print ("-    ")
             } else {
-                print("X   ")
+                print("O    ")
                 blockRow.add(value.yInd)
                 blockCol.add(value.xInd)
             }
@@ -33,14 +33,17 @@ fun main (args: Array<String>) {
         println()
     }
 
-    println(blockRow.size)
-    println(blockCol.size)
     var blockArray = arrayOf(blockRow, blockCol)
 
     var pathfinding: Pathfinding = Pathfinding(floorMap.floorNodes.size,floorMap.floorNodes[0].size, origin, destination)
 
+    pathfinding.printMapSizeToConsole()
+
     pathfinding.loadMap()
     pathfinding.loadBlocks(blockArray)
     pathfinding.printMapToConsole()
-
+    var path: MutableList<Node> = pathfinding.findPath()
+    for (node: Node in path) {
+        println(node)
+    }
 }
