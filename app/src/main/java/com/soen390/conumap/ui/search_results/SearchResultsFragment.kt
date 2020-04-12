@@ -5,7 +5,6 @@ import android.app.Activity.RESULT_OK
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,8 +23,7 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.soen390.conumap.R
-import com.soen390.conumap.path.Path
-import com.soen390.conumap.ui.search_bar.SearchBarViewModel
+import com.soen390.conumap.ui.directions.DirectionsViewModel
 import kotlinx.android.synthetic.main.search_results_fragment.*
 
 
@@ -36,7 +34,7 @@ class SearchResultsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.search_results_fragment, container, false)
-
+        val model: DirectionsViewModel by activityViewModels()
         //TODO: Recently visited
 
         //Getting the Views from the fragment
@@ -58,20 +56,17 @@ class SearchResultsFragment : Fragment() {
                  AutocompleteActivityMode.OVERLAY, fields).setCountry("CA").setLocationBias(bounds)
                 .build(this.requireContext());
          startActivityForResult(intent, autoCompleteRequestCode);
-        /* TODO Enforce Autocomplete Programmatically */
-        Path.setTransportation((getString(R.string.driving)))
+
 
         // This button clears the edit text input when it is pressed
         clearButton.setOnClickListener {
             searchBar.setText("")
         }
 
+        // Cancel destination in modelView
         cancelButton.setOnClickListener {
-            // Cancel destination in modelView
-            val model: SearchBarViewModel by activityViewModels()
-            model.setDestination("")
+            model.setDestinationCompletely("",LatLng(45.494,-73.577),"")
             NavHostFragment.findNavController(this).navigateUp()
-            //TODO:if keyboard is shown, hide the keyboard
         }
         return root
     }
@@ -81,23 +76,16 @@ class SearchResultsFragment : Fragment() {
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) { //Displays the appropriate thing according to what the user selected.
+     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) { //Displays the appropriate thing according to what the user selected.
         super.onActivityResult(requestCode, resultCode, data)
+        val model: DirectionsViewModel by activityViewModels()
         if (resultCode==RESULT_OK)
         {
             val place= data?.let { Autocomplete.getPlaceFromIntent(it) }
             Log.i(TAG,"Place: "+ place!!.name+ ","+place.id)
             searchBar.setText(place.name)
-            val model: SearchBarViewModel by activityViewModels()
-            model.setDestination(place.name)
-            model.setDestinationAddress(place.address)
-            val sharedPreferences: SharedPreferences =requireContext().getSharedPreferences("SearchDest",0)
-
-            val editor: SharedPreferences.Editor =  sharedPreferences.edit()
-            editor.putString("destinationLocation",place.name)
-            editor.putString("destinationLocationAddress",place.address)
-            editor.apply()
-            editor.commit()
+            model.setDestinationCompletely(place.name!!,place.latLng!!,place.address!!)
+            NavHostFragment.findNavController(this).navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
         }
         else if (resultCode==AutocompleteActivity.RESULT_ERROR)
         {
@@ -105,7 +93,6 @@ class SearchResultsFragment : Fragment() {
             Log.i(TAG, status.statusMessage)
             searchBar.setText("Error")
         }
-        NavHostFragment.findNavController(this).navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
     }
 
 
@@ -122,7 +109,6 @@ class SearchResultsFragment : Fragment() {
     fun Activity.hideKeyboard() {
       hideKeyboard(currentFocus ?: View(this))
     }
-
 
 
     //This function is to make the keyboard open

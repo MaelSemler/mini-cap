@@ -1,11 +1,15 @@
 package com.soen390.conumap.ui.directions
 
+import android.app.Activity
+import android.content.ContentValues
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,29 +20,29 @@ import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.model.LatLng
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.model.RectangularBounds
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.soen390.conumap.R
 import com.soen390.conumap.databinding.DirectionsFragmentBinding
 import com.soen390.conumap.path.Path
 import com.soen390.conumap.ui.search_bar.SearchBarViewModel
+import com.soen390.conumap.ui.search_results.SearchResultsViewModel
 import kotlinx.android.synthetic.main.directions_fragment.*
+import kotlinx.android.synthetic.main.search_results_fragment.*
 import java.util.*
 
 
 class DirectionsFragment : Fragment() {
-    var prefs: SharedPreferences? = null
-    val map = com.soen390.conumap.map.Map
-    var startLocationAddress:String?=null
-    var  startLocationText:String?=null
-    var endLocationText:String?=null
-    var startLocation:String?=null
-    var endLocation:String?=null
-    var endLocationAddress:String?=null
 
     companion object {
         fun newInstance() = DirectionsFragment()
     }
 
-    private lateinit var viewModel: DirectionsViewModel
+    private lateinit var directionsViewModel: DirectionsViewModel
     lateinit var binding : DirectionsFragmentBinding
 
     override fun onCreateView(
@@ -55,41 +59,29 @@ class DirectionsFragment : Fragment() {
             this.setLifecycleOwner(activity)
             this.viewmodel = directionViewModel
         }
-
-        getPath()
-
-        //To change starting and ending location, just click on the buttons to be sent to a search fragment
-
-        val sharedPreferences: SharedPreferences =requireContext().getSharedPreferences("SearchCount",0)
-
-        val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+        //Initial transportation mode is already driving
+        //Path.findDirections(requireActivity())
 
         // Select radio button corresponding to transportation mode active
-        when(Path.getTransportation()){
+        when(directionsViewModel.getTransportation()){
             getString(R.string.driving) -> binding.transportationCar.setChecked(true)
             getString(R.string.bicycling) -> binding.transportationBike.setChecked(true)
             getString(R.string.walking) -> binding.transportationWalk.setChecked(true)
             getString(R.string.transit) -> binding.transportationBus.setChecked(true)
         }
 
-        //TODO: Will need to be refactor, we should be calling this function from the onclick in SearchCompletedFragment
-        //Path.findDirections(requireActivity())
-
         // Alternate Routes
         binding.altButton.setOnClickListener{
             NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_alternateFragment)
         }
         binding.startLocationButton.setOnClickListener{
-            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_directionsSearchFragment)
-            editor.putString("result","1")
-            editor.apply()
-            editor.commit()
+            initializeAutocomplete()
+            binding.endLocationButton.text
+            Path.findDirections(requireActivity())//Calls function for finding directions
         }
         binding.endLocationButton.setOnClickListener{
-            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_directionsSearchFragment)
-            editor.putString("result","2")
-            editor.apply()
-            editor.commit()
+            initializeAutocomplete()
+            Path.findDirections(requireActivity())//Calls function for finding directions
         }
 
         binding.returnButton.setOnClickListener{
@@ -97,125 +89,90 @@ class DirectionsFragment : Fragment() {
         }
         binding.transportationWalk.setOnClickListener {   //This binds the radio button to an onclick listener event that sets the transportation mode
 
-            Path.setTransportation(getString(R.string.walking))
+            directionViewModel.setTransportation(getString(R.string.walking))
             Path.findDirections(requireActivity())//Calls function for finding directions
         }
         binding.transportationBike.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
-            Path.setTransportation(getString(R.string.bicycling))
+            directionViewModel.setTransportation(getString(R.string.bicycling))
             Path.findDirections(requireActivity()) //Calls function for finding directions
         }
         binding.transportationCar.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
-            Path.setTransportation(getString(R.string.driving))
+            directionViewModel.setTransportation(getString(R.string.driving))
             Path.findDirections(requireActivity())//Calls function for finding directions
         }
         binding.transportationBus.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
-            Path.setTransportation(getString(R.string.transit))
+            directionViewModel.setTransportation(getString(R.string.transit))
             Path.findDirections(requireActivity())//Calls function for finding directions
         }
 
         //enable switchOriginAndDestination button
         binding.switchButton.setOnClickListener{
-            val sharedPreferencesstartLocation: SharedPreferences =requireContext().getSharedPreferences("SearchCurrent",0)
-            val editorstart:SharedPreferences.Editor =  sharedPreferencesstartLocation.edit()
-            editorstart.putString("currentLocation",endLocation)
-            editorstart.putString("currentLocationAddress",endLocationAddress)
-            editorstart.apply()
-            editorstart.commit()
-
-            val sharedPreferences: SharedPreferences =requireContext().getSharedPreferences("SearchDest",0)
-
-            val editor:SharedPreferences.Editor =  sharedPreferences.edit()
-            editor.putString("destinationLocation",startLocation)
-            editor.putString("destinationLocationAddress",startLocationAddress)
-            // Log.e("nfe",place.name);
-            editor.apply()
-            editor.commit()
-            getPath()
+            switchButtons()
+            binding.startLocationButton.text=directionsViewModel.getOriginName()
+            binding.endLocationButton.text=directionsViewModel.getDestinationName()
+            Path.findDirections(requireActivity())
         }
-
         //TODO: implement alternative button and set the alternative here. Display the changed directions.
-
         return binding.root
     }
 
-    fun getPath(){
-        prefs = requireContext().getSharedPreferences("SearchCurrent", 0)
-        startLocation=  prefs!!.getString("currentLocation","" )
-        startLocationAddress=prefs!!.getString("currentLocationAddress","" )
-        binding.startLocationButton.setText(startLocation)
-        prefs = requireContext().getSharedPreferences("SearchDest", 0)
-        endLocation=  prefs!!.getString("destinationLocation","" )
-        endLocationAddress=  prefs!!.getString("destinationLocationAddress","" )
-
-        binding.endLocationButton.setText(endLocation)
-        if(startLocation.equals("")){
-            val originLatLng = map.getCurrentLocation()
-            val geocoder: Geocoder
-            val addresses: List<Address>
-            geocoder = Geocoder(requireContext(), Locale.getDefault())
-
-            addresses = geocoder.getFromLocation(
-                originLatLng.latitude,
-                originLatLng.longitude,
-                1)
-
-
-            val address = addresses[0].getAddressLine(0)
-            val city = addresses[0].getLocality()
-
-            binding.startLocationButton.setText(address)
-            startLocationAddress=address
-
-
-        }
-
-        map?.getMapInstance().clear()
-        val originLatLng = getOrigin(startLocationAddress)
-        Path.setOrigin(originLatLng)
-        val destinationLatLng = getDestination(endLocationAddress)
-        Path.setDestination(destinationLatLng)
-        Path.setTransportation(getString(R.string.driving))
-
-        Path.findDirections(requireActivity())
-
-    }
-
-    fun  getOrigin(startLocation: String ?):LatLng{
-        val geocoderLocation : Geocoder = Geocoder(requireContext(), Locale.getDefault())
-        val addressesStart: List<Address>?= geocoderLocation.getFromLocationName( startLocation, 5)
-        val straddress = addressesStart!![0]
-
-        val latitudeStart = straddress .latitude
-        val longitudeStart = straddress .longitude
-        val originLatLng = LatLng(latitudeStart,longitudeStart)
-        return originLatLng
-    }
-    fun getDestination(endLocation:String?):LatLng{
-        val geocoderLocation : Geocoder = Geocoder(requireContext(), Locale.getDefault())
-
-        val addressesEnd: List<Address>?= geocoderLocation.getFromLocationName(endLocation, 5)
-        val addressEnd = addressesEnd!![0]
-
-        val latitudeEnd = addressEnd .latitude
-        val longitudeEnd = addressEnd .longitude
-
-        val destinationLatLng = LatLng(latitudeEnd, longitudeEnd)
-        return destinationLatLng
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
-
-        viewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
-        val model: SearchBarViewModel by activityViewModels()
-        //val destination = model.getDestination()
-        //end_location_button.setText(destination)
+        directionsViewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
 
     }
 
 
+    fun initializeAutocomplete(){
+        this.context?.let {
+            Places.initialize(it, context?.getString(R.string.apiKey)!!)
+        };  //initialize context
+        val placesClient = this.context?.let { Places.createClient(it) }   //initialize placesClient
+        val autoCompleteRequestCode= 1
+        val bounds = RectangularBounds.newInstance(
+            LatLng(45.425579, -73.687204),
+            LatLng(45.706574, -73.475121))
+        val fields = arrayListOf (Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS)
+        val intent = Autocomplete.IntentBuilder(
+            AutocompleteActivityMode.OVERLAY, fields).setCountry("CA").setLocationBias(bounds)
+            .build(this.requireContext());
+        startActivityForResult(intent, autoCompleteRequestCode)
 
+        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Place? { //Displays the appropriate thing according to what the user selected.
+            super.onActivityResult(requestCode, resultCode, data)
+            val model: DirectionsViewModel by activityViewModels()
+            if (resultCode== Activity.RESULT_OK)
+            {
+                val place= data?.let { Autocomplete.getPlaceFromIntent(it) }
+                return place
+            }
+            else if (resultCode== AutocompleteActivity.RESULT_ERROR)
+            {
+                val status=Autocomplete.getStatusFromIntent(data!!)
+                searchBar.setText("Error")
+            }
+        }
 
+    }
 
+    fun setStartingOrEnding(type:String,place:Place, model:DirectionsViewModel){
+       if (type == "Origin")
+       {
+           onActivityResult()
+       }
+        if (type == "Destination")
+        {
+            binding.startLocationButton.text = place.name
+            model.setOriginCompletely(place.name!!,place.latLng!!,place.address!!)
+        }
+    }
+    fun switchButtons(){
+        directionsViewModel.setOriginLocation(directionsViewModel.getDestinationLocation()!!)
+        directionsViewModel.setDestinationLocation(directionsViewModel.getOriginLocation()!!)
+        directionsViewModel.setOriginName(directionsViewModel.getDestinationName()!!)
+        directionsViewModel.setDestinationName(directionsViewModel.getOriginName()!!)
+        directionsViewModel.setOriginAddress(directionsViewModel.getDestinationAddress()!!)
+        directionsViewModel.setDestinationAddress(directionsViewModel.getOriginAddress()!!)
+    }
 }
