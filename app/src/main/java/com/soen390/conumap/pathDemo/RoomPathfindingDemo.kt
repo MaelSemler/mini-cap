@@ -10,17 +10,20 @@ fun main (args: Array<String>) {
     var origin = Node (0,0)
     var destination = Node (0, 1)
     var floorMap: Floor.FloorPlan
+    var blockArray: Array<Array<Int>>
 
     FloorCreator.createFloors()
 
     //Temporarily hardcoded to first index since that's where H9 floor plan is currently stored
     floorMap = FloorCreator.floors[0].floorPlan
 
-    for (array in floorMap.floorNodes) {
+    var floorNodes = floorMap.floorNodes
+
+    for (array in floorNodes.reversedArray()) {
         for (value in array) {
             if (value.walkable == true) {
                 print ("-   ")
-            } else if (value.walkable == false) {
+            } else {
                 print("X   ")
             }
         }
