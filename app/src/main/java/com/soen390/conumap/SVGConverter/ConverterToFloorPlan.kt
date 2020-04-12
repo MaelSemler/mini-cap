@@ -70,6 +70,19 @@ object ConverterToFloorPlan{
 
     suspend fun convertToPlan(bitmapFile: Bitmap?): Floor.FloorPlan {
         lateinit var convertedfloorPlan: Floor.FloorPlan
+
+        var numRow = bitmapFile?.height
+        var numCol = bitmapFile?.width
+
+        for (i in 0..numCol!!){
+            var row = arrayOf<Floor.FloorNode>()
+            for(j in 0..numRow!!) {
+                row += Floor.FloorNode(-1,-1, "#000000", "", false, false)
+            }
+            floorNode += row
+        }
+
+
         coroutineScope {
             launch(Dispatchers.IO) {
                 if (bitmapFile != null) {
@@ -79,7 +92,10 @@ object ConverterToFloorPlan{
                             //If it is a wall or a room then walkable set to false
                             if ( bitmapFile.getPixel(x,y).toColor() == Color.rgb(218,54,54).toColor())
                                 floorNode[x][y] = Floor.FloorNode(x,y,"#da3636", "id"+x+y, false, false)
+
                             else//It is a hallway set walkable to true
+
+                                continue
                                 floorNode[x][y] = Floor.FloorNode(x,y,"#da3636", "id"+x+y, true, false)
 
             //                bitmapFile.setPixel(x, y, Color.rgb(255, 255, 255))

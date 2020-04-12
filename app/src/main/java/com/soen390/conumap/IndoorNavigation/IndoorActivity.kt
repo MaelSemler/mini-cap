@@ -27,13 +27,8 @@ class IndoorActivity : AppCompatActivity() {
         GlobalScope.launch {
             var tempBitmap = floorConverter.svgToBitMap()
 
-//            val floorP =  floorConverter.convertToPlan(tempBitmap)
+            val floorP =  floorConverter.convertToPlan(tempBitmap)
         }
-
-//        Picasso
-//            .get() // give it the context
-//            .load("https://raw.githubusercontent.com/MaelSemler/mini-cap/DEV-26-Automate-Conversion-Map/app/src/main/res/drawable/h9floorplan.png") // load the image
-//            .into(myImageView) // select the ImageView to load it into
 
     }
 }
