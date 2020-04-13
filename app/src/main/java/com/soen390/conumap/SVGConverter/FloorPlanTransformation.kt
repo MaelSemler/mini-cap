@@ -51,6 +51,8 @@ class FloorPlanTransformation: Transformation {
         val height = source.height
 
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+//        val bitmap = Bitmap.createBitmap(width, height,
+
 
         canvas = Canvas(bitmap)
 

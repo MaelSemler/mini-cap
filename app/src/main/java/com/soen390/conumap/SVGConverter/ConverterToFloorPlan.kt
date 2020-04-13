@@ -39,7 +39,6 @@ object ConverterToFloorPlan{
         var bitmapFile: Bitmap? = null
 
 
-
             if (svgFile.getDocumentWidth() !== -1F) {
 
                 // set your custom height and width for the svg
@@ -94,8 +93,6 @@ object ConverterToFloorPlan{
                                 floorNode[x][y] = Floor.FloorNode(x,y,"#da3636", "id"+x+y, false, false)
 
                             else//It is a hallway set walkable to true
-
-                                continue
                                 floorNode[x][y] = Floor.FloorNode(x,y,"#da3636", "id"+x+y, true, false)
 
             //                bitmapFile.setPixel(x, y, Color.rgb(255, 255, 255))
