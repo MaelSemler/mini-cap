@@ -11,17 +11,22 @@ import org.json.JSONArray
 
 object Path {
     private var distance = 0.0
+
     var alternativesOn = true
     var transportationMode: String = "driving"
+
     private lateinit var originFromSearch: LatLng
     private lateinit var destinationFromSearch: LatLng
-    val _PathDirectionText = MutableLiveData<String>()
+
+    var _DescriptionText = MutableLiveData<String>("")
+
     val _PathTotalDistanceText = MutableLiveData<String>()
     val _PathTotalTimeText = MutableLiveData<String>()
     var _infoPathText = MutableLiveData<String>()
-    val _PathAlternateText = MutableLiveData<String>("")
+
     val _alternateRouteId = MutableLiveData<Int>(0)
     val _alternateRouteIdMax = MutableLiveData<Int>(99)
+    val _DirectionsScreenMode = MutableLiveData<Boolean>(true)
 
     val map = Map
 
@@ -31,6 +36,16 @@ object Path {
 
     fun setDestination(value: LatLng) {
         destinationFromSearch = value
+    }
+
+    fun setDirectionsScreenMode(mode: String){
+        when(mode){
+            "alt" -> _DirectionsScreenMode.value = false
+            "dir" -> _DirectionsScreenMode.value = true
+        }
+    }
+    fun getDirectionScreenMode():Boolean?{
+        return _DirectionsScreenMode.value
     }
 
     fun findDirections(activity: FragmentActivity) {
@@ -61,13 +76,12 @@ object Path {
     }
 
     fun resetAlternateText(){
-        _PathAlternateText.value = ""
+        _DescriptionText.value = ""
     }
 
     //Update the directionText
     fun updateSteps(textSteps: String) {
-
-        _PathDirectionText.value = textSteps
+        _DescriptionText.value =textSteps
     }
 
     //Update TotalDistance
@@ -91,7 +105,7 @@ object Path {
         totalDistanceText: String,
         infoPathText: String
     ) {
-        _PathAlternateText.value += "  " + totalTimeText + " " + totalDistanceText + "\n" + infoPathText + "\n\n"
+        _DescriptionText.value += "  " + totalTimeText + " " + totalDistanceText + "\n" + infoPathText + "\n\n"
     }
 
     fun setAlternativeRouteMaxId(n: Int) {
@@ -105,11 +119,10 @@ object Path {
     }
 
     fun resetDirections() {
-        _PathDirectionText.value = "Direction: "
+        _DescriptionText.value = "Direction: "
         _PathTotalDistanceText.value = ""
         _PathTotalTimeText.value = ""
         _infoPathText.value = ""
-        _PathAlternateText.value = ""
         _alternateRouteId.value = 0
         _alternateRouteIdMax.value = 99
     }
