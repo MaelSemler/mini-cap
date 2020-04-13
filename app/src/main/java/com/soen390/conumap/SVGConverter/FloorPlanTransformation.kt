@@ -58,59 +58,39 @@ class FloorPlanTransformation: Transformation {
 
         canvas.drawBitmap(source, 0.0F, 0.0F, paint)
 
-//        /////////////////EXAMPLE WITH FloatArray////////////////
-//        var exArray = floatArrayOf(
-//            0F, 0F, 1993F, 0F,
-//            1993F, 0F, 1993F, 100F,
-//            1993f, 100f, 0f, 100f
-//        )
-//        drawLineWithArray(exArray)
-//        ///////////////////////////////////////////////////////
-
-        var indoorPath = drawPathIndoor(source)
+        var indoorPath = drawPathIndoor(source, 3, 3)
         drawLineWithArray(indoorPath)
-
-        //TODO: This should be the only method called here?
-        // drawPathIndoor()
 
         source.recycle()
 
         return bitmap
     }
 
-    //TODO: Method that would run the algorithm, retrieve the points, then draw the path + other trimmings?
-    fun drawPathIndoor(source: Bitmap): FloatArray {
+    // Draws the path on the indoor floorplan.
+    fun drawPathIndoor(source: Bitmap, numXNodes: Int, numYNodes: Int): FloatArray {
         var pathOfNodes = retrievePathIndoor()
 
         // 4 floats to add for each node: startX, startY, endX, endY.
         var pathToDraw = mutableListOf<Float>()
 
-        for(i in 0..pathOfNodes.size) {
-            if(i < pathOfNodes.size - 1) {
-                // Not last node, we add the current node and the following node.
-                var start = findNodeCoordinates(source, 3, 3, pathOfNodes[i].col, pathOfNodes[i].row)
-                var end = findNodeCoordinates(source, 3, 3, pathOfNodes[i + 1].col, pathOfNodes[i + 1].row)
+        // Adds coordinates to pathToDraw.
+        for(i in 0 until pathOfNodes.size - 1) {
+            var start = findNodeCoordinates(source, numXNodes, numYNodes, pathOfNodes[i].col, pathOfNodes[i].row)
+            var end = findNodeCoordinates(source, numXNodes, numYNodes, pathOfNodes[i + 1].col, pathOfNodes[i + 1].row)
 
-                pathToDraw.add(start[0])
-                pathToDraw.add(start[1])
-                pathToDraw.add(end[0])
-                pathToDraw.add(end[1])
-            } else {
-//                // Last node, add the final node only.
-//                var start = findNodeCoordinates(source, 3, 3, pathOfNodes[i].row, pathOfNodes[i].col)
-//
-//                pathToDraw.add(start[0])
-//                pathToDraw.add(start[1])
-            }
+            pathToDraw.add(start[0])
+            pathToDraw.add(start[1])
+            pathToDraw.add(end[0])
+            pathToDraw.add(end[1])
         }
 
         // Convert to floatArray so we can use it with drawLineWithArray and return it.
         return pathToDraw.toFloatArray()
     }
 
-
     //TODO: This should be to link to Algorithm to retrieve the array of coordinates
     fun retrievePathIndoor(): Array<Node> {
+        // Temporary to test, should actually get path from pathfinding algorithm.
         return arrayOf(Node(0, 0), Node(0, 1), Node(0, 2),
             Node(1, 2), Node(1, 1), Node(1, 0),
             Node(2, 0), Node(2, 1), Node(2, 2)
@@ -121,7 +101,6 @@ class FloorPlanTransformation: Transformation {
     fun drawLineStartStop(start:Node,stop:Node){
         canvas.drawLine(start.getX(), start.getY(), stop.getX(), stop.getY(), pathPaint)
     }
-
 
     //Second option: With this method you need to be careful
     // you need to repeat the last stopNode and copy it into the next startNode
@@ -135,16 +114,15 @@ class FloorPlanTransformation: Transformation {
     // Function which returns the coordinates of a given node.
     fun findNodeCoordinates(source: Bitmap, numXNodes: Int, numYNodes: Int, nodeX: Int, nodeY: Int): FloatArray {
         // Determine the length and width of an individual node.
-        var nodeWidth = source.width / numXNodes
-        var nodeHeight = source.height / numYNodes
+        val nodeWidth = source.width / numXNodes
+        val nodeHeight = source.height / numYNodes
 
         // Find the center of the desired node.
-        var nodeCenterX = nodeX * nodeWidth + nodeWidth / 2
-        var nodeCenterY = nodeY * nodeHeight + nodeHeight / 2
+        val nodeCenterX = nodeX * nodeWidth + nodeWidth / 2
+        val nodeCenterY = nodeY * nodeHeight + nodeHeight / 2
 
         // Return an array with [xCoord, yCoord] of the node's center, which can be used to draw the path.
-        var coordinates = floatArrayOf(nodeCenterX.toFloat(), nodeCenterY.toFloat())
-        return coordinates
+        return floatArrayOf(nodeCenterX.toFloat(), nodeCenterY.toFloat())
     }
 }
 
