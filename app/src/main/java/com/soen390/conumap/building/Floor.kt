@@ -2,6 +2,6 @@ package com.soen390.conumap.building
 
 class Floor(buildingCode: String, floorNumber: Int, floorPlan: FloorPlan) {
 
-    class FloorNode(yInd: Int, xInd: Int, color: String, id: String, walkable: Boolean, target: Boolean) { }
-    class FloorPlan(floorNodes: Array<Array<FloorNode>>) { }
+    class FloorNode(var yInd: Int,var xInd: Int,var color: String,var id: String,var walkable: Boolean,var target: Boolean) { }
+    class FloorPlan(var floorNodes: Array<Array<FloorNode>>) { }
 }
