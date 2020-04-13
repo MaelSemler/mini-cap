@@ -18,7 +18,7 @@ class ImageHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         //TODO: Hardcoded floorplan for now
         //Note: load(DOES NOT TAKE IN AS ARGUMENT SVG)
         Picasso.get()
-            .load(R.drawable.h9floorplan)
+            .load(R.drawable.hall8)
             .transform(FloorPlanTransformation())
             .into(myImageView)
     }
