@@ -76,8 +76,8 @@ class FloorPlanTransformation: Transformation {
 
         // Adds coordinates to pathToDraw.
         for(i in 0 until pathOfNodes.size - 1) {
-            var start = findNodeCoordinates(source, numXNodes, numYNodes, pathOfNodes[i].col, pathOfNodes[i].row)
-            var end = findNodeCoordinates(source, numXNodes, numYNodes, pathOfNodes[i + 1].col, pathOfNodes[i + 1].row)
+            var start = findNodeCoordinates(source, numXNodes, numYNodes, pathOfNodes[i].row, pathOfNodes[i].col)
+            var end = findNodeCoordinates(source, numXNodes, numYNodes, pathOfNodes[i + 1].row, pathOfNodes[i + 1].col)
 
             pathToDraw.add(start[0])
             pathToDraw.add(start[1])
