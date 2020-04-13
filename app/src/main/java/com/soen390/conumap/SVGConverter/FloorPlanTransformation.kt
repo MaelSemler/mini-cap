@@ -135,12 +135,12 @@ class FloorPlanTransformation: Transformation {
     // Function which returns the coordinates of a given node.
     fun findNodeCoordinates(source: Bitmap, numXNodes: Int, numYNodes: Int, nodeX: Int, nodeY: Int): FloatArray {
         // Determine the length and width of an individual node.
-        var nodeLength = source.width / numXNodes
-        var nodeWidth = source.width / numYNodes
+        var nodeWidth = source.width / numXNodes
+        var nodeHeight = source.height / numYNodes
 
         // Find the center of the desired node.
         var nodeCenterX = nodeX * nodeWidth + nodeWidth / 2
-        var nodeCenterY = nodeY * nodeLength + nodeLength / 2
+        var nodeCenterY = nodeY * nodeHeight + nodeHeight / 2
 
         // Return an array with [xCoord, yCoord] of the node's center, which can be used to draw the path.
         var coordinates = floatArrayOf(nodeCenterX.toFloat(), nodeCenterY.toFloat())
