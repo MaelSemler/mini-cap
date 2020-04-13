@@ -164,7 +164,6 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
         } else {
             moveCamera(sgwCampus.location, 16f)
             sgwCampus.marker.showInfoWindow()
-            BuildingCreator.showIndoorMap(gMap, "H", 9)
         }
     }
 
