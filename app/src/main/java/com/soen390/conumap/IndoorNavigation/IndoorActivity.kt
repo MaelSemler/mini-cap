@@ -26,14 +26,14 @@ class IndoorActivity : AppCompatActivity() {
         val floorConverter = ConverterToFloorPlan
 
         var tempBitmap = floorConverter.svgToBitMap()
-        print("HELLO")
 
         GlobalScope.launch {
 
-
+            //@Andy Here is your floorplan
             val floorP =  floorConverter.convertToPlan(tempBitmap)
 
-            print(floorP.floorNodes[430][330].color)
+//            Proof that this is workinggg
+            Log.i("TESTING: ",floorP.floorNodes[430][330].color)
         }
 
     }
