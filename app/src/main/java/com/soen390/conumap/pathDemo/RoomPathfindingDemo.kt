@@ -5,7 +5,6 @@ import com.soen390.conumap.IndoorNavigation.Pathfinding
 import com.soen390.conumap.building.FloorCreator
 import com.soen390.conumap.building.Floor
 
-
 fun main (args: Array<String>) {
     var origin = Node (1,1)
     var destination = Node (9, 17)

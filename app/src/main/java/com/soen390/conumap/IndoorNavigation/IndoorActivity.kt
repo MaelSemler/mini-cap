@@ -32,8 +32,35 @@ class IndoorActivity : AppCompatActivity() {
             //@Andy Here is your floorplan
             val floorP =  floorConverter.convertToPlan(tempBitmap)
 
-//            Proof that this is workinggg
+//          Proof that this is workinggg
             Log.i("TESTING: ",floorP.floorNodes[430][330].color)
+
+            var blockRow: ArrayList<Int> = arrayListOf()
+            var blockCol: ArrayList<Int> = arrayListOf()
+
+            for (array in floorP.floorNodes.reversedArray()) {
+                for (value in array) {
+                    if (value.walkable == true) {
+                    } else {
+                        blockRow.add(value.yInd)
+                        blockCol.add(value.xInd)
+                    }
+                }
+            }
+
+            var blockArray = arrayOf(blockRow, blockCol)
+
+            var pathfinding: Pathfinding = Pathfinding(floorP.floorNodes.size,floorP.floorNodes[0].size, Node(384,38), Node(731,208))
+
+            pathfinding.loadMap()
+            pathfinding.loadBlocks(blockArray)
+            var path: MutableList<Node> = pathfinding.findPath()
+
+            for (node: Node in path) {
+                println(node)
+            }
+
+            Log.i("Algorithm","Done running algorithm...")
         }
 
     }
