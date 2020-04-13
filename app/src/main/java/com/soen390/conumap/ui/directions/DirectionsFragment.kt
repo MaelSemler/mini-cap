@@ -35,17 +35,11 @@ class DirectionsFragment : Fragment() {
 
     private lateinit var viewModel: DirectionsViewModel
     lateinit var binding : DirectionsFragmentBinding
-    lateinit var distanceBar: TextView
-    lateinit var timeBar: TextView
-    lateinit var infoBar: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //TODO: get the results from SearchCompletedFragment
-        //TODO: get the currentlocation
-        //TODO: add the name of the result and the current location to the start and end buttons (get them from the actual objects)
         var root = inflater.inflate(R.layout.directions_fragment, container, false)
         val directionViewModel = ViewModelProviders.of(this)
             .get(DirectionsViewModel::class.java)
@@ -96,7 +90,6 @@ class DirectionsFragment : Fragment() {
         map?.getMapInstance().clear()
         val originLatLng = getOrigin(startLocationAddress)
         Path.setOrigin(originLatLng)
-        //TODO:Destination is hardcoded for now
         val destinationLatLng = getDestination(endLocationAddress)
         Path.setDestination(destinationLatLng)
 
@@ -116,21 +109,18 @@ class DirectionsFragment : Fragment() {
             NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_alternateFragment)
         }
         binding.startLocationButton.setOnClickListener{
-            //TODO: send info to the search bar (DirectionSearchFragment)
             NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_directionsSearchFragment)
             editor.putString("result","1")
             editor.apply()
             editor.commit()
         }
         binding.endLocationButton.setOnClickListener{
-            //TODO: send info to the search bar (DirectionSearchFragment)
             NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_directionsSearchFragment)
             editor.putString("result","2")
             editor.apply()
             editor.commit()
         }
 
-        //TODO: look in if this is the best way to implement a "back" function
         binding.returnButton.setOnClickListener{
             NavHostFragment.findNavController(this).navigate(R.id.searchCompletedFragment)
         }
@@ -138,25 +128,20 @@ class DirectionsFragment : Fragment() {
 
             Path.setTransportation(getString(R.string.walking))
             Path.findDirections(requireActivity())//Calls function for finding directions
-            //TODO: redisplay new directions
         }
         binding.transportationBike.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
             Path.setTransportation(getString(R.string.bicycling))
             Path.findDirections(requireActivity()) //Calls function for finding directions
-            //TODO: redisplay new directions
         }
         binding.transportationCar.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
             Path.setTransportation(getString(R.string.driving))
             Path.findDirections(requireActivity())//Calls function for finding directions
-            //TODO: redisplay new directions
         }
         binding.transportationBus.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
             Path.setTransportation(getString(R.string.transit))
             Path.findDirections(requireActivity())//Calls function for finding directions
-            //TODO: redisplay new directions
         }
         //TODO: enable switchOriginAndDestination button
-        //TODO: implement alternative button and set the alternative here. Display the changed directions.
         return binding.root
     }
 

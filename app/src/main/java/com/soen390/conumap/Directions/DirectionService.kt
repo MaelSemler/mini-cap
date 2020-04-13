@@ -26,9 +26,8 @@ import kotlin.collections.ArrayList
 
 object DirectionService {
     val map = Map
-    val listOfPath = ArrayList<Directions>()
+    var listOfPath = ArrayList<Directions>()
     var polyline= ArrayList<Polyline>()
-//    private val context: Context
 
     init {
 
@@ -95,31 +94,18 @@ object DirectionService {
 
                                 //List of Path is an ArrayList containing every alternative route
                                 listOfPath.add(dirObj)
-                                ///////////////////////////////////////////////////
+
                             }
                             //Update the display on the main thread
-                            //TODO: THIS IS WHERE YOU EITHER CALL A FUNCTION THAT WILL LOGICALLY CHOOSE WHICH PATH TO DISPLAY ON THE SCREEN
                             var n = com.soen390.conumap.path.Path.getAlternatives()
                             if ( n >= listOfPath.size){
                                 n = 0
                                 com.soen390.conumap.path.Path.setAlternativeRoute(0)
                                 Log.e("DirectionService", "Alternate Route Id > List of recorded routes")
                             }
-
-                            //TODO: Currently hardcoded to return and display the first route only, but the rest are stored inside of listOfPath
                             activity.runOnUiThread {
-                                com.soen390.conumap.path.Path.updatePathInfo(listOfPath[n].getInfoPathText())
-                                com.soen390.conumap.path.Path.updateTotalDuration(listOfPath[n].getTotalTimeText())
-                                com.soen390.conumap.path.Path.updateTotalDistance(listOfPath[n].getTotalDistanceText())
-                                com.soen390.conumap.path.Path.updateSteps(listOfPath[n].getDirectionText())
-                                com.soen390.conumap.path.Path.setAlternativeRouteMaxId(listOfPath.size)
-                                com.soen390.conumap.path.Path.resetAlternateText()
-                                for (i in 0 until listOfPath.size){
-                                    Log.d("DirectionServices", "Building Alternate list $i " + listOfPath[i].getInfoPathText())
-                                    if (i != n){
-                                        com.soen390.conumap.path.Path.updateAlternateText(listOfPath[i].getTotalTimeText(), listOfPath[i].getTotalDistanceText() ,listOfPath[i].getInfoPathText())
-                                    }
-                                }
+                                displayOnScreenPath(listOfPath,n)
+
                             }
 
                             ResetPathDrawing()
@@ -133,7 +119,6 @@ object DirectionService {
                             }
                         } else {
                             // status NOT OK (No route from Google API)
-                            //TODO display error message on phone
                             Toast.makeText(activity, "ERROR:  No answer from google API - status: $status", Toast.LENGTH_SHORT).show()
                         }
                     },
@@ -183,11 +168,26 @@ object DirectionService {
         }
     }
 
-    private fun ResetPathDrawing(){
+    fun ResetPathDrawing(){
         if (polyline.isNotEmpty())
         {
             for (i in 0 until polyline.size)
             {polyline[i].remove()}   //removes each polyline in array list to redraw new polyline
+        }
+    }
+
+    fun displayOnScreenPath(listOfPath:ArrayList<Directions>,n:Int){
+        Path.updatePathInfo(listOfPath[n].getInfoPathText())
+        Path.updateTotalDuration(listOfPath[n].getTotalTimeText())
+        Path.updateTotalDistance(listOfPath[n].getTotalDistanceText())
+        Path.updateSteps(listOfPath[n].getDirectionText())
+        Path.setAlternativeRouteMaxId(listOfPath.size)
+        Path.resetAlternateText()
+        for (i in 0 until listOfPath.size){
+            Log.d("DirectionServices", "Building Alternate list $i " + listOfPath[i].getInfoPathText())
+            if (i != n){
+                Path.updateAlternateText(listOfPath[i].getTotalTimeText(), listOfPath[i].getTotalDistanceText() ,listOfPath[i].getInfoPathText())
+            }
         }
     }
 
