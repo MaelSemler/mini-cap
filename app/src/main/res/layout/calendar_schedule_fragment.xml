@@ -92,6 +92,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_toStartOf="@+id/go_now_button"
                 android:text="Room Location value"
+                android:maxLines="1"
                 android:textSize="15dp"/>
             <TextView
                 android:id="@+id/location_value"
@@ -104,6 +105,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_toStartOf="@+id/go_now_button"
                 android:text="Location value"
+                android:maxLines="1"
                 android:textSize="15dp"/>
 
             <Button
@@ -151,7 +153,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="Dec-2020"
+                    android:text="Month Year"
                     android:textColor="@android:color/black"
                     android:textSize="20dp"
                     android:textStyle="bold" />
