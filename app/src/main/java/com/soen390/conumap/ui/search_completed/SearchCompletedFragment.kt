@@ -22,7 +22,6 @@ class SearchCompletedFragment : Fragment() {
     companion object {
         fun newInstance() =
             SearchCompletedFragment()
-//        val dir = directions(Map)
     }
     override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +43,6 @@ class SearchCompletedFragment : Fragment() {
         //This changes fragment when the "45 degree" arrow is pressed
         travel_button.setOnClickListener{
             //TODO: send the result of the search (DirectionsFragment) The findDirections() function is being called directly inside of directionsFragment, but ideally we would like to keep it here
-//            findDirections(activity!!)
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }
         restart_button.setOnClickListener{
@@ -62,14 +60,9 @@ class SearchCompletedFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        // TODO: Use the ViewModel
-        //TODO: receive the result of the search result (SearchResultFragment)
         val model: SearchBarViewModel by activityViewModels()
         val destination = model.getDestination()
-
-        //TODO: put name of the location result on the button
         found_location_button.setText(destination)
-        //TODO: get the map to focus on the search result location
 
     }
 

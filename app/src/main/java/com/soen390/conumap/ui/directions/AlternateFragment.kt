@@ -40,9 +40,6 @@ class AlternateFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //TODO: get the results from SearchCompletedFragment
-        //TODO: get the currentlocation
-        //TODO: add the name of the result and the current location to the start and end buttons (get them from the actual objects)
 
         val AlternateViewModel = ViewModelProviders.of(this)
             .get(AlternateViewModel::class.java)
@@ -93,7 +90,6 @@ class AlternateFragment : Fragment() {
         map?.getMapInstance().clear()
         val originLatLng = getOrigin(startLocationAddress)
         Path.setOrigin(originLatLng)
-        //TODO:Destination is hardcoded for now
         val destinationLatLng = getDestination(endLocationAddress)
         Path.setDestination(destinationLatLng)
 
@@ -113,21 +109,18 @@ class AlternateFragment : Fragment() {
             NavHostFragment.findNavController(this).navigate(R.id.action_alternateFragment_to_directionsFragment)
         }
         binding.startLocationButton.setOnClickListener{
-            //TODO: send info to the search bar (DirectionSearchFragment)
             NavHostFragment.findNavController(this).navigate(R.id.action_alternateFragment_to_directionsSearchFragment)
             editor.putString("result","1")
             editor.apply()
             editor.commit()
         }
         binding.endLocationButton.setOnClickListener{
-            //TODO: send info to the search bar (DirectionSearchFragment)
             NavHostFragment.findNavController(this).navigate(R.id.action_alternateFragment_to_directionsSearchFragment)
             editor.putString("result","2")
             editor.apply()
             editor.commit()
         }
 
-        //TODO: look in if this is the best way to implement a "back" function
         binding.returnButton.setOnClickListener{
             NavHostFragment.findNavController(this).navigate(R.id.searchCompletedFragment)
         }
@@ -135,27 +128,22 @@ class AlternateFragment : Fragment() {
 
             Path.setTransportation(getString(R.string.walking))
             Path.findDirections(requireActivity())//Calls function for finding directions
-            //TODO: redisplay new directions
         }
         binding.transportationBike.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
             Path.setTransportation(getString(R.string.bicycling))
             Path.findDirections(requireActivity()) //Calls function for finding directions
-            //TODO: redisplay new directions
         }
         binding.transportationCar.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
             Path.setTransportation(getString(R.string.driving))
             Path.findDirections(requireActivity())//Calls function for finding directions
-            //TODO: redisplay new directions
         }
         binding.transportationBus.setOnClickListener {//This binds the radio button to an onclick listener event that sets the transportation mode
             Path.setTransportation(getString(R.string.transit))
             Path.findDirections(requireActivity())//Calls function for finding directions
-            //TODO: redisplay new directions
         }
 
 
         //TODO: enable switchOriginAndDestination button
-        //TODO: implement alternative button and set the alternative here. Display the changed directions.
 
         binding.DirectionsTextBox.setOnTouchListener(View.OnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
@@ -178,14 +166,9 @@ class AlternateFragment : Fragment() {
                 }
                 // Save Context
                 val route_id = Path.getAlternatives()
-                // val transportation_mode = Path.getTransportationMode() // waiting for transportation mode available
-                // Reset data in view model
                 Path.resetDirections()
-                // Restore direction selections
                 Path.setAlternativeRoute(route_id)
-                // Path.setTransportationMode(transportation_mode) // waiting for transportation mode available
-                Path.findDirections(activity!!)
-    //DEBUG                Toast.makeText(getActivity(),"AlternateFragment: Route changed to " + Path.getAlternatives(),Toast.LENGTH_SHORT).show()
+                Path.findDirections(requireActivity())
             }
 
             true
@@ -220,7 +203,6 @@ class AlternateFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(AlternateViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
 }

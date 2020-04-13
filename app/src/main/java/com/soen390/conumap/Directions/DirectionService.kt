@@ -28,7 +28,6 @@ object DirectionService {
     val map = Map
     var listOfPath = ArrayList<Directions>()
     var polyline= ArrayList<Polyline>()
-//    private val context: Context
 
     init {
 
@@ -95,18 +94,15 @@ object DirectionService {
 
                                 //List of Path is an ArrayList containing every alternative route
                                 listOfPath.add(dirObj)
-                                ///////////////////////////////////////////////////
+
                             }
                             //Update the display on the main thread
-                            //TODO: THIS IS WHERE YOU EITHER CALL A FUNCTION THAT WILL LOGICALLY CHOOSE WHICH PATH TO DISPLAY ON THE SCREEN
                             var n = com.soen390.conumap.path.Path.getAlternatives()
                             if ( n >= listOfPath.size){
                                 n = 0
                                 com.soen390.conumap.path.Path.setAlternativeRoute(0)
                                 Log.e("DirectionService", "Alternate Route Id > List of recorded routes")
                             }
-
-                            //TODO: Currently hardcoded to return and display the first route only, but the rest are stored inside of listOfPath
                             activity.runOnUiThread {
                                 displayOnScreenPath(listOfPath,n)
 
@@ -123,7 +119,6 @@ object DirectionService {
                             }
                         } else {
                             // status NOT OK (No route from Google API)
-                            //TODO display error message on phone
                             Toast.makeText(activity, "ERROR:  No answer from google API - status: $status", Toast.LENGTH_SHORT).show()
                         }
                     },
@@ -191,7 +186,7 @@ object DirectionService {
         for (i in 0 until listOfPath.size){
             Log.d("DirectionServices", "Building Alternate list $i " + listOfPath[i].getInfoPathText())
             if (i != n){
-                com.soen390.conumap.path.Path.updateAlternateText(listOfPath[i].getTotalTimeText(), listOfPath[i].getTotalDistanceText() ,listOfPath[i].getInfoPathText())
+                Path.updateAlternateText(listOfPath[i].getTotalTimeText(), listOfPath[i].getTotalDistanceText() ,listOfPath[i].getInfoPathText())
             }
         }
     }

@@ -25,6 +25,14 @@ class Node (row: Int, col: Int) {
         calculateF()
     }
 
+    fun getX():Float{
+        return col.toFloat()
+    }
+
+    fun getY():Float{
+        return row.toFloat()
+    }
+
     //Method checks to see if there exists alternative path better than current one
     fun checkAlternative(currentNode: Node, cost: Int): Boolean {
         var newG: Int = currentNode.g + cost
