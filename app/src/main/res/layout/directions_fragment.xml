@@ -174,9 +174,8 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginLeft="40sp"
                                 android:layout_below="@+id/info_text"
-                                android:textColor="@color/buttonColor"
                                 android:background="@drawable/button_bg_rounded_corners"
-                                android:backgroundTint="@color/colorAccent"
+                                android:backgroundTint="@color/buttonColor"
                                 android:text="Direction" />
 
                             <Button
