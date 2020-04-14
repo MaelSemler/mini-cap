@@ -1,12 +1,15 @@
 package com.soen390.conumap.ui.directions
 
 import android.content.SharedPreferences
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -93,6 +96,22 @@ class DirectionsFragment : Fragment() {
         val destinationLatLng = getDestination(endLocationAddress)
         Path.setDestination(destinationLatLng)
 
+        // Paint Current Button
+        binding.run {
+            Path.setDestination(destinationLatLng)
+
+            if(Path.getDirectionScreenMode()!!) {
+                // Paint Current Button
+                directionsButton.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.colorAccent)))
+                directionsButton.setTextColor(resources.getColor(R.color.buttonColor))
+                altButton.setTextColor(resources.getColor(R.color.colorAccent))
+            }else{
+                // Paint Current Button
+                altButton.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.colorAccent)))
+                altButton.setTextColor(resources.getColor(R.color.buttonColor))
+                directionsButton.setTextColor(resources.getColor(R.color.colorAccent))
+            }
+        }
         // Select radio button corresponding to transportation mode active
         when(Path.getTransportation()){
             getString(R.string.driving) -> binding.transportationCar.setChecked(true)
@@ -106,7 +125,13 @@ class DirectionsFragment : Fragment() {
 
         // Alternate Routes
         binding.altButton.setOnClickListener{
-            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_alternateFragment)
+            Path.setDirectionsScreenMode("alt")
+            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_self)
+        }
+        // Direction Routes
+        binding.directionsButton.setOnClickListener{
+            Path.setDirectionsScreenMode("dir")
+            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_self)
         }
         binding.startLocationButton.setOnClickListener{
             NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_directionsSearchFragment)
@@ -142,6 +167,38 @@ class DirectionsFragment : Fragment() {
             Path.findDirections(requireActivity())//Calls function for finding directions
         }
         //TODO: enable switchOriginAndDestination button
+
+        if(!Path.getDirectionScreenMode()!!) {
+            binding.DirectionsTextBox.setOnTouchListener(View.OnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_DOWN) {
+                    // Toast.makeText(getActivity(), "AlternateFragment: Touch coordinates : " +  event.x.toString() + " x " + event.y.toString(), Toast.LENGTH_SHORT).show()
+                    // Change route
+                    if (event.y < 300) {
+                        //First line selected
+                        if (Path.getAlternatives() == 0) {
+                            Path.setAlternativeRoute(1)
+                        } else {
+                            Path.setAlternativeRoute(0)
+                        }
+                    } else {
+                        //Second Line selected
+                        if (Path.getAlternatives() == 2) {
+                            Path.setAlternativeRoute(1)
+                        } else {
+                            Path.setAlternativeRoute(2)
+                        }
+                    }
+                    // Save Context
+                    val route_id = Path.getAlternatives()
+                    Path.resetDirections()
+                    Path.setAlternativeRoute(route_id)
+                    Path.findDirections(requireActivity())
+                }
+
+                true
+            })
+        }
+
         return binding.root
     }
 
@@ -178,9 +235,4 @@ class DirectionsFragment : Fragment() {
         end_location_button.setText(destination)
 
     }
-
-
-
-
-
 }

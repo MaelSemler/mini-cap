@@ -166,3 +166,4 @@ fabric.properties
 
 # End of https://www.gitignore.io/api/java,kotlin,androidstudio
 apiKey.xml
+/app/src/main/res/values/calendarClientID.xml
