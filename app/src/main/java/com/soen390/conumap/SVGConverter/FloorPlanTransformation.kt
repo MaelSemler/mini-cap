@@ -1,46 +1,42 @@
 package com.soen390.conumap.SVGConverter
 
-
 import android.content.Context
 import android.graphics.*
 import android.renderscript.RenderScript
+import androidx.core.content.ContextCompat
 import com.soen390.conumap.IndoorNavigation.Node
+import com.soen390.conumap.R
 import com.squareup.picasso.Transformation
-import kotlin.math.roundToInt
-
 
 class FloorPlanTransformation: Transformation {
 
-    private lateinit var context:Context
-    var svgCon: ConverterToFloorPlan = ConverterToFloorPlan
-    lateinit var pathPaint: Paint
-    lateinit var paint:Paint
-    lateinit var canvas: Canvas
+    private var context:Context
     private var mColor = 0
-
+    lateinit var canvas: Canvas
+    var svgCon: ConverterToFloorPlan = ConverterToFloorPlan
+    var pathPaint: Paint
+    var paint: Paint
 
     init {
         context = svgCon.getContext()
         pathPaint = setupPathPaint()
         paint = setupMainPaint()
-
     }
-    var rs : RenderScript = RenderScript.create(context)
 
     override fun key(): String {
        return "Transformed floorPlan"
     }
 
-    private fun setupPathPaint(): Paint{
+    private fun setupPathPaint(): Paint {
         pathPaint = Paint()
         pathPaint.isAntiAlias = true
         pathPaint.style = Paint.Style.STROKE
-        pathPaint.strokeWidth = 20.0F
-        pathPaint.color = Color.BLUE
+        pathPaint.strokeWidth = 15f
+        pathPaint.color = ContextCompat.getColor(context, R.color.indoorPath)
         return pathPaint
     }
 
-    private fun setupMainPaint():Paint{
+    private fun setupMainPaint():Paint {
         paint = Paint()
         paint.setAntiAlias(true)
         paint.setColorFilter(PorterDuffColorFilter(mColor, PorterDuff.Mode.SRC_ATOP))
@@ -48,15 +44,12 @@ class FloorPlanTransformation: Transformation {
     }
 
     override fun transform(source: Bitmap): Bitmap {
-        val width = source.width // 1993
-        val height = source.height // 1829
+        val width = source.width
+        val height = source.height
 
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-//        val bitmap = Bitmap.createBitmap(width, height,
-
 
         canvas = Canvas(bitmap)
-
         canvas.drawBitmap(source, 0.0F, 0.0F, paint)
 
         var indoorPath = drawPathIndoor(source, 400, 367)
@@ -71,7 +64,6 @@ class FloorPlanTransformation: Transformation {
     fun drawPathIndoor(source: Bitmap, numXNodes: Int, numYNodes: Int): FloatArray {
         var pathOfNodes = retrievePathIndoor()
 
-        // 4 floats to add for each node: startX, startY, endX, endY.
         var pathToDraw = mutableListOf<Float>()
 
         // Adds coordinates to pathToDraw.
@@ -79,6 +71,7 @@ class FloorPlanTransformation: Transformation {
             var start = findNodeCoordinates(source, numXNodes, numYNodes, pathOfNodes[i].row, pathOfNodes[i].col)
             var end = findNodeCoordinates(source, numXNodes, numYNodes, pathOfNodes[i + 1].row, pathOfNodes[i + 1].col)
 
+            // 4 floats to add for each node: startX, startY, endX, endY.
             pathToDraw.add(start[0])
             pathToDraw.add(start[1])
             pathToDraw.add(end[0])
@@ -436,16 +429,8 @@ class FloorPlanTransformation: Transformation {
         )
     }
 
-    //This method would be the most straight forward since we can loop and call this
-    fun drawLineStartStop(start:Node,stop:Node){
-        canvas.drawLine(start.getX(), start.getY(), stop.getX(), stop.getY(), pathPaint)
-    }
-
-    //Second option: With this method you need to be careful
-    // you need to repeat the last stopNode and copy it into the next startNode
-    // We could probably override the method to make it work if we want to i guess
-    // Just less straight forward to use
-    //TODO: SEE EXAMPLE Up there
+    // Takes an array of Floats and draws line at desired position.
+    // A line needs 4 floats: startX, startY, endX, endY.
     fun drawLineWithArray(pathArray:FloatArray){
         canvas.drawLines(pathArray, pathPaint)
     }

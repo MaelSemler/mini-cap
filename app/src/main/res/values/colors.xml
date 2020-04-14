@@ -8,5 +8,6 @@
     <color name="buttonColor">#FFFFFF</color>
     <color name="buildingOutline">#934323</color>
     <color name="red_transparent">#80932339</color>
+    <color name="indoorPath">#ff2c55</color>
     <color name="transparent">#00000000</color>
 </resources>
