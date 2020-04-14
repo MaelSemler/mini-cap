@@ -5,7 +5,7 @@ import com.soen390.conumap.IndoorNavigation.Pathfinding
 
 fun main (args: Array<String>) {
     var origin: Node =
-        Node(2, 1)
+        Node(1, 2)
     var destination: Node =
         Node(7, 7)
     var row = 8
@@ -19,7 +19,7 @@ fun main (args: Array<String>) {
         )
     var blockRow = arrayListOf<Int>(1,2,3,4,5,6,7,7,6,5,3,3,3)
     var blockCol = arrayListOf<Int>(3,3,3,3,3,3,3,6,6,6,5,6,7)
-    var blockArray = arrayOf<ArrayList<Int>>(blockRow, blockCol)
+    var blockArray = arrayOf<ArrayList<Int>>(blockCol, blockRow)
     pathfindingTest.loadMap()
     pathfindingTest.loadBlocks(blockArray)
     pathfindingTest.printMapSizeToConsole()

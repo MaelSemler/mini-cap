@@ -79,8 +79,8 @@ object ConverterToFloorPlan{
                         for (y in 0 until bitmapFile.height-1) {
 
                             //If it is a hallway then walkable
-                            if ( bitmapFile.getPixel(x,y).toColor() == Color.rgb(97,84,84).toColor())
-                                floorNode[x][y] = Floor.FloorNode(x,y,"#f7d6d5", "id"+x+y, true, false)
+                            if ( bitmapFile.getPixel(x,y).toColor() == Color.rgb(243,211,211).toColor())
+                                floorNode[x][y] = Floor.FloorNode(x,y,"#f3d3d3", "id"+x+y, true, false)
 
                             else//It is not a hallway so a wall or a room
                                 floorNode[x][y] = Floor.FloorNode(x,y,"#da3636", "id"+x+y, false, false)
