@@ -20,5 +20,6 @@
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/settings"
             android:title="@string/menu_settings" />
+
     </group>
 </menu>
