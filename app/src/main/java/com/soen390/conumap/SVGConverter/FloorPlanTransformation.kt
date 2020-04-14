@@ -43,6 +43,7 @@ class FloorPlanTransformation: Transformation {
         return paint
     }
 
+    // Transformation of indoor floor plan image which includes drawing an indoor path.
     override fun transform(source: Bitmap): Bitmap {
         val width = source.width
         val height = source.height
