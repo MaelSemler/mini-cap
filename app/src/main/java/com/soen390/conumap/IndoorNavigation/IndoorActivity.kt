@@ -41,12 +41,20 @@ class IndoorActivity : AppCompatActivity() {
 
         db.emptyDatabaseContents()
 
-        println("DBTest" + db.getNumberOfRows())
-        println("DBTest" + db.isEmpty())
+        db.printDatabaseContents()
 
-        db.insertData("", "", "", "", "", "")
+        db.insertData("", "", "", "H-937", "10", "12")
+        db.insertData("", "", "", "H-801", "5", "9")
 
-        println("DBTest" + db.getNumberOfRows())
-        println("DBTest" + db.isEmpty())
+        db.printDatabaseContents()
+
+        var one = db.getRoomCoordinates("H-937")
+        var two = db.getRoomCoordinates("H-801")
+        var thr = db.getRoomCoordinates("Nonsense value to test error")
+
+        println("DBTest:")
+        println("one: " + one[0] + ", " + one[1])
+        println("two: " + two[0] + ", " + two[1])
+        println("thr: " + thr[0] + ", " + thr[1])
     }
 }

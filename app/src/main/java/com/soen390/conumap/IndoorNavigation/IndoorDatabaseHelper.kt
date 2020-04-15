@@ -60,6 +60,31 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
         return db.insert(TABLE_NAME, null, values) != (-1).toLong()
     }
 
+    // Specify a room code and will return an array with the node coordinates of that room by searching
+    // the database for a match. Returns in the form [xCoord, yCoord]. [-1, -1] means room not found.
+    fun getRoomCoordinates(roomCode: String): Array<Int> {
+        val db: SQLiteDatabase = this.writableDatabase
+
+        // Get the NODE_X_POS and NODE_Y_POS for the matching room code and store it.
+        val coords: Cursor = db.rawQuery("SELECT $COL_NX, $COL_NY " +
+                "FROM $TABLE_NAME WHERE $COL_RC = ?", arrayOf(roomCode)
+        )
+
+        return if(coords.count > 0) {
+            // Found a result, return it as Ints.
+            coords.moveToFirst()
+            val result = arrayOf(coords.getString(0).toInt(), coords.getString(1).toInt())
+            coords.close()
+
+            result
+        } else {
+            Log.e("IndoorDatabase", "Room $roomCode not found. Returning [-1, -1].")
+            coords.close()
+
+            arrayOf(-1, -1)
+        }
+    }
+
     // To check how many rows are in the database currently.
     fun getNumberOfRows(): Int {
         val db: SQLiteDatabase = this.writableDatabase
@@ -67,7 +92,7 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
         val contents: Cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
         val count = contents.count
         contents.close()
-        
+
         return count
     }
 
@@ -99,8 +124,8 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
                         contents.getString(1) + "\t\t\t\t" +                     // Print Building Code.
                         contents.getString(2) + "\t\t\t\t" +                     // Print Floor Number.
                         contents.getString(3) + "\t\t\t" +                       // Print Room Number.
-                        contents.getString(4) + "\t\t" +                       // Print Room Code.
-                        contents.getString(5) + "\t\t" +                       // Print Node X Pos.
+                        contents.getString(4) + "\t\t" +                         // Print Room Code.
+                        contents.getString(5) + "\t\t\t" +                       // Print Node X Pos.
                         contents.getString(6) + "\n"                             // Print Node Y Pos.
                 )
             }
@@ -110,5 +135,4 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
 
         contents.close()
     }
-
 }
