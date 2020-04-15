@@ -60,9 +60,27 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
         return db.insert(TABLE_NAME, null, values) != (-1).toLong()
     }
 
-    // Deletes everything in the database.
-    fun emptyDatabase(): Boolean {
+    // To check how many rows are in the database currently.
+    fun getNumberOfRows(): Int {
         val db: SQLiteDatabase = this.writableDatabase
+
+        val contents: Cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
+        val count = contents.count
+        contents.close()
+        
+        return count
+    }
+
+    // To verify if database has been populated or not. Returns true if empty, false if non-empty.
+    fun isEmpty(): Boolean {
+        return getNumberOfRows() == 0
+    }
+
+    // Deletes everything in the database. Return true if rows deleted, else false.
+    fun emptyDatabaseContents(): Boolean {
+        val db: SQLiteDatabase = this.writableDatabase
+
+        // Delete everything, will return 0 if nothing deleted.
         return db.delete(TABLE_NAME, null, null) > 0
     }
 

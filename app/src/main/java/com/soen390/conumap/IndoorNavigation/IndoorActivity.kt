@@ -39,8 +39,14 @@ class IndoorActivity : AppCompatActivity() {
 
         db = IndoorDatabaseHelper(this)
 
-        var x = db.emptyDatabase()
-        println(x)
-        db.printDatabaseContents()
+        db.emptyDatabaseContents()
+
+        println("DBTest" + db.getNumberOfRows())
+        println("DBTest" + db.isEmpty())
+
+        db.insertData("", "", "", "", "", "")
+
+        println("DBTest" + db.getNumberOfRows())
+        println("DBTest" + db.isEmpty())
     }
 }
