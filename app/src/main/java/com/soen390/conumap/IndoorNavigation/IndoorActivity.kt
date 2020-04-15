@@ -38,5 +38,10 @@ class IndoorActivity : AppCompatActivity() {
         }
 
         db = IndoorDatabaseHelper(this)
+        if (db.insertData("X", "0", "0", "X-00", "0", "0")) {
+            Log.d("IndoorDatabase", "Data inserted to IndoorDatabase successfully.")
+        } else {
+            Log.e("IndoorDatabase", "There was an error inserting the data to IndoorDatabase.")
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.soen390.conumap.IndoorNavigation
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -20,9 +21,7 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
         const val COL_NY: String = "NODE_Y_POS"
     }
 
-    constructor(ctx: Context) : super(ctx, DATABASE_NAME, null, 1) {
-        var db: SQLiteDatabase = this.writableDatabase
-    }
+    constructor(ctx: Context) : super(ctx, DATABASE_NAME, null, 1)
 
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL("CREATE TABLE $TABLE_NAME (" +
@@ -41,4 +40,20 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
         onCreate(db)
     }
 
+    // Used to populate database. Returns true if insertion was successful, false otherwise.
+    fun insertData(bc: String, fn: String, rn: String, rc: String, nx: String, ny: String): Boolean {
+        var db: SQLiteDatabase = this.writableDatabase
+
+        // Holds data that we want to insert.
+        var values = ContentValues()
+        values.put(COL_BC, bc)
+        values.put(COL_FN, fn)
+        values.put(COL_RN, rn)
+        values.put(COL_RC, rc)
+        values.put(COL_NX, nx)
+        values.put(COL_NY, ny)
+
+        // Insert it, will return -1 if error.
+        return db.insert(TABLE_NAME, null, values) != (-1).toLong()
+    }
 }
