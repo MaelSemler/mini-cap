@@ -78,12 +78,12 @@ object ConverterToFloorPlan{
                     for (x in 0 until bitmapFile.width) {
                         for (y in 0 until bitmapFile.height) {
 
-                            //If it is a wall or a room then walkable set to false
-                            if ( bitmapFile.getPixel(x,y).toColor() == Color.rgb(218,54,54).toColor())
-                                floorNode[x][y] = Floor.FloorNode(x,y,"#da3636", "id"+x+y, false, false)
+                            //If it is a hallway then walkable
+                            if ( bitmapFile.getPixel(x,y).toColor() == Color.rgb(243,211,211).toColor())
+                                floorNode[x][y] = Floor.FloorNode(x,y,"#f3d3d3", "id"+x+y, true, false)
 
-                            else//It is a hallway set walkable to true
-                                floorNode[x][y] = Floor.FloorNode(x,y,"#da3636", "id"+x+y, true, false)
+                            else//It is not a hallway so a wall or a room
+                                floorNode[x][y] = Floor.FloorNode(x,y,"#da3636", "id"+x+y, false, false)
 
                         }
                     }

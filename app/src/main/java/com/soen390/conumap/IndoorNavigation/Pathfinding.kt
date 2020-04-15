@@ -67,9 +67,9 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
 
     //Sets the map with blocks i.e. tiles that cannot be walked on
     //Parameter is array of nodes that are blocks
-    fun loadBlocks(blockArray: Array<Array<Int>>) {
-        var rowArray = arrayOf<Int>()
-        var colArray = arrayOf<Int>()
+    fun loadBlocks(blockArray: Array<ArrayList<Int>>) {
+        var rowArray = arrayListOf<Int>()
+        var colArray = arrayListOf<Int>()
         var counter = 0
         for (tempArray in blockArray) {
             if (counter == 0)
@@ -128,7 +128,7 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
     }
 
     fun printMapToConsole() {
-        for (array in mapArray) {
+        for (array in mapArray.reversedArray()) {
             for (value in array) {
                 if (value.equals(origin)) {
                     print("O    ")
