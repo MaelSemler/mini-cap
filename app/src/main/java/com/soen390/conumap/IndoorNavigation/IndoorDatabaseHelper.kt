@@ -2,8 +2,10 @@ package com.soen390.conumap.IndoorNavigation
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
 // IndoorDatabase will be used to store node coordinates of rooms. When user searches for a room,
 // the database will be queried and return the coordinates of the node, which will be used with the
@@ -17,6 +19,7 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
         const val COL_FN: String = "FLOOR_NUMBER"
         const val COL_RN: String = "ROOM_NUMBER"
         const val COL_RC: String = "ROOM_CODE"
+
         const val COL_NX: String = "NODE_X_POS"
         const val COL_NY: String = "NODE_Y_POS"
     }
@@ -56,4 +59,38 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
         // Insert it, will return -1 if error.
         return db.insert(TABLE_NAME, null, values) != (-1).toLong()
     }
+
+    // Deletes everything in the database.
+    fun emptyDatabase(): Boolean {
+        val db: SQLiteDatabase = this.writableDatabase
+        return db.delete(TABLE_NAME, null, null) > 0
+    }
+
+    // Prints database contents to the console for testing purposes.
+    fun printDatabaseContents() {
+        val db: SQLiteDatabase = this.writableDatabase
+
+        val contents: Cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
+
+        // Print all data or show that it is empty.
+        if(contents.count > 0) {
+            Log.i("IndoorDatabase", "Count is " + contents.count + ". Current database contents are:\n" +
+                    "$COL_ID\t$COL_BC\t$COL_FN\t$COL_RN\t$COL_RC\t$COL_NX\t$COL_NY")
+            while(contents.moveToNext()) {
+                Log.i("IndoorDatabase", contents.getString(0) + "\t" + // Print ID.
+                        contents.getString(1) + "\t\t\t\t" +                     // Print Building Code.
+                        contents.getString(2) + "\t\t\t\t" +                     // Print Floor Number.
+                        contents.getString(3) + "\t\t\t" +                       // Print Room Number.
+                        contents.getString(4) + "\t\t" +                       // Print Room Code.
+                        contents.getString(5) + "\t\t" +                       // Print Node X Pos.
+                        contents.getString(6) + "\n"                             // Print Node Y Pos.
+                )
+            }
+        } else {
+            Log.i("IndoorDatabase", "Count is " + contents.count + ". Database is currently empty.")
+        }
+
+        contents.close()
+    }
+
 }
