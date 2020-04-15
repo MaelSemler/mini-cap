@@ -13,6 +13,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class IndoorActivity : AppCompatActivity() {
+    lateinit var db: IndoorDatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,5 +37,6 @@ class IndoorActivity : AppCompatActivity() {
             Log.i("TESTING: ",floorP.floorNodes[430][330].color)
         }
 
+        db = IndoorDatabaseHelper(this)
     }
 }
