@@ -19,7 +19,6 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
         const val COL_FN: String = "FLOOR_NUMBER"
         const val COL_RN: String = "ROOM_NUMBER"
         const val COL_RC: String = "ROOM_CODE"
-
         const val COL_NX: String = "NODE_X_POS"
         const val COL_NY: String = "NODE_Y_POS"
     }
@@ -56,7 +55,7 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
         values.put(COL_NX, nx)
         values.put(COL_NY, ny)
 
-        // Insert it, will return -1 if error.
+        // Insert it, db.insert will return -1 if error.
         return db.insert(TABLE_NAME, null, values) != (-1).toLong()
     }
 
@@ -78,6 +77,7 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
 
             result
         } else {
+            // Not found, return [-1, -1].
             Log.e("IndoorDatabase", "Room $roomCode not found. Returning [-1, -1].")
             coords.close()
 
@@ -105,7 +105,7 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
     fun emptyDatabaseContents(): Boolean {
         val db: SQLiteDatabase = this.writableDatabase
 
-        // Delete everything, will return 0 if nothing deleted.
+        // Delete everything, db.delete will return 0 if nothing deleted.
         return db.delete(TABLE_NAME, null, null) > 0
     }
 
