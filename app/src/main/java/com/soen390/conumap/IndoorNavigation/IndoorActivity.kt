@@ -49,5 +49,8 @@ class IndoorActivity : AppCompatActivity() {
 
         var one = db.getRoomCoordinates("H-937") // This is [10, 12].
         var two = db.getRoomCoordinates("H-801") // This is [5, 9].
+
+        println(one.toString())
+        println(two.toString())
     }
 }

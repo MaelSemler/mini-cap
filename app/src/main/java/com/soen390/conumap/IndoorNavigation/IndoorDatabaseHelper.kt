@@ -44,10 +44,10 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
 
     // Used to populate database. Returns true if insertion was successful, false otherwise.
     fun insertData(bc: String, fn: String, rn: String, rc: String, nx: String, ny: String): Boolean {
-        var db: SQLiteDatabase = this.writableDatabase
+        val db: SQLiteDatabase = this.writableDatabase
 
         // Holds data that we want to insert.
-        var values = ContentValues()
+        val values = ContentValues()
         values.put(COL_BC, bc)
         values.put(COL_FN, fn)
         values.put(COL_RN, rn)
@@ -59,9 +59,9 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
         return db.insert(TABLE_NAME, null, values) != (-1).toLong()
     }
 
-    // Specify a room code and will return an array with the node coordinates of that room by searching
-    // the database for a match. Returns in the form [xCoord, yCoord]. [-1, -1] means room not found.
-    fun getRoomCoordinates(roomCode: String): Array<Int> {
+    // Specify a room code and will return an array with the node coordinates of that room by searching the
+    // database for a match. Returns a Node of the room coordinates. Node(-1, -1) means room not found.
+    fun getRoomCoordinates(roomCode: String): Node {
         val db: SQLiteDatabase = this.writableDatabase
 
         // Get the NODE_X_POS and NODE_Y_POS for the matching room code and store it.
@@ -70,18 +70,19 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
         )
 
         return if(coords.count > 0) {
-            // Found a result, return it as Ints.
+            // Found a result, return it as a node.
             coords.moveToFirst()
-            val result = arrayOf(coords.getString(0).toInt(), coords.getString(1).toInt())
+            // val result = arrayOf(coords.getString(0).toInt(), coords.getString(1).toInt())
+            val result = Node(coords.getString(0).toInt(), coords.getString(1).toInt())
             coords.close()
 
             result
         } else {
-            // Not found, return [-1, -1].
-            Log.e("IndoorDatabase", "Room $roomCode not found. Returning [-1, -1].")
+            // Not found, return Node with x and y -1, -1.
+            Log.e("IndoorDatabase", "Room $roomCode not found. Returning Node(-1, -1).")
             coords.close()
 
-            arrayOf(-1, -1)
+            Node(-1, -1)
         }
     }
 
