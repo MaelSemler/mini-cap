@@ -7,9 +7,8 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
-// IndoorDatabase will be used to store node coordinates of rooms. When user searches for a room,
-// the database will be queried and return the coordinates of the node, which will be used with the
-// pathfinding algorithm.
+// IndoorDatabase will be used to store node coordinates of rooms. When user searches for a room, the
+// database will be queried and return a Node, which can be used with the pathfinding algorithm.
 class IndoorDatabaseHelper: SQLiteOpenHelper {
     companion object Database {
         const val DATABASE_NAME: String = "Indoor.db"
