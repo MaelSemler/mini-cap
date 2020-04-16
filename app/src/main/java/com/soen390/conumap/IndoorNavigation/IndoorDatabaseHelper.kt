@@ -72,7 +72,6 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
         return if(coords.count > 0) {
             // Found a result, return it as a node.
             coords.moveToFirst()
-            // val result = arrayOf(coords.getString(0).toInt(), coords.getString(1).toInt())
             val result = Node(coords.getString(0).toInt(), coords.getString(1).toInt())
             coords.close()
 
@@ -80,6 +79,30 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
         } else {
             // Not found, return Node with x and y -1, -1.
             Log.e("IndoorDatabase", "Room $roomCode not found. Returning Node(-1, -1).")
+            coords.close()
+
+            Node(-1, -1)
+        }
+    }
+
+    // Works in the same was as getRoomCoordinates but also checks that the floor matches.
+    fun getPOICoordinates(roomCode: String, floorNumber: Int): Node {
+        val db: SQLiteDatabase = this.writableDatabase
+
+        val coords: Cursor = db.rawQuery("SELECT $COL_NX, $COL_NY " +
+                "FROM $TABLE_NAME WHERE $COL_RC = ? AND $COL_FN = ?", arrayOf(roomCode, floorNumber.toString())
+        )
+
+        // Return result if we find one.
+        return if(coords.count > 0) {
+            coords.moveToFirst()
+            val result = Node(coords.getString(0).toInt(), coords.getString(1).toInt())
+            coords.close()
+
+            result
+        } else {
+            // Not found, return Node with x and y -1, -1.
+            Log.e("IndoorDatabase", "POI $roomCode on floor $floorNumber not found. Returning Node(-1, -1).")
             coords.close()
 
             Node(-1, -1)

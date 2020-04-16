@@ -44,13 +44,17 @@ class IndoorActivity : AppCompatActivity() {
 
         db.insertData("H", "9", "937", "H-937", "10", "12")
         db.insertData("H", "8", "801", "H-801", "5", "9")
+        db.insertData("H", "8", "WF", "Water Fountain", "6", "13")
+        db.insertData("H", "9", "VM", "Vending Machine", "2", "8")
 
         db.printDatabaseContents()
 
-        var one = db.getRoomCoordinates("H-937") // This is [10, 12].
-        var two = db.getRoomCoordinates("H-801") // This is [5, 9].
+        var a = db.getRoomCoordinates("H-937")
+        var b = db.getRoomCoordinates("H-801")
+        var c = db.getPOICoordinates("Water Fountain", 8)
+        var d = db.getPOICoordinates("Vending Machine", 9)
+        var e = db.getPOICoordinates("Nonsense", 6) // Should be error.
 
-        println(one.toString())
-        println(two.toString())
+        println(a.toString() + "\n" + b.toString() + "\n" + c.toString() + "\n" + d.toString() + "\n" + e.toString())
     }
 }
