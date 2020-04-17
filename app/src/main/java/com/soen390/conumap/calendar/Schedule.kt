@@ -14,6 +14,9 @@ object Schedule {
     private var calendar: Calendar? = null
     private val calendarEntryList = mutableListOf<CalendarListEntry>()
     private var name: String? = null
+    fun getName(): String? {
+        return name
+    }
     fun setName(name: String?) {
         this.name = name
     }

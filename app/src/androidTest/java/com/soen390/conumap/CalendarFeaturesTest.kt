@@ -1,20 +1,19 @@
 package com.soen390.conumap
 
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.assertion.ViewAssertions.*
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject
 import androidx.test.uiautomator.UiSelector
-import org.junit.Assert.assertEquals
+import org.hamcrest.Matchers.not
 
 import org.junit.Test
 import org.junit.runner.RunWith
 
 import java.lang.Thread.sleep
-import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 class CalendarFeaturesTest {
@@ -26,14 +25,11 @@ class CalendarFeaturesTest {
     fun reachCalendar(){
         // Open app.
         device.pressRecentApps()
-
         sleep(1000)
-
         device.click(
             width / 2,
             height / 2
         )
-
         // Give time for app to load.
         sleep(5000)
 
@@ -50,76 +46,36 @@ class CalendarFeaturesTest {
         //Time for the calendar page to load
         sleep(5000)
     }
+
     @Test
     fun signInTest() {
         reachCalendar()
-        val signOutButton: UiObject = device.findObject(
-            UiSelector().resourceId("com.soen390.conumap:id/debug_sign_out")
-        )
-        //onView(withId(R.id.debug_sign_out)).check(matches(isClickable())) ///Change to this format
-        assertEquals(signOutButton.isClickable, true)
+        //Checking if the sign out button is on the view
+        onView(withId(R.id.debug_sign_out)).check(matches(isClickable()))
     }
 
     @Test
     fun comingUpTest() {
         reachCalendar()
-        val classNumberText: UiObject = device.findObject(
-            UiSelector().resourceId("com.soen390.conumap:id/class_number_value")
-        )
-        assertEquals(classNumberText.text != "Class Number", true)
-
-        val timeText: UiObject = device.findObject(
-            UiSelector().resourceId("com.soen390.conumap:id/time_value")
-        )
-        assertEquals(timeText.text != "Time value", true)
-
-        val roomText: UiObject = device.findObject(
-            UiSelector().resourceId("com.soen390.conumap:id/room_location_value")
-        )
-        assertEquals(roomText.text != "Room Location value", true)
-
-        val locationText: UiObject = device.findObject(
-            UiSelector().resourceId("com.soen390.conumap:id/location_value")
-        )
-        assertEquals(locationText.text != "Location value", true)
+        //Checking that the next class info has been updated and is not set to default value
+        onView(withId(R.id.class_number_value)).check(matches(withText(not("Class Number"))))
+        onView(withId(R.id.time_value)).check(matches(withText(not("Time value"))))
+        onView(withId(R.id.room_location_value)).check(matches(withText(not("Room Location value"))))
+        onView(withId(R.id.location_value)).check(matches(withText(not("Location value"))))
     }
 
     @Test
     fun dropdownTest() {
         reachCalendar()
-        val dropdown: UiObject = device.findObject(
-            UiSelector().resourceId("com.soen390.conumap:id/dropdown_calendar")
-        )
-        //if the dropdown is initialised, then it is scrollable
-        assertEquals(dropdown.isScrollable,true)
+        //Checking that the drop down menu is initialized with calendars
+        //The calendar is not focusable if no calendar is found
+        onView(withId(R.id.dropdown_calendar)).check(matches(isFocusable()))
     }
+
     @Test
     fun calendarTest() {
         reachCalendar()
-        val calendarText: UiObject = device.findObject(
-            UiSelector().resourceId("com.soen390.conumap:id/month_year")
-        )
-        assertEquals(calendarText.text != "Month Year",true)
-
-        val date = java.util.Calendar.getInstance()
-        val month = date.getDisplayName(java.util.Calendar.MONTH,java.util.Calendar.LONG, Locale.getDefault())
-        val year = date.get(java.util.Calendar.YEAR).toString()
-        val dateStrings = calendarText.text.split(" ")
-        //there are three possible date formats
-        // Month Year, MonthA - MonthB Year, MonthA YearA - MonthB YearB
-        when (dateStrings.size) {
-            2 -> {
-                assertEquals(dateStrings[0] == month,true)
-                assertEquals(dateStrings[1] == year,true)
-            }
-            4 -> {
-                assertEquals(dateStrings[0] == month || dateStrings[2] == month,true)
-                assertEquals(dateStrings[3] == year,true)
-            }
-            5 -> {
-                assertEquals(dateStrings[0] == month || dateStrings[3] == month,true)
-                assertEquals(dateStrings[1] == year || dateStrings[4] == month,true)
-            }
-        }
+        //Checking that the month and year has been updated and is not set to default value on the calendar
+        onView(withId(R.id.month_year)).check(matches(withText(not("Month Year"))))
     }
 }
