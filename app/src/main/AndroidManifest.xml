@@ -15,8 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".IndoorNavigation.IndoorActivity"></activity>
-
+        <activity android:name=".IndoorNavigation.IndoorActivity"
+            android:parentActivityName=".mainActivity.MainActivity"></activity>
         <service
             android:name=".Directions.DirectionsService"
             android:enabled="true"
