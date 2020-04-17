@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.soen390.conumap.IndoorNavigation.helperSearch.SearchAdapter
 import com.soen390.conumap.R
@@ -37,7 +38,7 @@ class IndoorActivity : AppCompatActivity() {
 //        setContentView(R.layout.activity_indoor)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_indoor)
         binding.searchResult.adapter = searchAdapter
-        viewModel.searchResult.observe(this) { handleSearchResult(it) }
+        viewModel.searchResult.observe(this){handleSearchResult(it)}
 
 
 
