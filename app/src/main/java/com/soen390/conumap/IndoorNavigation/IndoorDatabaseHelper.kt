@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import java.io.File
 
 // IndoorDatabase will be used to store node coordinates of rooms. When user searches for a room, the
 // database will be queried and return a Node, which can be used with the pathfinding algorithm.
@@ -122,8 +123,24 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
         }
         roomCodes.close()
 
+        writeToTextFile(roomsInDb)
+
         // Sort, turn to array, and return.
         return roomsInDb.toList().sorted()
+    }
+
+    fun writeToTextFile(roomsInDb: MutableList<String>){
+        val fileName = "/src/main/assets/ClassRoom.txt"
+        val file = File(fileName)
+
+        file.printWriter().use { out ->
+
+            for(room in roomsInDb){
+                out.println(room)
+            }
+        }
+
+
     }
 
     // To check how many rows are in the database currently.

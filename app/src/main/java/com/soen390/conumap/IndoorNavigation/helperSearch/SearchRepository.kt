@@ -30,25 +30,18 @@ class SearchRepository (private val assets: AssetManager,
             }
 
             //TODO: Connect with Database
-            val listRooms =db.getAllRoomCodes()
-                .filter{it.contains(query,true)}
-                .take(maxResult)
-                .toList()
 
-            Log.i("TESTING:" ,listRooms[0])
+            println("Search for $query")
+            val inputStream = assets.open("ClassRoom.txt")
+            val inputStreamReader = InputStreamReader(inputStream)
 
-            return@withContext listRooms
-//            println("Search for $query")
-//            val inputStream = assets.open("ClassRoom.txt")
-//            val inputStreamReader = InputStreamReader(inputStream)
-//
-//            val bufferedReader = BufferedReader(inputStreamReader)
-//            bufferedReader.use { reader: BufferedReader ->
-//                reader.lineSequence()
-//                    .filter { it.contains(query, true) }
-//                    .take(maxResult)
-//                    .toList()
-//            }
+            val bufferedReader = BufferedReader(inputStreamReader)
+            bufferedReader.use { reader: BufferedReader ->
+                reader.lineSequence()
+                    .filter { it.contains(query, true) }
+                    .take(maxResult)
+                    .toList()
+            }
 
 
 
