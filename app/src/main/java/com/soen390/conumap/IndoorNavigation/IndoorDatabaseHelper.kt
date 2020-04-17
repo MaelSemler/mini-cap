@@ -184,12 +184,12 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
 
         for(i in nodeInfo.indices step 6) {
             insertData(
-                nodeInfo[i + 0],
-                nodeInfo[i + 1],
-                nodeInfo[i + 2],
-                nodeInfo[i + 3],
-                nodeInfo[i + 4],
-                nodeInfo[i + 5]
+                nodeInfo[i + 0], // Building code.
+                nodeInfo[i + 1], // Floor number.
+                nodeInfo[i + 2], // Room number.
+                nodeInfo[i + 3], // Room code.
+                nodeInfo[i + 4], // Node X.
+                nodeInfo[i + 5]  // Node Y.
             )
         }
     }

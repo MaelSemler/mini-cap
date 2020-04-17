@@ -2,7 +2,6 @@ package com.soen390.conumap.IndoorNavigation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.soen390.conumap.R
 import com.soen390.conumap.SVGConverter.ImageAdapter
