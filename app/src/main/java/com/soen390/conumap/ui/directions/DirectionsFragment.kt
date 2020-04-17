@@ -65,9 +65,16 @@ class DirectionsFragment : Fragment() {
 
         val editor: SharedPreferences.Editor =  sharedPreferences.edit()
 
+
+        map?.getMapInstance().clear()
+        val originLatLng = getOrigin(startLocationAddress)
+        Path.setOrigin(originLatLng)
+        val destinationLatLng = getDestination(endLocationAddress)
+        Path.setDestination(destinationLatLng)
+
         // Paint Current Button
         binding.run {
-            //            Path.setDestination(destinationLatLng)
+            Path.setDestination(destinationLatLng)
 
             if(Path.getDirectionScreenMode()!!) {
                 // Paint Current Button
@@ -87,11 +94,6 @@ class DirectionsFragment : Fragment() {
             getString(R.string.bicycling) -> binding.transportationBike.setChecked(true)
             getString(R.string.walking) -> binding.transportationWalk.setChecked(true)
             getString(R.string.transit) -> binding.transportationBus.setChecked(true)
-            else -> {
-                // Default transportation is car
-                binding.transportationCar.setChecked(true)
-                Path.setTransportation(getString(R.string.driving))
-            }
         }
 
         //TODO: Will need to be refactor, we should be calling this function from the onclick in SearchCompletedFragment
@@ -235,7 +237,7 @@ class DirectionsFragment : Fragment() {
         Path.setOrigin(originLatLng)
         val destinationLatLng = getDestination(endLocationAddress)
         Path.setDestination(destinationLatLng)
-        //        Path.setTransportation(getString(R.string.driving))
+        Path.setTransportation(getString(R.string.driving))
 
         Path.findDirections(requireActivity())
 
