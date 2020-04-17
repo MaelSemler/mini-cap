@@ -32,12 +32,8 @@ class IndoorActivity : AppCompatActivity() {
         var tempBitmap = floorConverter.svgToBitMap()
 
         GlobalScope.launch {
-
-            //@Andy Here is your floorplan
+            // Floorplan
             val floorP =  floorConverter.convertToPlan(tempBitmap)
-
-//            Proof that this is workinggg
-            Log.i("TESTING: ",floorP.floorNodes[430][330].color)
         }
 
         // Demo so people can see how to use the database.

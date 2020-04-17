@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Every 6 items is a room -->
+    <!-- BC, FN, RN, RC, NX, NY -->
+    <string-array name="floor_nodes">
+        <!-- 8th Floor -->
+        <!-- Men's Washroom -->
+        <item>H</item>
+        <item>8</item>
+        <item>WM</item>
+        <item>Washroom (Men, 8)</item>
+        <item>243</item>
+        <item>74</item>
+        <!-- Women's Washroom -->
+        <item>H</item>
+        <item>8</item>
+        <item>WW</item>
+        <item>Washroom (Women, 8)</item>
+        <item>170</item>
+        <item>74</item>
+        <!-- Water Fountain -->
+        <item>H</item>
+        <item>8</item>
+        <item>WF</item>
+        <item>Water Fountain (8)</item>
+        <item>260</item>
+        <item>74</item>
+        <!-- Vending Machine -->
+        <item>H</item>
+        <item>8</item>
+        <item>VM</item>
+        <item>Vending Machine (8)</item>
+        <item>173</item>
+        <item>281</item>
+        <!-- H-823 -->
+        <item>H</item>
+        <item>8</item>
+        <item>823</item>
+        <item>H-823</item>
+        <item>341</item>
+        <item>129</item>
+        <!-- H-845 -->
+        <item>H</item>
+        <item>8</item>
+        <item>845</item>
+        <item>H-845</item>
+        <item>96</item>
+        <item>305</item>
+        <!-- H-859 -->
+        <item>H</item>
+        <item>8</item>
+        <item>859</item>
+        <item>H-859</item>
+        <item>59</item>
+        <item>130</item>
+        <!-- H-803 -->
+        <item>H</item>
+        <item>8</item>
+        <item>803</item>
+        <item>H-803</item>
+        <item>274</item>
+        <item>307</item>
+        <!-- 9th Floor -->
+        <!-- Men's Washroom -->
+        <item>H</item>
+        <item>9</item>
+        <item>WM</item>
+        <item>Washroom (Men, 9)</item>
+        <item>237</item>
+        <item>77</item>
+        <!-- Women's Washroom -->
+        <item>H</item>
+        <item>9</item>
+        <item>WW</item>
+        <item>Washroom (Women, 9)</item>
+        <item>169</item>
+        <item>75</item>
+        <!-- Water Fountain -->
+        <item>H</item>
+        <item>9</item>
+        <item>WF</item>
+        <item>Water Fountain (9)</item>
+        <item>262</item>
+        <item>78</item>
+        <!-- Vending Machine -->
+        <item>H</item>
+        <item>9</item>
+        <item>VM</item>
+        <item>Vending Machine (9)</item>
+        <item>267</item>
+        <item>298</item>
+        <!-- H-963 -->
+        <item>H</item>
+        <item>9</item>
+        <item>963</item>
+        <item>H-963</item>
+        <item>67</item>
+        <item>149</item>
+        <!-- H-961-7 -->
+        <item>H</item>
+        <item>9</item>
+        <item>961-7</item>
+        <item>H-961-7</item>
+        <item>26</item>
+        <item>231</item>
+        <!-- H-929 -->
+        <item>H</item>
+        <item>9</item>
+        <item>929</item>
+        <item>H-929</item>
+        <item>324</item>
+        <item>320</item>
+        <!-- H-907 -->
+        <item>H</item>
+        <item>9</item>
+        <item>907</item>
+        <item>H-907</item>
+        <item>196</item>
+        <item>61</item>
+    </string-array>
+</resources>

@@ -35,7 +35,7 @@ class IndoorFragment : Fragment() {
 
         val hfloor_nine_button = root.findViewById<View>(R.id.hfloor_nine_button)
         val hfloor_eight_button = root.findViewById<View>(R.id.hfloor_eight_button)
-        
+
         hfloor_nine_button.setOnClickListener{
             context?.let { it1 -> ContextCompat.getColor(it1, R.color.colorPrimary) }?.let { it2 ->
                 hfloor_nine_button.setBackgroundColor(
