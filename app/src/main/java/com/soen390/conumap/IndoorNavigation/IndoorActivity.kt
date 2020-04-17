@@ -41,7 +41,7 @@ class IndoorActivity : AppCompatActivity() {
         viewModel.searchResult.observe(this){handleSearchResult(it)}
 
 
-        setContentView(R.layout.activity_indoor)
+//        setContentView(R.layout.activity_indoor)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = resources.getString(R.string.indoor_nav)
 
@@ -78,26 +78,24 @@ class IndoorActivity : AppCompatActivity() {
 ////            Proof that this is workinggg
 //            Log.i("TESTING: ",floorP.floorNodes[430][330].color)
 //        }
+        //        // Demo so people can see how to use the database.
+        db = IndoorDatabaseHelper(this)
+
+        db.emptyDatabaseContents()
+
+        db.insertData("H", "9", "937", "H-937", "10", "12")
+        db.insertData("H", "8", "801", "H-801", "5", "9")
+
+        db.printDatabaseContents()
+
+        var one = db.getRoomCoordinates("H-937") // This is [10, 12].
+        var two = db.getRoomCoordinates("H-801") // This is [5, 9].
 
 
         db.insertData("H", "9", "937", "H-937", "10", "12")
         db.insertData("H", "8", "801", "H-801", "5", "9")
         db.insertData("H", "8", "WF", "Water Fountain", "6", "13")
         db.insertData("H", "9", "VM", "Vending Machine", "2", "8")
-
-//        // Demo so people can see how to use the database.
-//        db = IndoorDatabaseHelper(this)
-//
-//        db.emptyDatabaseContents()
-//
-//        db.insertData("H", "9", "937", "H-937", "10", "12")
-//        db.insertData("H", "8", "801", "H-801", "5", "9")
-//
-//        db.printDatabaseContents()
-//
-//        var one = db.getRoomCoordinates("H-937") // This is [10, 12].
-//        var two = db.getRoomCoordinates("H-801") // This is [5, 9].
-    }
 
         var a = db.getRoomCoordinates("H-937")
         var b = db.getRoomCoordinates("H-801")
@@ -106,6 +104,47 @@ class IndoorActivity : AppCompatActivity() {
         var e = db.getPOICoordinates("Nonsense", 6) // Should be error.
 
         println(a.toString() + "\n" + b.toString() + "\n" + c.toString() + "\n" + d.toString() + "\n" + e.toString())
+
+
+    }
+
+
+    private fun handleSearchResult(it: SearchResult) {
+        when (it) {
+            is ValidResult -> {
+                binding.otherResultText.visibility = View.GONE
+                binding.searchResult.visibility = View.VISIBLE
+                searchAdapter.submitList(it.result)
+            }
+            is ErrorResult -> {
+                searchAdapter.submitList(emptyList())
+                binding.otherResultText.visibility = View.VISIBLE
+                binding.searchResult.visibility = View.GONE
+                binding.otherResultText.setText("Errors")
+            }
+            is EmptyResult -> {
+                searchAdapter.submitList(emptyList())
+                binding.otherResultText.visibility = View.VISIBLE
+                binding.searchResult.visibility = View.GONE
+                binding.otherResultText.setText("Empty Results")
+            }
+            is EmptyQuery -> {
+                searchAdapter.submitList(emptyList())
+                binding.otherResultText.visibility = View.VISIBLE
+                binding.searchResult.visibility = View.GONE
+                binding.otherResultText.setText("Not enough char")
+            }
+            is TerminalError -> {
+                // Something wen't terribly wrong!
+                println("Our Flow terminated unexpectedly, so we're bailing!")
+                Toast.makeText(
+                    this,
+                    "Unexpected error in SearchRepository!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                finish()
+            }
+        }
     }
 }
 
