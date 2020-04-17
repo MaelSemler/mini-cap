@@ -3,6 +3,7 @@ package com.soen390.conumap.IndoorNavigation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.soen390.conumap.R
 import com.soen390.conumap.SVGConverter.ImageAdapter
@@ -59,4 +60,5 @@ class IndoorActivity : AppCompatActivity() {
 
         println(a.toString() + "\n" + b.toString() + "\n" + c.toString() + "\n" + d.toString() + "\n" + e.toString())
     }
+
 }
