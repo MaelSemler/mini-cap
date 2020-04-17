@@ -12,7 +12,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class IndoorActivity : AppCompatActivity() {
-    lateinit var db: IndoorDatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,16 +32,6 @@ class IndoorActivity : AppCompatActivity() {
             // Floorplan
             val floorP =  floorConverter.convertToPlan(tempBitmap)
         }
-
-        // Demo so people can see how to use the database.
-        db = IndoorDatabaseHelper(this)
-
-        db.emptyDatabaseContents()
-
-        var x = resources.getStringArray(R.array.floor_nodes)
-        db.addAllInfoToTable(x)
-
-        db.printDatabaseContents()
     }
 
 }
