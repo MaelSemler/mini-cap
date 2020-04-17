@@ -1,11 +1,9 @@
 package com.soen390.conumap
 
 import android.content.Context
-import android.database.Cursor
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.soen390.conumap.IndoorNavigation.IndoorDatabaseHelper
-import com.soen390.conumap.IndoorNavigation.IndoorDatabaseHelper.Database.TABLE_NAME
 import com.soen390.conumap.IndoorNavigation.Node
 import junit.framework.TestCase.assertEquals
 import org.junit.After
@@ -56,11 +54,15 @@ class IndoorDatabaseHelperTest {
         assertEquals(countBefore + 1, testDb.getNumberOfRows())
 
         // Make sure the item we entered is present.
-        assertEquals("Node(6,9)", testDb.getRoomCoordinates("H-420").toString())
+        assert(Node(6, 9).equals(testDb.getRoomCoordinates("H-420")))
     }
 
     @Test
     fun getRoomCoordinatesTest() {
-        assertEquals("Node(12,12)", testDb.getRoomCoordinates("H-907").toString())
+        // Test existing room.
+        assert(Node(12, 12).equals(testDb.getRoomCoordinates("H-907")))
+
+        // Test non-existing room.
+        assert(Node(-1, -1).equals(testDb.getRoomCoordinates("H-123")))
     }
 }
