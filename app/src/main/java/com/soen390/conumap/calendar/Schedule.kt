@@ -14,19 +14,16 @@ object Schedule {
     private var calendar: Calendar? = null
     private val calendarEntryList = mutableListOf<CalendarListEntry>()
     private var name: String? = null
-    fun getName(): String? {
-        return name
-    }
     fun setName(name: String?) {
         this.name = name
     }
 
     //Sets up the google calendars
-    fun setUpCalendar(con: Context): MutableList<String>? {
+    fun setUpCalendar(context: Context): MutableList<String>? {
         val transport = AndroidHttp.newCompatibleTransport()
         val jsonFactory = JacksonFactory.getDefaultInstance()
         val calendarNameList = mutableListOf<String>()
-        val token = GoogleAuthUtil.getToken(con, name, "oauth2:https://www.googleapis.com/auth/calendar.readonly")
+        val token = GoogleAuthUtil.getToken(context, name, "oauth2:https://www.googleapis.com/auth/calendar.readonly")
         var googleCred =  GoogleCredential()
         googleCred.accessToken = token
         calendar = Calendar.Builder(

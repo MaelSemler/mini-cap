@@ -1,5 +1,8 @@
 package com.soen390.conumap
 
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.uiautomator.UiDevice
@@ -14,7 +17,7 @@ import java.lang.Thread.sleep
 import java.util.*
 
 @RunWith(AndroidJUnit4::class)
-class CalendarTest {
+class CalendarFeaturesTest {
     var device = UiDevice.getInstance(getInstrumentation())
     var height = device.displayHeight
     var width = device.displayWidth
@@ -53,6 +56,7 @@ class CalendarTest {
         val signOutButton: UiObject = device.findObject(
             UiSelector().resourceId("com.soen390.conumap:id/debug_sign_out")
         )
+        //onView(withId(R.id.debug_sign_out)).check(matches(isClickable())) ///Change to this format
         assertEquals(signOutButton.isClickable, true)
     }
 
