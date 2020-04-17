@@ -39,8 +39,8 @@ class IndoorDatabaseHelperTest {
 
     @After
     fun tearDownDatabase() {
-        // Clear the database so the test values will not be used on next time app is run. The next
-        // time app is run, it should detect that the DB is empty and repopulate it with the real values.
+        // Clear the database so the test values will not be used on next time app is run. The next time
+        // app is run, it should detect that the DB is empty and repopulate it with the real values.
         testDb.emptyDatabaseContents()
     }
 
