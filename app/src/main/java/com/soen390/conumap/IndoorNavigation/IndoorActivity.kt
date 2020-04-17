@@ -55,6 +55,7 @@ class IndoorActivity : AppCompatActivity() {
             pathfinding.loadBlocks(blockArray)
             var path: MutableList<Node> = pathfinding.findPath()
 
+            /* Uncomment to print all walkable nodes to console. */
 //            for (array in floorP.floorNodes) {
 //                for (value in array) {
 //                    if (value.walkable == true) {
