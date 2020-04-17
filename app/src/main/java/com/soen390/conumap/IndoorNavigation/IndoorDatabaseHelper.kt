@@ -176,4 +176,6 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
 
         contents.close()
     }
+
+
 }
