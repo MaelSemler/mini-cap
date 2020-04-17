@@ -25,8 +25,10 @@ class SearchRepository (private val assets: AssetManager,
                 println("Random error thrown!")
                 throw IOException("This is a random network error!")
             }
+
+            //TODO: Connect with Database
             println("Search for $query")
-            val inputStream = assets.open("words_alpha.txt")
+            val inputStream = assets.open("ClassRoom.txt")
             val inputStreamReader = InputStreamReader(inputStream)
             val bufferedReader = BufferedReader(inputStreamReader)
             bufferedReader.use { reader: BufferedReader ->
