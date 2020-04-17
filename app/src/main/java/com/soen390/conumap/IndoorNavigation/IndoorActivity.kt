@@ -44,4 +44,5 @@ class IndoorActivity : AppCompatActivity() {
 
         db.printDatabaseContents()
     }
+
 }
