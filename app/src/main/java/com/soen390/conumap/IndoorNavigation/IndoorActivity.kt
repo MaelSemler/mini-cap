@@ -36,7 +36,7 @@ class IndoorActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_indoor)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_indoor)
+        binding = DataBindingUtil.setContentView(this, R.layout.indoor_search_fragment)
         binding.searchResult.adapter = searchAdapter
         viewModel.searchResult.observe(this){handleSearchResult(it)}
 
@@ -58,38 +58,38 @@ class IndoorActivity : AppCompatActivity() {
             }
         }
 
-        imageRecycler.layoutManager = LinearLayoutManager(this)
-        imageRecycler.adapter = ImageAdapter()
+//        imageRecycler.layoutManager = LinearLayoutManager(this)
+//        imageRecycler.adapter = ImageAdapter()
 
 
 
-        val floorConverter = ConverterToFloorPlan
+//        val floorConverter = ConverterToFloorPlan
+//
+//        var tempBitmap = floorConverter.svgToBitMap()
 
-        var tempBitmap = floorConverter.svgToBitMap()
-
-        GlobalScope.launch {
-
-            //@Andy Here is your floorplan
-            val floorP =  floorConverter.convertToPlan(tempBitmap)
-
-//            Proof that this is workinggg
-            Log.i("TESTING: ",floorP.floorNodes[430][330].color)
-        }
+//        GlobalScope.launch {
+//
+//            //@Andy Here is your floorplan
+//            val floorP =  floorConverter.convertToPlan(tempBitmap)
+//
+////            Proof that this is workinggg
+//            Log.i("TESTING: ",floorP.floorNodes[430][330].color)
+//        }
 
 
 
-        // Demo so people can see how to use the database.
-        db = IndoorDatabaseHelper(this)
-
-        db.emptyDatabaseContents()
-
-        db.insertData("H", "9", "937", "H-937", "10", "12")
-        db.insertData("H", "8", "801", "H-801", "5", "9")
-
-        db.printDatabaseContents()
-
-        var one = db.getRoomCoordinates("H-937") // This is [10, 12].
-        var two = db.getRoomCoordinates("H-801") // This is [5, 9].
+//        // Demo so people can see how to use the database.
+//        db = IndoorDatabaseHelper(this)
+//
+//        db.emptyDatabaseContents()
+//
+//        db.insertData("H", "9", "937", "H-937", "10", "12")
+//        db.insertData("H", "8", "801", "H-801", "5", "9")
+//
+//        db.printDatabaseContents()
+//
+//        var one = db.getRoomCoordinates("H-937") // This is [10, 12].
+//        var two = db.getRoomCoordinates("H-801") // This is [5, 9].
     }
 
     fun handleSearchResult(it: SearchResult){
