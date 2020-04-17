@@ -3,26 +3,64 @@ package com.soen390.conumap.IndoorNavigation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.core.widget.doAfterTextChanged
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.soen390.conumap.IndoorNavigation.helperSearch.SearchAdapter
 import com.soen390.conumap.R
 import com.soen390.conumap.SVGConverter.ImageAdapter
 import com.soen390.conumap.SVGConverter.ConverterToFloorPlan
+import com.soen390.conumap.databinding.FragmentIndoorBinding
+import com.soen390.conumap.databinding.IndoorSearchFragmentBinding
 import com.soen390.conumap.helper.ContextPasser
 import kotlinx.android.synthetic.main.activity_indoor.*
+import kotlinx.android.synthetic.main.indoor_search_fragment.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class IndoorActivity : AppCompatActivity() {
     lateinit var db: IndoorDatabaseHelper
+    private lateinit var  binding: IndoorSearchFragmentBinding
+    private val searchAdapter = SearchAdapter()
+
+    val viewModel: IndoorSearchViewModel by viewModels{
+        IndoorSearchViewModel.Factory(assets, Dispatchers.IO)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_indoor)
+//        setContentView(R.layout.activity_indoor)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_indoor)
+        binding.searchResult.adapter = searchAdapter
+        viewModel.searchResult.observe(this) { handleSearchResult(it) }
+
+
 
         ContextPasser.setContextIndoor(this)
 
+        //Empty search
+        searchAdapter.submitList(emptyList())
+        binding.otherResultText.visibility = View.VISIBLE
+        binding.searchResult.visibility= View.GONE
+        binding.otherResultText.setText("Not enough Chars")
+        binding.searchText.requestFocus()
+
+        binding.searchText.doAfterTextChanged{
+            editable ->
+            lifecycleScope.launch{
+                viewModel.queryChannel.send(editable.toString())
+            }
+        }
+
         imageRecycler.layoutManager = LinearLayoutManager(this)
         imageRecycler.adapter = ImageAdapter()
+
+
 
         val floorConverter = ConverterToFloorPlan
 
@@ -37,6 +75,8 @@ class IndoorActivity : AppCompatActivity() {
             Log.i("TESTING: ",floorP.floorNodes[430][330].color)
         }
 
+
+
         // Demo so people can see how to use the database.
         db = IndoorDatabaseHelper(this)
 
@@ -50,4 +90,44 @@ class IndoorActivity : AppCompatActivity() {
         var one = db.getRoomCoordinates("H-937") // This is [10, 12].
         var two = db.getRoomCoordinates("H-801") // This is [5, 9].
     }
+
+    fun handleSearchResult(it: SearchResult){
+        when(it){
+            is ValidResult -> {
+                binding.otherResultText.visibility = View.GONE
+                binding.searchResult.visibility = View.VISIBLE
+                searchAdapter.submitList(it.result)
+            }
+            is ErrorResult -> {
+                searchAdapter.submitList(emptyList())
+                binding.otherResultText.visibility = View.VISIBLE
+                binding.searchResult.visibility = View.GONE
+                binding.otherResultText.setText("Errors")
+            }
+            is EmptyResult -> {
+                searchAdapter.submitList(emptyList())
+                binding.otherResultText.visibility = View.VISIBLE
+                binding.searchResult.visibility = View.GONE
+                binding.otherResultText.setText("Empty Results")
+            }
+            is EmptyQuery -> {
+                searchAdapter.submitList(emptyList())
+                binding.otherResultText.visibility = View.VISIBLE
+                binding.searchResult.visibility = View.GONE
+                binding.otherResultText.setText("Not enough chars")
+            }
+            is TerminalError -> {
+                // Something wen't terribly wrong!
+                println("Our Flow terminated unexpectedly, so we're bailing!")
+                Toast.makeText(
+                    this,
+                    "Unexpected error in SearchRepository!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                finish()
+            }
+        }
+    }
 }
+
+
