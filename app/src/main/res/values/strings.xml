@@ -13,6 +13,8 @@
     <string name="menu_settings">Settings</string>
     <string name="menu_slideshow">Slideshow</string>
 
+    <string name="indoor_nav">Indoor Navigation</string>
+
     <string name="home_second">Home Second</string>
 
     <!--Strings from master -->
@@ -24,9 +26,14 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="vanier">Vanier Library, Con.</string>
     <string name="directionsStep">DIrections:</string>
+    
+    <string name="server_client_id">@string/clientID</string>
+    <string name="noUpcomingEvent">No Upcoming Event</string>
+    <string name="notAvailable">N/A</string>
 
     <string name="driving">driving</string>
     <string name="bicycling">bicycling</string>
     <string name="transit">transit</string>
     <string name="walking">walking</string>
+
 </resources>

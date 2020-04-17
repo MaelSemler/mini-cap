@@ -105,7 +105,6 @@ object DirectionService {
                             }
                             activity.runOnUiThread {
                                 displayOnScreenPath(listOfPath,n)
-
                             }
 
                             ResetPathDrawing()
@@ -180,13 +179,17 @@ object DirectionService {
         Path.updatePathInfo(listOfPath[n].getInfoPathText())
         Path.updateTotalDuration(listOfPath[n].getTotalTimeText())
         Path.updateTotalDistance(listOfPath[n].getTotalDistanceText())
-        Path.updateSteps(listOfPath[n].getDirectionText())
-        Path.setAlternativeRouteMaxId(listOfPath.size)
-        Path.resetAlternateText()
-        for (i in 0 until listOfPath.size){
-            Log.d("DirectionServices", "Building Alternate list $i " + listOfPath[i].getInfoPathText())
-            if (i != n){
-                Path.updateAlternateText(listOfPath[i].getTotalTimeText(), listOfPath[i].getTotalDistanceText() ,listOfPath[i].getInfoPathText())
+        // Set detail text according to Fragment mode: Directions or Alternate
+        if(Path.getDirectionScreenMode()!!) {
+            Path.updateSteps(listOfPath[n].getDirectionText())
+        }else{
+            Path.setAlternativeRouteMaxId(listOfPath.size)
+            Path.resetAlternateText()
+            for (i in 0 until listOfPath.size){
+                Log.d("DirectionServices", "Building Alternate list $i " + listOfPath[i].getInfoPathText())
+                if (i != n){
+                    Path.updateAlternateText(listOfPath[i].getTotalTimeText(), listOfPath[i].getTotalDistanceText() ,listOfPath[i].getInfoPathText())
+                }
             }
         }
     }
