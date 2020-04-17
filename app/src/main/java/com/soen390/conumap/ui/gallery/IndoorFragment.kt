@@ -30,11 +30,6 @@ class IndoorFragment : Fragment() {
                 ViewModelProviders.of(this).get(IndoorViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_indoor, container, false)
 
-
         return root
     }
-
-
-
-
 }
