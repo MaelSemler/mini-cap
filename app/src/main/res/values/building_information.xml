@@ -2,7 +2,7 @@
 <resources>
     <!-- SGW Buildings -->
     <string name="sgwHName">Henry F. Hall Building</string>
-    <string name="sgwHInfo">SGW Campus\n1455 De Maisonneuve Blvd. W.</string>
+    <string name="sgwHInfo">SGW Campus\n1455 De Maisonneuve Blvd. W.\n-----------\n Click Here for Indoor View</string>
     <string name="sgwGMName">Guy-De Maisonneuve Building</string>
     <string name="sgwGMInfo">SGW Campus\n1550 De Maisonneuve Blvd. W.</string>
     <string name="sgwMBName">John Molson Building</string>
