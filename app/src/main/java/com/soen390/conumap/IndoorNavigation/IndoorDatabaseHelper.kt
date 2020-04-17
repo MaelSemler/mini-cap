@@ -108,6 +108,24 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
         }
     }
 
+    // Returns an array of Strings containing all room codes in the DB, sorted.
+    fun getAllRoomCodes(): List<String> {
+        val db: SQLiteDatabase = this.writableDatabase
+        var roomsInDb = mutableListOf<String>()
+
+        // Query DB for all room codes.
+        val roomCodes: Cursor = db.rawQuery("SELECT $COL_RC FROM $TABLE_NAME",null)
+
+        // Add to roomsInDb.
+        while(roomCodes.moveToNext()) {
+            roomsInDb.add(roomCodes.getString(0))
+        }
+        roomCodes.close()
+
+        // Sort, turn to array, and return.
+        return roomsInDb.toList().sorted()
+    }
+
     // To check how many rows are in the database currently.
     fun getNumberOfRows(): Int {
         val db: SQLiteDatabase = this.writableDatabase

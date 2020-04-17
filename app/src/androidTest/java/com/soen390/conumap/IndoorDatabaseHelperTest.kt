@@ -95,6 +95,14 @@ class IndoorDatabaseHelperTest {
     }
 
     @Test
+    fun getAllRoomCodesTest() {
+        var expected = listOf("H-815", "H-820", "H-907", "H-937", "Men's Washroom", "Water Fountain")
+        var actual = testDb.getAllRoomCodes()
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
     fun getNumberOfRowsTest() {
         // Test correct for initial DB.
         assertEquals(6, testDb.getNumberOfRows())
