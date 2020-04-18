@@ -23,7 +23,6 @@ import kotlinx.coroutines.Dispatchers
 class IndoorActivity : AppCompatActivity() {
     lateinit var db: IndoorDatabaseHelper
     private lateinit var  binding: IndoorSearchFragmentBinding
-//    private val searchAdapter = SearchAdapter()
 
     lateinit var list: ListView
     lateinit var adapter: AdapterClass
@@ -64,7 +63,7 @@ class IndoorActivity : AppCompatActivity() {
             "Washroom ( Men, 9)", "Washroom ( Women, 9)", "Water Fountain (9)", "Vending Machine (9)", "H-963", "H-961-7", "H-929", "H-907")
 
 
-        list = findViewById(R.id.list_view);
+        list = findViewById(R.id.list_view)
         for (element in searchQueries) {
             var searchQuery1:SearchQuery = SearchQuery(element)
             // Binds all strings into an array
@@ -78,77 +77,50 @@ class IndoorActivity : AppCompatActivity() {
         searchDestinationRoom.isSubmitButtonEnabled = true
         searchStartingRoom.isSubmitButtonEnabled = true
 
-
         list.visibility= View.GONE
 
 
-
-
-
         val floorConverter = ConverterToFloorPlan
-//
-        var tempBitmap = floorConverter.svgToBitMap()
 
-//        GlobalScope.launch {
-//
-//            //@Andy Here is your floorplan
-//            val floorP =  floorConverter.convertToPlan(tempBitmap)
-//
-////            Proof that this is workinggg
-//            Log.i("TESTING: ",floorP.floorNodes[430][330].color)
-//        }
-                    //        // Demo so people can see how to use the database.
         db = IndoorDatabaseHelper(this)
 
-
-        //Listening to the Search StartingRoom
-        searchStartingRoom.setOnQueryTextListener(object:
-            OnQueryTextListener {
-                //WHen user click on enter
-                override fun onQueryTextSubmit(startingQuery: String): Boolean {
-                    list.visibility= View.GONE
-                    startingRoom = startingQuery
-
-                    startingCoor = db.getRoomCoordinates(startingQuery)
-                    Log.i("Starting Room IS: ",startingCoor.toString())
-
-                    return false;
-                }
-                //When The searchbar textfield is changing
-                override fun onQueryTextChange(newText: String): Boolean {
-                    list.visibility= View.VISIBLE
-                    var text = newText;
-                    adapter.filter(text);
-                    return false;
-                }
-            }
-        )
-
-//        list.setOnClickListener(){AdapterView, view, position,id ->
-//            var itemAtPos = AdapterView.getItemAtPosition(position)
-//
-//            Log.d("item: ", item.toString())
-//            Log.d("list_item[i]:", (list_view.adapter to item).toString())
-//            Log.d("getItemAt: ", list_view.getItemAtPosition(i).)
-//
-//            searchDestinationRoom.setQuery(item.toString(),false)
-//
-//
-//        }
-
-        list.setOnItemClickListener(object : AdapterView.OnItemClickListener {
-            override fun onItemClick(parent: AdapterView<*>, view: View, i: Int,
-                                     id: Long) {
+        //Method that would set the corresponding SearchView bar with the clicked item
+        fun clickItem(searchB: SearchView ){
+            list.setOnItemClickListener { parent, view, i, id ->
                 val item:SearchQuery = list.adapter.getItem(i) as SearchQuery
 
                 Log.d("item: ", item.getQuery().toString())
                 Log.d("list_item[i]:", list[i].toString())
                 Log.d("getItemAt: ", list.getItemAtPosition(i).toString())
 
-                searchDestinationRoom.setQuery(item.getQuery().toString(),false)
-
+                searchB.setQuery(item.getQuery().toString(),false)
             }
-        })
+        }
+
+
+        //Listening to the Search StartingRoom
+        searchStartingRoom.setOnQueryTextListener(object:
+            OnQueryTextListener {
+            //WHen user click on enter
+            override fun onQueryTextSubmit(startingQuery: String): Boolean {
+                list.visibility= View.GONE
+                startingRoom = startingQuery
+
+                startingCoor = db.getRoomCoordinates(startingQuery)
+                Log.i("Starting Room IS: ",startingCoor.toString())
+
+                return false;
+            }
+            //When The searchbar textfield is changing
+            override fun onQueryTextChange(newText: String): Boolean {
+                list.visibility= View.VISIBLE
+                var text = newText;
+                adapter.filter(text);
+                clickItem(searchStartingRoom)
+                return false;
+            }
+        }
+        )
 
         searchDestinationRoom.setOnQueryTextListener(object:
             OnQueryTextListener {
@@ -156,7 +128,6 @@ class IndoorActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(destinationQuery: String): Boolean {
                 list.visibility= View.GONE
                 destinationRoom = destinationQuery
-
                 destinationCoor = db.getRoomCoordinates(destinationQuery)
                 Log.i("DESTINATION IS: ",destinationCoor.toString())
 
@@ -167,18 +138,11 @@ class IndoorActivity : AppCompatActivity() {
                 list.visibility= View.VISIBLE
                 var text = newText;
                 adapter.filter(text);
+                clickItem(searchDestinationRoom)
                 return false;
             }
-
-
-
-        }
+            }
         )
-
-
-
-
-
 
     }
 
