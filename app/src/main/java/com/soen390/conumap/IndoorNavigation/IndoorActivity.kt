@@ -35,34 +35,34 @@ class IndoorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_indoor)
-        binding = DataBindingUtil.setContentView(this, R.layout.indoor_search_fragment)
-        binding.searchResult.adapter = searchAdapter
-        viewModel.searchResult.observe(this){handleSearchResult(it)}
+        setContentView(R.layout.activity_indoor)
+//        binding = DataBindingUtil.setContentView(this, R.layout.activity_indoor)
+//        binding.searchResult.adapter = searchAdapter
+//        viewModel.searchResult.observe(this){handleSearchResult(it)}
 
 
 //        setContentView(R.layout.activity_indoor)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = resources.getString(R.string.indoor_nav)
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.title = resources.getString(R.string.indoor_nav)
 
         ContextPasser.setContextIndoor(this)
 
         //Empty search
-        searchAdapter.submitList(emptyList())
-        binding.otherResultText.visibility = View.VISIBLE
-        binding.searchResult.visibility= View.GONE
-        binding.otherResultText.setText("Not enough Chars")
-        binding.searchText.requestFocus()
+//        searchAdapter.submitList(emptyList())
+//        binding.otherResultText.visibility = View.VISIBLE
+//        binding.searchResult.visibility= View.GONE
+//        binding.otherResultText.setText("Not enough Chars")
+//        binding.searchText.requestFocus()
+//
+//        binding.searchText.doAfterTextChanged{
+//            editable ->
+//            lifecycleScope.launch{
+//                viewModel.queryChannel.send(editable.toString())
+//            }
+//        }
 
-        binding.searchText.doAfterTextChanged{
-            editable ->
-            lifecycleScope.launch{
-                viewModel.queryChannel.send(editable.toString())
-            }
-        }
-
-//        imageRecycler.layoutManager = LinearLayoutManager(this)
-//        imageRecycler.adapter = ImageAdapter()
+        imageRecycler.layoutManager = LinearLayoutManager(this)
+        imageRecycler.adapter = ImageAdapter()
 
 
 
