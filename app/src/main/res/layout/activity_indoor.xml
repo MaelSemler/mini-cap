@@ -30,47 +30,48 @@
         android:onClick="h8Button"
         android:text="8" />
 
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/indoorSubmitButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/hfloor_eight_button"
-        android:id="@+id/floorPlanWrap"
-        android:orientation="vertical">
-        tools:ignore="ExtraText">
-
+        android:text="Route This"
+        android:layout_below="@id/search_DestinationRoom"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimary"
+        android:textColor="#FFF"
+        >
+    </Button>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/imageRecycler"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" >
 
-    </RelativeLayout>
+        </androidx.recyclerview.widget.RecyclerView>
 
 
-        <android.widget.SearchView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:id="@+id/search_StartRoom"
-            android:queryHint="Enter Start Room"
-            android:inputType="text"
-            android:iconifiedByDefault="true"
-            android:background="@drawable/round_rectangle_white">
-        </android.widget.SearchView>
+    <android.widget.SearchView
+        android:id="@+id/search_StartRoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
+        android:background="#F5F5F5"
+        android:iconifiedByDefault="false"
+        android:inputType="text"
+        android:queryHint="Enter Start Room"></android.widget.SearchView>
 
-        <android.widget.SearchView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_below="@id/search_StartRoom"
-            android:id="@+id/search_DestinationRoom"
-            android:queryHint="Enter Destination Room"
-            android:inputType="text"
-            android:iconifiedByDefault="true"
-            android:background="@drawable/round_rectangle_white">
-        </android.widget.SearchView>
+    <android.widget.SearchView
+        android:id="@+id/search_DestinationRoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_StartRoom"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
+        android:background="#F5F5F5"
+        android:iconifiedByDefault="false"
+        android:inputType="text"
+        android:queryHint="Enter Destination Room"></android.widget.SearchView>
 
     <ListView
         android:id="@+id/list_view"
