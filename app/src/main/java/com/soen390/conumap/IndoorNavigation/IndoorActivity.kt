@@ -5,11 +5,8 @@ import android.database.Cursor
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.CursorAdapter
-import android.widget.ListView
-import android.widget.SearchView
+import android.widget.*
 import android.widget.SearchView.OnQueryTextListener
-import android.widget.SimpleCursorAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -127,26 +124,31 @@ class IndoorActivity : AppCompatActivity() {
             }
         )
 
-        //Listening to the Search StartingRoom
-        searchDestinationRoom.setOnSuggestionListener(object: SearchView.OnSuggestionListener{
-            override fun onSuggestionSelect(i: Int):Boolean{
-                searchDestinationRoom.setQuery(list_view[i].toString(), false)
-                Log.d("ONSELECT", list_view[i].toString())
-                return true
-            }
+//        list.setOnClickListener(){AdapterView, view, position,id ->
+//            var itemAtPos = AdapterView.getItemAtPosition(position)
+//
+//            Log.d("item: ", item.toString())
+//            Log.d("list_item[i]:", (list_view.adapter to item).toString())
+//            Log.d("getItemAt: ", list_view.getItemAtPosition(i).)
+//
+//            searchDestinationRoom.setQuery(item.toString(),false)
+//
+//
+//        }
 
-            override fun onSuggestionClick(position: Int): Boolean {
-                val selectedView: CursorAdapter = searchDestinationRoom.suggestionsAdapter
-                val cursor: Cursor = selectedView.getItem(position) as Cursor
-                var index = cursor.getColumnIndexOrThrow(SearchManager.SUGGEST_COLUMN_TEXT_1)
-                searchDestinationRoom.setQuery(cursor.getString(index), false)
-                Log.d("ONCLICKK is", cursor.getString(index) )
-                return true
+        list.setOnItemClickListener(object : AdapterView.OnItemClickListener {
+            override fun onItemClick(parent: AdapterView<*>, view: View, i: Int,
+                                     id: Long) {
+                val item:SearchQuery = list.adapter.getItem(i) as SearchQuery
+
+                Log.d("item: ", item.getQuery().toString())
+                Log.d("list_item[i]:", list[i].toString())
+                Log.d("getItemAt: ", list.getItemAtPosition(i).toString())
+
+                searchDestinationRoom.setQuery(item.getQuery().toString(),false)
+
             }
         })
-
-
-
 
         searchDestinationRoom.setOnQueryTextListener(object:
             OnQueryTextListener {
