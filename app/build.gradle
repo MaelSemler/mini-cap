@@ -46,7 +46,6 @@ android {
     }
 
 
-
 }
 repositories {
     jcenter()
@@ -88,8 +87,9 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'jp.wasabeef:picasso-transformations:2.2.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-rc03'
     implementation 'com.google.api-client:google-api-client-android:1.30.5'
     implementation 'com.google.apis:google-api-services-calendar:v3-rev305-1.23.0'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.10.+'
-    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
+
 }

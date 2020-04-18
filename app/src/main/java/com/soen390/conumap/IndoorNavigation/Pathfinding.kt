@@ -80,7 +80,7 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
             counter ++
         }
         for (i in 0..colArray.size-1) {
-            mapArray[colArray[i]][rowArray[i]].makeBlock(true)
+            mapArray[rowArray[i]][colArray[i]].makeBlock(true)
         }
     }
 
@@ -137,13 +137,13 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
         for (y in 0..mapArray[0].size-1) {
             for (x in 0..mapArray.size-1) {
                 if (mapArray[x][y].equals(origin)){
-                    print("O    ")
+                    print("O ")
                 } else if (mapArray[x][y].equals(destination)) {
-                    print("D    ")
+                    print("D ")
                 } else if (mapArray[x][y].isBlock) {
-                    print("X    ")
+                    print("X ")
                 } else {
-                    print("-    ")
+                    print("- ")
                 }
             }
             println()

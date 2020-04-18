@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.database.sqlite.SQLiteQueryBuilder
 import android.util.Log
 import com.soen390.conumap.R
 
@@ -21,7 +22,9 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
         const val COL_RC: String = "ROOM_CODE"
         const val COL_NX: String = "NODE_X_POS"
         const val COL_NY: String = "NODE_Y_POS"
+
     }
+
 
     constructor(ctx: Context) : super(ctx, DATABASE_NAME, null, 1)
 
@@ -125,6 +128,34 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
 
         // Sort, turn to array, and return.
         return roomsInDb.toList().sorted()
+    }
+
+    fun getWordMatches(query: String, columns: Array<String>?): Cursor? {
+        val selection = "$COL_RC MATCH ?"
+        val selectionArgs = arrayOf("$query*")
+
+        return query(selection, selectionArgs, columns)
+    }
+
+    fun query(
+        selection: String,
+        selectionArgs: Array<String>,
+        columns: Array<String>?
+    ): Cursor? {
+        val db: SQLiteDatabase = this.readableDatabase
+        val cursor: Cursor? = SQLiteQueryBuilder().run {
+            tables = TABLE_NAME
+            query(db,
+                columns, selection, selectionArgs, null, null, null)
+        }
+        return cursor?.run {
+            if (!moveToFirst()) {
+                close()
+                null
+            } else {
+                this
+            }
+        } ?: null
     }
 
     // To check how many rows are in the database currently.

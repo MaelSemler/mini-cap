@@ -1,74 +1,174 @@
 package com.soen390.conumap.IndoorNavigation
 
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import androidx.core.content.ContextCompat
+import android.widget.ListView
+import android.widget.SearchView
+import android.widget.SearchView.OnQueryTextListener
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.soen390.conumap.R
-import com.soen390.conumap.SVGConverter.ImageAdapter
 import com.soen390.conumap.SVGConverter.ConverterToFloorPlan
+import com.soen390.conumap.SVGConverter.ImageAdapter
+import com.soen390.conumap.databinding.IndoorSearchFragmentBinding
 import com.soen390.conumap.helper.ContextPasser
 import kotlinx.android.synthetic.main.activity_indoor.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class IndoorActivity : AppCompatActivity() {
+    lateinit var db: IndoorDatabaseHelper
+    private lateinit var  binding: IndoorSearchFragmentBinding
+//    private val searchAdapter = SearchAdapter()
+
+    lateinit var list: ListView
+    lateinit var adapter: AdapterClass
+    lateinit var searchStartingRoom: SearchView
+    lateinit var searchDestinationRoom: SearchView
+    lateinit var searchQueries: ArrayList<String>
+
+    lateinit var  startingRoom: String
+    lateinit var  startingCoor: Node
+
+
+    lateinit var  destinationRoom: String
+    lateinit var  destinationCoor: Node
+
+    var arraylist: ArrayList<SearchQuery> = ArrayList<SearchQuery>()
+
+
+    val viewModel: IndoorSearchViewModel by viewModels{
+        IndoorSearchViewModel.Factory(assets, Dispatchers.IO)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_indoor)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = resources.getString(R.string.indoor_nav)
 
         ContextPasser.setContextIndoor(this)
 
         imageRecycler.layoutManager = LinearLayoutManager(this)
         imageRecycler.adapter = ImageAdapter(R.drawable.h9floorplan, arrayOf())
 
-        val floorConverter = ConverterToFloorPlan
+        searchQueries = arrayListOf("H-823", "H-845", "H-859",
+            "H-803", "Washroom(Men, 8+)", "Washroom(Women, 8+)", "Water Fountain(8)", "Vending Machine(8)",
+            "Washroom(Men, 9+)", "Washroom(Women, 9+)", "Water Fountain(9)", "Vending Machine(9)", "H-963", "H-961-7", "H-929", "H-907")
 
+
+        list = findViewById(R.id.list_view);
+        for (element in searchQueries) {
+            var searchQuery1:SearchQuery = SearchQuery(element)
+            // Binds all strings into an array
+            arraylist.add(searchQuery1)
+        }
+        adapter = AdapterClass(this, arraylist)
+        list.setAdapter(adapter)
+        searchStartingRoom = findViewById(R.id.search_StartRoom)
+        searchDestinationRoom = findViewById(R.id.search_DestinationRoom)
+
+
+        list.visibility= View.GONE
+
+        // Demo so people can see how to use the database.
+        db = IndoorDatabaseHelper(this)
+
+
+        //Listening to the Search StartingRoom
+        searchStartingRoom.setOnQueryTextListener(object:
+            OnQueryTextListener {
+                //WHen user click on enter
+                override fun onQueryTextSubmit(startingQuery: String): Boolean {
+                    list.visibility= View.GONE
+                    startingRoom = startingQuery
+
+                    startingCoor = db.getRoomCoordinates(startingQuery)
+                    Log.i("Starting Room IS: ",startingCoor.toString())
+
+                    return false;
+                }
+                //When The searchbar textfield is changing
+                override fun onQueryTextChange(newText: String): Boolean {
+                    list.visibility= View.VISIBLE
+                    var text = newText;
+                    adapter.filter(text);
+                    return false;
+                }
+            }
+        )
+
+        //Listening to the Search StartingRoom
+        searchDestinationRoom.setOnQueryTextListener(object:
+            OnQueryTextListener {
+            //WHen user click on enter
+            override fun onQueryTextSubmit(destinationQuery: String): Boolean {
+                list.visibility= View.GONE
+                destinationRoom = destinationQuery
+
+                destinationCoor = db.getRoomCoordinates(destinationQuery)
+                Log.i("DESTINATION IS: ",destinationCoor.toString())
+
+                return false;
+            }
+            //When The searchbar textfield is changing
+            override fun onQueryTextChange(newText: String): Boolean {
+                list.visibility= View.VISIBLE
+                var text = newText;
+                adapter.filter(text);
+                return false;
+            }
+        }
+        )
+
+    }
+
+    fun routeIndoor(view:View){
+        val routeIndoorButton = findViewById<View>(R.id.indoorSubmitButton)
+
+        val floorConverter = ConverterToFloorPlan
         var tempBitmap = floorConverter.svgToBitMap()
 
         GlobalScope.launch {
+            println("Launching GlobalScope")
             // Floorplan
-            val floorP =  floorConverter.convertToPlan(tempBitmap)
+            val floorP = floorConverter.convertToPlan(tempBitmap)
 
             var blockRow: ArrayList<Int> = arrayListOf()
             var blockCol: ArrayList<Int> = arrayListOf()
 
+            println("Loading blocks")
             for (array in floorP.floorNodes) {
                 for (value in array) {
                     if (value.walkable == true) {
                     } else {
-                        blockCol.add(value.yInd)
-                        blockRow.add(value.xInd)
+                        blockCol.add(value.xInd)
+                        blockRow.add(value.yInd)
                     }
                 }
             }
 
-            var blockArray = arrayOf(blockRow, blockCol)
+            var blockArray = arrayOf(blockCol, blockRow)
 
-            var pathfinding: Pathfinding = Pathfinding(floorP.floorNodes.size,floorP.floorNodes[0].size, Node(31,291), Node(354,307))
+            println("Pathfinding")
+            var pathfinding: Pathfinding = Pathfinding(
+                floorP.floorNodes[0].size,
+                floorP.floorNodes.size,
+                startingCoor,
+                destinationCoor
+            )
 
             pathfinding.loadMap()
             pathfinding.loadBlocks(blockArray)
             var path: MutableList<Node> = pathfinding.findPath()
 
-            /* Uncomment to print all walkable nodes to console. */
-//            for (array in floorP.floorNodes) {
-//                for (value in array) {
-//                    if (value.walkable == true) {
-//                        println("Node("+value.xInd+","+value.yInd+"),")
-//                    }
-//                }
-//            }
-
+            println("Path: ")
             for (node: Node in path) {
-                println(""+node+",")
+                println("" + node + ",")
             }
+            println("Done.")
         }
     }
 
@@ -92,3 +192,5 @@ class IndoorActivity : AppCompatActivity() {
         imageRecycler.adapter = ImageAdapter(R.drawable.h8floorplan, arrayOf())
     }
 }
+
+
