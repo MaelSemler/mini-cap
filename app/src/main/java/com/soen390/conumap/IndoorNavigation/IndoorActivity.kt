@@ -8,11 +8,6 @@ import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.soen390.conumap.R
@@ -31,6 +26,10 @@ class IndoorActivity : AppCompatActivity() {
     lateinit var adapter: AdapterClass
     lateinit var searchBar: SearchView
     lateinit var searchQueries: ArrayList<String>
+
+    lateinit var  startingRoom: String
+    lateinit var  startingCoor: Node
+
     var arraylist: ArrayList<SearchQuery> = ArrayList<SearchQuery>()
 
 
@@ -69,11 +68,6 @@ class IndoorActivity : AppCompatActivity() {
 
 
 
-//            }
-
-
-
-
 
 //        val floorConverter = ConverterToFloorPlan
 //
@@ -88,37 +82,7 @@ class IndoorActivity : AppCompatActivity() {
 //            Log.i("TESTING: ",floorP.floorNodes[430][330].color)
 //        }
                     //        // Demo so people can see how to use the database.
-                    db = IndoorDatabaseHelper(this)
-
-                    db.emptyDatabaseContents()
-
-                    db.insertData("H",
-            "9",
-            "937",
-            "H-937",
-            "10",
-            "12"
-        )
-        db.insertData("H", "8", "801", "H-801", "5", "9")
-
-        db.printDatabaseContents()
-
-        var one = db.getRoomCoordinates("H-937") // This is [10, 12].
-        var two = db.getRoomCoordinates("H-801") // This is [5, 9].
-
-
-        db.insertData("H", "9", "937", "H-937", "10", "12")
-        db.insertData("H", "8", "801", "H-801", "5", "9")
-        db.insertData("H", "8", "WF", "Water Fountain", "6", "13")
-        db.insertData("H", "9", "VM", "Vending Machine", "2", "8")
-
-        var a = db.getRoomCoordinates("H-937")
-        var b = db.getRoomCoordinates("H-801")
-        var c = db.getPOICoordinates("Water Fountain", 8)
-        var d = db.getPOICoordinates("Vending Machine", 9)
-        var e = db.getPOICoordinates("Nonsense", 6) // Should be error.
-
-        println(a.toString() + "\n" + b.toString() + "\n" + c.toString() + "\n" + d.toString() + "\n" + e.toString())
+        db = IndoorDatabaseHelper(this)
 
 
         //Listening to the searchbar
@@ -127,7 +91,14 @@ class IndoorActivity : AppCompatActivity() {
                 //WHen user click on enter
                 override fun onQueryTextSubmit(startingQuery: String): Boolean {
                     list.visibility= View.GONE
-                    Log.d("TESTING:", startingQuery)
+                    startingRoom = startingQuery
+
+                    startingCoor = db.getRoomCoordinates(startingQuery)
+
+
+                    Log.d("TESTING:", startingCoor.toString())
+                    db.printDatabaseContents()
+
                     return false;
                 }
                 //When The searchbar textfield is changing
