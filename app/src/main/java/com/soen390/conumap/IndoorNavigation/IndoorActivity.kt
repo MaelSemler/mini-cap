@@ -143,6 +143,17 @@ class IndoorActivity : AppCompatActivity() {
 
     }
 
+    fun routeIndoor(view:View){
+        val routeIndoorButton = findViewById<View>(R.id.indoorSubmitButton)
+        //CALL Algorithm here
+        startingCoor//This is startingRoom Node
+        destinationCoor// This is destinationRoom Node
+
+
+
+
+    }
+
     fun h9Button(view: View){
         val h9button = findViewById<View>(R.id.hfloor_nine_button)
         h9button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.colorPrimary, null))
