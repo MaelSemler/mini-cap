@@ -8,6 +8,12 @@ import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.soen390.conumap.R
 import com.soen390.conumap.SVGConverter.ImageAdapter
@@ -36,10 +42,12 @@ class IndoorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_indoor)
 
+        //img rec. adapter. switchfloor
+
         ContextPasser.setContextIndoor(this)
 
         imageRecycler.layoutManager = LinearLayoutManager(this)
-        imageRecycler.adapter = ImageAdapter()
+        imageRecycler.adapter = ImageAdapter(R.drawable.h9floorplan)
 
         searchQueries = arrayListOf("H-823", "H-845", "H-859",
             "H-803", "Washroom(Men, 8+)", "Washroom(Women, 8+)", "Water Fountain(8)", "Vending Machine(8)",
@@ -137,45 +145,21 @@ class IndoorActivity : AppCompatActivity() {
 
     }
 
+    fun h9Button(view: View){
+        val h9button = findViewById<View>(R.id.hfloor_nine_button)
+        h9button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.colorPrimary, null))
+        val h8button = findViewById<View>(R.id.hfloor_eight_button)
+        h8button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.buttonColor, null))
+        imageRecycler.adapter = ImageAdapter(R.drawable.h9floorplan)
+    }
 
-//    private fun handleSearchResult(it: SearchResult) {
-//        when (it) {
-//            is ValidResult -> {
-//                binding.otherResultText.visibility = View.GONE
-//                binding.searchResult.visibility = View.VISIBLE
-//                searchAdapter.submitList(it.result)
-//            }
-//            is ErrorResult -> {
-//                searchAdapter.submitList(emptyList())
-//                binding.otherResultText.visibility = View.VISIBLE
-//                binding.searchResult.visibility = View.GONE
-//                binding.otherResultText.setText("Errors")
-//            }
-//            is EmptyResult -> {
-//                searchAdapter.submitList(emptyList())
-//                binding.otherResultText.visibility = View.VISIBLE
-//                binding.searchResult.visibility = View.GONE
-//                binding.otherResultText.setText("Empty Results")
-//            }
-//            is EmptyQuery -> {
-//                searchAdapter.submitList(emptyList())
-//                binding.otherResultText.visibility = View.VISIBLE
-//                binding.searchResult.visibility = View.GONE
-//                binding.otherResultText.setText("Not enough char")
-//            }
-//            is TerminalError -> {
-//                // Something wen't terribly wrong!
-//                println("Our Flow terminated unexpectedly, so we're bailing!")
-//                Toast.makeText(
-//                    this,
-//                    "Unexpected error in SearchRepository!",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//                finish()
-//            }
-//        }
-//    }
-
+    fun h8Button(view: View){
+        val h9button = findViewById<View>(R.id.hfloor_nine_button)
+        h9button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.buttonColor, null))
+        val h8button = findViewById<View>(R.id.hfloor_eight_button)
+        h8button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.colorPrimary, null))
+        imageRecycler.adapter = ImageAdapter(R.drawable.h8floorplan)
+    }
 }
 
 

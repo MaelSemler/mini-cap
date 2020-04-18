@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.soen390.conumap.R
 
-class ImageAdapter(): RecyclerView.Adapter<ImageHolder>() {
+class ImageAdapter(var imageUrl: Int): RecyclerView.Adapter<ImageHolder>() {
     val imageUrls: Array<Int>
 
     init {
-        imageUrls = arrayOf(R.drawable.h8floorplan, R.drawable.h9floorplan)
+        imageUrls = arrayOf(imageUrl)
     }
 
     override fun getItemCount(): Int {
@@ -17,10 +17,9 @@ class ImageAdapter(): RecyclerView.Adapter<ImageHolder>() {
 //        return imageUrls.size
     }
 
-
     override fun onBindViewHolder(holder: ImageHolder, position: Int) {
         var imageUrl = imageUrls[position]
-        holder?.updateWithR()
+        holder?.updateIndoorImage(imageUrl)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {

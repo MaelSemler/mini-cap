@@ -12,11 +12,18 @@ class ImageHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     private val myImageView: ImageView = itemView.findViewById(R.id.myImageView)
 
-    fun updateWithR(){
+    fun updateWithR() {
         //TODO: Hardcoded floorplan for now
         //Note: load(DOES NOT TAKE IN AS ARGUMENT SVG)
         Picasso.get()
             .load(R.drawable.h8floorplan)
+            .transform(FloorPlanTransformation())
+            .into(myImageView)
+    }
+
+    fun updateIndoorImage(resource: Int) {
+        Picasso.get()
+            .load(resource)
             .transform(FloorPlanTransformation())
             .into(myImageView)
     }

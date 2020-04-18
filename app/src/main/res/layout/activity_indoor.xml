@@ -7,7 +7,7 @@
     tools:context=".IndoorNavigation.IndoorActivity">
 
     <Button
-        android:id="@+id/hfloor_eight_button"
+        android:id="@+id/hfloor_nine_button"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_alignParentLeft="true"
@@ -15,9 +15,11 @@
         android:layout_marginLeft="200dp"
         android:layout_marginBottom="40dp"
         android:background="@color/colorPrimary"
+        android:onClick="h9Button"
         android:text="9" />
+
     <Button
-        android:id="@+id/hfloor_nine_button"
+        android:id="@+id/hfloor_eight_button"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_alignParentLeft="true"
@@ -25,7 +27,8 @@
         android:layout_marginLeft="150dp"
         android:layout_marginBottom="40dp"
         android:background="@color/buttonColor"
-        android:text="8"/>
+        android:onClick="h8Button"
+        android:text="8" />
 
 
 
