@@ -139,7 +139,6 @@ class IndoorActivity : AppCompatActivity() {
             var blockRow: ArrayList<Int> = arrayListOf()
             var blockCol: ArrayList<Int> = arrayListOf()
 
-            println("Loading blocks")
             for (array in floorP.floorNodes) {
                 for (value in array) {
                     if (value.walkable == true) {
@@ -152,23 +151,14 @@ class IndoorActivity : AppCompatActivity() {
 
             var blockArray = arrayOf(blockCol, blockRow)
 
-            println("Pathfinding")
-            var pathfinding: Pathfinding = Pathfinding(
-                floorP.floorNodes[0].size,
-                floorP.floorNodes.size,
-                startingCoor,
-                destinationCoor
-            )
+            var pathfinding: Pathfinding = Pathfinding(floorP.floorNodes[0].size, floorP.floorNodes.size, startingCoor, destinationCoor)
 
             pathfinding.loadMap()
             pathfinding.loadBlocks(blockArray)
             var path: MutableList<Node> = pathfinding.findPath()
-
-            println("Path: ")
             for (node: Node in path) {
                 println("" + node + ",")
             }
-            println("Done.")
         }
     }
 
