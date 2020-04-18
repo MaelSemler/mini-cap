@@ -44,6 +44,7 @@ class IndoorActivity : AppCompatActivity() {
     lateinit var floorConverter: ConverterToFloorPlan
     lateinit var tempBitmap: Bitmap
     lateinit var floorP: Floor.FloorPlan
+    lateinit var pathArray: Array<Node>
 
     val viewModel: IndoorSearchViewModel by viewModels{
         IndoorSearchViewModel.Factory(assets, Dispatchers.IO)
@@ -138,8 +139,8 @@ class IndoorActivity : AppCompatActivity() {
     fun routeIndoor(view:View){
         val routeIndoorButton = findViewById<View>(R.id.indoorSubmitButton)
 
-//        val floorConverter = ConverterToFloorPlan
-//        var tempBitmap = floorConverter.svgToBitMap()
+        floorConverter = ConverterToFloorPlan
+        tempBitmap = floorConverter.svgToBitMap() as Bitmap
 
 
 
@@ -163,9 +164,9 @@ class IndoorActivity : AppCompatActivity() {
             pathfinding.loadMap()
             pathfinding.loadBlocks(blockArray)
             var path: ArrayList<Node> = pathfinding.findPath()
-            var pathArray = arrayOfNulls<Node>(path.size) as Array<Node>
+            pathArray = arrayOfNulls<Node>(path.size) as Array<Node>
             path.toArray(pathArray)
-        showIndoorPath(R.drawable.h8floorplan, pathArray)
+        // showIndoorPath(R.drawable.h8floorplan, pathArray)
     }
 
     fun showIndoorPath(resource: Int, indoorPath: Array<Node>) {
@@ -185,7 +186,7 @@ class IndoorActivity : AppCompatActivity() {
         h9button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.buttonColor, null))
         val h8button = findViewById<View>(R.id.hfloor_eight_button)
         h8button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.colorPrimary, null))
-        imageRecycler.adapter = ImageAdapter(R.drawable.h8floorplan, arrayOf())
+        imageRecycler.adapter = ImageAdapter(R.drawable.h8floorplan, pathArray)
     }
 }
 
