@@ -5,11 +5,9 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import android.widget.ListView
 import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
-import android.widget.SimpleCursorAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -18,7 +16,6 @@ import com.soen390.conumap.R
 import com.soen390.conumap.SVGConverter.ConverterToFloorPlan
 import com.soen390.conumap.SVGConverter.ImageAdapter
 import com.soen390.conumap.building.Floor
-import com.soen390.conumap.databinding.IndoorSearchFragmentBinding
 import com.soen390.conumap.helper.ContextPasser
 import kotlinx.android.synthetic.main.activity_indoor.*
 import kotlinx.coroutines.Dispatchers
@@ -27,9 +24,9 @@ import kotlinx.coroutines.launch
 
 class IndoorActivity : AppCompatActivity() {
     lateinit var db: IndoorDatabaseHelper
-    private lateinit var  binding: IndoorSearchFragmentBinding
 
-    lateinit var list: ListView
+    //SearchQueries
+    lateinit var suggestionList: ListView
     lateinit var adapter: AdapterClass
     lateinit var searchStartingRoom: SearchView
     lateinit var searchDestinationRoom: SearchView
@@ -41,15 +38,15 @@ class IndoorActivity : AppCompatActivity() {
     lateinit var  destinationRoom: String
     lateinit var  destinationCoor: Node
 
-    lateinit var mAdapter: SimpleCursorAdapter
-
-
     var arraylist: ArrayList<SearchQuery> = ArrayList<SearchQuery>()
+    var listDigit = listOf("0","1","2","3","4","5","6","7","8","9")
 
+    //Conversion to FloorPlan for Indoor Algorithm
     lateinit var floorConverter: ConverterToFloorPlan
     lateinit var tempBitmap: Bitmap
     lateinit var floorP: Floor.FloorPlan
     lateinit var pathArray: Array<Node>
+
 
     val viewModel: IndoorSearchViewModel by viewModels{
         IndoorSearchViewModel.Factory(assets, Dispatchers.IO)
@@ -67,30 +64,36 @@ class IndoorActivity : AppCompatActivity() {
         imageRecycler.layoutManager = LinearLayoutManager(this)
         imageRecycler.adapter = ImageAdapter(R.drawable.h9floorplan, arrayOf())
 
-        searchQueries = arrayListOf("H-823", "H-845", "H-859",
-            "H-803", "Washroom (Men, 8)", "Washroom (Women, 8)", "Water Fountain (8)", "Vending Machine (8)",
-            "Washroom (Men, 9)", "Washroom (Women, 9)", "Water Fountain (9)", "Vending Machine (9)", "H-963", "H-961-7", "H-929", "H-907")
+
 
         GlobalScope.launch {
             // Floorplan
             floorP = floorConverter.convertToPlan(tempBitmap)
         }
 
-        list = findViewById(R.id.list_view)
+        //Bind Views with their IDs
+        suggestionList = findViewById(R.id.list_view)
+        searchStartingRoom = findViewById(R.id.search_StartRoom)
+        searchDestinationRoom = findViewById(R.id.search_DestinationRoom)
+
+        searchQueries = arrayListOf("H-823", "H-845", "H-859",
+            "H-803", "Washroom (Men, 8)", "Washroom (Women, 8)", "Water Fountain (8)", "Vending Machine (8)",
+            "Washroom (Men, 9)", "Washroom (Women, 9)", "Water Fountain (9)", "Vending Machine (9)", "H-963", "H-961-7", "H-929", "H-907")
+
         for (element in searchQueries) {
             var searchQuery1:SearchQuery = SearchQuery(element)
             // Binds all strings into an array
             arraylist.add(searchQuery1)
         }
-        adapter = AdapterClass(this, arraylist)
-        list.setAdapter(adapter)
-        searchStartingRoom = findViewById(R.id.search_StartRoom)
-        searchDestinationRoom = findViewById(R.id.search_DestinationRoom)
 
+        adapter = AdapterClass(this, arraylist)
+        suggestionList.adapter = adapter
+
+
+        //Default settings for Searchfiels
         searchDestinationRoom.isSubmitButtonEnabled = true
         searchStartingRoom.isSubmitButtonEnabled = true
-
-        list.visibility= View.GONE
+        suggestionList.visibility= View.GONE
 
 
         val floorConverter = ConverterToFloorPlan
@@ -99,26 +102,21 @@ class IndoorActivity : AppCompatActivity() {
 
         //Method that would set the corresponding SearchView bar with the clicked item
         fun clickItem(searchB: SearchView ){
-            list.setOnItemClickListener { parent, view, i, id ->
-                val item:SearchQuery = list.adapter.getItem(i) as SearchQuery
+            suggestionList.setOnItemClickListener { parent, view, i, id ->
+                val item:SearchQuery = suggestionList.adapter.getItem(i) as SearchQuery
 
                 searchB.setQuery(item.getQuery().toString(),true)
-                list.visibility = View.GONE
+                suggestionList.visibility = View.GONE
 
             }
         }
 
+        //**************SearchBar Starting Room*****************
+
+        //When Closed
         searchStartingRoom.setOnCloseListener(object: SearchView.OnCloseListener{
             override fun onClose(): Boolean {
-                list.visibility = View.GONE
-                return false
-            }
-
-        })
-
-        searchDestinationRoom.setOnCloseListener(object: SearchView.OnCloseListener{
-            override fun onClose(): Boolean {
-                list.visibility = View.GONE
+                suggestionList.visibility = View.GONE
                 return false
             }
 
@@ -129,15 +127,13 @@ class IndoorActivity : AppCompatActivity() {
             OnQueryTextListener {
             //WHen user click on enter
             override fun onQueryTextSubmit(startingQuery: String): Boolean {
-                list.visibility= View.GONE
+                suggestionList.visibility= View.GONE
                 startingRoom = startingQuery
 
                 if(startingRoom.startsWith("H-")){
                     startingCoor = db.getRoomCoordinates(startingQuery)
                 }
                 else{
-                    var digitRegex = ("\\d+").toRegex()
-                    var listDigit = listOf("0","1","2","3","4","5","6","7","8","9")
                     var floorValIndex = startingRoom.indexOfAny(listDigit,0,true)
                     var floorNum = startingRoom[floorValIndex].toString().toInt()
                     Log.d("FloorVal is: ", startingRoom[floorValIndex].toString())
@@ -149,24 +145,39 @@ class IndoorActivity : AppCompatActivity() {
 
             //When The searchbar textfield is changing
             override fun onQueryTextChange(newText: String): Boolean {
-                list.visibility= View.VISIBLE
+                suggestionList.visibility= View.VISIBLE
                 var text = newText;
                 adapter.filter(text);
                 clickItem(searchStartingRoom)
 
                 if (TextUtils.isEmpty(newText)){
-                    list.visibility = View.GONE
+                    suggestionList.visibility = View.GONE
                 }
                 return false
             }
         }
         )
-        
+
+
+        //**************SearchBar Destination Room*****************
+
+        //When Closed
+        searchDestinationRoom.setOnCloseListener(object: SearchView.OnCloseListener{
+            override fun onClose(): Boolean {
+                suggestionList.visibility = View.GONE
+                return false
+            }
+
+        })
+
+
+        //Listener on the Destination searchfield
         searchDestinationRoom.setOnQueryTextListener(object:
             OnQueryTextListener {
+
             //WHen user click on enter
             override fun onQueryTextSubmit(destinationQuery: String): Boolean {
-                list.visibility= View.GONE
+                suggestionList.visibility= View.GONE
                 destinationRoom = destinationQuery
                 if(destinationRoom.startsWith("H-")){
                     destinationCoor = db.getRoomCoordinates(destinationQuery)
@@ -174,33 +185,31 @@ class IndoorActivity : AppCompatActivity() {
                 }
                 else{
 
-                    var digitRegex = ("\\d+").toRegex()
-                    var listDigit = listOf("0","1","2","3","4","5","6","7","8","9")
                     var floorValIndex = destinationRoom.indexOfAny(listDigit,0,true)
                     var floorNum = destinationRoom[floorValIndex].toString().toInt()
                     Log.d("FloorVal is: ", destinationRoom[floorValIndex].toString())
-
                     destinationCoor = db.getPOICoordinates(destinationRoom,floorNum)
                     Log.d("Destination: ", destinationCoor.toString())
                 }
-
                 return false;
             }
-            
+
             //When The searchbar textfield is changing
             override fun onQueryTextChange(newText: String): Boolean {
-                list.visibility= View.VISIBLE
-                var text = newText;
-                adapter.filter(text);
+                suggestionList.visibility= View.VISIBLE
+                adapter.filter(newText);
                 clickItem(searchDestinationRoom)
                 if (TextUtils.isEmpty(newText)){
-                    list.visibility = View.GONE
+                    suggestionList.visibility = View.GONE
                 }
                 return false;
             }
             }
+
         )
+
     }
+    
 
 
     fun routeIndoor(view:View){
