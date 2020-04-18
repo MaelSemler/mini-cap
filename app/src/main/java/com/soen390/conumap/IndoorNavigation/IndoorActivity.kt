@@ -25,7 +25,6 @@ import kotlinx.coroutines.launch
 class IndoorActivity : AppCompatActivity() {
     lateinit var db: IndoorDatabaseHelper
     private lateinit var  binding: IndoorSearchFragmentBinding
-//    private val searchAdapter = SearchAdapter()
 
     lateinit var list: ListView
     lateinit var adapter: AdapterClass
@@ -58,6 +57,7 @@ class IndoorActivity : AppCompatActivity() {
         floorConverter = ConverterToFloorPlan
         tempBitmap = floorConverter.svgToBitMap() as Bitmap
 
+        // Show H9 by default.
         imageRecycler.layoutManager = LinearLayoutManager(this)
         imageRecycler.adapter = ImageAdapter(R.drawable.h9floorplan, arrayOf())
 
@@ -81,12 +81,9 @@ class IndoorActivity : AppCompatActivity() {
         searchStartingRoom = findViewById(R.id.search_StartRoom)
         searchDestinationRoom = findViewById(R.id.search_DestinationRoom)
 
-
         list.visibility= View.GONE
 
-        // Demo so people can see how to use the database.
         db = IndoorDatabaseHelper(this)
-
 
         //Listening to the Search StartingRoom
         searchStartingRoom.setOnQueryTextListener(object:
@@ -133,40 +130,35 @@ class IndoorActivity : AppCompatActivity() {
             }
         }
         )
-
     }
 
     fun routeIndoor(view:View){
-        val routeIndoorButton = findViewById<View>(R.id.indoorSubmitButton)
+        imageRecycler.adapter = ImageAdapter(R.drawable.h9floorplan, arrayOf(Node(0, 0), Node(50, 300)))
 
-        floorConverter = ConverterToFloorPlan
-        tempBitmap = floorConverter.svgToBitMap() as Bitmap
+        var blockRow: ArrayList<Int> = arrayListOf()
+        var blockCol: ArrayList<Int> = arrayListOf()
 
-
-
-            var blockRow: ArrayList<Int> = arrayListOf()
-            var blockCol: ArrayList<Int> = arrayListOf()
-
-            for (array in floorP.floorNodes) {
-                for (value in array) {
-                    if (value.walkable == true) {
-                    } else {
-                        blockCol.add(value.xInd)
-                        blockRow.add(value.yInd)
-                    }
+        for (array in floorP.floorNodes) {
+            for (value in array) {
+                if (value.walkable == true) {
+                } else {
+                    blockCol.add(value.xInd)
+                    blockRow.add(value.yInd)
                 }
             }
+        }
 
-            var blockArray = arrayOf(blockCol, blockRow)
+        var blockArray = arrayOf(blockCol, blockRow)
 
-            var pathfinding: Pathfinding = Pathfinding(floorP.floorNodes[0].size, floorP.floorNodes.size, startingCoor, destinationCoor)
+        var pathfinding: Pathfinding = Pathfinding(floorP.floorNodes[0].size, floorP.floorNodes.size, startingCoor, destinationCoor)
 
-            pathfinding.loadMap()
-            pathfinding.loadBlocks(blockArray)
-            var path: ArrayList<Node> = pathfinding.findPath()
-            pathArray = arrayOfNulls<Node>(path.size) as Array<Node>
-            path.toArray(pathArray)
-        // showIndoorPath(R.drawable.h8floorplan, pathArray)
+        pathfinding.loadMap()
+        pathfinding.loadBlocks(blockArray)
+        var path: ArrayList<Node> = pathfinding.findPath()
+
+        pathArray = arrayOfNulls<Node>(path.size) as Array<Node>
+        path.toArray(pathArray)
+        showIndoorPath(R.drawable.h8floorplan, pathArray)
     }
 
     fun showIndoorPath(resource: Int, indoorPath: Array<Node>) {
@@ -186,8 +178,6 @@ class IndoorActivity : AppCompatActivity() {
         h9button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.buttonColor, null))
         val h8button = findViewById<View>(R.id.hfloor_eight_button)
         h8button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.colorPrimary, null))
-        imageRecycler.adapter = ImageAdapter(R.drawable.h8floorplan, pathArray)
+        imageRecycler.adapter = ImageAdapter(R.drawable.h8floorplan, arrayOf())
     }
 }
-
-

@@ -22,5 +22,4 @@ class ImageAdapter(var imageUrl: Int, var indoorPath: Array<Node>): RecyclerView
         var imageItem = LayoutInflater.from(parent?.context).inflate(R.layout.image_item, parent, false)
         return ImageHolder(imageItem)
     }
-
 }

@@ -2,7 +2,6 @@ package com.soen390.conumap.SVGConverter
 
 import android.content.Context
 import android.graphics.*
-import android.renderscript.RenderScript
 import androidx.core.content.ContextCompat
 import com.soen390.conumap.IndoorNavigation.Node
 import com.soen390.conumap.R
