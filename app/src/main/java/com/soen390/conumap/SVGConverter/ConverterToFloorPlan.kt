@@ -16,9 +16,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 object ConverterToFloorPlan{
-//    private val activity = Activity()
-//    val activity : Activity = Activity()
-
     private lateinit var context:Context
 
     var floorNode :Array<Array<Floor.FloorNode>> = arrayOf<Array<Floor.FloorNode>>()
@@ -30,14 +27,10 @@ object ConverterToFloorPlan{
     fun getContext(): Context {
         return context
     }
-    init {
 
-    }
-
-    fun svgToBitMap(): Bitmap? {
-        val svgFile = SVG.getFromResource(context.resources, R.raw.hall8)
+    fun svgToBitMap(svg: Int): Bitmap? {
+        val svgFile = SVG.getFromResource(context.resources, svg)
         var bitmapFile: Bitmap? = null
-
 
             if (svgFile.getDocumentWidth() !== -1F) {
 
@@ -50,11 +43,9 @@ object ConverterToFloorPlan{
 
                 // Render our document onto our canvas
                 svgFile.renderToCanvas(canvas)
-
             }
 
         return bitmapFile
-
     }
 
     suspend fun convertToPlan(bitmapFile: Bitmap?): Floor.FloorPlan {
@@ -79,12 +70,14 @@ object ConverterToFloorPlan{
                         for (y in 0 until bitmapFile.height-1) {
 
                             //If it is a hallway then walkable
-                            if ( bitmapFile.getPixel(x,y).toColor() == Color.rgb(243,211,211).toColor())
-                                floorNode[x][y] = Floor.FloorNode(x,y,"#f3d3d3", "id"+x+y, true, false)
+                            if (bitmapFile.getPixel(x,y).toColor() == Color.rgb(243,211,211).toColor() ||
+                                bitmapFile.getPixel(x,y).toColor() == Color.rgb(247,214,214).toColor())
+                                floorNode[x][y] =
+                                    Floor.FloorNode(x, y, "#f3d3d3", "id" + x + y, true, false)
 
-                            else//It is not a hallway so a wall or a room
-                                floorNode[x][y] = Floor.FloorNode(x,y,"#da3636", "id"+x+y, false, false)
-
+                            else //It is not a hallway so a wall or a room
+                                floorNode[x][y] =
+                                    Floor.FloorNode(x, y, "#da3636", "id" + x + y, false, false)
                         }
                     }
                 }
@@ -92,6 +85,5 @@ object ConverterToFloorPlan{
             convertedfloorPlan = Floor.FloorPlan(floorNode)
         }
         return convertedfloorPlan
-
     }
 }

@@ -4,10 +4,12 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.widget.ListView
 import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -42,11 +44,13 @@ class IndoorActivity : AppCompatActivity() {
     var listDigit = listOf("0","1","2","3","4","5","6","7","8","9")
 
     //Conversion to FloorPlan for Indoor Algorithm
-    lateinit var floorConverter: ConverterToFloorPlan
-    lateinit var tempBitmap: Bitmap
-    lateinit var floorP: Floor.FloorPlan
+    lateinit var h8floorConverter: ConverterToFloorPlan
+    lateinit var h9floorConverter: ConverterToFloorPlan
+    lateinit var h8BitMap: Bitmap
+    lateinit var h9BitMap: Bitmap
+    lateinit var h8floorP: Floor.FloorPlan
+    lateinit var h9floorP: Floor.FloorPlan
     lateinit var pathArray: Array<Node>
-
 
     val viewModel: IndoorSearchViewModel by viewModels{
         IndoorSearchViewModel.Factory(assets, Dispatchers.IO)
@@ -57,18 +61,18 @@ class IndoorActivity : AppCompatActivity() {
         setContentView(R.layout.activity_indoor)
 
         ContextPasser.setContextIndoor(this)
-        floorConverter = ConverterToFloorPlan
-        tempBitmap = floorConverter.svgToBitMap() as Bitmap
+        h8floorConverter = ConverterToFloorPlan
+        h9floorConverter = ConverterToFloorPlan
+        h8BitMap = h8floorConverter.svgToBitMap(R.raw.hall8) as Bitmap
+        h9BitMap = h9floorConverter.svgToBitMap(R.raw.hall9) as Bitmap
 
         // Show H9 by default.
         imageRecycler.layoutManager = LinearLayoutManager(this)
         imageRecycler.adapter = ImageAdapter(R.drawable.h9floorplan, arrayOf())
 
-
-
         GlobalScope.launch {
-            // Floorplan
-            floorP = floorConverter.convertToPlan(tempBitmap)
+            h8floorP = h8floorConverter.convertToPlan(h8BitMap)
+            h9floorP = h9floorConverter.convertToPlan(h9BitMap)
         }
 
         //Bind Views with their IDs
@@ -88,7 +92,6 @@ class IndoorActivity : AppCompatActivity() {
 
         adapter = AdapterClass(this, arraylist)
         suggestionList.adapter = adapter
-
 
         //Default settings for Searchfiels
         searchDestinationRoom.isSubmitButtonEnabled = true
@@ -167,9 +170,7 @@ class IndoorActivity : AppCompatActivity() {
                 suggestionList.visibility = View.GONE
                 return false
             }
-
         })
-
 
         //Listener on the Destination searchfield
         searchDestinationRoom.setOnQueryTextListener(object:
@@ -204,21 +205,46 @@ class IndoorActivity : AppCompatActivity() {
                 }
                 return false;
             }
-            }
-
-        )
-
+        })
     }
 
+    fun routeIndoor(view:View) {
+        val floorNumber = Regex("[0-9]").find(startingRoom)?.value
 
+        // Show Toast when trying to go between floors.
+        if(floorNumber!= Regex("[0-9]").find(destinationRoom)?.value) {
+            var betweenFloorsError = Toast.makeText(
+                applicationContext,
+                "Please select rooms on the same floor.",
+                Toast.LENGTH_LONG
+            )
+            betweenFloorsError.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+            betweenFloorsError.show()
 
-    fun routeIndoor(view:View){
-        imageRecycler.adapter = ImageAdapter(R.drawable.h9floorplan, arrayOf(Node(0, 0), Node(50, 300)))
+            return
+        }
 
+        // Initialize variables depending on which floor the navigation is on.
+        var currentFloorPlan = Floor.FloorPlan(arrayOf<Array<Floor.FloorNode>>())
+        var indoorMapResource = -1
+        if (floorNumber != null) {
+            when(floorNumber.toInt()) {
+                8 -> {
+                    currentFloorPlan = h8floorP
+                    indoorMapResource = R.drawable.h8floorplan
+                }
+                9 -> {
+                    currentFloorPlan = h9floorP
+                    indoorMapResource = R.drawable.h9floorplan
+                }
+            }
+        }
+
+        // Run pathfinding algorithm.
         var blockRow: ArrayList<Int> = arrayListOf()
         var blockCol: ArrayList<Int> = arrayListOf()
 
-        for (array in floorP.floorNodes) {
+        for (array in currentFloorPlan.floorNodes) {
             for (value in array) {
                 if (value.walkable == true) {
                 } else {
@@ -230,7 +256,7 @@ class IndoorActivity : AppCompatActivity() {
 
         var blockArray = arrayOf(blockCol, blockRow)
 
-        var pathfinding: Pathfinding = Pathfinding(floorP.floorNodes[0].size, floorP.floorNodes.size, startingCoor, destinationCoor)
+        var pathfinding: Pathfinding = Pathfinding(currentFloorPlan.floorNodes[0].size, currentFloorPlan.floorNodes.size, startingCoor, destinationCoor)
 
         pathfinding.loadMap()
         pathfinding.loadBlocks(blockArray)
@@ -238,7 +264,8 @@ class IndoorActivity : AppCompatActivity() {
 
         pathArray = arrayOfNulls<Node>(path.size) as Array<Node>
         path.toArray(pathArray)
-        showIndoorPath(R.drawable.h8floorplan, pathArray)
+
+        showIndoorPath(indoorMapResource, pathArray)
     }
 
     fun showIndoorPath(resource: Int, indoorPath: Array<Node>) {

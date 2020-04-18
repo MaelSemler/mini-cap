@@ -22,6 +22,5 @@ class ImageHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             .memoryPolicy(MemoryPolicy.NO_CACHE)
             .networkPolicy(NetworkPolicy.NO_CACHE)
             .into(myImageView)
-
     }
 }
