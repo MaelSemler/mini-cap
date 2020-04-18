@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.soen390.conumap.R
+import com.soen390.conumap.map.Map
 import com.soen390.conumap.ui.directions.DirectionsViewModel
 import com.soen390.conumap.ui.search_bar.SearchBarViewModel
 import com.soen390.conumap.ui.search_results.SearchResultsViewModel
@@ -35,16 +36,13 @@ class SearchCompletedFragment : Fragment() {
         val location_button = root.findViewById<Button>(R.id.found_location_button)
 
         //Set text in location button
-        location_button.text = directionsViewModel.getDestinationName()
+        location_button.text = directionsViewModel.destinationName.value
 
         //This changes fragment when the "45 degree" arrow is pressed
         travel_button.setOnClickListener{
-            //TODO: Set Original Location Here
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }
-        restart_button.setOnClickListener{
-            // Cancel destination in modelView
-            directionsViewModel.setDestinationName("")
+        restart_button.setOnClickListener{ //directionsViewModel.getDestinationName().postValue("")
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_searchBarFragment)
         }
         location_button.setOnClickListener{
@@ -55,10 +53,6 @@ class SearchCompletedFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-    }
-
-    fun getInitialOrigin(){
-
     }
 }
 

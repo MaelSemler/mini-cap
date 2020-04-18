@@ -14,6 +14,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
@@ -23,7 +27,9 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.soen390.conumap.R
+import com.soen390.conumap.path.Path
 import com.soen390.conumap.ui.directions.DirectionsViewModel
+import com.soen390.conumap.ui.search_bar.SearchBarViewModel
 import kotlinx.android.synthetic.main.search_results_fragment.*
 
 
@@ -33,8 +39,10 @@ class SearchResultsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val root = inflater.inflate(R.layout.search_results_fragment, container, false)
-        val model: DirectionsViewModel by activityViewModels()
+        val model= ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
+
         //TODO: Recently visited
 
         //Getting the Views from the fragment
@@ -51,7 +59,7 @@ class SearchResultsFragment : Fragment() {
         val bounds = RectangularBounds.newInstance(
             LatLng(45.425579, -73.687204),
             LatLng(45.706574, -73.475121))
-           val fields = arrayListOf (Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS)
+           val fields = arrayListOf (Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
            val intent = Autocomplete.IntentBuilder(
                  AutocompleteActivityMode.OVERLAY, fields).setCountry("CA").setLocationBias(bounds)
                 .build(this.requireContext());
@@ -65,34 +73,49 @@ class SearchResultsFragment : Fragment() {
 
         // Cancel destination in modelView
         cancelButton.setOnClickListener {
-            model.setDestinationCompletely("",LatLng(45.494,-73.577),"")
+            model.destinationName!!.value=""
+            model.destinationAddress!!.value=""
+            model.destinationLocation!!.value=LatLng(45.494,-73.577)
             NavHostFragment.findNavController(this).navigateUp()
         }
         return root
     }
-
-        override fun onActivityCreated(savedInstanceState: Bundle?) {
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
     }
-
-     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) { //Displays the appropriate thing according to what the user selected.
-        super.onActivityResult(requestCode, resultCode, data)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) { //Displays the appropriate thing according to what the user selected.
         val model: DirectionsViewModel by activityViewModels()
+        super.onActivityResult(requestCode, resultCode, data)
         if (resultCode==RESULT_OK)
         {
             val place= data?.let { Autocomplete.getPlaceFromIntent(it) }
             Log.i(TAG,"Place: "+ place!!.name+ ","+place.id)
-            searchBar.setText(place.name)
-            model.setDestinationCompletely(place.name!!,place.latLng!!,place.address!!)
-            NavHostFragment.findNavController(this).navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
+            if (model.destinationChanged.value==true||model.destinationChanged.value==null)
+            {
+                model.destinationName!!.value=place?.name
+                model.destinationAddress!!.value=place?.address
+                model.destinationLocation!!.value=place?.latLng
+                Path.setDestination(model.destinationLocation.value!!)
+            }
+            if (model.destinationChanged.value==false)
+            {
+                model.originName!!.value=place?.name
+                model.originAddress!!.value=place?.address
+                model.originLocation!!.value=place?.latLng
+                Path.setOrigin(model.originLocation.value!!)
+            }
         }
         else if (resultCode==AutocompleteActivity.RESULT_ERROR)
         {
             val status=Autocomplete.getStatusFromIntent(data!!)
             Log.i(TAG, status.statusMessage)
             searchBar.setText("Error")
+            NavHostFragment.findNavController(this).navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
         }
+        if (model.destinationChanged.value==null)
+            NavHostFragment.findNavController(this).navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
+        else if (model.destinationChanged.value==true||model.destinationChanged.value==false)
+            NavHostFragment.findNavController(this).navigate(R.id.action_searchResultsFragment_to_directionsFragment)
     }
 
 

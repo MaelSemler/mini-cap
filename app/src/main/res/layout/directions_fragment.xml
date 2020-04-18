@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.soen390.conumap.ui.directions.DirectionsViewModel" />
+            type="com.soen390.conumap.path.Path" />
     </data>
 
     <FrameLayout
@@ -136,7 +136,7 @@
                             android:layout_marginLeft="30sp"
                             android:layout_marginTop="20dp"
                             android:layout_alignParentTop="true"
-                            android:text="@{viewmodel.returnTotalTimeText}"
+                            android:text="@{viewmodel._PathTotalTimeText}"
                             android:textColor="@android:color/black"
                             android:textSize="20sp" />
 
@@ -148,7 +148,7 @@
                             android:layout_marginStart="20dp"
                             android:layout_alignParentTop="true"
                             android:layout_marginTop="20dp"
-                            android:text="@{viewmodel.returnTotalDistanceText}"
+                            android:text="@{viewmodel._PathTotalDistanceText}"
                             android:textSize="20sp" />
 
                         <TextView
@@ -157,7 +157,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/totalDistance"
                             android:layout_marginLeft="30sp"
-                            android:text="@{viewmodel.returnInfoPathText}"
+                            android:text="@{viewmodel._infoPathText}"
                             android:layout_marginTop="50dp"
                             android:layout_alignParentTop="true"
                             android:textSize="15sp" />
@@ -200,7 +200,7 @@
                             android:id="@+id/DirectionsTextBox"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="@{viewmodel.returnDirectionText}"
+                            android:text="@{viewmodel._PathDirectionText}"
                             android:layout_below="@+id/directions_button"
                             android:layout_marginTop="20dp"
                             android:layout_marginLeft="30sp"

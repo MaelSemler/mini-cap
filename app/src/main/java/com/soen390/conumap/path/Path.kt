@@ -1,20 +1,25 @@
 package com.soen390.conumap.path
 
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.model.LatLng
 import com.soen390.conumap.Directions.DirectionService.route
+import com.soen390.conumap.ui.directions.DirectionsViewModel
 import com.soen390.conumap.map.Map
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.json.JSONArray
 
 object Path {
-    private var distance = 0.0
+    var viewModel= DirectionsViewModel()
+
     var alternativesOn = true
-    var transportationMode: String = "driving"
-    private lateinit var originFromSearch: LatLng
-    private lateinit var destinationFromSearch: LatLng
+    var transportationMode: String= "driving"
+    private lateinit var originLatLng: LatLng
+    private lateinit var destinationLatLng: LatLng
+
     val _PathDirectionText = MutableLiveData<String>()
     val _PathTotalDistanceText = MutableLiveData<String>()
     val _PathTotalTimeText = MutableLiveData<String>()
@@ -26,35 +31,29 @@ object Path {
     val map = Map
 
     fun setOrigin(value: LatLng) {
-        originFromSearch = value
+        originLatLng = value
     }
 
     fun setDestination(value: LatLng) {
-        destinationFromSearch = value
+        destinationLatLng = value
     }
-
     fun findDirections(activity: FragmentActivity) {
 
-        val originLatLng = originFromSearch
-        val destinationLatLng = destinationFromSearch
-
-        map.addMarker(originLatLng, ("This is the origin"))
-        map.addMarker(destinationLatLng, "Destination")
-        map.moveCamera(originLatLng, 14.5f)
+        map.addMarker(originLatLng!!, ("This is the origin"))
+        map.addMarker(destinationLatLng!!, "Destination")
+        map.moveCamera(originLatLng!!, 14.5f)
         GlobalScope.launch {
             route(
                 activity,
-                originLatLng,
-                destinationLatLng,
-                transportationMode,
+                originLatLng!!,
+                destinationLatLng!!,
+                transportationMode!!,
                 alternativesOn
             )
             //Calling the actual route function and passing all the needed parameters
         }
     }
 
-    fun switchOriginAndDestination() {
-    }
 
     fun getAlternatives(): Int {
         return _alternateRouteId.value!!.toInt()
@@ -113,12 +112,11 @@ object Path {
         _alternateRouteId.value = 0
         _alternateRouteIdMax.value = 99
     }
-
     fun setTransportation(mode: String){
-        Path.transportationMode=mode
+        transportationMode=mode
+    }
+    fun getTransportation():String{
+        return transportationMode
     }
 
-    fun getTransportation():String{
-        return Path.transportationMode
-    }
 }
