@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.database.sqlite.SQLiteQueryBuilder
 import android.util.Log
-import java.io.File
+import com.soen390.conumap.R
 
 // IndoorDatabase will be used to store node coordinates of rooms. When user searches for a room, the
 // database will be queried and return a Node, which can be used with the pathfinding algorithm.
@@ -207,5 +207,21 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
         }
 
         contents.close()
+    }
+
+    // Add all info from the string array passed in.
+    fun addAllInfoToTable(nodeInfo: Array<String>) {
+        val db: SQLiteDatabase = this.writableDatabase
+
+        for(i in nodeInfo.indices step 6) {
+            insertData(
+                nodeInfo[i + 0], // Building code.
+                nodeInfo[i + 1], // Floor number.
+                nodeInfo[i + 2], // Room number.
+                nodeInfo[i + 3], // Room code.
+                nodeInfo[i + 4], // Node X.
+                nodeInfo[i + 5]  // Node Y.
+            )
+        }
     }
 }

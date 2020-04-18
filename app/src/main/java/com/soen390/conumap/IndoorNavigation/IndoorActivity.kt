@@ -146,6 +146,7 @@ class IndoorActivity : AppCompatActivity() {
             }
         }
     }
+
 }
 
 
