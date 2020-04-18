@@ -54,7 +54,7 @@ object DirectionService {
 
             //Retrieve the correct URL to call the API
             val urlDirections = getGoogleMapRequestURL(activity, originLatLng, destinationLatLng, transportationMode, alternativesOn)
-            Log.d("DirectionServices", "GoogleMAp URL $urlDirections ")
+            Log.d("DirectionServices", "GoogleMap URL $urlDirections ")
 
             //Making the Request
             launch(Dispatchers.IO) {
@@ -115,6 +115,12 @@ object DirectionService {
                                 if (i != n) {
                                     drawPath(listOfPath[i].getMapSteps(), Color.GRAY, true)
                                 }
+                            }
+                            // Draws Shuttle Bus if transportation mode is transit
+                            if (transportationMode == "transit"){
+                                val shuttle_json = activity.getResources().openRawResource(R.raw.shuttle).bufferedReader().use { it.readText() }
+                                var shuttle = JSONObject(shuttle_json).getJSONArray("steps")
+                                drawPath(shuttle, Color.YELLOW, false)
                             }
                         } else {
                             // status NOT OK (No route from Google API)
