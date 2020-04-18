@@ -11,4 +11,5 @@
     <color name="red_transparent">#80932339</color>
     <color name="indoorPath">#ff2c55</color>
     <color name="transparent">#00000000</color>
+    <color name="black">#000000</color>
 </resources>

@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.widget.Button
 import android.widget.ListView
 import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
@@ -23,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_indoor.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlin.math.floor
 
 class IndoorActivity : AppCompatActivity() {
     lateinit var db: IndoorDatabaseHelper
@@ -98,7 +100,6 @@ class IndoorActivity : AppCompatActivity() {
         searchStartingRoom.isSubmitButtonEnabled = true
         suggestionList.visibility= View.GONE
 
-
         val floorConverter = ConverterToFloorPlan
 
         db = IndoorDatabaseHelper(this)
@@ -158,9 +159,7 @@ class IndoorActivity : AppCompatActivity() {
                 }
                 return false
             }
-        }
-        )
-
+        })
 
         //**************SearchBar Destination Room*****************
 
@@ -238,6 +237,7 @@ class IndoorActivity : AppCompatActivity() {
                     indoorMapResource = R.drawable.h9floorplan
                 }
             }
+            changeFloorButtonEnabled(floorNumber.toInt())
         }
 
         // Run pathfinding algorithm.
@@ -262,9 +262,11 @@ class IndoorActivity : AppCompatActivity() {
         pathfinding.loadBlocks(blockArray)
         var path: ArrayList<Node> = pathfinding.findPath()
 
+        // Retrieve path from algorithm.
         pathArray = arrayOfNulls<Node>(path.size) as Array<Node>
         path.toArray(pathArray)
 
+        // Display the path.
         showIndoorPath(indoorMapResource, pathArray)
     }
 
@@ -272,19 +274,33 @@ class IndoorActivity : AppCompatActivity() {
         imageRecycler.adapter = ImageAdapter(resource, indoorPath)
     }
 
-    fun h9Button(view: View){
-        val h9button = findViewById<View>(R.id.hfloor_nine_button)
-        h9button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.colorPrimary, null))
-        val h8button = findViewById<View>(R.id.hfloor_eight_button)
-        h8button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.buttonColor, null))
-        imageRecycler.adapter = ImageAdapter(R.drawable.h9floorplan, arrayOf())
+    fun changeFloorButtonEnabled(floorNumber: Int) {
+        val h9button = findViewById<View>(R.id.hfloor_nine_button) as Button
+        val h8button = findViewById<View>(R.id.hfloor_eight_button) as Button
+
+        when(floorNumber) {
+            8 -> {
+                h8button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.colorPrimary, null))
+                h8button.setTextColor(ResourcesCompat.getColor(resources, R.color.buttonColor, null))
+                h9button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.buttonColor, null))
+                h9button.setTextColor(ResourcesCompat.getColor(resources, R.color.black, null))
+            }
+            9 -> {
+                h9button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.colorPrimary, null))
+                h9button.setTextColor(ResourcesCompat.getColor(resources, R.color.buttonColor, null))
+                h8button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.buttonColor, null))
+                h8button.setTextColor(ResourcesCompat.getColor(resources, R.color.black, null))
+            }
+        }
     }
 
     fun h8Button(view: View){
-        val h9button = findViewById<View>(R.id.hfloor_nine_button)
-        h9button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.buttonColor, null))
-        val h8button = findViewById<View>(R.id.hfloor_eight_button)
-        h8button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.colorPrimary, null))
+        changeFloorButtonEnabled(8)
         imageRecycler.adapter = ImageAdapter(R.drawable.h8floorplan, arrayOf())
+    }
+
+    fun h9Button(view: View){
+        changeFloorButtonEnabled(9)
+        imageRecycler.adapter = ImageAdapter(R.drawable.h9floorplan, arrayOf())
     }
 }
