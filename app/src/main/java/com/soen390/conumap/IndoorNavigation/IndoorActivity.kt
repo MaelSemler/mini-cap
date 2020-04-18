@@ -132,7 +132,6 @@ class IndoorActivity : AppCompatActivity() {
         var tempBitmap = floorConverter.svgToBitMap()
 
         GlobalScope.launch {
-            println("Launching GlobalScope")
             // Floorplan
             val floorP = floorConverter.convertToPlan(tempBitmap)
 
@@ -155,10 +154,9 @@ class IndoorActivity : AppCompatActivity() {
 
             pathfinding.loadMap()
             pathfinding.loadBlocks(blockArray)
-            var path: MutableList<Node> = pathfinding.findPath()
-            for (node: Node in path) {
-                println("" + node + ",")
-            }
+            var path: ArrayList<Node> = pathfinding.findPath()
+            var pathArray = arrayOfNulls<Node>(path.size)
+            path.toArray(pathArray)
         }
     }
 
