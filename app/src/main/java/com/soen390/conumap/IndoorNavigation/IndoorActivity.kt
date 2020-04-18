@@ -68,8 +68,8 @@ class IndoorActivity : AppCompatActivity() {
         imageRecycler.adapter = ImageAdapter(R.drawable.h9floorplan, arrayOf())
 
         searchQueries = arrayListOf("H-823", "H-845", "H-859",
-            "H-803", "Washroom ( Men, 8)", "Washroom( Women, 8)", "Water Fountain (8)", "Vending Machine (8)",
-            "Washroom ( Men, 9)", "Washroom ( Women, 9)", "Water Fountain (9)", "Vending Machine (9)", "H-963", "H-961-7", "H-929", "H-907")
+            "H-803", "Washroom (Men, 8)", "Washroom (Women, 8)", "Water Fountain (8)", "Vending Machine (8)",
+            "Washroom (Men, 9)", "Washroom (Women, 9)", "Water Fountain (9)", "Vending Machine (9)", "H-963", "H-961-7", "H-929", "H-907")
 
         GlobalScope.launch {
             // Floorplan
@@ -158,7 +158,21 @@ class IndoorActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(destinationQuery: String): Boolean {
                 list.visibility= View.GONE
                 destinationRoom = destinationQuery
-                destinationCoor = db.getRoomCoordinates(destinationQuery)
+                if(destinationRoom.startsWith("H-")){
+                    destinationCoor = db.getRoomCoordinates(destinationQuery)
+                    Log.d("DESTINATION IS: ", destinationRoom)
+                }
+                else{
+                    var floorVal = destinationRoom.removeSurrounding("(",")")
+                    Log.d("FloorVal is: ", floorVal)
+
+
+                    destinationCoor = db.getPOICoordinates(destinationRoom,floorVal.toInt())
+                    Log.d("Destination: ", destinationCoor.toString())
+
+                }
+
+
                 Log.i("DESTINATION IS: ",destinationCoor.toString())
 
                 return false;
