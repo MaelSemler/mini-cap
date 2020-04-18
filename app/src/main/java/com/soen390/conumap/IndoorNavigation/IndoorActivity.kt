@@ -209,7 +209,7 @@ class IndoorActivity : AppCompatActivity() {
         )
 
     }
-    
+
 
 
     fun routeIndoor(view:View){
