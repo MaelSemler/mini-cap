@@ -33,28 +33,6 @@ class IndoorFragment : Fragment() {
                 ViewModelProviders.of(this).get(IndoorViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_indoor, container, false)
 
-        val hfloor_nine_button = root.findViewById<View>(R.id.hfloor_nine_button)
-        val hfloor_eight_button = root.findViewById<View>(R.id.hfloor_eight_button)
-
-        hfloor_nine_button.setOnClickListener{
-            context?.let { it1 -> ContextCompat.getColor(it1, R.color.colorPrimary) }?.let { it2 ->
-                hfloor_nine_button.setBackgroundColor(
-                    it2
-                )
-            }
-            Toast.makeText(context, "You clicked me.", Toast.LENGTH_SHORT).show()
-            print("\n---------------AAAAAAAAAAAAAA")
-        }
-
-        hfloor_eight_button.setOnClickListener{
-            context?.let { it1 -> ContextCompat.getColor(it1, R.color.colorPrimary) }?.let { it2 ->
-                hfloor_eight_button.setBackgroundColor(
-                    it2
-                )
-            }
-            print("\n---------------BBBBBBBBBBBBBBB")
-        }
-
         return root
     }
 
