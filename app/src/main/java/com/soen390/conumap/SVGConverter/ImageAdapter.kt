@@ -27,4 +27,5 @@ class ImageAdapter(): RecyclerView.Adapter<ImageHolder>() {
         var imageItem = LayoutInflater.from(parent?.context).inflate(R.layout.image_item, parent, false)
         return ImageHolder(imageItem)
     }
+
 }
