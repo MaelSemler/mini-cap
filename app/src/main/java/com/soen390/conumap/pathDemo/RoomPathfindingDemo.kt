@@ -7,7 +7,7 @@ import com.soen390.conumap.building.Floor
 
 fun main (args: Array<String>) {
     var origin = Node (1,1)
-    var destination = Node (1, 2)
+    var destination = Node (16, 15)
     var floorMap: Floor.FloorPlan
     var blockRow: ArrayList<Int> = arrayListOf()
     var blockCol: ArrayList<Int> = arrayListOf()
