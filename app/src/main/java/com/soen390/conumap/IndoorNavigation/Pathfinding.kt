@@ -9,17 +9,17 @@ import java.util.PriorityQueue
  * The algorithm is based on the A* path-finding algorithm in order to determine the quickest path
  * from one room to another, or from one room to an indoor point of interest.
  *
- * NOTE: It currently only works with vertical/horizontal movements
- * NOTE2: Coordinates start from top left corner (0,0) and increase rightwards and downwards.
+ * NOTE: Distances are calculated using Manhattan distance.
+ * NOTE2: Graph coordinates start from top left corner (0,0) and increase rightwards and downwards.
  */
 
 class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
     val moveCost: Int = 1
     var origin: Node = origin
     var destination: Node = destination
-    var mapArray: Array<Array<Node>> = Array(rows) {Array(cols) {Node(0,0)}}
+    var mapArray: Array<Array<Node>> = Array(cols) {Array(rows) {Node(0,0)}}
     @RequiresApi(Build.VERSION_CODES.N)
-    var openSet = PriorityQueue<Node>(NodeComparator)
+    var openSet = PriorityQueue(NodeComparator)
     var closedSet = mutableListOf<Node>()
 
     fun findPath(): MutableList<Node> {
@@ -37,7 +37,7 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
         return  noPath
     }
 
-    //Retreive the path from origin to destination
+    //Retrieve the path from origin to destination
     fun getPath(currentNode: Node): MutableList<Node> {
         var path: MutableList<Node> = arrayListOf()
         var currentNode = currentNode
@@ -60,7 +60,7 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
                 currentNode = Node(i, j)
                 currentNode.calculateH(destination)
                 tempArray += currentNode
-                mapArray[i][j]=(currentNode)
+                mapArray[i][j] = (currentNode)
             }
         }
     }
@@ -73,13 +73,13 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
         var counter = 0
         for (tempArray in blockArray) {
             if (counter == 0)
-                rowArray = tempArray
-            else {
                 colArray = tempArray
+            else {
+                rowArray = tempArray
             }
             counter ++
         }
-        for (i in 0..rowArray.size-1) {
+        for (i in 0..colArray.size-1) {
             mapArray[rowArray[i]][colArray[i]].makeBlock(true)
         }
     }
@@ -106,8 +106,8 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
 
     //Checks to see if a given node is valid (i.e. not a block) and adds it to the open set
     fun checkNode(currentNode: Node, row: Int, col: Int, cost: Int) {
-        var neighbourNode: Node = mapArray[row][col]
-        if (!mapArray[row][col].isBlock && !closedSet.contains(neighbourNode)) {
+        var neighbourNode: Node = mapArray[col][row]
+        if (!mapArray[col][row].isBlock && !closedSet.contains(neighbourNode)) {
             if (!openSet.contains(neighbourNode)) {
                 neighbourNode.updateNode(currentNode, cost)
                 openSet.add(neighbourNode)
@@ -124,20 +124,26 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
     }
 
     fun printMapSizeToConsole() {
-        println("Map size: "+mapArray.size+" rows x "+mapArray[0].size+" columns")
+        println("Map size: "+mapArray.size+" columns x "+mapArray[0].size+" rows")
     }
 
     fun printMapToConsole() {
-        for (array in mapArray.reversedArray()) {
-            for (value in array) {
-                if (value.equals(origin)) {
-                    print("O    ")
-                } else if (value.equals(destination)) {
-                    print("D    ")
-                } else if (value.isBlock) {
-                    print("X    ")
+        println("Legend: ")
+        (println("-: Walkable node"))
+        println("X: Block node")
+        println("O: Origin")
+        println("D: Destination")
+
+        for (y in 0..mapArray[0].size-1) {
+            for (x in 0..mapArray.size-1) {
+                if (mapArray[x][y].equals(origin)){
+                    print("O ")
+                } else if (mapArray[x][y].equals(destination)) {
+                    print("D ")
+                } else if (mapArray[x][y].isBlock) {
+                    print("X ")
                 } else {
-                    print("-    ")
+                    print("- ")
                 }
             }
             println()

@@ -5,37 +5,32 @@ import com.soen390.conumap.IndoorNavigation.Pathfinding
 import com.soen390.conumap.building.FloorCreator
 import com.soen390.conumap.building.Floor
 
-
 fun main (args: Array<String>) {
     var origin = Node (1,1)
-    var destination = Node (9, 17)
+    var destination = Node (16, 15)
     var floorMap: Floor.FloorPlan
     var blockRow: ArrayList<Int> = arrayListOf()
     var blockCol: ArrayList<Int> = arrayListOf()
 
     FloorCreator.createFloors()
 
-    //Temporarily hardcoded to first index since that's where H9 floor plan is currently stored
+    //Hardcoded to first index since that's where H9 floor plan is currently stored
     floorMap = FloorCreator.floors[0].floorPlan
 
     var floorNodes = floorMap.floorNodes
 
-    for (array in floorNodes.reversedArray()) {
+    for (array in floorNodes) {
         for (value in array) {
-            if (value.walkable == true) {
-                print ("-    ")
-            } else {
-                print("O    ")
+            if (!value.walkable) {
                 blockRow.add(value.yInd)
                 blockCol.add(value.xInd)
             }
         }
-        println()
     }
 
-    var blockArray = arrayOf(blockRow, blockCol)
+    var blockArray = arrayOf(blockCol, blockRow)
 
-    var pathfinding: Pathfinding = Pathfinding(floorMap.floorNodes.size,floorMap.floorNodes[0].size, origin, destination)
+    var pathfinding = Pathfinding(floorMap.floorNodes.size,floorMap.floorNodes[0].size, origin, destination)
 
     pathfinding.printMapSizeToConsole()
 

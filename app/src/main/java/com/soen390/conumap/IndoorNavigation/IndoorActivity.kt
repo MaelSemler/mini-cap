@@ -11,11 +11,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.soen390.conumap.R
+import com.soen390.conumap.SVGConverter.ConverterToFloorPlan
 import com.soen390.conumap.SVGConverter.ImageAdapter
 import com.soen390.conumap.databinding.IndoorSearchFragmentBinding
 import com.soen390.conumap.helper.ContextPasser
 import kotlinx.android.synthetic.main.activity_indoor.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class IndoorActivity : AppCompatActivity() {
     lateinit var db: IndoorDatabaseHelper
@@ -70,23 +73,7 @@ class IndoorActivity : AppCompatActivity() {
 
         list.visibility= View.GONE
 
-
-
-
-
-//        val floorConverter = ConverterToFloorPlan
-//
-//        var tempBitmap = floorConverter.svgToBitMap()
-
-//        GlobalScope.launch {
-//
-//            //@Andy Here is your floorplan
-//            val floorP =  floorConverter.convertToPlan(tempBitmap)
-//
-////            Proof that this is workinggg
-//            Log.i("TESTING: ",floorP.floorNodes[430][330].color)
-//        }
-                    //        // Demo so people can see how to use the database.
+        // Demo so people can see how to use the database.
         db = IndoorDatabaseHelper(this)
 
 
@@ -136,20 +123,43 @@ class IndoorActivity : AppCompatActivity() {
         }
         )
 
-
-
-
     }
 
     fun routeIndoor(view:View){
         val routeIndoorButton = findViewById<View>(R.id.indoorSubmitButton)
-        //CALL Algorithm here
-        startingCoor//This is startingRoom Node
-        destinationCoor// This is destinationRoom Node
 
+        val floorConverter = ConverterToFloorPlan
+        var tempBitmap = floorConverter.svgToBitMap()
 
+        GlobalScope.launch {
+            println("Launching GlobalScope")
+            // Floorplan
+            val floorP = floorConverter.convertToPlan(tempBitmap)
 
+            var blockRow: ArrayList<Int> = arrayListOf()
+            var blockCol: ArrayList<Int> = arrayListOf()
 
+            for (array in floorP.floorNodes) {
+                for (value in array) {
+                    if (value.walkable == true) {
+                    } else {
+                        blockCol.add(value.xInd)
+                        blockRow.add(value.yInd)
+                    }
+                }
+            }
+
+            var blockArray = arrayOf(blockCol, blockRow)
+
+            var pathfinding: Pathfinding = Pathfinding(floorP.floorNodes[0].size, floorP.floorNodes.size, startingCoor, destinationCoor)
+
+            pathfinding.loadMap()
+            pathfinding.loadBlocks(blockArray)
+            var path: MutableList<Node> = pathfinding.findPath()
+            for (node: Node in path) {
+                println("" + node + ",")
+            }
+        }
     }
 
     fun showIndoorPath(resource: Int, indoorPath: Array<Node>) {
