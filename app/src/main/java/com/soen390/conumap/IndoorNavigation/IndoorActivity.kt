@@ -101,13 +101,19 @@ class IndoorActivity : AppCompatActivity() {
             list.setOnItemClickListener { parent, view, i, id ->
                 val item:SearchQuery = list.adapter.getItem(i) as SearchQuery
 
-                Log.d("item: ", item.getQuery().toString())
-                Log.d("list_item[i]:", list[i].toString())
-                Log.d("getItemAt: ", list.getItemAtPosition(i).toString())
+                searchB.setQuery(item.getQuery().toString(),true)
+                list.visibility = View.GONE
 
-                searchB.setQuery(item.getQuery().toString(),false)
             }
         }
+
+        searchStartingRoom.setOnCloseListener(object: SearchView.OnCloseListener{
+            override fun onClose(): Boolean {
+                list.visibility = View.GONE
+                return false
+            }
+
+        })
 
         //Listening to the Search StartingRoom
         searchStartingRoom.setOnQueryTextListener(object:
@@ -120,7 +126,7 @@ class IndoorActivity : AppCompatActivity() {
                 startingCoor = db.getRoomCoordinates(startingQuery)
                 Log.i("Starting Room IS: ",startingCoor.toString())
 
-                return false;
+                return false
             }
             //When The searchbar textfield is changing
             override fun onQueryTextChange(newText: String): Boolean {
@@ -128,7 +134,7 @@ class IndoorActivity : AppCompatActivity() {
                 var text = newText;
                 adapter.filter(text);
                 clickItem(searchStartingRoom)
-                return false;
+                return false
             }
         }
         )
