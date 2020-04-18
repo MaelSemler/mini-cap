@@ -10,6 +10,7 @@ class DirectionsViewModel : ViewModel() {
      var destinationName= MutableLiveData<String>()
      var destinationAddress= MutableLiveData<String>()
      var destinationLocation= MutableLiveData<LatLng>()
+
      var originName= MutableLiveData<String>()
      var originAddress= MutableLiveData<String>()
      var originLocation= MutableLiveData<LatLng>()

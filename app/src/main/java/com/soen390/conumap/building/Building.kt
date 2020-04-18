@@ -4,6 +4,8 @@ import android.graphics.Color
 import android.graphics.Color.rgb
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
+import com.google.maps.android.PolyUtil
+import com.soen390.conumap.map.Map
 
 class Building(var name: String, var info: String, var location: LatLng, var outlineArray: Array<String>,
                var touchTargetArray: Array<String>, map: GoogleMap, var touchTargetID: Float) {
@@ -42,8 +44,13 @@ class Building(var name: String, var info: String, var location: LatLng, var out
                 outline.add(LatLng(outlineArray[i].toDouble(), outlineArray[i + 1].toDouble()))
             }
         }
+        var userLocation = Map.getCurrentLocation();
+        var colorFill = rgb(147, 35, 57);
+        if(PolyUtil.containsLocation(userLocation, outline.points, true)){
+            colorFill = rgb(35, 147, 125);
+        }
         map.addPolygon(outline
-            .fillColor(rgb(147, 35, 57))
+            .fillColor(colorFill)
             .strokeColor(Color.argb(0, 0, 0, 0))
         )
         return outline

@@ -47,28 +47,14 @@
         android:label="directions_fragment"
         tools:layout="@layout/directions_fragment" >
         <action
-            android:id="@+id/action_directionsFragment_to_alternateFragment"
-            app:destination="@id/alternateFragment" />
-        <action
             android:id="@+id/action_directionsFragment_to_searchBarFragment"
             app:destination="@id/searchBarFragment" />
         <action
             android:id="@+id/action_directionsFragment_to_searchResultsFragment"
             app:destination="@id/searchResultsFragment" />
-
-    </fragment>
-    <fragment
-        android:id="@+id/alternateFragment"
-        android:name="com.soen390.conumap.ui.directions.AlternateFragment"
-        android:label="AlternateFragment" >
         <action
-            android:id="@+id/action_alternateFragment_to_directionsFragment"
+            android:id="@+id/action_directionsFragment_self"
             app:destination="@id/directionsFragment" />
-        <action
-            android:id="@+id/action_alternateFragment_to_searchBarFragment"
-            app:destination="@id/searchBarFragment" />
-        <action
-            android:id="@+id/action_alternateFragment_to_searchCompletedFragment"
-            app:destination="@id/searchCompletedFragment" />
+
     </fragment>
 </navigation>

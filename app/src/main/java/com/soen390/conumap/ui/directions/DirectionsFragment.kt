@@ -1,13 +1,9 @@
 package com.soen390.conumap.ui.directions
 
-import android.app.Activity
-import android.content.ContentValues
-import android.content.ContentValues.TAG
-import android.content.Intent
-import androidx.lifecycle.ViewModelProviders
+import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -15,19 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.gms.maps.model.LatLng
 import androidx.navigation.fragment.NavHostFragment
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.model.RectangularBounds
-import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.AutocompleteActivity
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.soen390.conumap.R
 import com.soen390.conumap.databinding.DirectionsFragmentBinding
-import com.soen390.conumap.map.Map
 import com.soen390.conumap.path.Path
 import kotlinx.android.synthetic.main.directions_fragment.*
-import kotlinx.android.synthetic.main.search_results_fragment.*
-import java.util.*
 
 
 class DirectionsFragment : Fragment() {
@@ -70,23 +57,51 @@ class DirectionsFragment : Fragment() {
 
         Path.findDirections(requireActivity())
 
-        //Select radio button corresponding to transportation mode active
-        when(Path.getTransportation())
-        {
+        // Paint Current Button
+        binding.run {
+            //            Path.setDestination(destinationLatLng)
+
+            if(Path.getDirectionScreenMode()!!) {
+                // Paint Current Button
+                directionsButton.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.colorAccent)))
+                directionsButton.setTextColor(resources.getColor(R.color.buttonColor))
+                altButton.setTextColor(resources.getColor(R.color.colorAccent))
+            }else{
+                // Paint Current Button
+                altButton.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.colorAccent)))
+                altButton.setTextColor(resources.getColor(R.color.buttonColor))
+                directionsButton.setTextColor(resources.getColor(R.color.colorAccent))
+            }
+        }
+        // Select radio button corresponding to transportation mode active
+        when(Path.getTransportation()){
             getString(R.string.driving) -> binding.transportationCar.setChecked(true)
             getString(R.string.bicycling) -> binding.transportationBike.setChecked(true)
             getString(R.string.walking) -> binding.transportationWalk.setChecked(true)
             getString(R.string.transit) -> binding.transportationBus.setChecked(true)
+            else -> {
+                // Default transportation is car
+                binding.transportationCar.setChecked(true)
+                Path.setTransportation(getString(R.string.driving))
+            }
         }
+        Path.findDirections(requireActivity())
+
 
         // Alternate Routes
         binding.altButton.setOnClickListener{
-            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_alternateFragment)
+            Path.setDirectionsScreenMode("alt")
+            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_self)
+        }
+        // Direction Routes
+        binding.directionsButton.setOnClickListener{
+            Path.setDirectionsScreenMode("dir")
+            NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_self)
         }
         binding.startLocationButton.setOnClickListener{
             directionsViewModel.destinationChanged.value=false
             NavHostFragment.findNavController(this).navigate(R.id.action_directionsFragment_to_searchResultsFragment)
-             Path.findDirections(requireActivity())//Calls function for finding directions
+            Path.findDirections(requireActivity())//Calls function for finding directions
         }
         binding.endLocationButton.setOnClickListener{
             directionsViewModel.destinationChanged.value=true
@@ -112,7 +127,6 @@ class DirectionsFragment : Fragment() {
             Path.setTransportation(getString(R.string.transit))
             Path.findDirections(requireActivity())//Calls function for finding directions
         }
-
         //enable switchOriginAndDestination button
         binding.switchButton.setOnClickListener{
             switchButtons()
@@ -121,6 +135,39 @@ class DirectionsFragment : Fragment() {
             Path.findDirections(requireActivity())
         }
         //TODO: implement alternative button and set the alternative here. Display the changed directions.
+
+
+        if(!Path.getDirectionScreenMode()!!) {
+            binding.DirectionsTextBox.setOnTouchListener(View.OnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_DOWN) {
+                    // Toast.makeText(getActivity(), "AlternateFragment: Touch coordinates : " +  event.x.toString() + " x " + event.y.toString(), Toast.LENGTH_SHORT).show()
+                    // Change route
+                    if (event.y < 300) {
+                        //First line selected
+                        if (Path.getAlternatives() == 0) {
+                            Path.setAlternativeRoute(1)
+                        } else {
+                            Path.setAlternativeRoute(0)
+                        }
+                    } else {
+                        //Second Line selected
+                        if (Path.getAlternatives() == 2) {
+                            Path.setAlternativeRoute(1)
+                        } else {
+                            Path.setAlternativeRoute(2)
+                        }
+                    }
+                    // Save Context
+                    val route_id = Path.getAlternatives()
+                    Path.resetDirections()
+                    Path.setAlternativeRoute(route_id)
+                    Path.findDirections(requireActivity())
+                }
+
+                true
+            })
+        }
+
         return binding.root
     }
 
@@ -134,19 +181,19 @@ class DirectionsFragment : Fragment() {
 
 
     fun switchButtons(){
-        var originLocation=directionsViewModel.originLocation!!.value
-        directionsViewModel.originLocation!!.value=directionsViewModel.destinationLocation!!.value
-        directionsViewModel.destinationLocation!!.value=originLocation
+        val originLocation= directionsViewModel.originLocation.value
+        directionsViewModel.originLocation.value= directionsViewModel.destinationLocation.value
+        directionsViewModel.destinationLocation.value=originLocation
         Path.setOrigin(directionsViewModel.originLocation.value!!)
         Path.setDestination(directionsViewModel.destinationLocation.value!!)
 
-        var originName=directionsViewModel.originName!!.value
-        directionsViewModel.originName!!.value=directionsViewModel.destinationName!!.value
-        directionsViewModel.destinationName!!.value=originName
+        val originName= directionsViewModel.originName.value
+        directionsViewModel.originName.value= directionsViewModel.destinationName.value
+        directionsViewModel.destinationName.value=originName
 
-        var originAddress=directionsViewModel.originAddress!!.value
-        directionsViewModel.originAddress!!.value=directionsViewModel.destinationAddress!!.value
-        directionsViewModel.destinationAddress!!.value=originAddress
+        val originAddress= directionsViewModel.originAddress.value
+        directionsViewModel.originAddress.value= directionsViewModel.destinationAddress.value
+        directionsViewModel.destinationAddress.value=originAddress
     }
 
 }
