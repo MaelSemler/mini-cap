@@ -42,7 +42,7 @@ object ConverterToFloorPlan{
             if (svgFile.getDocumentWidth() !== -1F) {
 
                 // create a canvas to draw onto
-                bitmapFile = Bitmap.createBitmap(svgFile.documentWidth.toInt()+1,svgFile.documentHeight.toInt()+1, Bitmap.Config.ARGB_8888)
+                bitmapFile = Bitmap.createBitmap(svgFile.documentWidth.toInt(),svgFile.documentHeight.toInt(), Bitmap.Config.ARGB_8888)
                 val canvas = Canvas(bitmapFile)
 
                 // canvas - white background
@@ -63,10 +63,10 @@ object ConverterToFloorPlan{
         var numRow = bitmapFile?.height
         var numCol = bitmapFile?.width
 
-        for (i in 0..numCol!!){
+        for (i in 0..numCol!!-1){
             var row = arrayOf<Floor.FloorNode>()
-            for(j in 0..numRow!!) {
-                row += Floor.FloorNode(-1,-1, "#000000", "", false, false)
+            for(j in 0..numRow!!-1) {
+                row += Floor.FloorNode(0,0, "#000000", "", false, false)
             }
             floorNode += row
         }
@@ -75,8 +75,8 @@ object ConverterToFloorPlan{
         coroutineScope {
             launch(Dispatchers.IO) {
                 if (bitmapFile != null) {
-                    for (x in 0 until bitmapFile.width) {
-                        for (y in 0 until bitmapFile.height) {
+                    for (x in 0 until bitmapFile.width-1) {
+                        for (y in 0 until bitmapFile.height-1) {
 
                             //If it is a hallway then walkable
                             if ( bitmapFile.getPixel(x,y).toColor() == Color.rgb(243,211,211).toColor())

@@ -2,12 +2,12 @@ package com.soen390.conumap.IndoorNavigation
 
 import kotlin.math.abs
 
-class Node (row: Int, col: Int) {
+class Node (x: Int, y: Int) {
     var f: Int = 0
     var g: Int = 0
     var h: Int = 0
-    var row: Int = row
-    var col: Int = col
+    var row: Int = y
+    var col: Int = x
     var isBlock: Boolean = false
     var parent: Node? = null
 
@@ -44,7 +44,7 @@ class Node (row: Int, col: Int) {
     }
 
     override fun toString(): String {
-        return "Node("+row+","+col+")"
+        return "Node("+col+","+row+")"
     }
 
     fun equals (otherNode: Node): Boolean {

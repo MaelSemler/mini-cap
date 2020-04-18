@@ -2,7 +2,6 @@ package com.soen390.conumap.SVGConverter
 
 import android.content.Context
 import android.graphics.*
-import android.renderscript.RenderScript
 import androidx.core.content.ContextCompat
 import com.soen390.conumap.IndoorNavigation.Node
 import com.soen390.conumap.R
@@ -11,7 +10,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.logging.Logger.global
 
-class FloorPlanTransformation: Transformation {
+class FloorPlanTransformation(var indoorPath: Array<Node>): Transformation {
 
     private var context:Context
     private var mColor = 0
@@ -69,14 +68,14 @@ class FloorPlanTransformation: Transformation {
 
     // Draws the path on the indoor floorplan.
     fun drawPathIndoor(source: Bitmap, numXNodes: Int, numYNodes: Int): FloatArray {
-        var pathOfNodes = retrievePathIndoor()
+        var pathOfNodes = indoorPath
 
         var pathToDraw = mutableListOf<Float>()
 
         // Adds coordinates to pathToDraw.
         for(i in 0 until pathOfNodes.size - 1) {
-            var start = findNodeCoordinates(source, numXNodes, numYNodes, pathOfNodes[i].row, pathOfNodes[i].col)
-            var end = findNodeCoordinates(source, numXNodes, numYNodes, pathOfNodes[i + 1].row, pathOfNodes[i + 1].col)
+            var start = findNodeCoordinates(source, numXNodes, numYNodes, pathOfNodes[i].col, pathOfNodes[i].row)
+            var end = findNodeCoordinates(source, numXNodes, numYNodes, pathOfNodes[i + 1].col, pathOfNodes[i + 1].row)
 
             // 4 floats to add for each node: startX, startY, endX, endY.
             pathToDraw.add(start[0])
@@ -87,11 +86,6 @@ class FloorPlanTransformation: Transformation {
 
         // Convert to floatArray so we can use it with drawLineWithArray and return it.
         return pathToDraw.toFloatArray()
-    }
-
-    fun retrievePathIndoor(): Array<Node> {
-        // Temporary to test, should actually get path from pathfinding algorithm.
-        return arrayOf()
     }
 
     // Takes an array of Floats and draws line at desired position.
