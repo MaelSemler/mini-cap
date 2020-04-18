@@ -1,16 +1,14 @@
 package com.soen390.conumap.IndoorNavigation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ListView
 import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.soen390.conumap.IndoorNavigation.helperSearch.SearchAdapter
 import com.soen390.conumap.R
 import com.soen390.conumap.SVGConverter.ImageAdapter
 import com.soen390.conumap.databinding.IndoorSearchFragmentBinding
@@ -25,7 +23,7 @@ class IndoorActivity : AppCompatActivity() {
 
     lateinit var list: ListView
     lateinit var adapter: AdapterClass
-    lateinit var editsearch: SearchView
+    lateinit var searchBar: SearchView
     lateinit var searchQueries: ArrayList<String>
     var arraylist: ArrayList<SearchQuery> = ArrayList<SearchQuery>()
 
@@ -56,27 +54,12 @@ class IndoorActivity : AppCompatActivity() {
         }
         adapter = AdapterClass(this, arraylist)
         list.setAdapter(adapter)
-        editsearch = findViewById(R.id.search_view)
+        searchBar = findViewById(R.id.search_view)
 
         list.visibility= View.GONE
 
-        editsearch.setOnQueryTextListener(object:
-            OnQueryTextListener {
-            @Override
-            override fun onQueryTextSubmit(query: String): Boolean {
-                list.visibility= View.GONE
-                return false;
-            }
 
-            @Override
-            override fun onQueryTextChange(newText: String): Boolean {
-                list.visibility= View.VISIBLE
-                var text = newText;
-                adapter.filter(text);
-                return false;
-            }
-        }
-                )
+
 
 //            }
 
@@ -128,6 +111,28 @@ class IndoorActivity : AppCompatActivity() {
         var e = db.getPOICoordinates("Nonsense", 6) // Should be error.
 
         println(a.toString() + "\n" + b.toString() + "\n" + c.toString() + "\n" + d.toString() + "\n" + e.toString())
+
+
+        //Listening to the searchbar
+        searchBar.setOnQueryTextListener(object:
+            OnQueryTextListener {
+                //WHen user click on enter
+                override fun onQueryTextSubmit(startingQuery: String): Boolean {
+                    list.visibility= View.GONE
+                    Log.d("TESTING:", startingQuery)
+                    return false;
+                }
+                //When The searchbar textfield is changing
+                override fun onQueryTextChange(newText: String): Boolean {
+                    list.visibility= View.VISIBLE
+                    var text = newText;
+                    adapter.filter(text);
+                    return false;
+                }
+            }
+        )
+
+
 
 
     }
