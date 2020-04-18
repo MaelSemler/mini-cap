@@ -132,11 +132,21 @@ class IndoorActivity : AppCompatActivity() {
                 list.visibility= View.GONE
                 startingRoom = startingQuery
 
-                startingCoor = db.getRoomCoordinates(startingQuery)
+                if(startingRoom.startsWith("H-")){
+                    startingCoor = db.getRoomCoordinates(startingQuery)
+                }
+                else{
+                    var digitRegex = ("\\d+").toRegex()
+                    var listDigit = listOf("0","1","2","3","4","5","6","7","8","9")
+                    var floorValIndex = startingRoom.indexOfAny(listDigit,0,true)
+                    var floorNum = startingRoom[floorValIndex].toString().toInt()
+                    Log.d("FloorVal is: ", startingRoom[floorValIndex].toString())
+                    destinationCoor = db.getPOICoordinates(startingRoom,floorNum)
+                }
                 Log.i("Starting Room IS: ",startingCoor.toString())
-
                 return false
             }
+
             //When The searchbar textfield is changing
             override fun onQueryTextChange(newText: String): Boolean {
                 list.visibility= View.VISIBLE
@@ -163,20 +173,20 @@ class IndoorActivity : AppCompatActivity() {
                     Log.d("DESTINATION IS: ", destinationRoom)
                 }
                 else{
-                    var floorVal = destinationRoom.removeSurrounding("(",")")
-                    Log.d("FloorVal is: ", floorVal)
 
+                    var digitRegex = ("\\d+").toRegex()
+                    var listDigit = listOf("0","1","2","3","4","5","6","7","8","9")
+                    var floorValIndex = destinationRoom.indexOfAny(listDigit,0,true)
+                    var floorNum = destinationRoom[floorValIndex].toString().toInt()
+                    Log.d("FloorVal is: ", destinationRoom[floorValIndex].toString())
 
-                    destinationCoor = db.getPOICoordinates(destinationRoom,floorVal.toInt())
+                    destinationCoor = db.getPOICoordinates(destinationRoom,floorNum)
                     Log.d("Destination: ", destinationCoor.toString())
-
                 }
-
-
-                Log.i("DESTINATION IS: ",destinationCoor.toString())
 
                 return false;
             }
+            
             //When The searchbar textfield is changing
             override fun onQueryTextChange(newText: String): Boolean {
                 list.visibility= View.VISIBLE
