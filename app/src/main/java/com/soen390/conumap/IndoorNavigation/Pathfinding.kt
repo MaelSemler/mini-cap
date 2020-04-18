@@ -22,7 +22,7 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
     var openSet = PriorityQueue(NodeComparator)
     var closedSet = mutableListOf<Node>()
 
-    fun findPath(): MutableList<Node> {
+    fun findPath(): ArrayList<Node> {
         openSet.add(origin)
         while (openSet.size > 0) {
             var currentNode: Node = openSet.poll()
@@ -33,13 +33,13 @@ class Pathfinding (rows: Int, cols: Int, origin: Node, destination: Node) {
                 addNeighbours(currentNode)
             }
         }
-        var noPath:MutableList<Node> = mutableListOf()
+        var noPath: ArrayList<Node> = arrayListOf()
         return  noPath
     }
 
     //Retrieve the path from origin to destination
-    fun getPath(currentNode: Node): MutableList<Node> {
-        var path: MutableList<Node> = arrayListOf()
+    fun getPath(currentNode: Node): ArrayList<Node> {
+        var path: ArrayList<Node> = arrayListOf()
         var currentNode = currentNode
         var parentNode: Node? = currentNode.parent
         path.add(currentNode)

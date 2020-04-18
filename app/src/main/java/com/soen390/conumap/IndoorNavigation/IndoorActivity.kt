@@ -154,7 +154,9 @@ class IndoorActivity : AppCompatActivity() {
 
             pathfinding.loadMap()
             pathfinding.loadBlocks(blockArray)
-            var path: MutableList<Node> = pathfinding.findPath()
+            var path: ArrayList<Node> = pathfinding.findPath()
+            var pathArray = arrayOfNulls<Node>(path.size)
+            path.toArray(pathArray)
         }
     }
 
