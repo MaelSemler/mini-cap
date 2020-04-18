@@ -1,17 +1,18 @@
 package com.soen390.conumap.IndoorNavigation
 
-import android.app.SearchManager
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.widget.*
+import android.widget.ImageView
+import android.widget.ListView
+import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
+import android.widget.SimpleCursorAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.soen390.conumap.R
 import com.soen390.conumap.SVGConverter.ConverterToFloorPlan
@@ -115,6 +116,14 @@ class IndoorActivity : AppCompatActivity() {
 
         })
 
+        searchDestinationRoom.setOnCloseListener(object: SearchView.OnCloseListener{
+            override fun onClose(): Boolean {
+                list.visibility = View.GONE
+                return false
+            }
+
+        })
+
         //Listening to the Search StartingRoom
         searchStartingRoom.setOnQueryTextListener(object:
             OnQueryTextListener {
@@ -134,11 +143,15 @@ class IndoorActivity : AppCompatActivity() {
                 var text = newText;
                 adapter.filter(text);
                 clickItem(searchStartingRoom)
+
+                if (TextUtils.isEmpty(newText)){
+                    list.visibility = View.GONE
+                }
                 return false
             }
         }
         )
-
+        
         searchDestinationRoom.setOnQueryTextListener(object:
             OnQueryTextListener {
             //WHen user click on enter
@@ -156,6 +169,9 @@ class IndoorActivity : AppCompatActivity() {
                 var text = newText;
                 adapter.filter(text);
                 clickItem(searchDestinationRoom)
+                if (TextUtils.isEmpty(newText)){
+                    list.visibility = View.GONE
+                }
                 return false;
             }
             }
