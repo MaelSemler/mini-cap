@@ -1,5 +1,6 @@
 package com.soen390.conumap.IndoorNavigation
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.soen390.conumap.R
 import com.soen390.conumap.SVGConverter.ConverterToFloorPlan
 import com.soen390.conumap.SVGConverter.ImageAdapter
+import com.soen390.conumap.building.Floor
 import com.soen390.conumap.databinding.IndoorSearchFragmentBinding
 import com.soen390.conumap.helper.ContextPasser
 import kotlinx.android.synthetic.main.activity_indoor.*
@@ -34,12 +36,14 @@ class IndoorActivity : AppCompatActivity() {
     lateinit var  startingRoom: String
     lateinit var  startingCoor: Node
 
-
     lateinit var  destinationRoom: String
     lateinit var  destinationCoor: Node
 
     var arraylist: ArrayList<SearchQuery> = ArrayList<SearchQuery>()
 
+    lateinit var floorConverter: ConverterToFloorPlan
+    lateinit var tempBitmap: Bitmap
+    lateinit var floorP: Floor.FloorPlan
 
     val viewModel: IndoorSearchViewModel by viewModels{
         IndoorSearchViewModel.Factory(assets, Dispatchers.IO)
@@ -50,6 +54,8 @@ class IndoorActivity : AppCompatActivity() {
         setContentView(R.layout.activity_indoor)
 
         ContextPasser.setContextIndoor(this)
+        floorConverter = ConverterToFloorPlan
+        tempBitmap = floorConverter.svgToBitMap() as Bitmap
 
         imageRecycler.layoutManager = LinearLayoutManager(this)
         imageRecycler.adapter = ImageAdapter(R.drawable.h9floorplan, arrayOf())
@@ -58,6 +64,10 @@ class IndoorActivity : AppCompatActivity() {
             "H-803", "Washroom(Men, 8+)", "Washroom(Women, 8+)", "Water Fountain(8)", "Vending Machine(8)",
             "Washroom(Men, 9+)", "Washroom(Women, 9+)", "Water Fountain(9)", "Vending Machine(9)", "H-963", "H-961-7", "H-929", "H-907")
 
+        GlobalScope.launch {
+            // Floorplan
+            floorP = floorConverter.convertToPlan(tempBitmap)
+        }
 
         list = findViewById(R.id.list_view);
         for (element in searchQueries) {
@@ -128,12 +138,10 @@ class IndoorActivity : AppCompatActivity() {
     fun routeIndoor(view:View){
         val routeIndoorButton = findViewById<View>(R.id.indoorSubmitButton)
 
-        val floorConverter = ConverterToFloorPlan
-        var tempBitmap = floorConverter.svgToBitMap()
+//        val floorConverter = ConverterToFloorPlan
+//        var tempBitmap = floorConverter.svgToBitMap()
 
-        GlobalScope.launch {
-            // Floorplan
-            val floorP = floorConverter.convertToPlan(tempBitmap)
+
 
             var blockRow: ArrayList<Int> = arrayListOf()
             var blockCol: ArrayList<Int> = arrayListOf()
@@ -155,9 +163,9 @@ class IndoorActivity : AppCompatActivity() {
             pathfinding.loadMap()
             pathfinding.loadBlocks(blockArray)
             var path: ArrayList<Node> = pathfinding.findPath()
-            var pathArray = arrayOfNulls<Node>(path.size)
+            var pathArray = arrayOfNulls<Node>(path.size) as Array<Node>
             path.toArray(pathArray)
-        }
+        showIndoorPath(R.drawable.h8floorplan, pathArray)
     }
 
     fun showIndoorPath(resource: Int, indoorPath: Array<Node>) {
