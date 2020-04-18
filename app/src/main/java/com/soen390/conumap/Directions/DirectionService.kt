@@ -120,7 +120,22 @@ object DirectionService {
                             if (transportationMode == "transit"){
                                 val shuttle_json = activity.getResources().openRawResource(R.raw.shuttle).bufferedReader().use { it.readText() }
                                 var shuttle = JSONObject(shuttle_json).getJSONArray("steps")
-                                drawPath(shuttle, Color.YELLOW, false)
+                                drawPath(shuttle, Color.RED, false)
+
+                                // Adds Shuttle as alternate route
+                                var dirObj : Directions = Directions()
+                                val extractedCleanedDirections = dirObj.extractDirections(shuttle)
+                                val pathInfo = shuttle.getJSONObject(0).getString("summary")
+
+                                dirObj.updateSteps(extractedCleanedDirections)
+                                dirObj.updateTotalDistance("")
+                                dirObj.updateTotalDuration("")
+                                dirObj.updatePathInfo(pathInfo)
+                                dirObj.updateMapSteps(shuttle)
+
+                                //List of Path is an ArrayList containing every alternative route
+                                listOfPath.add(dirObj)
+                                
                             }
                         } else {
                             // status NOT OK (No route from Google API)
