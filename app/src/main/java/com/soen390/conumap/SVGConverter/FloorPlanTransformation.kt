@@ -1,105 +1,105 @@
 package com.soen390.conumap.SVGConverter
 
-
 import android.content.Context
 import android.graphics.*
 import android.renderscript.RenderScript
+import androidx.core.content.ContextCompat
 import com.soen390.conumap.IndoorNavigation.Node
+import com.soen390.conumap.R
 import com.squareup.picasso.Transformation
 
+class FloorPlanTransformation(var indoorPath: Array<Node>): Transformation {
 
-class FloorPlanTransformation: Transformation {
-
-    private lateinit var context:Context
-    var svgCon: ConverterToFloorPlan = ConverterToFloorPlan
-    lateinit var pathPaint: Paint
-    lateinit var paint:Paint
-    lateinit var canvas: Canvas
+    private var context:Context
     private var mColor = 0
-
+    lateinit var canvas: Canvas
+    var svgCon: ConverterToFloorPlan = ConverterToFloorPlan
+    var pathPaint: Paint
+    var paint: Paint
 
     init {
         context = svgCon.getContext()
         pathPaint = setupPathPaint()
         paint = setupMainPaint()
-
     }
-    var rs : RenderScript = RenderScript.create(context)
 
     override fun key(): String {
        return "Transformed floorPlan"
     }
 
-    private fun setupPathPaint(): Paint{
+    private fun setupPathPaint(): Paint {
         pathPaint = Paint()
         pathPaint.isAntiAlias = true
         pathPaint.style = Paint.Style.STROKE
-        pathPaint.strokeWidth = 20.0F
-        pathPaint.color = Color.BLUE
+        pathPaint.strokeWidth = 15f
+        pathPaint.color = ContextCompat.getColor(context, R.color.indoorPath)
         return pathPaint
     }
 
-    private fun setupMainPaint():Paint{
+    private fun setupMainPaint():Paint {
         paint = Paint()
         paint.setAntiAlias(true)
         paint.setColorFilter(PorterDuffColorFilter(mColor, PorterDuff.Mode.SRC_ATOP))
         return paint
     }
 
+    // Transformation of indoor floor plan image which includes drawing an indoor path.
     override fun transform(source: Bitmap): Bitmap {
         val width = source.width
         val height = source.height
 
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-//        val bitmap = Bitmap.createBitmap(width, height,
-
 
         canvas = Canvas(bitmap)
+        canvas.drawBitmap(source, 0f, 0f, paint)
 
-        canvas.drawBitmap(source, 0.0F, 0.0F, paint)
-
-        /////////////////EXAMPLE WITH FloatArray////////////////
-        var exArray = floatArrayOf(800F,600F,2500F,600F, 3000F,1500F,3000F,3500F)
-        drawLineWithArray(exArray)
-        ///////////////////////////////////////////////////////
-
-        //TODO: This should be the only method called here?
-        drawPathIndoor()
+        var indoorPath = drawPathIndoor(source, 400, 367)
+        drawLineWithArray(indoorPath)
 
         source.recycle()
 
         return bitmap
     }
 
-    //TODO: Method that would run the algorithm, retrieve the points, then draw the path + other trimmings?
-    fun drawPathIndoor(){
-        retrievePathIndoor()
-//        Loop thru the retrived data and draw the path
-//        drawLineStartStop()
+    // Draws the path on the indoor floorplan.
+    fun drawPathIndoor(source: Bitmap, numXNodes: Int, numYNodes: Int): FloatArray {
+        var pathOfNodes = indoorPath
+
+        var pathToDraw = mutableListOf<Float>()
+
+        // Adds coordinates to pathToDraw.
+        for(i in 0 until pathOfNodes.size - 1) {
+            var start = findNodeCoordinates(source, numXNodes, numYNodes, pathOfNodes[i].row, pathOfNodes[i].col)
+            var end = findNodeCoordinates(source, numXNodes, numYNodes, pathOfNodes[i + 1].row, pathOfNodes[i + 1].col)
+
+            // 4 floats to add for each node: startX, startY, endX, endY.
+            pathToDraw.add(start[0])
+            pathToDraw.add(start[1])
+            pathToDraw.add(end[0])
+            pathToDraw.add(end[1])
+        }
+
+        // Convert to floatArray so we can use it with drawLineWithArray and return it.
+        return pathToDraw.toFloatArray()
     }
 
-
-    //TODO: This should be to link to Algorithm to retrieve the array of coordinates
-    fun retrievePathIndoor(){
-
-    }
-
-    //This method would be the most straight forward since we can loop and call this
-    fun drawLineStartStop(start:Node,stop:Node){
-        canvas.drawLine(start.getX(), start.getY(), stop.getX(), stop.getY(), pathPaint)
-    }
-
-
-    //Second option: With this method you need to be careful
-    // you need to repeat the last stopNode and copy it into the next startNode
-    // We could probably override the method to make it work if we want to i guess
-    // Just less straight forward to use
-    //TODO: SEE EXAMPLE Up there
-    fun drawLineWithArray(pathArray:FloatArray){
+    // Takes an array of Floats and draws line at desired position.
+    // A line needs 4 floats: startX, startY, endX, endY.
+    fun drawLineWithArray(pathArray: FloatArray){
         canvas.drawLines(pathArray, pathPaint)
     }
 
+    // Function which returns the coordinates of a given node.
+    fun findNodeCoordinates(source: Bitmap, numXNodes: Int, numYNodes: Int, nodeX: Int, nodeY: Int): FloatArray {
+        // Determine the length and width of an individual node.
+        val nodeWidth = source.width / numXNodes.toFloat()
+        val nodeHeight = source.height / numYNodes.toFloat()
 
+        // Find the center of the desired node.
+        val nodeCenterX = (nodeX * nodeWidth) + (nodeWidth / 2)
+        val nodeCenterY = (nodeY * nodeHeight) + (nodeHeight / 2)
+
+        // Return an array with [xCoord, yCoord] of the node's center, which can be used to draw the path.
+        return floatArrayOf(nodeCenterX, nodeCenterY)
+    }
 }
-
-

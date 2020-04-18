@@ -6,31 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".IndoorNavigation.IndoorActivity">
 
+    <Button
+        android:id="@+id/hfloor_nine_button"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="200dp"
+        android:layout_marginBottom="40dp"
+        android:background="@color/colorPrimary"
+        android:onClick="h9Button"
+        android:text="9" />
 
-    <RelativeLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+    <Button
+        android:id="@+id/hfloor_eight_button"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="150dp"
+        android:layout_marginBottom="40dp"
+        android:background="@color/buttonColor"
+        android:onClick="h8Button"
+        android:text="8" />
 
-
-        <Button
-            android:id="@+id/indoorConvert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="146dp"
-            android:layout_marginTop="102dp"
-            android:text="IndoorConvert" />
-
-
-
-    </RelativeLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/imageRecycler"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/imageRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>
-

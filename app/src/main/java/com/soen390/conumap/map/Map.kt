@@ -1,6 +1,7 @@
 package com.soen390.conumap.map
 
 import android.content.Context
+import android.content.Intent
 import android.view.Gravity
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
@@ -9,13 +10,16 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
+import com.soen390.conumap.IndoorNavigation.IndoorActivity
 import com.soen390.conumap.R
 import com.soen390.conumap.building.Building
 import com.soen390.conumap.building.BuildingCreator
 import com.soen390.conumap.building.BuildingInfoWindowAdapter
+import com.soen390.conumap.building.BuildingsConstants
 import com.soen390.conumap.campus.Campus
 import com.soen390.conumap.helper.DeviceLocationChecker
 import com.soen390.conumap.permission.Permission
+import com.soen390.conumap.ui.gallery.IndoorFragment
 
 object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
 
@@ -163,7 +167,6 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
         } else {
             moveCamera(sgwCampus.location, 16f)
             sgwCampus.marker.showInfoWindow()
-            BuildingCreator.showIndoorMap(gMap, "H", 9)
         }
     }
 
@@ -192,6 +195,10 @@ object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, G
 
     // Close the info window when it is tapped.
     override fun onInfoWindowClick(p0: Marker?) {
+        if(p0?.title.equals(context.getString(R.string.sgwHName))){
+            val intent = Intent(context, IndoorActivity::class.java)
+            context.startActivity(intent);
+        }
         p0?.hideInfoWindow()
     }
 }
