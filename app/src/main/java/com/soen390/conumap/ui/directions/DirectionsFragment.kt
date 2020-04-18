@@ -1,5 +1,6 @@
 package com.soen390.conumap.ui.directions
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -44,6 +45,7 @@ class DirectionsFragment : Fragment() {
     private lateinit var viewModel: DirectionsViewModel
     lateinit var binding : DirectionsFragmentBinding
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -93,10 +95,6 @@ class DirectionsFragment : Fragment() {
                 Path.setTransportation(getString(R.string.driving))
             }
         }
-
-        //TODO: Will need to be refactor, we should be calling this function from the onclick in SearchCompletedFragment
-        // FOR DEV26-switching
-        Path.findDirections(requireActivity())
 
         // Alternate Routes
         binding.altButton.setOnClickListener{
@@ -170,21 +168,22 @@ class DirectionsFragment : Fragment() {
                 if (event.action == MotionEvent.ACTION_DOWN) {
                     // Toast.makeText(getActivity(), "AlternateFragment: Touch coordinates : " +  event.x.toString() + " x " + event.y.toString(), Toast.LENGTH_SHORT).show()
                     // Change route
-                    if (event.y < 300) {
+                    var line = 0
+                    if (event.y < 210) {
                         //First line selected
-                        if (Path.getAlternatives() == 0) {
-                            Path.setAlternativeRoute(1)
-                        } else {
-                            Path.setAlternativeRoute(0)
-                        }
-                    } else {
-                        //Second Line selected
-                        if (Path.getAlternatives() == 2) {
-                            Path.setAlternativeRoute(1)
-                        } else {
-                            Path.setAlternativeRoute(2)
-                        }
+                        line = 1
+                    } else if (event.y < 450 ) {
+                        line = 2
+                    } else if (event.y < 620 ) {
+                        line = 3
+                    } else if (event.y < 620 ) {
+                        line = 4
                     }
+                    //Toast.makeText(getActivity(), "AlternateFragment: Line selected : $line" , Toast.LENGTH_SHORT).show()
+                    if (line <=  Path.getAlternatives()){
+                        line = line - 1
+                    }
+                    Path.setAlternativeRoute(line)
                     // Save Context
                     val route_id = Path.getAlternatives()
                     Path.resetDirections()
@@ -270,8 +269,6 @@ class DirectionsFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
         val model: SearchBarViewModel by activityViewModels()
-        //val destination = model.getDestination()
-        //end_location_button.setText(destination)
 
     }
 }
