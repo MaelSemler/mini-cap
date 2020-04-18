@@ -57,7 +57,7 @@ class DirectionsFragment : Fragment() {
             //If you're using an emulator, use the first commented out line
             //If you're using a phone, use the second commented out line
             //PLEASE TEST THIS
-            directionsViewModel.originLocation.value= LatLng(42.7,-74.3)
+            directionsViewModel.originLocation.value= LatLng(45.7,-73.3)
             //directionsViewModel.originLocation.value= Map.getCurrentLocation()
             Path.setOrigin(directionsViewModel.originLocation.value!!)
         }
