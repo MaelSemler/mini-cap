@@ -7,6 +7,9 @@ import androidx.core.content.ContextCompat
 import com.soen390.conumap.IndoorNavigation.Node
 import com.soen390.conumap.R
 import com.squareup.picasso.Transformation
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.logging.Logger.global
 
 class FloorPlanTransformation: Transformation {
 
@@ -49,6 +52,9 @@ class FloorPlanTransformation: Transformation {
         val height = source.height
 
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+//        GlobalScope.launch{
+//            svgCon.convertToPlan(bitmap)
+//        }
 
         canvas = Canvas(bitmap)
         canvas.drawBitmap(source, 0f, 0f, paint)

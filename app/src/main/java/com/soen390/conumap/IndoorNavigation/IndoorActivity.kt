@@ -1,16 +1,22 @@
 package com.soen390.conumap.IndoorNavigation
 
+import android.app.SearchManager
+import android.database.Cursor
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.CursorAdapter
 import android.widget.ListView
 import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
+import android.widget.SimpleCursorAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.soen390.conumap.R
+import com.soen390.conumap.SVGConverter.ConverterToFloorPlan
 import com.soen390.conumap.SVGConverter.ImageAdapter
 import com.soen390.conumap.databinding.IndoorSearchFragmentBinding
 import com.soen390.conumap.helper.ContextPasser
@@ -35,6 +41,9 @@ class IndoorActivity : AppCompatActivity() {
     lateinit var  destinationRoom: String
     lateinit var  destinationCoor: Node
 
+    lateinit var mAdapter: SimpleCursorAdapter
+
+
     var arraylist: ArrayList<SearchQuery> = ArrayList<SearchQuery>()
 
 
@@ -54,8 +63,8 @@ class IndoorActivity : AppCompatActivity() {
         imageRecycler.adapter = ImageAdapter(R.drawable.h9floorplan)
 
         searchQueries = arrayListOf("H-823", "H-845", "H-859",
-            "H-803", "Washroom(Men, 8+)", "Washroom(Women, 8+)", "Water Fountain(8)", "Vending Machine(8)",
-            "Washroom(Men, 9+)", "Washroom(Women, 9+)", "Water Fountain(9)", "Vending Machine(9)", "H-963", "H-961-7", "H-929", "H-907")
+            "H-803", "Washroom ( Men, 8)", "Washroom( Women, 8)", "Water Fountain (8)", "Vending Machine (8)",
+            "Washroom ( Men, 9)", "Washroom ( Women, 9)", "Water Fountain (9)", "Vending Machine (9)", "H-963", "H-961-7", "H-929", "H-907")
 
 
         list = findViewById(R.id.list_view);
@@ -69,6 +78,9 @@ class IndoorActivity : AppCompatActivity() {
         searchStartingRoom = findViewById(R.id.search_StartRoom)
         searchDestinationRoom = findViewById(R.id.search_DestinationRoom)
 
+        searchDestinationRoom.isSubmitButtonEnabled = true
+        searchStartingRoom.isSubmitButtonEnabled = true
+
 
         list.visibility= View.GONE
 
@@ -76,9 +88,9 @@ class IndoorActivity : AppCompatActivity() {
 
 
 
-//        val floorConverter = ConverterToFloorPlan
+        val floorConverter = ConverterToFloorPlan
 //
-//        var tempBitmap = floorConverter.svgToBitMap()
+        var tempBitmap = floorConverter.svgToBitMap()
 
 //        GlobalScope.launch {
 //
@@ -116,6 +128,26 @@ class IndoorActivity : AppCompatActivity() {
         )
 
         //Listening to the Search StartingRoom
+        searchDestinationRoom.setOnSuggestionListener(object: SearchView.OnSuggestionListener{
+            override fun onSuggestionSelect(i: Int):Boolean{
+                searchDestinationRoom.setQuery(list_view[i].toString(), false)
+                Log.d("ONSELECT", list_view[i].toString())
+                return true
+            }
+
+            override fun onSuggestionClick(position: Int): Boolean {
+                val selectedView: CursorAdapter = searchDestinationRoom.suggestionsAdapter
+                val cursor: Cursor = selectedView.getItem(position) as Cursor
+                var index = cursor.getColumnIndexOrThrow(SearchManager.SUGGEST_COLUMN_TEXT_1)
+                searchDestinationRoom.setQuery(cursor.getString(index), false)
+                Log.d("ONCLICKK is", cursor.getString(index) )
+                return true
+            }
+        })
+
+
+
+
         searchDestinationRoom.setOnQueryTextListener(object:
             OnQueryTextListener {
             //WHen user click on enter
@@ -135,8 +167,13 @@ class IndoorActivity : AppCompatActivity() {
                 adapter.filter(text);
                 return false;
             }
+
+
+
         }
         )
+
+
 
 
 
