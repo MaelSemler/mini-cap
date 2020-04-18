@@ -172,17 +172,20 @@ class DirectionsFragment : Fragment() {
                     if (event.y < 210) {
                         //First line selected
                         line = 1
-                    } else if (event.y < 450 ) {
+                    } else if (event.y < 420 ) {
                         line = 2
-                    } else if (event.y < 620 ) {
+                    } else if (event.y < 640 ) {
                         line = 3
-                    } else if (event.y < 620 ) {
+                    } else if (event.y < 860 ) {
                         line = 4
+                    } else if (event.y < 1080 ) {
+                        line = 5
                     }
-                    //Toast.makeText(getActivity(), "AlternateFragment: Line selected : $line" , Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(getActivity(), "AlternateFragment: Line selected : $line" , Toast.LENGTH_SHORT).show()
                     if (line <=  Path.getAlternatives()){
                         line = line - 1
                     }
+                    // Toast.makeText(getActivity(), "AlternateFragment: Route selected : $line" , Toast.LENGTH_SHORT).show()
                     Path.setAlternativeRoute(line)
                     // Save Context
                     val route_id = Path.getAlternatives()

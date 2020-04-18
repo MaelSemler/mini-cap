@@ -96,32 +96,12 @@ object DirectionService {
                                 listOfPath.add(dirObj)
 
                             }
-                            //Update the display on the main thread
-                            var n = com.soen390.conumap.path.Path.getAlternatives()
-                            if ( n >= listOfPath.size){
-                                n = 0
-                                com.soen390.conumap.path.Path.setAlternativeRoute(0)
-                                Log.e("DirectionService", "Alternate Route Id > List of recorded routes")
-                            }
-                            activity.runOnUiThread {
-                                displayOnScreenPath(listOfPath,n)
-                            }
-
-                            ResetPathDrawing()
-                            //This Draw on the Map the tracing of "Steps"
-                            drawPath(steps, Color.RED, false)     // Draw main path
-                            // Draws alternate routes
-                            for (i in 0 until listOfPath.size) {
-                                if (i != n) {
-                                    drawPath(listOfPath[i].getMapSteps(), Color.GRAY, true)
-                                }
-                            }
                             // Draws Shuttle Bus if transportation mode is transit
                             if (transportationMode == "transit"){
                                 val shuttle_json = activity.getResources().openRawResource(R.raw.shuttle).bufferedReader().use { it.readText() }
                                 var shuttle = JSONObject(shuttle_json).getJSONArray("steps")
-                                drawPath(shuttle, Color.RED, false)
-
+//                            Log.d("DirectionService", "--------   drawPath YELLOW --------")
+                                drawPath(shuttle, Color.YELLOW, false)
                                 // Adds Shuttle as alternate route
                                 var dirObj : Directions = Directions()
                                 val extractedCleanedDirections = dirObj.extractDirections(shuttle)
@@ -135,7 +115,30 @@ object DirectionService {
 
                                 //List of Path is an ArrayList containing every alternative route
                                 listOfPath.add(dirObj)
-                                
+                                Log.d("DirectionService", "-------->  listOfPath Shuttle")
+                            }
+
+                            Path.setAlternativeRouteMaxId(listOfPath.size)
+
+                            //Update the display on the main thread
+                            var n = com.soen390.conumap.path.Path.getAlternatives()
+                            if ( n >= listOfPath.size || n < 0){
+                                n = 0
+                                com.soen390.conumap.path.Path.setAlternativeRoute(0)
+                                Log.e("DirectionService", "Alternate Route Id > List of recorded routes or < 0")
+                            }
+                            activity.runOnUiThread {
+                                displayOnScreenPath(listOfPath,n)
+                            }
+
+                            ResetPathDrawing()
+                            //This Draw on the Map the tracing of "Steps"
+                            drawPath(steps, Color.RED, false)     // Draw main path
+                            // Draws alternate routes
+                            for (i in 0 until listOfPath.size) {
+                                if (i != n) {
+                                    drawPath(listOfPath[i].getMapSteps(), Color.GRAY, true)
+                                }
                             }
                         } else {
                             // status NOT OK (No route from Google API)
@@ -180,6 +183,8 @@ object DirectionService {
         for (i in 0 until steps.length()) {
             points =
                 steps.getJSONObject(i).getJSONObject("polyline").getString("points")
+//            Log.d("DirectionService", "points: $points")
+
             path.add(PolyUtil.decode(points))
         }
         for (i in 0 until path.size) {
@@ -197,6 +202,7 @@ object DirectionService {
     }
 
     fun displayOnScreenPath(listOfPath:ArrayList<Directions>,n:Int){
+        Log.d("DirectionServices", "displayOnScreenPath $n " )
         Path.updatePathInfo(listOfPath[n].getInfoPathText())
         Path.updateTotalDuration(listOfPath[n].getTotalTimeText())
         Path.updateTotalDistance(listOfPath[n].getTotalDistanceText())
