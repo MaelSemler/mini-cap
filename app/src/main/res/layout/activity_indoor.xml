@@ -39,6 +39,7 @@
         android:layout_centerHorizontal="true"
         android:background="@color/colorPrimary"
         android:textColor="#FFF"
+        android:onClick="routeIndoor"
         >
     </Button>
 
