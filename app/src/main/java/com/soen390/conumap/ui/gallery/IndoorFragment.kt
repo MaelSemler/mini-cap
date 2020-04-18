@@ -57,4 +57,6 @@ class IndoorFragment : Fragment() {
 
         return root
     }
+
+
 }

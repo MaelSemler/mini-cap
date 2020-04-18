@@ -1,7 +1,11 @@
 package com.soen390.conumap.IndoorNavigation
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.soen390.conumap.R
 import com.soen390.conumap.SVGConverter.ImageAdapter
@@ -32,6 +36,21 @@ class IndoorActivity : AppCompatActivity() {
             // Floorplan
             val floorP =  floorConverter.convertToPlan(tempBitmap)
         }
+
+    }
+
+    fun h9Button(view: View){
+        val h9button = findViewById<View>(R.id.hfloor_nine_button)
+        h9button.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null))
+        val h8button = findViewById<View>(R.id.hfloor_eight_button)
+        h8button.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.buttonColor, null))
+    }
+
+    fun h8Button(view: View){
+        val h9button = findViewById<View>(R.id.hfloor_nine_button)
+        h9button.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.buttonColor, null))
+        val h8button = findViewById<View>(R.id.hfloor_eight_button)
+        h8button.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null))
     }
 
 }
