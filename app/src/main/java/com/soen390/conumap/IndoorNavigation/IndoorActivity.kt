@@ -23,12 +23,10 @@ class IndoorActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = resources.getString(R.string.indoor_nav)
 
-        //img rec. adapter. switchfloor
-
         ContextPasser.setContextIndoor(this)
 
         imageRecycler.layoutManager = LinearLayoutManager(this)
-        imageRecycler.adapter = ImageAdapter(R.drawable.h9floorplan)
+        imageRecycler.adapter = ImageAdapter(R.drawable.h9floorplan, arrayOf())
 
         val floorConverter = ConverterToFloorPlan
 
@@ -40,12 +38,16 @@ class IndoorActivity : AppCompatActivity() {
         }
     }
 
+    fun showIndoorPath(resource: Int, indoorPath: Array<Node>) {
+        imageRecycler.adapter = ImageAdapter(resource, indoorPath)
+    }
+
     fun h9Button(view: View){
         val h9button = findViewById<View>(R.id.hfloor_nine_button)
         h9button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.colorPrimary, null))
         val h8button = findViewById<View>(R.id.hfloor_eight_button)
         h8button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.buttonColor, null))
-        imageRecycler.adapter = ImageAdapter(R.drawable.h9floorplan)
+        imageRecycler.adapter = ImageAdapter(R.drawable.h9floorplan, arrayOf())
     }
 
     fun h8Button(view: View){
@@ -53,6 +55,6 @@ class IndoorActivity : AppCompatActivity() {
         h9button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.buttonColor, null))
         val h8button = findViewById<View>(R.id.hfloor_eight_button)
         h8button.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.colorPrimary, null))
-        imageRecycler.adapter = ImageAdapter(R.drawable.h8floorplan)
+        imageRecycler.adapter = ImageAdapter(R.drawable.h8floorplan, arrayOf())
     }
 }

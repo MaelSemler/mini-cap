@@ -8,7 +8,7 @@ import com.soen390.conumap.IndoorNavigation.Node
 import com.soen390.conumap.R
 import com.squareup.picasso.Transformation
 
-class FloorPlanTransformation: Transformation {
+class FloorPlanTransformation(var indoorPath: Array<Node>): Transformation {
 
     private var context:Context
     private var mColor = 0
@@ -63,7 +63,7 @@ class FloorPlanTransformation: Transformation {
 
     // Draws the path on the indoor floorplan.
     fun drawPathIndoor(source: Bitmap, numXNodes: Int, numYNodes: Int): FloatArray {
-        var pathOfNodes = retrievePathIndoor()
+        var pathOfNodes = indoorPath
 
         var pathToDraw = mutableListOf<Float>()
 
@@ -81,11 +81,6 @@ class FloorPlanTransformation: Transformation {
 
         // Convert to floatArray so we can use it with drawLineWithArray and return it.
         return pathToDraw.toFloatArray()
-    }
-
-    fun retrievePathIndoor(): Array<Node> {
-        // Temporary to test, should actually get path from pathfinding algorithm.
-        return arrayOf()
     }
 
     // Takes an array of Floats and draws line at desired position.
