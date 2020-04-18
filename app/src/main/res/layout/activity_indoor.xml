@@ -53,8 +53,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:id="@+id/search_view"
-            android:queryHint="Search here"
+            android:id="@+id/search_StartRoom"
+            android:queryHint="Enter Start Room"
+            android:inputType="text"
+            android:iconifiedByDefault="true"
+            android:background="@drawable/round_rectangle_white">
+        </android.widget.SearchView>
+
+        <android.widget.SearchView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_below="@id/search_StartRoom"
+            android:id="@+id/search_DestinationRoom"
+            android:queryHint="Enter Destination Room"
             android:inputType="text"
             android:iconifiedByDefault="true"
             android:background="@drawable/round_rectangle_white">
@@ -64,7 +76,8 @@
         android:id="@+id/list_view"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/search_view">
+        android:layout_below="@id/search_DestinationRoom"
+        android:background="#FFF">
     </ListView>
 
 
