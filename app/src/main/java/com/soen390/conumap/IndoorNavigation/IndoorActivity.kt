@@ -257,7 +257,6 @@ class IndoorActivity : AppCompatActivity() {
     }
 
     fun routeIndoor(view: View) {
-        Log.d("NODE IS: ", startingCoor.toString())
         // Check that the origin and destination points are specified in search boxes.
         if(checkIfStartEndError()) { return }
 
