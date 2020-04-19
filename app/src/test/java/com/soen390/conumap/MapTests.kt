@@ -61,11 +61,6 @@ class MapTests {
     }
 
     @Test
-    fun onInfoWindowClickTest() {
-        Map.onInfoWindowClick(markerMock)
-    }
-
-    @Test
     fun onPolygonClickTest() {
         Map.onPolygonClick(polygonMock)
     }

@@ -54,7 +54,7 @@ object DirectionService {
 
             //Retrieve the correct URL to call the API
             val urlDirections = getGoogleMapRequestURL(activity, originLatLng, destinationLatLng, transportationMode, alternativesOn)
-            Log.d("DirectionServices", "GoogleMAp URL $urlDirections ")
+            Log.d("DirectionServices", "GoogleMap URL $urlDirections ")
 
             //Making the Request
             launch(Dispatchers.IO) {
@@ -96,12 +96,36 @@ object DirectionService {
                                 listOfPath.add(dirObj)
 
                             }
+                            // Draws Shuttle Bus if transportation mode is transit
+                            if (transportationMode == "transit"){
+                                val shuttle_json = activity.getResources().openRawResource(R.raw.shuttle).bufferedReader().use { it.readText() }
+                                var shuttle = JSONObject(shuttle_json).getJSONArray("steps")
+//                            Log.d("DirectionService", "--------   drawPath YELLOW --------")
+                                drawPath(shuttle, Color.YELLOW, false)
+                                // Adds Shuttle as alternate route
+                                var dirObj : Directions = Directions()
+                                val extractedCleanedDirections = dirObj.extractDirections(shuttle)
+                                val pathInfo = shuttle.getJSONObject(0).getString("summary")
+
+                                dirObj.updateSteps(extractedCleanedDirections)
+                                dirObj.updateTotalDistance("")
+                                dirObj.updateTotalDuration("")
+                                dirObj.updatePathInfo(pathInfo)
+                                dirObj.updateMapSteps(shuttle)
+
+                                //List of Path is an ArrayList containing every alternative route
+                                listOfPath.add(dirObj)
+                                Log.d("DirectionService", "-------->  listOfPath Shuttle")
+                            }
+
+                            Path.setAlternativeRouteMaxId(listOfPath.size)
+
                             //Update the display on the main thread
                             var n = com.soen390.conumap.path.Path.getAlternatives()
-                            if ( n >= listOfPath.size){
+                            if ( n >= listOfPath.size || n < 0){
                                 n = 0
                                 com.soen390.conumap.path.Path.setAlternativeRoute(0)
-                                Log.e("DirectionService", "Alternate Route Id > List of recorded routes")
+                                Log.e("DirectionService", "Alternate Route Id > List of recorded routes or < 0")
                             }
                             activity.runOnUiThread {
                                 displayOnScreenPath(listOfPath,n)
@@ -159,6 +183,8 @@ object DirectionService {
         for (i in 0 until steps.length()) {
             points =
                 steps.getJSONObject(i).getJSONObject("polyline").getString("points")
+//            Log.d("DirectionService", "points: $points")
+
             path.add(PolyUtil.decode(points))
         }
         for (i in 0 until path.size) {
@@ -176,6 +202,7 @@ object DirectionService {
     }
 
     fun displayOnScreenPath(listOfPath:ArrayList<Directions>,n:Int){
+        Log.d("DirectionServices", "displayOnScreenPath $n " )
         Path.updatePathInfo(listOfPath[n].getInfoPathText())
         Path.updateTotalDuration(listOfPath[n].getTotalTimeText())
         Path.updateTotalDistance(listOfPath[n].getTotalDistanceText())

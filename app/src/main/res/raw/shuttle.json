@@ -1,0 +1,19 @@
+{
+  "steps": [{
+    "start_location": {
+      "lat": 45.497163,
+      "lng": -73.578535
+    },
+    "end_location": {
+      "lat": 45.458424,
+      "lng": -73.638369
+    },
+    "distance":{"text":"1 m","value":1},
+    "duration":{"text":"1 min","value":1},
+    "summary": "Concordia Shuttle",
+    "html_instructions": "Got to Concordia Shuttle",
+    "polyline": {
+      "points": "_dutGzwa`MlDtCpBj@tmCddDZx@rArAf@|@~DzIfO|]pJrUnn@nzAiGlThFjKtDtEYt@"
+    }
+  }]
+}
