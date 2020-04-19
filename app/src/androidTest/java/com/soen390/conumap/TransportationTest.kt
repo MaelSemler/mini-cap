@@ -4,6 +4,7 @@ import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject
 import androidx.test.uiautomator.UiSelector
+import com.soen390.conumap.path.Path
 
 import org.junit.Before
 import org.junit.Test
@@ -67,7 +68,33 @@ class TransportationTest {
 
         val transportation:  UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/transportation_walk"))
         transportation.click()
+        assert(Path.transportationMode=="walking")
+        directionsView.swipeUp(75)
         directions.click()
+        assert(directions.contentDescription==Path._DescriptionText.toString())
+
+        val transportation2:  UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/transportation_car"))
+        transportation2.click()
+        assert(Path.transportationMode=="driving")
+        directionsView.swipeUp(75)
+        directions.click()
+        assert(directions.contentDescription==Path._DescriptionText.toString())
+
+        val transportation3:  UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/transportation_bus"))
+        transportation3.click()
+        assert(Path.transportationMode=="transit")   //Assert path variable for transportation changed
+        directionsView.swipeUp(75)
+
+        directions.click()
+        assert(directions.contentDescription==Path._DescriptionText.toString()) //Assert text matches what the path returns
+
+        val transportation4:  UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/transportation_bike"))
+        transportation4.click()
+        assert(Path.transportationMode=="bicycling")
+        directionsView.swipeUp(100)
+
+        directions.click()
+        assert(directions.contentDescription==Path._DescriptionText.toString())
 
         device.pressBack() // Ensure keyboard is closed for the following test.
     }
