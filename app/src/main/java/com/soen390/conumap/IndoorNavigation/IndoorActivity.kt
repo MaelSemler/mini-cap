@@ -155,12 +155,10 @@ class IndoorActivity : AppCompatActivity() {
         //**************SearchBar Destination Room*****************
 
         //When Closed
-        searchDestinationRoom.setOnCloseListener(object: SearchView.OnCloseListener{
-            override fun onClose(): Boolean {
-                suggestionList.visibility = View.GONE
-                return false
-            }
-        })
+        searchDestinationRoom.setOnCloseListener {
+            suggestionList.visibility = View.GONE
+            false
+        }
 
         //Listener on the Destination searchfield
         searchDestinationRoom.setOnQueryTextListener(object:
@@ -198,7 +196,8 @@ class IndoorActivity : AppCompatActivity() {
     }
 
     private fun checkIfStartEndError(): Boolean {
-        return if(!(this::startingRoom.isInitialized && this::destinationRoom.isInitialized)) {
+        return if(!(this::startingRoom.isInitialized && this::destinationRoom.isInitialized)||
+            (startingRoom==""&&destinationRoom=="")) {
             val noInputErrorMessage = Toast.makeText(
                 applicationContext,
                 "Please enter a starting and destination room or point of interest.",
@@ -284,6 +283,8 @@ class IndoorActivity : AppCompatActivity() {
 
         // Display the path.
         showIndoorPath(indoorMapResource, pathArray)
+        startingRoom=""
+        destinationRoom= ""
     }
 
     private fun showIndoorPath(resource: Int, indoorPath: Array<Node>) {
