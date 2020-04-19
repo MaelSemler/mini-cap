@@ -17,6 +17,7 @@ class DirectionServiceTest {
 
     @Test
     fun testRoute() {
+         assert(true)
     }
 
 
@@ -40,6 +41,7 @@ class DirectionServiceTest {
 
     @Test
     fun testDisplayOnScreenPath(){
+         assert(true)
     }
 
 
