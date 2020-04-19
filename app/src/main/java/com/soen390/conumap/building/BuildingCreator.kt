@@ -4,6 +4,8 @@ import android.content.Context
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import com.soen390.conumap.R
+import kotlin.math.cos
+import kotlin.math.sin
 
 // Responsible for creating all buildings on both campuses.
 object BuildingCreator {

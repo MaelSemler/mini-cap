@@ -31,9 +31,9 @@
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.soen390.conumap.ui.slideshow.SlideshowFragment"
+        android:name="com.soen390.conumap.ui.slideshow.SettingsFragment"
         android:label="@string/menu_settings"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@id/mapFragment"
         android:name="com.soen390.conumap.ui.map.MapFragment"
@@ -44,4 +44,25 @@
         android:name="com.soen390.conumap.ui.directions.DirectionsFragment"
         android:label="directions_fragment"
         tools:layout="@layout/directions_fragment" />
+    <fragment
+        android:id="@+id/nav_indoortest"
+        android:name="com.soen390.conumap.ui.gallery.IndoorFragment"
+        android:label="indoor"
+        tools:layout="@layout/fragment_indoor"/>
+    <activity
+        android:id="@+id/indoorActivity"
+        android:name="com.soen390.conumap.IndoorNavigation.IndoorActivity"
+        android:label="activity_indoor"
+        tools:layout="@layout/activity_indoor" />
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.soen390.conumap.ui.calendar.CalendarFragment"
+        android:label="Schedule"
+        tools:layout="@layout/calendar_fragment" >
+        <action
+            android:id="@+id/action_calendarFragment_to_directionsFragment3"
+            app:destination="@id/mapFragment" />
+    </fragment>
 </navigation>
+
+   

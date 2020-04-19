@@ -39,7 +39,9 @@ class BuildingInformationTest {
         val sgwButton: UiObject = device.findObject(UiSelector().resourceId("com.soen390.conumap:id/sgw_button"))
         sgwButton.click()
         val sgwHMarker: UiObject = device.findObject(UiSelector().description("Henry F. Hall Building. SGW Campus\n" +
-                "1455 De Maisonneuve Blvd. W.."))
+                "1455 De Maisonneuve Blvd. W.\n" +
+                "-----------\n" +
+                "Click Here for Indoor View."))
         sgwHMarker.click()
         val sgwLBMarker: UiObject = device.findObject(UiSelector().description("J.W. McConnell Building. SGW Campus\n" +
                 "1400 De Maisonneuve Blvd. W.."))

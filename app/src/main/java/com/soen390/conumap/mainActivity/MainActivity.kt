@@ -1,7 +1,9 @@
 package com.soen390.conumap.mainActivity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.widget.Button
 
 import com.google.android.material.navigation.NavigationView
 
@@ -13,6 +15,8 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.soen390.conumap.IndoorNavigation.IndoorActivity
+import com.soen390.conumap.IndoorNavigation.IndoorDatabaseHelper
 import com.soen390.conumap.R
 
 
@@ -21,8 +25,8 @@ import com.soen390.conumap.map.Map
 import com.soen390.conumap.permission.Permission
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var db: IndoorDatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +51,12 @@ class MainActivity : AppCompatActivity() {
 
         // Pass context to other files that require it.
         ContextPasser.setContexts(this)
+
+        // Check if the database is populated and if it isn't, fill it up.
+        db = IndoorDatabaseHelper(this)
+        if(db.getNumberOfRows() == 0) {
+            db.addAllInfoToTable(resources.getStringArray(R.array.floor_nodes))
+        }
     }
 
     override fun onResume() {
