@@ -73,7 +73,7 @@ class CalendarLoginFragment : Fragment() {
             Schedule.setName(account!!.email!!)
             activity!!.supportFragmentManager.beginTransaction().replace(R.id.calendar_container,CalendarScheduleFragment.newInstance()).commit()
         } catch (e: ApiException) {
-            //Todo: handle it
+            
         }
     }
 
