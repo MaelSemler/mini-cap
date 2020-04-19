@@ -20,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".IndoorNavigation.IndoorActivity"
-            android:parentActivityName=".mainActivity.MainActivity"></activity>
+            android:parentActivityName=".mainActivity.MainActivity"
+            android:label="@string/indoor_nav"></activity>
         <service
             android:name=".Directions.DirectionsService"
             android:enabled="true"
