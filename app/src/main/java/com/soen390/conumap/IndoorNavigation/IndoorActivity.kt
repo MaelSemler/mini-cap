@@ -51,10 +51,6 @@ class IndoorActivity : AppCompatActivity() {
     lateinit var h9floorP: Floor.FloorPlan
     lateinit var pathArray: Array<Node>
 
-    val viewModel: IndoorSearchViewModel by viewModels{
-        IndoorSearchViewModel.Factory(assets, Dispatchers.IO)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_indoor)
