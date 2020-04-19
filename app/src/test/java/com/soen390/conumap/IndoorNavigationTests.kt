@@ -90,23 +90,26 @@ class IndoorNavigationTests {
         pfTest.loadBlocks(blockArray)
 
         var path = pfTest.findPath()
+
+        for(i in 0 until path.size) {
+            println(path[i])
+        }
+
         var expected: MutableList<Node> = mutableListOf()
 
         expected.add(Node(2,1))
-        expected.add(Node(2, 2))
-        expected.add(Node(1, 2))
-        expected.add(Node(0, 2))
-        expected.add(Node(0, 3))
-        expected.add(Node(0, 4))
-        expected.add(Node(1, 4))
-        expected.add(Node (2, 4))
-        expected.add(Node(3, 4))
-        expected.add(Node(4,4))
-        expected.add(Node(4,5))
-        expected.add(Node(4,6))
-        expected.add(Node(4,7))
-        expected.add(Node(5, 7))
-        expected.add(Node(6, 7))
+        expected.add(Node(2, 0))
+        expected.add(Node(3, 0))
+        expected.add(Node(4, 0))
+        expected.add(Node(4, 1))
+        expected.add(Node(4, 2))
+        expected.add(Node(4, 3))
+        expected.add(Node(4, 4))
+        expected.add(Node(5, 4))
+        expected.add(Node(6, 4))
+        expected.add(Node(7, 4))
+        expected.add(Node(7, 5))
+        expected.add(Node(7, 6))
         expected.add(Node(7, 7))
 
         for(i in 0 until path.size) {
