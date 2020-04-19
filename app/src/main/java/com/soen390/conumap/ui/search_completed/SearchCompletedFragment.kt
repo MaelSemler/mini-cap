@@ -1,7 +1,4 @@
 package com.soen390.conumap.ui.search_completed
-import android.content.SharedPreferences
-import android.location.Address
-import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +7,15 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
-import com.google.android.gms.maps.model.LatLng
 import com.soen390.conumap.R
+import com.soen390.conumap.map.Map
+import com.soen390.conumap.ui.directions.DirectionsViewModel
 import com.soen390.conumap.ui.search_bar.SearchBarViewModel
+import com.soen390.conumap.ui.search_results.SearchResultsViewModel
 import kotlinx.android.synthetic.main.search_completed_fragment.*
 import java.util.*
 
 class SearchCompletedFragment : Fragment() {
-    var prefs: SharedPreferences? = null
 
     companion object {
         fun newInstance() =
@@ -29,26 +27,22 @@ class SearchCompletedFragment : Fragment() {
     ): View? {
 
         val root = inflater.inflate(R.layout.search_completed_fragment, container, false)
+        val directionsViewModel: DirectionsViewModel by activityViewModels()
 
         //TODO: Change this to a two way bindings using binding.travelButton.setOnclickListener
         //directly instead of findViewByID=> Look into DirectionsFragment.kt 
         val travel_button = root.findViewById<View>(R.id.travel_button)
         val restart_button = root.findViewById<View>(R.id.restart_search)
         val location_button = root.findViewById<Button>(R.id.found_location_button)
-        prefs = requireContext().getSharedPreferences("SearchDest", 0)
 
-        val endLocation=  prefs!!.getString("destinationLocation","" )
-        location_button.setText(endLocation)
+        //Set text in location button
+        location_button.text = directionsViewModel.destinationName.value
 
         //This changes fragment when the "45 degree" arrow is pressed
         travel_button.setOnClickListener{
-            //TODO: send the result of the search (DirectionsFragment) The findDirections() function is being called directly inside of directionsFragment, but ideally we would like to keep it here
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }
-        restart_button.setOnClickListener{
-            // Cancel destination in modelView
-            val model: SearchBarViewModel by activityViewModels()
-            model.setDestination("")
+        restart_button.setOnClickListener{ //directionsViewModel.getDestinationName().postValue("")
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_searchBarFragment)
         }
         location_button.setOnClickListener{
@@ -59,38 +53,6 @@ class SearchCompletedFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        val model: SearchBarViewModel by activityViewModels()
-        val destination = model.getDestination()
-        found_location_button.setText(destination)
-
     }
-
-
-
-    fun  getOrigin(startLocation: String ?): LatLng {
-        val geocoderLocation : Geocoder = Geocoder(requireContext(), Locale.getDefault())
-        val addressesStart: List<Address>?= geocoderLocation.getFromLocationName( startLocation, 5)
-        val straddress = addressesStart!![0]
-
-        val latitudeStart = straddress .latitude
-        val longitudeStart = straddress .longitude
-        val originLatLng = LatLng(latitudeStart,longitudeStart)
-        return originLatLng
-    }
-    fun getDestination(endLocation:String?): LatLng {
-        val geocoderLocation : Geocoder = Geocoder(requireContext(), Locale.getDefault())
-
-        val addressesEnd: List<Address>?= geocoderLocation.getFromLocationName(endLocation, 5)
-        val addressEnd = addressesEnd!![0]
-
-        val latitudeEnd = addressEnd .latitude
-        val longitudeEnd = addressEnd .longitude
-
-        val destinationLatLng = LatLng(latitudeEnd, longitudeEnd)
-        return destinationLatLng
-    }
-
-
 }
 
