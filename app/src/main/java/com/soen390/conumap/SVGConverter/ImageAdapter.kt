@@ -14,8 +14,8 @@ class ImageAdapter(var imageUrl: Int, var indoorPath: Array<Node>): RecyclerView
     }
 
     override fun onBindViewHolder(holder: ImageHolder, position: Int) {
-        var imageUrl = imageUrls[position]
-        holder?.updateIndoorImage(imageUrl, indoorPath)
+        val imageUrl = imageUrls[position]
+        holder.updateIndoorImage(imageUrl, indoorPath)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {

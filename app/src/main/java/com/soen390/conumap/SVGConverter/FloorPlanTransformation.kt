@@ -6,9 +6,6 @@ import androidx.core.content.ContextCompat
 import com.soen390.conumap.IndoorNavigation.Node
 import com.soen390.conumap.R
 import com.squareup.picasso.Transformation
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.util.logging.Logger.global
 
 class FloorPlanTransformation(var indoorPath: Array<Node>): Transformation {
 
@@ -51,14 +48,11 @@ class FloorPlanTransformation(var indoorPath: Array<Node>): Transformation {
         val height = source.height
 
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-//        GlobalScope.launch{
-//            svgCon.convertToPlan(bitmap)
-//        }
 
         canvas = Canvas(bitmap)
         canvas.drawBitmap(source, 0f, 0f, paint)
 
-        var indoorPath = drawPathIndoor(source, 400, 367)
+        val indoorPath = drawPathIndoor(source, 400, 367)
         drawLineWithArray(indoorPath)
 
         source.recycle()
@@ -67,15 +61,15 @@ class FloorPlanTransformation(var indoorPath: Array<Node>): Transformation {
     }
 
     // Draws the path on the indoor floorplan.
-    fun drawPathIndoor(source: Bitmap, numXNodes: Int, numYNodes: Int): FloatArray {
-        var pathOfNodes = indoorPath
+    private fun drawPathIndoor(source: Bitmap, numXNodes: Int, numYNodes: Int): FloatArray {
+        val pathOfNodes = indoorPath
 
-        var pathToDraw = mutableListOf<Float>()
+        val pathToDraw = mutableListOf<Float>()
 
         // Adds coordinates to pathToDraw.
         for(i in 0 until pathOfNodes.size - 1) {
-            var start = findNodeCoordinates(source, numXNodes, numYNodes, pathOfNodes[i].col, pathOfNodes[i].row)
-            var end = findNodeCoordinates(source, numXNodes, numYNodes, pathOfNodes[i + 1].col, pathOfNodes[i + 1].row)
+            val start = findNodeCoordinates(source, numXNodes, numYNodes, pathOfNodes[i].col, pathOfNodes[i].row)
+            val end = findNodeCoordinates(source, numXNodes, numYNodes, pathOfNodes[i + 1].col, pathOfNodes[i + 1].row)
 
             // 4 floats to add for each node: startX, startY, endX, endY.
             pathToDraw.add(start[0])
@@ -90,12 +84,12 @@ class FloorPlanTransformation(var indoorPath: Array<Node>): Transformation {
 
     // Takes an array of Floats and draws line at desired position.
     // A line needs 4 floats: startX, startY, endX, endY.
-    fun drawLineWithArray(pathArray: FloatArray){
+    private fun drawLineWithArray(pathArray: FloatArray){
         canvas.drawLines(pathArray, pathPaint)
     }
 
     // Function which returns the coordinates of a given node.
-    fun findNodeCoordinates(source: Bitmap, numXNodes: Int, numYNodes: Int, nodeX: Int, nodeY: Int): FloatArray {
+    private fun findNodeCoordinates(source: Bitmap, numXNodes: Int, numYNodes: Int, nodeX: Int, nodeY: Int): FloatArray {
         // Determine the length and width of an individual node.
         val nodeWidth = source.width / numXNodes.toFloat()
         val nodeHeight = source.height / numYNodes.toFloat()

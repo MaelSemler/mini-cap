@@ -1,17 +1,13 @@
 package com.soen390.conumap.SVGConverter
 
-import android.app.Activity
-import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import androidx.core.graphics.toColor
 import com.caverock.androidsvg.SVG
-import com.soen390.conumap.R
 import com.soen390.conumap.building.Floor
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
@@ -36,7 +32,7 @@ object ConverterToFloorPlan{
         val svgFile = SVG.getFromResource(context.resources, svg)
         var bitmapFile: Bitmap? = null
 
-            if (svgFile.getDocumentWidth() !== -1F) {
+            if (svgFile.documentWidth != -1F) {
 
                 // create a canvas to draw onto
                 bitmapFile = Bitmap.createBitmap(svgFile.documentWidth.toInt(),svgFile.documentHeight.toInt(), Bitmap.Config.ARGB_8888)
@@ -65,7 +61,6 @@ object ConverterToFloorPlan{
             }
             floorNode += row
         }
-
 
         coroutineScope {
             launch(Dispatchers.IO) {

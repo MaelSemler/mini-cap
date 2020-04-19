@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.activity_indoor.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlin.math.floor
 
 class IndoorActivity : AppCompatActivity() {
     lateinit var db: IndoorDatabaseHelper
@@ -46,8 +45,6 @@ class IndoorActivity : AppCompatActivity() {
     var listDigit = listOf("0","1","2","3","4","5","6","7","8","9")
 
     //Conversion to FloorPlan for Indoor Algorithm
-    lateinit var h8floorConverter: ConverterToFloorPlan
-    lateinit var h9floorConverter: ConverterToFloorPlan
     lateinit var h8BitMap: Bitmap
     lateinit var h9BitMap: Bitmap
     lateinit var h8floorP: Floor.FloorPlan
@@ -63,19 +60,19 @@ class IndoorActivity : AppCompatActivity() {
         setContentView(R.layout.activity_indoor)
 
         ContextPasser.setContextIndoor(this)
-        h8floorConverter = ConverterToFloorPlan
-        h9floorConverter = ConverterToFloorPlan
-        h8BitMap = h8floorConverter.svgToBitMap(R.raw.hall8) as Bitmap
-        h9BitMap = h9floorConverter.svgToBitMap(R.raw.hall9) as Bitmap
+
+        h8BitMap = ConverterToFloorPlan.svgToBitMap(R.raw.hall8) as Bitmap
+        h9BitMap = ConverterToFloorPlan.svgToBitMap(R.raw.hall9) as Bitmap
 
         // Show H9 by default.
         imageRecycler.layoutManager = LinearLayoutManager(this)
         imageRecycler.adapter = ImageAdapter(R.drawable.h9floorplan, arrayOf())
+        changeFloorButtonEnabled(9)
 
         GlobalScope.launch {
-            h8floorP = h8floorConverter.convertToPlan(h8BitMap)
+            h8floorP = ConverterToFloorPlan.convertToPlan(h8BitMap)
             ConverterToFloorPlan.clearFloorNodes()
-            h9floorP = h9floorConverter.convertToPlan(h9BitMap)
+            h9floorP = ConverterToFloorPlan.convertToPlan(h9BitMap)
         }
 
         //Bind Views with their IDs
@@ -101,12 +98,10 @@ class IndoorActivity : AppCompatActivity() {
         searchStartingRoom.isSubmitButtonEnabled = true
         suggestionList.visibility= View.GONE
 
-        val floorConverter = ConverterToFloorPlan
-
         db = IndoorDatabaseHelper(this)
 
         //Method that would set the corresponding SearchView bar with the clicked item
-        fun clickItem(searchB: SearchView ){
+        fun clickItem(searchB: SearchView) {
             suggestionList.setOnItemClickListener { parent, view, i, id ->
                 val item:SearchQuery = suggestionList.adapter.getItem(i) as SearchQuery
 
@@ -124,7 +119,6 @@ class IndoorActivity : AppCompatActivity() {
                 suggestionList.visibility = View.GONE
                 return false
             }
-
         })
 
         //Listening to the Search StartingRoom
@@ -185,7 +179,6 @@ class IndoorActivity : AppCompatActivity() {
                     Log.d("DESTINATION IS: ", destinationRoom)
                 }
                 else{
-
                     var floorValIndex = destinationRoom.indexOfAny(listDigit,0,true)
                     var floorNum = destinationRoom[floorValIndex].toString().toInt()
                     Log.d("FloorVal is: ", destinationRoom[floorValIndex].toString())
@@ -208,33 +201,47 @@ class IndoorActivity : AppCompatActivity() {
         })
     }
 
-    fun routeIndoor(view:View) {
-        if(!this::startingRoom.isInitialized || !this::destinationRoom.isInitialized) {
-            var noInputErrorMessage = Toast.makeText(
+    private fun checkIfStartEndError(): Boolean {
+        return if(!(this::startingRoom.isInitialized && this::destinationRoom.isInitialized)) {
+            val noInputErrorMessage = Toast.makeText(
                 applicationContext,
                 "Please enter a starting and destination room or point of interest.",
                 Toast.LENGTH_LONG
             )
             noInputErrorMessage.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
             noInputErrorMessage.show()
-
-            return
+            true
+        } else {
+            false
         }
+    }
 
-        val floorNumber = Regex("[0-9]").find(startingRoom)?.value
-
-        // Show Toast when trying to go between floors.
-        if(floorNumber!= Regex("[0-9]").find(destinationRoom)?.value) {
-            var betweenFloorsError = Toast.makeText(
+    private fun checkIfDifferentFloorsError(origFloor: Int, destFloor: Int): Boolean {
+        return if(origFloor != destFloor) {
+            val betweenFloorsError = Toast.makeText(
                 applicationContext,
                 "Please select rooms on the same floor.",
                 Toast.LENGTH_LONG
             )
             betweenFloorsError.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
             betweenFloorsError.show()
-
-            return
+            true
+        } else {
+            false
         }
+    }
+
+    fun routeIndoor(view: View) {
+        // Check that the origin and destination points are specified in search boxes.
+        if(checkIfStartEndError()) { return }
+
+        // Check that the origin and destination points are on the same floor.
+        if(checkIfDifferentFloorsError(
+                Regex("[0-9]").find(startingRoom)?.value?.toInt() as Int,
+                Regex("[0-9]").find(destinationRoom)?.value?.toInt() as Int
+            )) { return }
+
+        val floorNumber = Regex("[0-9]").find(startingRoom)?.value
 
         // Initialize variables depending on which floor the navigation is on.
         var currentFloorPlan = Floor.FloorPlan(arrayOf<Array<Floor.FloorNode>>())
@@ -283,11 +290,11 @@ class IndoorActivity : AppCompatActivity() {
         showIndoorPath(indoorMapResource, pathArray)
     }
 
-    fun showIndoorPath(resource: Int, indoorPath: Array<Node>) {
+    private fun showIndoorPath(resource: Int, indoorPath: Array<Node>) {
         imageRecycler.adapter = ImageAdapter(resource, indoorPath)
     }
 
-    fun changeFloorButtonEnabled(floorNumber: Int) {
+    private fun changeFloorButtonEnabled(floorNumber: Int) {
         val h9button = findViewById<View>(R.id.hfloor_nine_button) as Button
         val h8button = findViewById<View>(R.id.hfloor_eight_button) as Button
 
@@ -307,12 +314,12 @@ class IndoorActivity : AppCompatActivity() {
         }
     }
 
-    fun h8Button(view: View){
+    fun h8Button(view: View) {
         changeFloorButtonEnabled(8)
         imageRecycler.adapter = ImageAdapter(R.drawable.h8floorplan, arrayOf())
     }
 
-    fun h9Button(view: View){
+    fun h9Button(view: View) {
         changeFloorButtonEnabled(9)
         imageRecycler.adapter = ImageAdapter(R.drawable.h9floorplan, arrayOf())
     }
