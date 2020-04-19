@@ -25,6 +25,6 @@ class PermissionsTests {
 
     @Test
     fun handleResultsTest() {
-
+         assert(true)
     }
 }
