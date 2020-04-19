@@ -133,7 +133,7 @@ class CalendarScheduleFragment : Fragment() {
         }
         goNowButton.setOnClickListener(){
             val model: DirectionsViewModel by activityViewModels()
-            if (!locationValue.text.equals(getString(R.string.notAvailable))&&!locationValue.text.isBlank()&&!locationValue.text.isEmpty()){
+            if (!locationValue.text.equals(getString(R.string.notAvailable))&&!locationValue.text.isBlank()&&!locationValue.text.isEmpty()&&getLocationFromAddress(locationValue.text.toString()) != null){
                     model.destinationName.value = locationValue.text.toString()
                     model.destinationLocation.value = getLocationFromAddress(locationValue.text.toString())
                     Path.setDestination(model.destinationLocation.value!!)
@@ -254,7 +254,7 @@ class CalendarScheduleFragment : Fragment() {
 
         try { // May throw an IOException
             address = coder.getFromLocationName(strAddress, 5)
-            if (address == null) {
+            if (address.isNullOrEmpty()) {
                 return null
             }
             val location: Address = address[0]
