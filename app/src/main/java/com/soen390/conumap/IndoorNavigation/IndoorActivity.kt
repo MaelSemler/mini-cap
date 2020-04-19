@@ -175,6 +175,7 @@ class IndoorActivity : AppCompatActivity() {
                 Log.d("DESTINATION IS: ", destinationRoom)
 
                 checkNodeInvalidity(destinationCoor)
+                Log.d("DESTINATION XY IS: ", destinationCoor.toString())
                 return false;
             }
 
@@ -194,7 +195,7 @@ class IndoorActivity : AppCompatActivity() {
 
     private fun checkNodeInvalidity(node:Node): Boolean{
         val invalidNode = Node(-1,-1)
-        return if (node==invalidNode){
+        return if (node.equals(invalidNode)){
             val noInputErrorMessage = Toast.makeText(
                 applicationContext,
                 "Please enter a VALID starting and destination room or point of interest.",
@@ -210,7 +211,7 @@ class IndoorActivity : AppCompatActivity() {
 
     private fun checkNodeInvalidity(): Boolean{
         val invalidNode = Node(-1,-1)
-        return if (startingCoor==invalidNode ||destinationCoor==invalidNode){
+        return if (startingCoor.equals(invalidNode) ||destinationCoor.equals(invalidNode)){
             val noInputErrorMessage = Toast.makeText(
                 applicationContext,
                 "Please enter a valid starting and destination room or point of interest.",
@@ -225,7 +226,7 @@ class IndoorActivity : AppCompatActivity() {
     }
 
     private fun checkIfStartEndError(): Boolean {
-        return if(!(this::startingRoom.isInitialized && this::destinationRoom.isInitialized)||
+        return if(!(this::startingRoom.isInitialized && this::destinationRoom.isInitialized && this::startingCoor.isInitialized && this::destinationCoor.isInitialized)||
             startingRoom==""||destinationRoom=="") {
             val noInputErrorMessage = Toast.makeText(
                 applicationContext,
