@@ -1,7 +1,5 @@
 package com.soen390.conumap.ui.directions
 
-import android.annotation.SuppressLint
-import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +9,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.google.android.gms.maps.model.LatLng
 import androidx.navigation.fragment.NavHostFragment
 import com.soen390.conumap.R
 import com.soen390.conumap.databinding.DirectionsFragmentBinding
@@ -159,9 +156,9 @@ class DirectionsFragment : Fragment() {
                     // Toast.makeText(getActivity(), "AlternateFragment: Route selected : $line" , Toast.LENGTH_SHORT).show()
                     Path.setAlternativeRoute(line)
                     // Save Context
-                    val route_id = Path.getAlternatives()
+                    val routeId = Path.getAlternatives()
                     Path.resetDirections()
-                    Path.setAlternativeRoute(route_id)
+                    Path.setAlternativeRoute(routeId)
                     Path.findDirections(requireActivity())
                 }
 

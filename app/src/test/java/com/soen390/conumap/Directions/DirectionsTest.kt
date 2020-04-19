@@ -1,34 +1,13 @@
 package com.soen390.conumap.Directions
 
-import android.content.Context
-import androidx.fragment.app.FragmentActivity
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.google.android.gms.maps.GoogleMap
-import com.google.gson.Gson
-import com.nhaarman.mockitokotlin2.mock
-import com.soen390.conumap.Directions.DataClass.directionsResponse
-import com.soen390.conumap.map.Map
-import org.json.JSONObject
-import org.json.JSONTokener
+
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
-import java.io.FileReader
 
 class DirectionsTest {
 
-    var gMap: GoogleMap = mock<GoogleMap>{}
-    var activity: FragmentActivity = mock()
-
     var testDirectionObj = Directions()
-    var map= mock <Map>()
-
-//    mockDirections.updateTotalDuration("Mocked X min")
-//    mockDirections.updatePathInfo("Mocked Path info")
-//    mockDirections.updateTotalDistance("Mocked Total distance")
-//    mockDirections.updateSteps("Mocked Steps")
-
-    val mockedTotalDuration = "Mocked X min"
 //    @Before
     fun setUp(){
         testDirectionObj.updateTotalDuration("Fake Duration")

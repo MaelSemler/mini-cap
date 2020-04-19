@@ -19,10 +19,6 @@ import kotlinx.android.synthetic.main.fragment_indoor.*
 class IndoorFragment : Fragment() {
 
     private lateinit var indoorViewModel: IndoorViewModel
-//    lateinit var binding: IndoorFragmentBinding
-
-//    lateinit var context = getContext()
-
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -35,6 +31,5 @@ class IndoorFragment : Fragment() {
 
         return root
     }
-
 
 }

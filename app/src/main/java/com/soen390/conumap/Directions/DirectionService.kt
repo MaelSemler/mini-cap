@@ -98,8 +98,8 @@ object DirectionService {
                             }
                             // Draws Shuttle Bus if transportation mode is transit
                             if (transportationMode == "transit"){
-                                val shuttle_json = activity.getResources().openRawResource(R.raw.shuttle).bufferedReader().use { it.readText() }
-                                var shuttle = JSONObject(shuttle_json).getJSONArray("steps")
+                                val shuttleJson = activity.getResources().openRawResource(R.raw.shuttle).bufferedReader().use { it.readText() }
+                                var shuttle = JSONObject(shuttleJson).getJSONArray("steps")
 //                            Log.d("DirectionService", "--------   drawPath YELLOW --------")
                                 drawPath(shuttle, Color.YELLOW, false)
                                 // Adds Shuttle as alternate route
@@ -131,7 +131,7 @@ object DirectionService {
                                 displayOnScreenPath(listOfPath,n)
                             }
 
-                            ResetPathDrawing()
+                            resetPathDrawing()
                             //This Draw on the Map the tracing of "Steps"
                             drawPath(steps, Color.RED, false)     // Draw main path
                             // Draws alternate routes
@@ -193,7 +193,7 @@ object DirectionService {
         }
     }
 
-    fun ResetPathDrawing(){
+    fun resetPathDrawing(){
         if (polyline.isNotEmpty())
         {
             for (i in 0 until polyline.size)

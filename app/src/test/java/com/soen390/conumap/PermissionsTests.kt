@@ -12,8 +12,6 @@ import org.junit.Assert.*
 class PermissionsTests {
 
 
-    //var permissionsArray: Array<String> = mock()
-    //var grantResultArray: IntArray = mock()
 
     @Test
     fun checkPermission() {
@@ -27,6 +25,6 @@ class PermissionsTests {
 
     @Test
     fun handleResultsTest() {
-        //Permission.handlePermissionResults(1, permissionsArray, grantResultArray, FragmentActivity())
+
     }
 }

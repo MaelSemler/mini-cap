@@ -23,39 +23,6 @@
             android:layout_marginTop="0dp"
             android:text="return" />
 
-        <!--        <Button-->
-        <!--            android:id="@+id/indoorShow"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_alignParentStart="true"-->
-        <!--            android:layout_alignParentTop="true"-->
-        <!--            android:layout_marginStart="146dp"-->
-        <!--            android:layout_marginTop="102dp"-->
-        <!--            android:text="Show Indoor img" />-->
-
-        <!--        <ImageView-->
-        <!--            android:id="@+id/myImageView"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"/>-->
-
-        <!--        <ImageView-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_centerInParent="true"-->
-        <!--            android:scaleType="center"-->
-
-        <!--            android:src="@{viewmodel.imageRes , default=@drawable/indoorH8}"/>-->
-
-
-        <!--        <Button-->
-        <!--            android:id="@+id/end_button"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_alignParentStart="true"-->
-        <!--            android:layout_alignParentTop="true"-->
-        <!--            android:layout_marginStart="149dp"-->
-        <!--            android:layout_marginTop="42dp"-->
-        <!--            android:text="end search" />-->
 
     </RelativeLayout>
 </layout>
