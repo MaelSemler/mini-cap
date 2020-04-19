@@ -142,7 +142,7 @@ class IndoorActivity : AppCompatActivity() {
                     var floorValIndex = startingRoom.indexOfAny(listDigit,0,true)
                     var floorNum = startingRoom[floorValIndex].toString().toInt()
                     Log.d("FloorVal is: ", startingRoom[floorValIndex].toString())
-                    destinationCoor = db.getPOICoordinates(startingRoom,floorNum)
+                    startingCoor = db.getPOICoordinates(startingRoom,floorNum)
                 }
                 Log.i("Starting Room IS: ",startingCoor.toString())
                 return false
