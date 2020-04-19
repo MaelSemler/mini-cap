@@ -249,11 +249,11 @@ class CalendarScheduleFragment : Fragment() {
     // Converts the address String into a LatLng
     private fun getLocationFromAddress(strAddress:String): LatLng? {
         val coder = Geocoder(context)
-        val address: List<Address>?
+        var address: List<Address>?
         var locationAsLatLng: LatLng? = null
 
-        try { // May throw an IOException
-            address = coder.getFromLocationName(strAddress, 5)
+        try {
+            address = coder.getFromLocationName(strAddress, 1)
             if (address.isNullOrEmpty()) {
                 return null
             }
