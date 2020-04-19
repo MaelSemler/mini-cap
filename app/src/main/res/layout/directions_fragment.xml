@@ -146,28 +146,26 @@
                                 android:text="@{viewmodel._PathTotalTimeText}"
                                 android:textColor="@android:color/black"
                                 android:textSize="20sp" />
+                            <TextView
+                                android:id="@+id/totalDistance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@id/totalTime"
+                                android:layout_marginStart="20dp"
+                                android:layout_below="@+id/scroll_bar"
+                                android:layout_marginTop="20dp"
+                                android:text="@{viewmodel._PathTotalDistanceText}"
+                                android:textSize="20sp" />
 
-                        <TextView
-                            android:id="@+id/totalDistance"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="300sp"
-                            android:layout_marginBottom="10sp"
-                            android:layout_alignParentTop="true"
-                            android:layout_below="@+id/scroll_bar"
-                            android:layout_marginTop="25dp"
-                            android:text="@{viewmodel._PathTotalDistanceText}"
-                            android:textSize="20sp" />
-
-                        <TextView
-                            android:id="@+id/info_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/totalDistance"
-                            android:layout_marginLeft="40sp"
-                            android:text="@{viewmodel._infoPathText}"
-                            android:layout_marginTop="10dp"
-                            android:textSize="15sp" />
+                            <TextView
+                                android:id="@+id/info_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/totalDistance"
+                                android:layout_marginLeft="40sp"
+                                android:text="@{viewmodel._infoPathText}"
+                                android:layout_marginTop="10dp"
+                                android:textSize="15sp" />
 
                             <Button
                                 android:id="@+id/directions_button"
