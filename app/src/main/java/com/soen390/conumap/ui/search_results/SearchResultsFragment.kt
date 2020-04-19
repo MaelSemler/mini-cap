@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.RectangularBounds
+import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
@@ -73,9 +74,9 @@ class SearchResultsFragment : Fragment() {
 
         // Cancel destination in modelView
         cancelButton.setOnClickListener {
-            model.destinationName!!.value=""
-            model.destinationAddress!!.value=""
-            model.destinationLocation!!.value=LatLng(45.494,-73.577)
+            model.destinationName.value=""
+            model.destinationAddress.value=""
+            model.destinationLocation.value=LatLng(45.494,-73.577)
             NavHostFragment.findNavController(this).navigateUp()
         }
         return root
@@ -92,23 +93,23 @@ class SearchResultsFragment : Fragment() {
             Log.i(TAG,"Place: "+ place!!.name+ ","+place.id)
             if (model.destinationChanged.value==true||model.destinationChanged.value==null)
             {
-                model.destinationName!!.value=place?.name
-                model.destinationAddress!!.value=place?.address
-                model.destinationLocation!!.value=place?.latLng
+                model.destinationName.value= place.name
+                model.destinationAddress.value= place.address
+                model.destinationLocation.value= place.latLng
                 Path.setDestination(model.destinationLocation.value!!)
             }
             if (model.destinationChanged.value==false)
             {
-                model.originName!!.value=place?.name
-                model.originAddress!!.value=place?.address
-                model.originLocation!!.value=place?.latLng
+                model.originName.value= place.name
+                model.originAddress.value=place.address
+                model.originLocation.value=place.latLng
                 Path.setOrigin(model.originLocation.value!!)
             }
         }
         else if (resultCode==AutocompleteActivity.RESULT_ERROR)
         {
             val status=Autocomplete.getStatusFromIntent(data!!)
-            Log.i(TAG, status.statusMessage)
+            Log.i(TAG, status.statusMessage.toString())
             searchBar.setText("Error")
             NavHostFragment.findNavController(this).navigate(R.id.action_searchResultsFragment_to_searchCompletedFragment)
         }
