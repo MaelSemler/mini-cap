@@ -8,27 +8,6 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="alternateFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="975" />
-                            <option name="y" value="-588" />
-                          </Point>
-                        </option>
-                        <option name="myPositions">
-                          <map>
-                            <entry key="action_alternateFragment_to_directionsFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
                   <entry key="directionsFragment">
                     <value>
                       <LayoutPositions>
@@ -40,17 +19,17 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_directionsFragment_to_alternateFragment">
+                            <entry key="action_directionsFragment_self">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_directionsFragment_to_directionsSearchFragment">
+                            <entry key="action_directionsFragment_to_searchBarFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_directionsFragment_to_searchCompletedFragment">
+                            <entry key="action_directionsFragment_to_searchResultsFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -60,18 +39,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="directionsSearchFragment">
+                  <entry key="schedule_frame">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="1027" />
-                            <option name="y" value="-155" />
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_directionsSearchFragment_to_directionsFragment">
+                            <entry key="action_calendarScheduleFragment_to_directionsFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -144,6 +123,11 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_searchResultsFragment_to_directionsFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_searchResultsFragment_to_searchCompletedFragment">
                               <value>
                                 <LayoutPositions />

@@ -1,6 +1,8 @@
 package com.soen390.conumap.ui.calendar_schedule
 
 import android.annotation.SuppressLint
+import android.location.Address
+import android.location.Geocoder
 import android.os.AsyncTask
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -9,17 +11,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.Scope
+import com.google.android.gms.maps.model.LatLng
 import com.google.api.client.util.DateTime
 import com.soen390.conumap.event.Event
 
 import com.soen390.conumap.R
 import com.soen390.conumap.calendar.Schedule
+import com.soen390.conumap.path.Path
 import com.soen390.conumap.ui.calendar_login.CalendarLoginFragment
+import com.soen390.conumap.ui.directions.DirectionsViewModel
+import kotlinx.android.synthetic.main.map_navigation.*
+import java.io.IOException
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -122,9 +131,14 @@ class CalendarScheduleFragment : Fragment() {
             previousWeekTask.execute()
 
         }
-        goNowButton.setOnClickListener{
-            NavHostFragment.findNavController(this).navigateUp()
-            //route(currentLocation, Destination)
+        goNowButton.setOnClickListener(){
+            val model: DirectionsViewModel by activityViewModels()
+            if (locationValue.text != "N/A"){
+                model.destinationName.value = locationValue.text.toString()
+                model.destinationLocation.value = getLocationFromAddress(locationValue.text.toString())
+                Path.setDestination(model.destinationLocation.value!!)
+                NavHostFragment.findNavController(this).navigate(R.id.action_calendarFragment_to_directionsFragment)
+            }
 
         }
         calendarDropDown.onItemSelectedListener =  object : AdapterView.OnItemSelectedListener{
@@ -231,6 +245,25 @@ class CalendarScheduleFragment : Fragment() {
             timeValue.text = getString(R.string.notAvailable)
             roomValue.text = getString(R.string.notAvailable)
         }
+    }
+
+    // Converts the address String into a LatLng
+    private fun getLocationFromAddress(strAddress:String): LatLng? {
+        val coder = Geocoder(context)
+        val address: List<Address>?
+        var locationAsLatLng: LatLng? = null
+
+        try { // May throw an IOException
+            address = coder.getFromLocationName(strAddress, 5)
+            if (address == null) {
+                return null
+            }
+            val location: Address = address[0]
+            locationAsLatLng = LatLng(location.getLatitude(), location.getLongitude())
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return locationAsLatLng!!
     }
 
     //Makes and places the event in the schedule
