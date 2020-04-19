@@ -197,7 +197,7 @@ class IndoorActivity : AppCompatActivity() {
 
     private fun checkIfStartEndError(): Boolean {
         return if(!(this::startingRoom.isInitialized && this::destinationRoom.isInitialized)||
-            (startingRoom==""&&destinationRoom=="")) {
+            startingRoom==""||destinationRoom=="") {
             val noInputErrorMessage = Toast.makeText(
                 applicationContext,
                 "Please enter a starting and destination room or point of interest.",
