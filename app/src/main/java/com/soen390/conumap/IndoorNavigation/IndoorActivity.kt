@@ -122,19 +122,16 @@ class IndoorActivity : AppCompatActivity() {
             OnQueryTextListener {
             //WHen user click on enter
             override fun onQueryTextSubmit(startingQuery: String): Boolean {
+                //Resetting the Node
+                startingCoor = Node(-1,-1)
+
                 suggestionList.visibility= View.GONE
                 startingRoom = startingQuery
 
-                if(startingRoom.startsWith("H-")){
-                    startingCoor = db.getRoomCoordinates(startingQuery)
-                }
-                else{
-                    var floorValIndex = startingRoom.indexOfAny(listDigit,0,true)
-                    var floorNum = startingRoom[floorValIndex].toString().toInt()
-                    Log.d("FloorVal is: ", startingRoom[floorValIndex].toString())
-                    startingCoor = db.getPOICoordinates(startingRoom,floorNum)
-                }
+                startingCoor = db.getRoomCoordinates(startingQuery)
+
                 Log.i("Starting Room IS: ",startingCoor.toString())
+                checkNodeInvalidity(startingCoor)
                 return false
             }
 
@@ -148,6 +145,7 @@ class IndoorActivity : AppCompatActivity() {
                 if (TextUtils.isEmpty(newText)){
                     suggestionList.visibility = View.GONE
                 }
+                startingRoom = newText
                 return false
             }
         })
@@ -166,19 +164,17 @@ class IndoorActivity : AppCompatActivity() {
 
             //WHen user click on enter
             override fun onQueryTextSubmit(destinationQuery: String): Boolean {
+                //Reset Node
+                destinationCoor = Node(-1,-1)
                 suggestionList.visibility= View.GONE
+
                 destinationRoom = destinationQuery
-                if(destinationRoom.startsWith("H-")){
-                    destinationCoor = db.getRoomCoordinates(destinationQuery)
-                    Log.d("DESTINATION IS: ", destinationRoom)
-                }
-                else{
-                    var floorValIndex = destinationRoom.indexOfAny(listDigit,0,true)
-                    var floorNum = destinationRoom[floorValIndex].toString().toInt()
-                    Log.d("FloorVal is: ", destinationRoom[floorValIndex].toString())
-                    destinationCoor = db.getPOICoordinates(destinationRoom,floorNum)
-                    Log.d("Destination: ", destinationCoor.toString())
-                }
+
+                destinationCoor = db.getRoomCoordinates(destinationQuery)
+
+                Log.d("DESTINATION IS: ", destinationRoom)
+
+                checkNodeInvalidity(destinationCoor)
                 return false;
             }
 
@@ -190,9 +186,42 @@ class IndoorActivity : AppCompatActivity() {
                 if (TextUtils.isEmpty(newText)){
                     suggestionList.visibility = View.GONE
                 }
+                destinationRoom=newText
                 return false;
             }
         })
+    }
+
+    private fun checkNodeInvalidity(node:Node): Boolean{
+        val invalidNode = Node(-1,-1)
+        return if (node==invalidNode){
+            val noInputErrorMessage = Toast.makeText(
+                applicationContext,
+                "Please enter a VALID starting and destination room or point of interest.",
+                Toast.LENGTH_LONG
+            )
+            noInputErrorMessage.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+            noInputErrorMessage.show()
+            true
+        }else{
+            false
+        }
+    }
+
+    private fun checkNodeInvalidity(): Boolean{
+        val invalidNode = Node(-1,-1)
+        return if (startingCoor==invalidNode ||destinationCoor==invalidNode){
+            val noInputErrorMessage = Toast.makeText(
+                applicationContext,
+                "Please enter a valid starting and destination room or point of interest.",
+                Toast.LENGTH_LONG
+            )
+            noInputErrorMessage.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+            noInputErrorMessage.show()
+            true
+        }else{
+            false
+        }
     }
 
     private fun checkIfStartEndError(): Boolean {
@@ -227,8 +256,11 @@ class IndoorActivity : AppCompatActivity() {
     }
 
     fun routeIndoor(view: View) {
+        Log.d("NODE IS: ", startingCoor.toString())
         // Check that the origin and destination points are specified in search boxes.
         if(checkIfStartEndError()) { return }
+
+        if(checkNodeInvalidity()){return}
 
         // Check that the origin and destination points are on the same floor.
         if(checkIfDifferentFloorsError(
@@ -283,8 +315,7 @@ class IndoorActivity : AppCompatActivity() {
 
         // Display the path.
         showIndoorPath(indoorMapResource, pathArray)
-        startingRoom=""
-        destinationRoom= ""
+
     }
 
     private fun showIndoorPath(resource: Int, indoorPath: Array<Node>) {
