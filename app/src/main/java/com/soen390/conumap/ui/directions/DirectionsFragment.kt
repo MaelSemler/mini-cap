@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.soen390.conumap.R
 import com.soen390.conumap.databinding.DirectionsFragmentBinding
 import com.soen390.conumap.path.Path
+import com.soen390.conumap.map.Map
 import kotlinx.android.synthetic.main.directions_fragment.*
 
 
@@ -41,11 +42,9 @@ class DirectionsFragment : Fragment() {
         //Initial transportation mode is already driving
         if (directionsViewModel.destinationChanged.value==null)
         {
-            //If you're using an emulator, use the first commented out line
-            //If you're using a phone, use the second commented out line
             //PLEASE TEST THIS
-            directionsViewModel.originLocation.value= LatLng(45.7,-73.3)
-            //directionsViewModel.originLocation.value= Map.getCurrentLocation()
+            //directionsViewModel.originLocation.value= LatLng(45.7,-73.3)
+            directionsViewModel.originLocation.value= Map.getCurrentLocation()
             Path.setOrigin(directionsViewModel.originLocation.value!!)
         }
         if (directionsViewModel.originName.value==null)
@@ -134,8 +133,6 @@ class DirectionsFragment : Fragment() {
             binding.endLocationButton.text= directionsViewModel.destinationName!!.value
             Path.findDirections(requireActivity())
         }
-        //TODO: implement alternative button and set the alternative here. Display the changed directions.
-
 
         if(!Path.getDirectionScreenMode()!!) {
             binding.DirectionsTextBox.setOnTouchListener(View.OnTouchListener { v, event ->

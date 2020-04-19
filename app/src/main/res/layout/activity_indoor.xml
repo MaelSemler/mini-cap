@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".IndoorNavigation.IndoorActivity">
+
+    <Button
+        android:id="@+id/hfloor_nine_button"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="200dp"
+        android:layout_marginBottom="40dp"
+        android:background="@color/colorPrimary"
+        android:onClick="h9Button"
+        android:text="9" />
+
+    <Button
+        android:id="@+id/hfloor_eight_button"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="150dp"
+        android:layout_marginBottom="40dp"
+        android:background="@color/buttonColor"
+        android:onClick="h8Button"
+        android:text="8" />
+
+    <Button
+        android:id="@+id/indoorSubmitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Route This"
+        android:layout_below="@id/search_DestinationRoom"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimary"
+        android:textColor="#FFF"
+        android:onClick="routeIndoor"
+        >
+    </Button>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/imageRecycler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+    <android.widget.SearchView
+        android:id="@+id/search_StartRoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
+        android:background="#F5F5F5"
+        android:iconifiedByDefault="false"
+        android:inputType="text"
+        android:queryHint="Enter Start Room"></android.widget.SearchView>
+
+    <android.widget.SearchView
+        android:id="@+id/search_DestinationRoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_StartRoom"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
+        android:background="#F5F5F5"
+        android:iconifiedByDefault="false"
+        android:inputType="text"
+        android:queryHint="Enter Destination Room"></android.widget.SearchView>
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_DestinationRoom"
+        android:background="#FFF">
+    </ListView>
+
+
+
+
+</RelativeLayout>

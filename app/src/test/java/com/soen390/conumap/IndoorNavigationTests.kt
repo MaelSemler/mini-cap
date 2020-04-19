@@ -80,9 +80,9 @@ class IndoorNavigationTests {
     var row = 8
     var col = 8
     var pfTest: Pathfinding = Pathfinding(row, col, origin, destination)
-    var blockRow = arrayOf(1,2,3,4,5,6,7,7,6,5,3,3,3)
-    var blockCol = arrayOf(3,3,3,3,3,3,3,6,6,6,5,6,7)
-    var blockArray = arrayOf<Array<Int>>(blockRow, blockCol)
+    var blockRow = arrayListOf<Int>(1,2,3,4,5,6,7,7,6,5,3,3,3)
+    var blockCol = arrayListOf<Int>(3,3,3,3,3,3,3,6,6,6,5,6,7)
+    var blockArray = arrayOf<ArrayList<Int>>(blockRow, blockCol)
 
     @Test
     fun findPathTest() {
@@ -90,23 +90,22 @@ class IndoorNavigationTests {
         pfTest.loadBlocks(blockArray)
 
         var path = pfTest.findPath()
+
         var expected: MutableList<Node> = mutableListOf()
 
         expected.add(Node(2,1))
-        expected.add(Node(2, 2))
-        expected.add(Node(1, 2))
-        expected.add(Node(0, 2))
-        expected.add(Node(0, 3))
-        expected.add(Node(0, 4))
-        expected.add(Node(1, 4))
-        expected.add(Node (2, 4))
-        expected.add(Node(3, 4))
-        expected.add(Node(4,4))
-        expected.add(Node(4,5))
-        expected.add(Node(4,6))
-        expected.add(Node(4,7))
-        expected.add(Node(5, 7))
-        expected.add(Node(6, 7))
+        expected.add(Node(2, 0))
+        expected.add(Node(3, 0))
+        expected.add(Node(4, 0))
+        expected.add(Node(4, 1))
+        expected.add(Node(4, 2))
+        expected.add(Node(4, 3))
+        expected.add(Node(4, 4))
+        expected.add(Node(5, 4))
+        expected.add(Node(6, 4))
+        expected.add(Node(7, 4))
+        expected.add(Node(7, 5))
+        expected.add(Node(7, 6))
         expected.add(Node(7, 7))
 
         for(i in 0 until path.size) {

@@ -153,9 +153,10 @@
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@id/totalTime"
                             android:layout_marginStart="20dp"
+                            android:layout_marginBottom="10sp"
                             android:layout_alignParentTop="true"
                             android:layout_below="@+id/scroll_bar"
-                            android:layout_marginTop="30dp"
+                            android:layout_marginTop="20dp"
                             android:text="@{viewmodel._PathTotalDistanceText}"
                             android:textSize="20sp" />
 

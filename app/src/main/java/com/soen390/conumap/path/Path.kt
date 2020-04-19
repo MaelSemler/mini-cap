@@ -53,15 +53,15 @@ object Path {
 
     fun findDirections(activity: FragmentActivity) {
 
-        map.addMarker(originLatLng!!, ("This is the origin"))
-        map.addMarker(destinationLatLng!!, "Destination")
-        map.moveCamera(originLatLng!!, 14.5f)
+        map.addMarker(originLatLng, ("This is the origin"))
+        map.addMarker(destinationLatLng, "Destination")
+        map.moveCamera(originLatLng, 14.5f)
         GlobalScope.launch {
             route(
                 activity,
-                originLatLng!!,
-                destinationLatLng!!,
-                transportationMode!!,
+                originLatLng,
+                destinationLatLng,
+                transportationMode,
                 alternativesOn
             )
             //Calling the actual route function and passing all the needed parameters
