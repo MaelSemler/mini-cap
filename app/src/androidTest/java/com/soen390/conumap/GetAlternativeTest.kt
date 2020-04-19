@@ -4,6 +4,7 @@ import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject
 import androidx.test.uiautomator.UiSelector
+import com.soen390.conumap.path.Path
 
 import org.junit.Before
 import org.junit.Test
@@ -77,8 +78,8 @@ class GetAlternativeTest {
         travelButton.click()
 
         sleep(1000)
-
         assert(!travelButton.exists())
+
         //Makes the directions visible
         val directionsView: UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/directions_popup"))
         directionsView.swipeUp(50)
@@ -94,7 +95,7 @@ class GetAlternativeTest {
         val alternative:  UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/alt_button"))
         assert(alternative.exists())
         alternative.click()
-        assert(directions.contentDescription==Path._PathAlternateText.toString())
+        assert(directions.contentDescription==Path._DescriptionText.toString())
         directionsView.swipeUp(50)
         sleep(1000)//wait for app to load
         directions.click()

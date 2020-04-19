@@ -76,15 +76,13 @@ class ChangeStartingLocationTest {
             device.findObject(UiSelector().resourceId("com.soen390.conumap:id/start_location_button"))
         startingLocation.click()
 
-        val searchBar: UiObject =
-            device.findObject(UiSelector().resourceId("com.soen390.conumap:id/DirectionSearchResults"))
-        searchBar.click()
-
-
         val secondAutocompleteText: UiObject =
             device.findObject(UiSelector().resourceId("com.soen390.conumap:id/places_autocomplete_search_bar"))
         secondAutocompleteText.waitForExists(2000)
+        assert(secondAutocompleteText.exists()) //assert the element specified exists
         secondAutocompleteText.setText("Atwater"); //write keyword for a location
+        assert(secondAutocompleteText.setText("Atwater")) //asserts that the text box has been changed to "Hall"
+
         device.pressBack() // To close keyboard
         sleep(1000) //wait for app to load
 
@@ -94,7 +92,11 @@ class ChangeStartingLocationTest {
         secondPrediction.click()
         sleep(1000) //wait for app to load
 
-        val directions:  UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/DirectionsTextBox"))
+
+        val directionsView: UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/directions_popup"))
+        directionsView.swipeUp(50)
+        assert(directionsView.exists())
+        assert(directionsView.contentDescription== Path._infoPathText.toString()) //asserts that the directions displayed are identical to what the path variable holds
 
         device.pressBack() // Ensure keyboard is closed for the following test.
     }
