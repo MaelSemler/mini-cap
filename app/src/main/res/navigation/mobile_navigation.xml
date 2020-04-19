@@ -50,7 +50,7 @@
         android:label="Schedule"
         tools:layout="@layout/calendar_fragment" >
         <action
-            android:id="@+id/action_calendarFragment_to_directionsFragment2"
-            app:destination="@id/directionsFragment" />
+            android:id="@+id/action_calendarFragment_to_directionsFragment3"
+            app:destination="@id/mapFragment" />
     </fragment>
 </navigation>

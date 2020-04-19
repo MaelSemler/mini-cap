@@ -133,11 +133,11 @@ class CalendarScheduleFragment : Fragment() {
         }
         goNowButton.setOnClickListener(){
             val model: DirectionsViewModel by activityViewModels()
-            if (locationValue.text != "N/A"){
+            if (!classNumberValue.text.equals(getString(R.string.noUpcomingEvent))){
                 model.destinationName.value = locationValue.text.toString()
                 model.destinationLocation.value = getLocationFromAddress(locationValue.text.toString())
                 Path.setDestination(model.destinationLocation.value!!)
-                NavHostFragment.findNavController(this).navigate(R.id.action_calendarFragment_to_directionsFragment)
+                NavHostFragment.findNavController(this).navigate(R.id.action_calendarFragment_to_directionsFragment3)
             }
 
         }

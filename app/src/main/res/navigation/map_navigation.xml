@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_searchBarFragment_to_searchResultsFragment"
             app:destination="@id/searchResultsFragment" />
+        <action
+            android:id="@+id/action_searchBarFragment_to_searchCompletedFragment"
+            app:destination="@id/searchCompletedFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchResultsFragment"

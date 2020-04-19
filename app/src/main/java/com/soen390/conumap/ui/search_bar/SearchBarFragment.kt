@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.soen390.conumap.R
+import com.soen390.conumap.ui.directions.DirectionsViewModel
 import kotlinx.android.synthetic.main.search_bar_fragment.*
 
 
@@ -37,7 +38,10 @@ class SearchBarFragment : Fragment() {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-
+        val model: DirectionsViewModel by activityViewModels()
+        if (model.destinationName.value != null){
+            NavHostFragment.findNavController(this).navigate(R.id.action_searchBarFragment_to_searchCompletedFragment)
+        }
         super.onActivityCreated(savedInstanceState)
 
     }
