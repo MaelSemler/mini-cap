@@ -201,7 +201,7 @@
                                 android:layout_below="@+id/info_text"
                                 android:layout_marginTop="20dp"
                                 android:backgroundTint="@android:color/transparent"
-                                android:src="@drawable/like_off" />
+                                android:src="@drawable/favorite_white" />
                             <ScrollView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
