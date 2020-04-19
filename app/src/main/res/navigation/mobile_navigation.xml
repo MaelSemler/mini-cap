@@ -58,5 +58,11 @@
         android:id="@+id/calendarFragment"
         android:name="com.soen390.conumap.ui.calendar.CalendarFragment"
         android:label="Schedule"
-        tools:layout="@layout/calendar_fragment" />
+        tools:layout="@layout/calendar_fragment" >
+        <action
+            android:id="@+id/action_calendarFragment_to_directionsFragment3"
+            app:destination="@id/mapFragment" />
+    </fragment>
 </navigation>
+
+   

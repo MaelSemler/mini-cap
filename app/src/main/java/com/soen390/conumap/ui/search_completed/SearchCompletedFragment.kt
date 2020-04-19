@@ -43,6 +43,9 @@ class SearchCompletedFragment : Fragment() {
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }
         restart_button.setOnClickListener{ //directionsViewModel.getDestinationName().postValue("")
+            val model: DirectionsViewModel by activityViewModels()
+            model.destinationName.value = null
+            model.destinationLocation.value = null
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_searchBarFragment)
         }
         location_button.setOnClickListener{
