@@ -28,6 +28,10 @@ object ConverterToFloorPlan{
         return context
     }
 
+    fun clearFloorNodes() {
+        floorNode = arrayOf<Array<Floor.FloorNode>>()
+    }
+
     fun svgToBitMap(svg: Int): Bitmap? {
         val svgFile = SVG.getFromResource(context.resources, svg)
         var bitmapFile: Bitmap? = null

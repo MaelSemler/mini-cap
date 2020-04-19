@@ -74,6 +74,7 @@ class IndoorActivity : AppCompatActivity() {
 
         GlobalScope.launch {
             h8floorP = h8floorConverter.convertToPlan(h8BitMap)
+            ConverterToFloorPlan.clearFloorNodes()
             h9floorP = h9floorConverter.convertToPlan(h9BitMap)
         }
 
