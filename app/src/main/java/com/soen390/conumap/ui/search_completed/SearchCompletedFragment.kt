@@ -8,12 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.soen390.conumap.R
-import com.soen390.conumap.map.Map
 import com.soen390.conumap.ui.directions.DirectionsViewModel
-import com.soen390.conumap.ui.search_bar.SearchBarViewModel
-import com.soen390.conumap.ui.search_results.SearchResultsViewModel
-import kotlinx.android.synthetic.main.search_completed_fragment.*
-import java.util.*
 
 class SearchCompletedFragment : Fragment() {
 
@@ -29,26 +24,25 @@ class SearchCompletedFragment : Fragment() {
         val root = inflater.inflate(R.layout.search_completed_fragment, container, false)
         val directionsViewModel: DirectionsViewModel by activityViewModels()
 
-        //TODO: Change this to a two way bindings using binding.travelButton.setOnclickListener
         //directly instead of findViewByID=> Look into DirectionsFragment.kt 
-        val travel_button = root.findViewById<View>(R.id.travel_button)
-        val restart_button = root.findViewById<View>(R.id.restart_search)
-        val location_button = root.findViewById<Button>(R.id.found_location_button)
+        val travelButton = root.findViewById<View>(R.id.travel_button)
+        val restartButton = root.findViewById<View>(R.id.restart_search)
+        val locationButton = root.findViewById<Button>(R.id.found_location_button)
 
         //Set text in location button
-        location_button.text = directionsViewModel.destinationName.value
+        locationButton.text = directionsViewModel.destinationName.value
 
         //This changes fragment when the "45 degree" arrow is pressed
-        travel_button.setOnClickListener{
+        travelButton.setOnClickListener{
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_directionsFragment)
         }
-        restart_button.setOnClickListener{ //directionsViewModel.getDestinationName().postValue("")
+        restartButton.setOnClickListener{ //directionsViewModel.getDestinationName().postValue("")
             val model: DirectionsViewModel by activityViewModels()
             model.destinationName.value = null
             model.destinationLocation.value = null
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_searchBarFragment)
         }
-        location_button.setOnClickListener{
+        locationButton.setOnClickListener{
             NavHostFragment.findNavController(this).navigate(R.id.action_searchCompletedFragment_to_searchResultsFragment)
         }
         return root

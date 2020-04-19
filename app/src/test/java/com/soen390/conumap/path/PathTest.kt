@@ -1,24 +1,13 @@
 package com.soen390.conumap.path
 
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.UiSettings
 import com.google.android.gms.maps.model.LatLng
-import org.junit.After
-import org.junit.Before
 import org.junit.Test
 import com.nhaarman.mockitokotlin2.*
-import com.soen390.conumap.Directions.Directions
-import com.soen390.conumap.map.Map
 import org.junit.Assert.*
 
 class PathTest {
     val mockPath :Path = mock<Path>()
-    var gMap: GoogleMap = mock<GoogleMap>{}
-    var uisettingsMock: UiSettings = mock()
-    var activity: FragmentActivity = mock()
-    var map= mock<Map>()
 
     @Test
     fun testSetOrigin() {
@@ -42,8 +31,7 @@ class PathTest {
 
     @Test
     fun testFindDirections() {
-
-
+        assert(true)
     }
 
 
@@ -57,20 +45,22 @@ class PathTest {
 
     @Test
     fun testUpdateSteps() {
-
+        assert(true)
     }
 
     @Test
     fun testUpdateTotalDistance() {
-
+        assert(true)
     }
 
     @Test
     fun testUpdateTotalDuration() {
+        assert(true)
     }
 
     @Test
     fun testUpdatePathInfo() {
+        assert(true)
     }
 
 

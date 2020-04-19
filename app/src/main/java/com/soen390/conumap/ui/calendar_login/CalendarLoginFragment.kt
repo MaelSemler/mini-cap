@@ -48,7 +48,6 @@ class CalendarLoginFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(CalendarLoginViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
     //Initiation of the signing in process
@@ -74,7 +73,7 @@ class CalendarLoginFragment : Fragment() {
             Schedule.setName(account!!.email!!)
             activity!!.supportFragmentManager.beginTransaction().replace(R.id.calendar_container,CalendarScheduleFragment.newInstance()).commit()
         } catch (e: ApiException) {
-            //Todo: handle it
+            
         }
     }
 

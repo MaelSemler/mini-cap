@@ -141,8 +141,7 @@ class CalendarScheduleFragment : Fragment() {
             }
         }
         calendarDropDown.onItemSelectedListener =  object : AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 calendarID = position
                 NextEventRequestTask().execute()//makes the Coming Up UI
@@ -341,7 +340,7 @@ class CalendarScheduleFragment : Fragment() {
     }
 
     //The Next event is requested
-    private inner class NextEventRequestTask() : AsyncTask<Void, Void, Event>() {//Todo: make it return an event
+    private inner class NextEventRequestTask() : AsyncTask<Void, Void, Event>() {
         private var mLastError: Exception? = null
         //Clears the next event text
         override fun onPreExecute() {
@@ -364,9 +363,8 @@ class CalendarScheduleFragment : Fragment() {
 
     //A list of all the calendars is requested
     private inner class CalendarSetUpTask() : AsyncTask<Void, Void, MutableList<String>>() {
-        //Todo: make it return an event
         private var mLastError: Exception? = null
-        //
+
         override fun doInBackground(vararg params: Void): MutableList<String>? {
             return try {
                 Schedule.setUpCalendar(context!!)

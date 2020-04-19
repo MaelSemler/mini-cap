@@ -44,8 +44,6 @@ class SearchResultsFragment : Fragment() {
         val root = inflater.inflate(R.layout.search_results_fragment, container, false)
         val model= ViewModelProviders.of(this).get(DirectionsViewModel::class.java)
 
-        //TODO: Recently visited
-
         //Getting the Views from the fragment
         val cancelButton = root.findViewById<View>(R.id.cancel_search) as Button
         val clearButton = root.findViewById<View>(R.id.clear_input) as Button
@@ -55,7 +53,6 @@ class SearchResultsFragment : Fragment() {
         this.context?.let {
             Places.initialize(it, context?.getString(R.string.apiKey)!!)
         };  //initialize context
-        val placesClient = this.context?.let { Places.createClient(it) }   //initialize placesClient
         val autoCompleteRequestCode= 1
         val bounds = RectangularBounds.newInstance(
             LatLng(45.425579, -73.687204),
@@ -119,8 +116,6 @@ class SearchResultsFragment : Fragment() {
             NavHostFragment.findNavController(this).navigate(R.id.action_searchResultsFragment_to_directionsFragment)
     }
 
-
-    //TODO:simply the logic of hideKeyboard() and showKeyboard
 
     //This function is to make the keyboard close
     fun Fragment.hideKeyboard() {
