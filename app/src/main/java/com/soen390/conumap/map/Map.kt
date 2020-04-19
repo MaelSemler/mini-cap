@@ -15,11 +15,9 @@ import com.soen390.conumap.R
 import com.soen390.conumap.building.Building
 import com.soen390.conumap.building.BuildingCreator
 import com.soen390.conumap.building.BuildingInfoWindowAdapter
-import com.soen390.conumap.building.BuildingsConstants
 import com.soen390.conumap.campus.Campus
 import com.soen390.conumap.helper.DeviceLocationChecker
 import com.soen390.conumap.permission.Permission
-import com.soen390.conumap.ui.gallery.IndoorFragment
 
 object Map: GoogleMap.OnPolygonClickListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
 

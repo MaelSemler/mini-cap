@@ -91,10 +91,6 @@ class IndoorNavigationTests {
 
         var path = pfTest.findPath()
 
-        for(i in 0 until path.size) {
-            println(path[i])
-        }
-
         var expected: MutableList<Node> = mutableListOf()
 
         expected.add(Node(2,1))
