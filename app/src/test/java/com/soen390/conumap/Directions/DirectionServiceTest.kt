@@ -549,7 +549,7 @@ class DirectionServiceTest {
 
         whenever(dirService.polyline).thenReturn(mockPolyline)
 
-        dirService.ResetPathDrawing()
+        dirService.resetPathDrawing()
 
         assert(mockPolyline.size==0)
 

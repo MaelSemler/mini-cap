@@ -293,8 +293,7 @@ class IndoorActivity : AppCompatActivity() {
 
         for (array in currentFloorPlan.floorNodes) {
             for (value in array) {
-                if (value.walkable == true) {
-                } else {
+                if (value.walkable == false) {
                     blockCol.add(value.xInd)
                     blockRow.add(value.yInd)
                 }

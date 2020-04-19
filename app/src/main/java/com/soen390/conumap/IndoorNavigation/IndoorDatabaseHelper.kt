@@ -211,7 +211,6 @@ class IndoorDatabaseHelper: SQLiteOpenHelper {
 
     // Add all info from the string array passed in.
     fun addAllInfoToTable(nodeInfo: Array<String>) {
-        val db: SQLiteDatabase = this.writableDatabase
 
         for(i in nodeInfo.indices step 6) {
             insertData(

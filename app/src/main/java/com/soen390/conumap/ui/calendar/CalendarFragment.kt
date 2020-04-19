@@ -36,7 +36,6 @@ class CalendarFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(CalendarViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
     //Check which fragment should be added depending on connected accounts
