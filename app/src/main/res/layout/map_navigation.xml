@@ -44,21 +44,10 @@
         android:label="directions_fragment"
         tools:layout="@layout/directions_fragment" >
         <action
-            android:id="@+id/action_directionsFragment_to_directionsSearchFragment"
-            app:destination="@id/directionsSearchFragment" />
-        <action
             android:id="@+id/action_directionsFragment_to_searchCompletedFragment"
             app:destination="@id/searchCompletedFragment" />
         <action android:id="@+id/action_directionsFragment_to_directionsFragment"
             app:destination="@+id/directionsFragment"/>
     </fragment>
-    <fragment
-        android:id="@+id/directionsSearchFragment"
-        android:name="com.soen390.conumap.ui.directions_search.DirectionsSearchFragment"
-        android:label="directions_search_fragment"
-        tools:layout="@layout/directions_search_fragment" >
-        <action
-            android:id="@+id/action_directionsSearchFragment_to_directionsFragment"
-            app:destination="@id/directionsFragment" />
-    </fragment>
+
 </navigation>
