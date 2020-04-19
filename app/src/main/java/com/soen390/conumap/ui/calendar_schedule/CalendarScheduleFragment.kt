@@ -133,13 +133,12 @@ class CalendarScheduleFragment : Fragment() {
         }
         goNowButton.setOnClickListener(){
             val model: DirectionsViewModel by activityViewModels()
-            if (!classNumberValue.text.equals(getString(R.string.noUpcomingEvent))){
-                model.destinationName.value = locationValue.text.toString()
-                model.destinationLocation.value = getLocationFromAddress(locationValue.text.toString())
-                Path.setDestination(model.destinationLocation.value!!)
-                NavHostFragment.findNavController(this).navigate(R.id.action_calendarFragment_to_directionsFragment3)
+            if (!locationValue.text.equals(getString(R.string.notAvailable))&&!locationValue.text.isBlank()&&!locationValue.text.isEmpty()){
+                    model.destinationName.value = locationValue.text.toString()
+                    model.destinationLocation.value = getLocationFromAddress(locationValue.text.toString())
+                    Path.setDestination(model.destinationLocation.value!!)
+                    NavHostFragment.findNavController(this).navigate(R.id.action_calendarFragment_to_directionsFragment3)
             }
-
         }
         calendarDropDown.onItemSelectedListener =  object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
