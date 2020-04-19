@@ -22,11 +22,11 @@ object Schedule {
     }
 
     //Sets up the google calendars
-    fun setUpCalendar(con: Context): MutableList<String>? {
+    fun setUpCalendar(context: Context): MutableList<String>? {
         val transport = AndroidHttp.newCompatibleTransport()
         val jsonFactory = JacksonFactory.getDefaultInstance()
         val calendarNameList = mutableListOf<String>()
-        val token = GoogleAuthUtil.getToken(con, name, "oauth2:https://www.googleapis.com/auth/calendar.readonly")
+        val token = GoogleAuthUtil.getToken(context, name, "oauth2:https://www.googleapis.com/auth/calendar.readonly")
         var googleCred =  GoogleCredential()
         googleCred.accessToken = token
         calendar = Calendar.Builder(

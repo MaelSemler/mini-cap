@@ -57,18 +57,27 @@ class GetAlternativeTest {
         travelButton.click()
         sleep(1000)
 
+        //Makes the directions visible
+        val directionsView: UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/directions_popup"))
+        directionsView.swipeUp(50)
+        sleep(1000)//wait for app to load
+
         val directions:  UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/DirectionsTextBox"))
         directions.click()
 
         //tests alternative
         val alternative:  UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/alt_button"))
         alternative.click()
+        directionsView.swipeUp(50)
+        sleep(1000)//wait for app to load
         directions.click()
 
         //tests alternative after changing mode of transportation
         val transportation:  UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/transportation_walk"))
         transportation.click()
         alternative.click()
+        directionsView.swipeUp(50)
+        sleep(1000)//wait for app to load
         directions.click()
 
         device.pressBack() // Ensure keyboard is closed for the following test.

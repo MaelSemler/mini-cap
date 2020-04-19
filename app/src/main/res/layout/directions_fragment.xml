@@ -123,7 +123,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/white_top_round_corners"
                         app:layout_behavior="@string/bottom_sheet_behavior"
-                        app:behavior_peekHeight="170dp">
+                        app:behavior_peekHeight="180dp">
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">

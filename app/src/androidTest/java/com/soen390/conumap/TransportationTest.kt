@@ -57,6 +57,11 @@ class TransportationTest {
         travelButton.click()
         sleep(1000)
 
+        //Makes the directions visible
+        val directionsView: UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/directions_popup"))
+        directionsView.swipeUp(50)
+        sleep(1000)//wait for app to load
+
         val directions:  UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/DirectionsTextBox"))
         directions.click()
 
