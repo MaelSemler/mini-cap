@@ -39,12 +39,6 @@ class SearchBarFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
         super.onActivityCreated(savedInstanceState)
-        // TODO: Use the ViewModel
-
-        val model: SearchBarViewModel by activityViewModels()
-        val destination = model.getDestination()
-        search_button.setText(destination)
-
 
     }
 

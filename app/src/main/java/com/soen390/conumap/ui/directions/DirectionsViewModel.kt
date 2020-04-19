@@ -1,14 +1,17 @@
 package com.soen390.conumap.ui.directions
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.soen390.conumap.path.Path
+import com.google.android.gms.maps.model.LatLng
 
 class DirectionsViewModel : ViewModel() {
 
-    // Return this when directions are determined
-    val returnDirectionText = Path._DescriptionText //This information is what is used to display on the Directions Fragment UI
-    val returnTotalDistanceText = Path._PathTotalDistanceText
-    val returnTotalTimeText = Path._PathTotalTimeText
-    val returnInfoPathText= Path._infoPathText
+     var destinationChanged= MutableLiveData<Boolean>()
+     var destinationName= MutableLiveData<String>()
+     var destinationAddress= MutableLiveData<String>()
+     var destinationLocation= MutableLiveData<LatLng>()
 
+     var originName= MutableLiveData<String>()
+     var originAddress= MutableLiveData<String>()
+     var originLocation= MutableLiveData<LatLng>()
 }
