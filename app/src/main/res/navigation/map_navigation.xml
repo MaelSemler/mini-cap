@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_searchBarFragment_to_searchResultsFragment"
             app:destination="@id/searchResultsFragment" />
+        <action
+            android:id="@+id/action_searchBarFragment_to_searchCompletedFragment"
+            app:destination="@id/searchCompletedFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchResultsFragment"
@@ -57,4 +60,14 @@
             app:destination="@id/directionsFragment" />
 
     </fragment>
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.soen390.conumap.ui.calendar_schedule.CalendarScheduleFragment"
+        android:label="calendar_schedule_fragment"
+        tools:layout="@layout/calendar_schedule_fragment" >
+        <action
+            android:id="@+id/action_calendarFragment_to_directionsFragment"
+            app:destination="@id/directionsFragment" />
+    </fragment>
+
 </navigation>
