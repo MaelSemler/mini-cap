@@ -4,7 +4,6 @@ import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject
 import androidx.test.uiautomator.UiSelector
-import com.soen390.conumap.path.Path
 
 import org.junit.Before
 import org.junit.Test
@@ -80,6 +79,11 @@ class GetAlternativeTest {
         sleep(1000)
 
         assert(!travelButton.exists())
+        //Makes the directions visible
+        val directionsView: UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/directions_popup"))
+        directionsView.swipeUp(50)
+        sleep(1000)//wait for app to load
+
         val directions:  UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/DirectionsTextBox"))
         assert(directions.exists())
         assert(directions.contentDescription== Path._infoPathText.toString()) //asserts that the directions displayed are identical to what the path variable holds
@@ -91,6 +95,9 @@ class GetAlternativeTest {
         assert(alternative.exists())
         alternative.click()
         assert(directions.contentDescription==Path._PathAlternateText.toString())
+        directionsView.swipeUp(50)
+        sleep(1000)//wait for app to load
+        directions.click()
 
         //tests alternative after changing mode of transportation
         val transportation:  UiObject=device.findObject(UiSelector().resourceId("com.soen390.conumap:id/transportation_walk"))
@@ -98,6 +105,8 @@ class GetAlternativeTest {
         assert(Path.transportationMode=="walking")
         alternative.click()
         assert(directions.exists())
+        directionsView.swipeUp(50)
+        sleep(1000)//wait for app to load
         directions.click()
 
 
