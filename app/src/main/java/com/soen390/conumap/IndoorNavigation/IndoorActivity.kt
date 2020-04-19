@@ -209,6 +209,18 @@ class IndoorActivity : AppCompatActivity() {
     }
 
     fun routeIndoor(view:View) {
+        if(!this::startingRoom.isInitialized || !this::destinationRoom.isInitialized) {
+            var noInputErrorMessage = Toast.makeText(
+                applicationContext,
+                "Please enter a starting and destination room or point of interest.",
+                Toast.LENGTH_LONG
+            )
+            noInputErrorMessage.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+            noInputErrorMessage.show()
+
+            return
+        }
+
         val floorNumber = Regex("[0-9]").find(startingRoom)?.value
 
         // Show Toast when trying to go between floors.
